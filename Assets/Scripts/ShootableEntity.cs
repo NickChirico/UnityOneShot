@@ -4,32 +4,56 @@ using UnityEngine;
 
 public class ShootableEntity : MonoBehaviour
 {
-    public int Health = 3;
-    public int currentHealth;
+    public PopUpDamageText damageText;
+    public enum DropType { Green, Red, Purple, Blue, White };
+    public DropType thisDropType;
 
-    TempEnemy thisEnemy;
+    private int health;
+    private int currentHealth;
+    private float invulnTime;
+
+    private bool canTakeDamage;
+
+    Enemy thisEnemy;
 
     private void Start()
     {
-        currentHealth = Health;
-        try
-        {
-            thisEnemy = this.GetComponent<TempEnemy>();
+        canTakeDamage = true;
+        currentHealth = health; // temp for 123 spawn in enemies
+        try 
+        { 
+            thisEnemy = this.GetComponent<Enemy>();
         }
         catch
         {
-            Debug.Log("No Enemy Found");
+            thisEnemy = null;
         }
+    }
+
+    public void SetValues(int hp, float cd)
+    {
+        health = hp;
+        currentHealth = health;
+        invulnTime = cd;
     }
 
     public bool TakeDamage(int damageAmount, Vector2 damageSpot)
     {
-        if (thisEnemy != null)
+        if (canTakeDamage)
         {
-            thisEnemy.Shot(damageAmount, damageSpot);
+            canTakeDamage = false;
+            StartCoroutine(Invuln());
+
+            currentHealth -= damageAmount;
+            PopUpDamageText T = Instantiate(damageText, damageSpot, Quaternion.identity);
+            T.SendMessage("SetTextRun", damageAmount);
+
+            if (thisEnemy != null)
+            {
+                thisEnemy.GotHit();
+            }
         }
 
-        currentHealth -= damageAmount;
         if (currentHealth <= 0)
         {
             Die();
@@ -41,19 +65,34 @@ public class ShootableEntity : MonoBehaviour
         }
     }
 
+    IEnumerator Invuln()
+    {
+        yield return new WaitForSeconds(invulnTime);
+        if (!canTakeDamage)
+        {
+            canTakeDamage = true;
+        }
+    }
+
     private void Die()
     {
         gameObject.SetActive(false);
+        //Destroy(this.gameObject);
     }
 
     // NOT BEING USED
     public bool CheckOneShot(int damageAmount)
     {
-        if (currentHealth == Health && currentHealth - damageAmount < 0)
+        if (currentHealth == health && currentHealth - damageAmount < 0)
         {
             return true;
         }
         else
             return false;
+    }
+
+    public DropType GetDropType()
+    {
+        return thisDropType;
     }
 }

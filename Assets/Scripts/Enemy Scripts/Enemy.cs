@@ -3,11 +3,10 @@
 public abstract class Enemy : MonoBehaviour
 {
     [SerializeField] public string enemyName;
-    [SerializeField] private float currentMovespeed;
-    private int currentHealth;
     [SerializeField] private int maxHealth;
 
     private Transform playerLoc;
+    private EnemyStateManager SM;
 
     public SpriteRenderer sp;
     public Rigidbody2D rb;
@@ -24,6 +23,8 @@ public abstract class Enemy : MonoBehaviour
 
 
     [Header("Variables")]
+    public int damageCollision;
+    public int damageAttack;
     public float visionRange;
     public bool playerSpotted;
     [Header("Idle")]
@@ -44,11 +45,15 @@ public abstract class Enemy : MonoBehaviour
     public float attackDelay;
     public float attackLungeForce;
     public bool canAttack;
+    [Header("Knocked")]
+    public float invulnTime;
+    public float knockbackForce;
 
     private void Awake()
     {
         sp = this.GetComponent<SpriteRenderer>();
         rb = this.GetComponent<Rigidbody2D>();
+        SM = this.GetComponent<EnemyStateManager>();
         playerLoc = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         if (EnableLineRend)
@@ -60,14 +65,15 @@ public abstract class Enemy : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        ShootableEntity entity = this.GetComponent<ShootableEntity>();
+        entity.SetValues(maxHealth, invulnTime);
 
         Introduction();
     }
 
     private void Introduction()
     {
-        Debug.Log(enemyName + ", " + playerLoc);
+        //Debug.Log(enemyName + ", " + playerLoc);
     }
 
     // UPDATE
@@ -76,6 +82,11 @@ public abstract class Enemy : MonoBehaviour
 
         UpdateInformation();
 
+    }
+
+    public void CheckCollisionPlayer()
+    {
+        
     }
 
     public void UpdateInformation()
@@ -137,6 +148,18 @@ public abstract class Enemy : MonoBehaviour
          */
     }
 
+    public void GotHit()
+    {
+        SM.ChangeState(SM.Knocked);
+    }
+
+    public void Knockback()
+    {
+        Vector2 knockBack = (-direction * knockbackForce);
+        rb.velocity = Vector2.zero;
+        rb.AddForce(knockBack);
+    }
+
     // ********************
     // * Override Methods *
     // ********************
@@ -196,4 +219,20 @@ public abstract class Enemy : MonoBehaviour
         Debug.Log("Dodging...");
 
     }
+
+    private void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.CompareTag("Player"))
+        {
+            Player player = coll.gameObject.GetComponent<Player>();
+            if (player.CanBeDamaged() && SM.GetCurrentState() != SM.Knocked) // PLayer can be damaged and enemy is not in "Knocked"
+            {
+                if (SM.GetCurrentState() == SM.Attack)
+                    player.TakeDamage(damageAttack + Random.Range(0, 4));
+                else
+                    player.TakeDamage(damageCollision);
+            }
+        }
+    }
+
 }

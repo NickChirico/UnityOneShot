@@ -28,6 +28,15 @@ public class PopUpDamageText : MonoBehaviour
         }
     }
 
+    public void SetTextRun(string text)
+    {
+        TextMeshPro textMesh = this.GetComponentInChildren<TextMeshPro>();
+        textMesh.text = "" + text;
+
+        this.transform.localScale = new Vector3(2,2,0);
+        textMesh.color = Color.white;
+    }
+
     // Called in child - DestroyParent - NOT THIS CODE
     public void DestoryThis()
     {

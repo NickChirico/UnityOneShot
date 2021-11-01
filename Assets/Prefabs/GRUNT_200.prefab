@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5390593308842656640}
-  - component: {fileID: 5390593308842656643}
   - component: {fileID: 5390593308842656642}
   - component: {fileID: 5390593308842656641}
   - component: {fileID: 5390593308842656646}
   - component: {fileID: 5390593308842656647}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GRUNT_200
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -35,20 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5390593308842656643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5390593308842656644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75bc83d31902084429eeb141ded872d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
-    type: 3}
 --- !u!114 &5390593308842656642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,8 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 019ac56116c754c46b4441555f6c0728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 200
+  damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
+    type: 3}
+  thisDropType: 0
+  health: 200
   currentHealth: 0
+  invulnTime: 0.5
 --- !u!212 &5390593308842656641
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -78,6 +67,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -16,6 +16,7 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyState Patrol;
     public EnemyState Attack;
     public EnemyState Dodge;
+    public EnemyState Knocked;
 
     private void Start()
     {
@@ -28,6 +29,7 @@ public class EnemyStateManager : MonoBehaviour
         Chase = new EnemyState_Chase(this_SM, thisEnemy, "Chase", thisEnemy.chaseDuration, thisEnemy.chaseSpeed);
         Patrol = new EnemyState_Patrol(this_SM, thisEnemy, "Patrol", thisEnemy.patrolDuration, thisEnemy.patrolSpeed);
         Attack = new EnemyState_Attack(this_SM, thisEnemy, "Attack", thisEnemy.attackDuration);
+        Knocked = new EnemyState_Knocked(this_SM, thisEnemy, "Knocked", thisEnemy.invulnTime);
 
 
         ChangeState(Idle);

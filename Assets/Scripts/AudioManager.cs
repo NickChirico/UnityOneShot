@@ -1,11 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager _audioManager;
     public static AudioManager GetAudioManager { get { return _audioManager; } }
+
+    [Header("Audio Mixer")]
+    [SerializeField] string _masterVolumeParameter = "MasterVolume";
+    [SerializeField] AudioMixer _mixer;
+    [SerializeField] Slider _slider;
+    [SerializeField] private float _multiplier = 30f;
+
 
     [Header("Player Audio")]
     public AudioSource GunSource;
@@ -13,14 +22,20 @@ public class AudioManager : MonoBehaviour
     public AudioSource ChargeSource;
     public AudioSource BoostSource;
     public AudioSource AltFireSource;
+    public AudioSource DashSource;
+    public AudioSource MeleeSource;
     [Space(10)]
     public AudioClip[] shotSounds;
     public AudioClip[] reloadSounds;
+    public AudioClip fullReloadSound;
     public AudioClip chargeSound;
     public AudioClip[] boostSounds;
-    [Space(5)]
+    public AudioClip dashSound;
+    [Space(10)]
     public AudioClip[] shotgunSounds;
     public AudioClip burstSound;
+    [Space(10)]
+    public AudioClip[] meleeSounds;
 
     bool isCharging;
 
@@ -33,7 +48,21 @@ public class AudioManager : MonoBehaviour
         else
         {
             _audioManager = this;
+            _slider.onValueChanged.AddListener(HandleSliderValueChanged);
         }
+    }
+    private void OnDisable()
+    {
+        PlayerPrefs.SetFloat(_masterVolumeParameter, _slider.value);   
+    }
+    private void HandleSliderValueChanged(float val)
+    {
+        _mixer.SetFloat(_masterVolumeParameter, Mathf.Log10(val) * _multiplier);
+    }
+
+    private void Start()
+    {
+        _slider.value = PlayerPrefs.GetFloat(_masterVolumeParameter, _slider.value);
     }
 
     public void PlayShotSound(int hit)
@@ -56,6 +85,12 @@ public class AudioManager : MonoBehaviour
     public void PlayReloadSound()
     {
         ReloadSource.clip = reloadSounds[Random.Range(0, reloadSounds.Length)];
+        ReloadSource.Play();
+    }
+
+    public void PlayFullReloadSound()
+    {
+        ReloadSource.clip = fullReloadSound;
         ReloadSource.Play();
     }
 
@@ -107,5 +142,30 @@ public class AudioManager : MonoBehaviour
     public void StopAltSound()
     {
         AltFireSource.Stop();
+    }
+
+    public void PlayDashSound()
+    {
+        DashSource.Play();
+    }
+    public void PlayMeleeSound(int interval)
+    {
+        switch(interval)
+        { 
+            case 1:
+                MeleeSource.clip = meleeSounds[0];
+                break;
+            case 2:
+                MeleeSource.clip = meleeSounds[1];
+                break;
+            case 3:
+                MeleeSource.clip = meleeSounds[2];
+                break;
+            default:
+                MeleeSource.clip = meleeSounds[0];
+                break;
+        }
+
+        MeleeSource.Play();
     }
 }
