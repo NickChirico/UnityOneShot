@@ -7,9 +7,12 @@ public class MovementController : MonoBehaviour
     public static MovementController _moveControl;
     public static MovementController GetMoveController { get { return _moveControl; } }
 
+    private static PlayerInputActions playerInputActions;
+    public static PlayerInputActions GetInputActions { get { return playerInputActions; } }
+
     public EquipmentManager.SpecialType currentSpecial;
 
-    public enum Movement { Normal, Boost, AltHold, Roll}
+    public enum Movement { Normal, Boost, AltHold, Roll, Hold }
     public Movement currentMoveType;
 
     [Header("Debug Tools")]
@@ -19,6 +22,7 @@ public class MovementController : MonoBehaviour
     private Rigidbody2D rb;
 
     private AudioManager audioManager;
+    private AnimationController animControl;
 
     [Header("Variable Stats")]
     public float baseMoveSpeed;
@@ -31,17 +35,30 @@ public class MovementController : MonoBehaviour
     public float killShotBoostMultiplier = 1.5f;
     public float boostDuration = 3f;
 
+    [Header("Dash")]
+    public float dashForce;
+    public float dashDuration;
+    public float dashCooldown;
+    private bool canDash = true;
+
+
     [Header("Special")]
     public float specialDuration;
     public float specialCooldown;
     public float specialSpeed;
 
+    [Header("Melee Attributes")]
+    [Range(1, 10)] public float delayStopTime;
+
     // Private variables
-    [SerializeField] private float targetSpeed;
+    private float targetSpeed;
     private float neutralSpeed;
     private float boostLerpTimer;
     private float recoilTimer;
     private float recoilDuration;
+    private float thrustTimer;
+    private float thrustDuration;
+    private float dashTimer;
 
     private Vector2 direction;
 
@@ -49,34 +66,71 @@ public class MovementController : MonoBehaviour
     {
         currentSpecial = EquipmentManager.SpecialType.None;
         _moveControl = this;
+
+        playerInputActions = new PlayerInputActions();
+        playerInputActions.Player.Enable();
     }
+
+    /*private void Movement_performed(InputAction.CallbackContext context)
+    {
+        //Debug.Log("INPUT");
+        Vector2 inputVector = context.ReadValue<Vector2>();
+        float speed = 500f;
+        rb.AddForce(inputVector * speed, ForceMode2D.Force);
+    }*/
 
     private void Start()
     {
         audioManager = AudioManager.GetAudioManager;
+        animControl = AnimationController.GetAnimController;
 
         rb = this.GetComponent<Rigidbody2D>();
         currentMoveSpeed = baseMoveSpeed;
     }
+    public Vector2 GetDirection()
+    { return direction; }
 
     // **FIXED UPDATE**
     private void FixedUpdate()
     {
-        float moveH = Input.GetAxis("Horizontal") * currentMoveSpeed;
-        float moveV = Input.GetAxis("Vertical") * currentMoveSpeed;
+        Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
 
         if (recoilTimer < recoilDuration)
         {
             recoilTimer += Time.fixedDeltaTime;
         }
+        else if (thrustTimer < thrustDuration)
+        {
+            thrustTimer += Time.deltaTime;
+        }
+        else if (dashTimer < dashDuration)
+        {
+            dashTimer += Time.deltaTime;
+        }
         else
         {
-            rb.velocity = new Vector2(moveH, moveV);
+            rb.velocity = inputVector *= currentMoveSpeed;
         }
-        direction = new Vector2(moveH, moveV);
+
+        direction = inputVector;
 
         //  SET ANIMATION
         //FindObjectOfType<PlayerAnimation>().SetDirection(direction);
+        //Debug.Log(currentMoveSpeed);
+
+        if (Mathf.Abs(rb.velocity.x) > 0.4f || Mathf.Abs(rb.velocity.y) > 0.4f)
+        {
+            if (!animControl.GetWalk())
+                animControl.SetWalk(true);
+        }
+        else
+        {
+            if (animControl.GetWalk())
+                animControl.SetWalk(false);
+        }
+
+        animControl.SetFlipX(direction);
+
 
         //  Movement INDICATOR ?
         //Vector2 indicatiorLoc = new Vector2(this.transform.position.x + (moveH * 0.15f), this.transform.position.y + (moveV * 0.15f));
@@ -88,7 +142,7 @@ public class MovementController : MonoBehaviour
     {
         float t = Time.deltaTime;
         switch (currentMoveType.ToString())
-        { 
+        {
             case "Boost":
                 boostLerpTimer += Time.deltaTime;
                 if (boostLerpTimer > boostDuration)
@@ -104,6 +158,10 @@ public class MovementController : MonoBehaviour
                 break;
             case "Roll":
                 //
+                break;
+            case "Hold":
+                t = Time.deltaTime * delayStopTime;
+                neutralSpeed = 0;
                 break;
             default:
                 // Normal 
@@ -131,9 +189,9 @@ public class MovementController : MonoBehaviour
     }
 
     // ~~ Recoil ~~
-    public void Recoil(bool moveDir, Vector2 dir, float force, float duration)
+    public void Recoil(bool isDashFWD, Vector2 dir, float force, float duration)
     {
-        if(moveDir)
+        if (isDashFWD)
             rb.AddForce(direction * force);
         else
             rb.AddForce(dir * force);
@@ -170,5 +228,41 @@ public class MovementController : MonoBehaviour
         }
         boostLerpTimer = 0f;
         audioManager.PlayBoostSound(isKillShot);
+    }
+
+    // ~~ Thrust ~~
+    public void Thrust(Vector2 dir, float force, float dur)
+    {
+        rb.AddForce(dir * force);
+        thrustTimer = 0;
+        thrustDuration = dur;
+    }
+    public void Hold()
+    {
+        SetMoveType(Movement.Hold);
+    }
+    public void MoveNormal()
+    {
+        SetMoveType(Movement.Normal);
+    }
+
+    // ~~ DASH ~~
+    public void Dash()
+    {
+        rb.velocity = Vector2.zero;
+        rb.AddForce(direction * dashForce);
+        audioManager.PlayDashSound();
+        dashTimer = 0;
+        StartCoroutine(DashCooldown());
+    }
+    IEnumerator DashCooldown()
+    {
+        canDash = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+    }
+    public bool CanDash()
+    {
+        return canDash;
     }
 }

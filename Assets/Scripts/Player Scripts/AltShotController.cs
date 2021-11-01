@@ -7,7 +7,12 @@ public class AltShotController : MonoBehaviour
     public static AltShotController _altControl;
     public static AltShotController GetAltControl { get { return _altControl; } }
 
+    private PlayerInputActions inputActions;
+
     public EquipmentManager.AlternateFire currentAltFire;
+
+    [Header("Debug Options")]
+    public bool usingMouse;
 
     [Header("Components")]
     private ShotController shot;
@@ -87,6 +92,9 @@ public class AltShotController : MonoBehaviour
     {
         currentAltFire = EquipmentManager.AlternateFire.None;
         _altControl = this;
+
+        inputActions = new PlayerInputActions();
+        inputActions.Player.Enable();
     }
 
     void Start()
@@ -102,11 +110,7 @@ public class AltShotController : MonoBehaviour
     void Update()
     {
         UpdateManaRegen();
-
-        // If using mouse...{}
-        // calculate Direction and RayOrigin
-        Vector3 targetPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z * -1)); // invert cam Z to make 0
-        direction = (targetPos - this.transform.position).normalized;
+        UpdateDirection();
 
         rayOrigin3D = new Vector3(this.transform.position.x,
             this.transform.position.y + 0.25f,
@@ -124,7 +128,33 @@ public class AltShotController : MonoBehaviour
             reloadTimerAlt += Time.deltaTime;
         }
     }
-    
+
+    private void UpdateDirection()
+    {
+        if (usingMouse)
+        {
+            // Mouse Look Controls
+            Vector3 targetPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z * -1)); // invert cam Z to make 0
+            direction = (targetPos - this.transform.position).normalized;
+        }
+        else
+        {
+            // Controller Controls
+            Vector2 aimVector = inputActions.Player.Aim.ReadValue<Vector2>();
+            Vector2 moveVector = inputActions.Player.Move.ReadValue<Vector2>();
+
+            if (aimVector.Equals(Vector2.zero))
+            {
+                if (moveVector.Equals(Vector2.zero))
+                    aimVector = Vector2.up;
+                else
+                    aimVector = moveVector;
+            }
+
+            direction = aimVector;
+        }
+    }
+
     public bool CanAltFire()
     {
         return (reloadTimerAlt >= altFireRate) && (currentMana >= manaCost) && (shotDelayTimer >= delayFromShot); 

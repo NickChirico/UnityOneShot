@@ -7,12 +7,16 @@ public class ShotController : MonoBehaviour
     public static ShotController _shotControl;
     public static ShotController GetShotControl { get { return _shotControl; } }
 
+    private PlayerInputActions playerInputActions;
+
+
     public EquipmentManager.GunType currentGun;
     public EquipmentManager.DamageEffect currentDamageEffect;
     public EquipmentManager.BulletType currentBullet;
+    public EquipmentManager.Aphelios currentAphelios;
 
     [Header("Debug Options")]
-    public bool UsingMouse;
+    public bool usingMouse;
     public bool aimLineEnabled;
     public bool rangeIndicatorEnabled;
 
@@ -21,9 +25,10 @@ public class ShotController : MonoBehaviour
     public LineRenderer AimLine;
     public GameObject ImpactBurst;
     public GameObject ImpactPierceBurst;
-    private MovementController moveController;
-    private AltShotController altController;
+    private MovementController moveControl;
+    private AltShotController altControl;
     private AudioManager audioManager;
+    private UI_Manager uiControl;
 
     [Header("Range Indicator")]
     public LineRenderer RangeIndicator;
@@ -33,16 +38,25 @@ public class ShotController : MonoBehaviour
 
     [Header("Variable Stats")]
     public int baseDamage = 10;
+    public int AmmoCapacity = 6;
+    [HideInInspector] public int currentAmmo;
     public float weaponRange = 4.5f;
     public float shotDuration = 0.5f;
     public float shotEffectDuration = 0.08f;
     public float reloadDuration = 1f;
+    public float rechamberDuration = 0.5f;
     public float delayFromAlt = 0.65f;
     public float hitForce = 400f;
     public float pierceDamageFalloff = 0.1f;
     public float chargeRate = 2f;
     public float chargeLimit = 100f;
 
+    [Header("Proto Stats")]
+    public float calibRange = 5f;
+    public float severRange = 3f;
+    public float graviRange = 4f;
+    public float inferRange = 4f;
+    public float creseRange = 3.5f;
 
     // Private variables
     private bool hasShot;
@@ -58,20 +72,28 @@ public class ShotController : MonoBehaviour
         currentGun = EquipmentManager.GunType.Basic;
         currentDamageEffect = EquipmentManager.DamageEffect.None;
         currentBullet = EquipmentManager.BulletType.Basic;
+        currentAphelios = EquipmentManager.Aphelios.Calibrum;
         _shotControl = this;
+
+        playerInputActions = new PlayerInputActions();
+        playerInputActions.Player.Enable();
     }
 
     private void Start()
     {
-        moveController = MovementController.GetMoveController;
-        altController = AltShotController.GetAltControl;
+        moveControl = MovementController.GetMoveController;
+        altControl = AltShotController.GetAltControl;
         audioManager = AudioManager.GetAudioManager;
+        uiControl = UI_Manager.GetUIManager;
 
         ShotTrail.gameObject.SetActive(true);
         RangeIndicator.gameObject.SetActive(true);
         AimLine.gameObject.SetActive(true);
         ShotTrail.enabled = false;
         hasShot = true;
+
+        currentAmmo = AmmoCapacity;
+        uiControl.UpdateAmmo(currentAmmo, AmmoCapacity);
     }
 
     public bool HasShot()
@@ -87,7 +109,7 @@ public class ShotController : MonoBehaviour
   //// ~~ UPDATE ~~
     private void Update()
     {
-        if (UsingMouse)
+        if (usingMouse)
         {
             // Mouse Look Controls
             Vector3 targetPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z * -1)); // invert cam Z to make 0
@@ -96,7 +118,18 @@ public class ShotController : MonoBehaviour
         else
         {
             // Controller/Non Mouse Controls
-            direction = Vector3.zero;
+            Vector2 aimVector = playerInputActions.Player.Aim.ReadValue<Vector2>();
+            Vector2 moveVector = playerInputActions.Player.Move.ReadValue<Vector2>();
+
+            if (aimVector.Equals(Vector2.zero))
+            {
+                if (moveVector.Equals(Vector2.zero))
+                    aimVector = Vector2.up;
+                else
+                    aimVector = moveVector;
+            }
+
+            direction = aimVector;
         }
 
         // Aim Line
@@ -195,7 +228,7 @@ public class ShotController : MonoBehaviour
 
             default:
                 // Basic
-                Shoot(direction, baseDamage);
+                ProtoFire();
                 break;
         }
     }
@@ -207,7 +240,7 @@ public class ShotController : MonoBehaviour
                 charging = false;
                 audioManager.StopChargeSound();
                 float chargeDamage = ((chargeLevel / chargeLimit) * baseDamage) + baseDamage;
-                Shoot(direction, (int)chargeDamage);
+                Shoot(direction, (int)chargeDamage, weaponRange);
                 chargeLevel = 0;
                 break;
 
@@ -221,15 +254,51 @@ public class ShotController : MonoBehaviour
         }
     }
 
-    private void Shoot(Vector2 direction, int damage)
+    public void LoseAmmo()
+    {
+        currentAmmo--;
+        UpdateAmmoUI();
+    }
+
+    public void UpdateAmmoUI()
+    {
+        uiControl.UpdateAmmo(currentAmmo, AmmoCapacity);
+    }
+
+    private void ProtoFire()
+    {
+        switch (currentAphelios)
+        {
+            case EquipmentManager.Aphelios.Calibrum:
+                Shoot(direction, baseDamage, calibRange);
+                break;
+            case EquipmentManager.Aphelios.Severum:
+                Shoot(direction, baseDamage, severRange);
+                break;
+            case EquipmentManager.Aphelios.Gravitum:
+                ShootLock(direction, baseDamage, graviRange);
+                break;
+            case EquipmentManager.Aphelios.Infernum:
+                ShootLock(direction, baseDamage, inferRange);
+                break;
+            case EquipmentManager.Aphelios.Cresendum:
+                ShootLock(direction, baseDamage, creseRange);
+                break;
+            default:
+                Shoot(direction, baseDamage, weaponRange);
+                break;
+        }
+    }
+
+    private void Shoot(Vector2 direction, int damage, float range)
     {
         hasShot = false;
         ShotTrail.SetPosition(0, rayOrigin);
 
         //RaycastHit2D hit = 
 
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction, weaponRange);
-        RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, weaponRange);
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction, range);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, range);
 
         bool pierceShot = false;
         switch (currentBullet.ToString())
@@ -270,7 +339,7 @@ public class ShotController : MonoBehaviour
                         if (hit.rigidbody != null)
                         {
                             Vector2 knockBack = CalculateKnockBack(-hit.normal, hitForce);
-                            hit.rigidbody.AddForce(knockBack);
+                            //hit.rigidbody.AddForce(knockBack);
                         }
                     }
 
@@ -300,7 +369,7 @@ public class ShotController : MonoBehaviour
                             if (h.rigidbody != null)
                             {
                                 Vector2 knockBack = CalculateKnockBack(-h.normal, hitForce);
-                                h.rigidbody.AddForce(knockBack);
+                                //h.rigidbody.AddForce(knockBack);
                             }
                         }
                     }
@@ -312,11 +381,16 @@ public class ShotController : MonoBehaviour
         {
             // MISS Shot
             Vector2 rayOrigin2 = new Vector2(rayOrigin.x, rayOrigin.y);
-            ShotTrail.SetPosition(1, rayOrigin2 + (direction * weaponRange));
+            ShotTrail.SetPosition(1, rayOrigin2 + (direction * range));
         }
 
         StartCoroutine(ShotEffect());
-        altController.ResetShotBuffer();
+        altControl.ResetShotBuffer();
+    }
+
+    private void ShootLock(Vector2 direction, int damage, float radius)
+    {
+        
     }
 
     private void ApplyShot(ShootableEntity entityHit, Vector2 hitPoint, float hitDistance, int damage)
@@ -338,7 +412,29 @@ public class ShotController : MonoBehaviour
         bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint);
 
         // Speed Boost
-        moveController.SpeedBoost(isKillShot);
+        moveControl.SpeedBoost(isKillShot);
+
+        switch (entityHit.GetDropType())
+        {
+            case ShootableEntity.DropType.Green:
+                EquipmentManager.GetEquipManager.UpdateWeaponMeters(1);
+                break;
+            case ShootableEntity.DropType.Red:
+                EquipmentManager.GetEquipManager.UpdateWeaponMeters(2);
+                break;
+            case ShootableEntity.DropType.Purple:
+                EquipmentManager.GetEquipManager.UpdateWeaponMeters(3);
+                break;
+            case ShootableEntity.DropType.Blue:
+                EquipmentManager.GetEquipManager.UpdateWeaponMeters(4);
+                break;
+            case ShootableEntity.DropType.White:
+                EquipmentManager.GetEquipManager.UpdateWeaponMeters(5);
+                break;
+            default:
+                EquipmentManager.GetEquipManager.UpdateWeaponMeters(-1);
+                break;
+        }
     }
 
     /*private void HitTerrain()
@@ -366,6 +462,10 @@ public class ShotController : MonoBehaviour
     public void PlayReloadSound()
     {
         audioManager.PlayReloadSound();
+    }
+    public void PlayFullReloadSound()
+    {
+        audioManager.PlayFullReloadSound();
     }
 
     public void ToggleAimLineColor(bool isReloading)
