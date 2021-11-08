@@ -7,8 +7,9 @@ public class ShotController : MonoBehaviour
     public static ShotController _shotControl;
     public static ShotController GetShotControl { get { return _shotControl; } }
 
+    #region ## PARAMETERS ##
     private PlayerInputActions playerInputActions;
-
+    public enum Special { None, Projectile, Burst }
 
     public EquipmentManager.GunType currentGun;
     public EquipmentManager.DamageEffect currentDamageEffect;
@@ -37,8 +38,9 @@ public class ShotController : MonoBehaviour
     private float Theta;
 
     [Header("Variable Stats")]
+    public string weaponName;
     public int baseDamage = 10;
-    public int AmmoCapacity = 6;
+    public int ammoCapacity = 6;
     [HideInInspector] public int currentAmmo;
     public float weaponRange = 4.5f;
     public float shotDuration = 0.5f;
@@ -67,6 +69,25 @@ public class ShotController : MonoBehaviour
     private Vector3 direction;
     private Vector3 rayOrigin;
 
+    // NEW VARIABLES
+    [Header("NEW WEAPON VARS")]
+    public bool doRechamber = true;
+    public float delayBetweenShots;
+    public bool doCone = false;
+    public int coneSpreadCount;
+    public float coneAngle;
+
+    public bool doHold = false;
+    public bool doPierce = false;
+    public bool doRecoil = false;
+    public float recoilForce, recoilDuration;
+
+    public LineRenderer ShotTrail_prefab;
+    public GameObject ImpactBurst_prefab;
+
+    #endregion
+
+    #region ## SET UP ##
     private void Awake()
     {
         currentGun = EquipmentManager.GunType.Basic;
@@ -92,8 +113,8 @@ public class ShotController : MonoBehaviour
         ShotTrail.enabled = false;
         hasShot = true;
 
-        currentAmmo = AmmoCapacity;
-        uiControl.UpdateAmmo(currentAmmo, AmmoCapacity);
+        currentAmmo = ammoCapacity;
+        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
     }
 
     public bool HasShot()
@@ -105,15 +126,62 @@ public class ShotController : MonoBehaviour
         hasShot = b;
     }
 
-  ////
-  //// ~~ UPDATE ~~
+    public void SetWeaponStats(RangedWeapon weap)
+    {
+        weaponName = weap.weaponName;
+
+        baseDamage = weap.shotDamage;
+        weaponRange = weap.range;
+        reloadDuration = weap.reloadDuration;
+
+        delayBetweenShots = weap.delayBetweenShots;
+        doRechamber = weap.doRechamber;
+        rechamberDuration = weap.rechamberDuration;
+
+        doCone = weap.doCone;
+        coneSpreadCount = weap.coneSpread;
+        coneAngle = weap.coneAngle;
+
+        doRecoil = weap.doRecoil;
+        recoilForce = weap.recoilForce;
+        recoilDuration = weap.recoilDuration;
+
+        ammoCapacity = weap.ammoCapacity;
+        currentAmmo = ammoCapacity;
+        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+
+        audioManager.SetShotSounds(weap.shotSounds);
+        audioManager.SetReloadSound(weap.reload_Sound);
+
+        Debug.Log("switched to: " + weaponName);
+    }
+    #endregion
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #region ### Update and actions ###
     private void Update()
     {
-        if (usingMouse)
+        // Aim Direction -- direction
+        direction = UpdateDirection(usingMouse);
+        // Aim Line -- rayOrigin
+        UpdateAimLine(aimLineEnabled, rangeIndicatorEnabled, direction);
+
+        // Charging Shot
+        if (charging && chargeLevel < chargeLimit)
+        {
+            chargeLevel += Time.deltaTime * chargeRate;
+
+            if (chargeLevel > chargeLimit * 0.05f && !audioManager.ChargeSource.isPlaying)
+                audioManager.PlayChargeSound();
+        }
+    }
+    private Vector2 UpdateDirection(bool mouse)
+    {
+        if (mouse)
         {
             // Mouse Look Controls
             Vector3 targetPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z * -1)); // invert cam Z to make 0
-            direction = (targetPos - this.transform.position).normalized;
+            return (targetPos - this.transform.position).normalized;
         }
         else
         {
@@ -129,27 +197,15 @@ public class ShotController : MonoBehaviour
                     aimVector = moveVector;
             }
 
-            direction = aimVector;
-        }
-
-        // Aim Line
-        rayOrigin = new Vector3(this.transform.position.x,
-            this.transform.position.y + 0.25f,
-            this.transform.position.z);
-        UpdateAimLine(aimLineEnabled, rangeIndicatorEnabled, direction);
-
-        // Charging Shot
-        if (charging && chargeLevel < chargeLimit)
-        {
-            chargeLevel += Time.deltaTime * chargeRate;
-
-            if (chargeLevel > chargeLimit * 0.05f && !audioManager.ChargeSource.isPlaying)
-                audioManager.PlayChargeSound();
+            return aimVector;
         }
     }
-
     void UpdateAimLine(bool enabled, bool circleEnabled, Vector3 direction)
     {
+        rayOrigin = new Vector3(this.transform.position.x,
+        this.transform.position.y + 0.25f,
+        this.transform.position.z);
+
         if (enabled)
         {
             if (!AimLine.enabled)
@@ -186,6 +242,14 @@ public class ShotController : MonoBehaviour
                 AimLine.enabled = false;
         }
     }
+    public Vector3 GetDirection()
+    {
+        return direction;
+    }
+    public Vector3 GetRayOrigin()
+    {
+        return rayOrigin;
+    }
 
     // Update current equipment - called from EquipmentManager
     public void UpdateCurrentEquipment(EquipmentManager.GunType gun, EquipmentManager.DamageEffect amplifier, EquipmentManager.BulletType bullet)
@@ -195,13 +259,9 @@ public class ShotController : MonoBehaviour
         currentBullet = bullet;
     }
 
-    public Vector3 GetDirection()
+    public void SetAimLine(bool b)
     {
-        return direction;
-    }
-    public Vector3 GetStartpoint()
-    {
-        return rayOrigin;
+        aimLineEnabled = b;
     }
     public void ToggleAimLine()
     {
@@ -211,9 +271,10 @@ public class ShotController : MonoBehaviour
             aimLineEnabled = true;
     }
 
-    ////
-    //// ~~ SHOOT ~~
-    public void ButtonPress()
+    #endregion
+
+    //// ~~ SHOOT [for charge] (old - remove) ~~
+    /*public void ButtonPress()
     {
         switch (currentGun.ToString())
         {
@@ -229,6 +290,7 @@ public class ShotController : MonoBehaviour
             default:
                 // Basic
                 ProtoFire();
+                // -- is really --> Shoot();
                 break;
         }
     }
@@ -252,20 +314,8 @@ public class ShotController : MonoBehaviour
                 // Basic --> Do nothing
                 break;
         }
-    }
-
-    public void LoseAmmo()
-    {
-        currentAmmo--;
-        UpdateAmmoUI();
-    }
-
-    public void UpdateAmmoUI()
-    {
-        uiControl.UpdateAmmo(currentAmmo, AmmoCapacity);
-    }
-
-    private void ProtoFire()
+    }*/
+    /*private void ProtoFire()
     {
         switch (currentAphelios)
         {
@@ -288,14 +338,48 @@ public class ShotController : MonoBehaviour
                 Shoot(direction, baseDamage, weaponRange);
                 break;
         }
+    }*/
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #region ## SHOT ##
+    Ray2D[] rays;
+    LineRenderer[] lineTrails;
+    public void CommenceShot()
+    {
+
+        if (doCone)
+        {
+            rays = new Ray2D[coneSpreadCount];
+            for (int i = 0; i < rays.Length; i++)
+            {
+                rays[i] = new Ray2D(rayOrigin, RandomConeAngle(direction));
+            }
+        }
+        else
+        {
+            rays = new Ray2D[1];
+            rays[0] = new Ray2D(rayOrigin, direction * weaponRange);
+
+
+            //Shoot(direction, baseDamage, weaponRange);
+        }
+
+        lineTrails = new LineRenderer[rays.Length];
+
+        // Do the shot(s)
+        Shoot(FindHitsFromRays(rays));
+        //
+        ShotRecoil();
+        //
+        LoseAmmo();
+        //
+        StartCoroutine(ShotEffect());
     }
 
-    private void Shoot(Vector2 direction, int damage, float range)
+    private void ShootOLD(Vector2 direction, int damage, float range)
     {
         hasShot = false;
         ShotTrail.SetPosition(0, rayOrigin);
-
-        //RaycastHit2D hit = 
 
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction, range);
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, direction, range);
@@ -388,15 +472,86 @@ public class ShotController : MonoBehaviour
         altControl.ResetShotBuffer();
     }
 
-    private void ShootLock(Vector2 direction, int damage, float radius)
+    private RaycastHit2D[] FindHitsFromRays(Ray2D[] rays)
     {
-        
+        RaycastHit2D[] hits = new RaycastHit2D[rays.Length];
+        for (int i = 0; i < rays.Length; i++)
+        {
+            hits[i] = Physics2D.Raycast(rayOrigin, rays[i].direction, weaponRange);
+        }
+        return hits;
+    }
+    private void Shoot(RaycastHit2D[] hits)
+    {
+        hasShot = false;
+        int i = 0;
+        foreach (RaycastHit2D hit in hits)
+        {
+            LineRenderer line = Instantiate(ShotTrail_prefab, this.transform);
+            line.SetPosition(0, rayOrigin);
+
+            if (hit.collider != null)
+            {
+                line.SetPosition(1, hit.point);
+                Vector2 hitPoint = new Vector2(hit.point.x, hit.point.y);
+
+                if (hit.collider.CompareTag("Terrain"))
+                {
+                    //HitTerrain();
+                    Instantiate(ImpactBurst_prefab, hit.point, Quaternion.identity);
+                }
+                else if (hit.collider.CompareTag("Enemy"))
+                {
+                    ShootableEntity entity = hit.collider.GetComponent<ShootableEntity>();
+                    if (entity != null)
+                    {
+                        ApplyShot(entity, hit.point, hit.distance, baseDamage); // PASS DAMAGE TO ApplyShot(damage);
+                        Instantiate(ImpactBurst_prefab, hitPoint, Quaternion.identity);
+                    }
+                }
+                else // other entities hit...
+                { }
+            }
+            else
+            {
+                // Miss!
+                Vector2 rayOrigin2D = new Vector2(rayOrigin.x, rayOrigin.y);
+                line.SetPosition(1, rayOrigin2D + rays[i].direction * weaponRange);
+            }
+            lineTrails[i] = line;
+            i++;
+        }
+
+
     }
 
     private void ApplyShot(ShootableEntity entityHit, Vector2 hitPoint, float hitDistance, int damage)
     {
         // Determine Damage
         int damageToDeal = damage;
+
+        if (doPierce)
+        {
+            damageToDeal = CalculateProximityDamage(damage, hitDistance);
+        }
+
+        // Deal Damage
+        bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint);
+
+        // Apply Knockback
+        // --here
+        // APPLY KNOCKBACK
+        // APPLY KNOCKBACK
+        // APPLY KNOCKBACK
+
+        // Speed Boost
+        moveControl.SpeedBoost(isKillShot);
+
+        // Bonus Effects
+        /*
+        // APPLY PROXIMITY
+        // APPLY PROXIMITY et al
+
         switch (currentDamageEffect.ToString())
         {
             case "None":
@@ -408,39 +563,23 @@ public class ShotController : MonoBehaviour
                 break;
         }
 
-        // Deal Damage
-        bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint);
-
-        // Speed Boost
-        moveControl.SpeedBoost(isKillShot);
-
         switch (entityHit.GetDropType())
         {
             case ShootableEntity.DropType.Green:
                 EquipmentManager.GetEquipManager.UpdateWeaponMeters(1);
                 break;
-            case ShootableEntity.DropType.Red:
-                EquipmentManager.GetEquipManager.UpdateWeaponMeters(2);
-                break;
-            case ShootableEntity.DropType.Purple:
-                EquipmentManager.GetEquipManager.UpdateWeaponMeters(3);
-                break;
-            case ShootableEntity.DropType.Blue:
-                EquipmentManager.GetEquipManager.UpdateWeaponMeters(4);
-                break;
-            case ShootableEntity.DropType.White:
-                EquipmentManager.GetEquipManager.UpdateWeaponMeters(5);
-                break;
-            default:
-                EquipmentManager.GetEquipManager.UpdateWeaponMeters(-1);
-                break;
-        }
+            ...
+            ...
+        }*/
     }
 
     /*private void HitTerrain()
     {
     }*/
+    #endregion
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #region ### Calculation Helper Functions ###
     public Vector2 CalculateKnockBack(Vector2 direction, float force)
     {
         Vector2 knockback = direction * force;
@@ -456,12 +595,51 @@ public class ShotController : MonoBehaviour
         int realDamage = (int)(damage - multiplier + damageMultiplier);
         return realDamage;
     }
+    private Vector2 RandomConeAngle(Vector2 dir)
+    {
+        float x = dir.x;
+        float y = dir.y;
 
-    ////
-    ////~~ RELOAD 
+        float randomAngle = Random.Range(-coneAngle, coneAngle);
+
+        float angle = randomAngle * Mathf.Deg2Rad;
+
+        float cos = Mathf.Cos(angle);
+        float sin = Mathf.Sin(angle);
+        float x2 = x * cos - y * sin;
+        float y2 = x * sin + y * cos;
+
+        return new Vector2(x2, y2);
+    }
+
+    public void ShotRecoil()
+    {
+        if (doRecoil)
+        {
+            moveControl.Recoil(false, -direction, recoilForce, recoilDuration);
+        }
+    }
+    #endregion
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #region ### Ammo and HUD UI ###
+    public void LoseAmmo()
+    {
+        currentAmmo--;
+        UpdateAmmoUI();
+    }
+
+    public void UpdateAmmoUI()
+    {
+        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+    }
+    #endregion
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #region ### Reloading ###
     public void PlayReloadSound()
     {
-        audioManager.PlayReloadSound();
+        audioManager.PlayRechamberSound();
     }
     public void PlayFullReloadSound()
     {
@@ -486,16 +664,28 @@ public class ShotController : MonoBehaviour
     {
         altDelayTimer = delayFromAlt;
     }
+    #endregion
 
-  ////
-  ////~~ Coroutines ~~
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #region ### Coroutines ###
     private IEnumerator ShotEffect()
     {
         audioManager.PlayShotSound(1);
         //Instanciate(GameObject shotEffect);
-
-        ShotTrail.enabled = true;
         yield return new WaitForSeconds(shotEffectDuration);
-        ShotTrail.enabled = false;
+        DestoryTrailLines();
     }
+    void DestoryTrailLines()
+    {
+        foreach (LineRenderer line in lineTrails)
+        {
+            Destroy(line.gameObject);
+        }
+    }
+
+
+
+
+
+    #endregion 
 }

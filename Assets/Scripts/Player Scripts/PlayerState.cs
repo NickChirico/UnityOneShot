@@ -9,6 +9,7 @@ public abstract class PlayerState
     protected MovementController Move;
     protected ShotController Shot;
     protected AltShotController Alt;
+    protected SpecialController Spec;
     protected MeleeController Melee;
 
     protected PlayerInputActions InputAction;
@@ -27,6 +28,7 @@ public abstract class PlayerState
         Shot = ShotController.GetShotControl;
         Alt = AltShotController.GetAltControl;
         Melee = MeleeController.GetMeleeControl;
+        Spec = SpecialController.GetSpecialController;
         SM = manager;
         Name = name;
     }
@@ -38,6 +40,7 @@ public abstract class PlayerState
         Shot = ShotController.GetShotControl;
         Alt = AltShotController.GetAltControl;
         Melee = MeleeController.GetMeleeControl;
+        Spec = SpecialController.GetSpecialController;
         SM = manager;
         Name = name;
         Duration = dur;
@@ -49,6 +52,7 @@ public abstract class PlayerState
         Shot = ShotController.GetShotControl;
         Alt = AltShotController.GetAltControl;
         Melee = MeleeController.GetMeleeControl;
+        Spec = SpecialController.GetSpecialController;
         SM = manager;
         player = p;
         Name = name;
@@ -62,6 +66,7 @@ public abstract class PlayerState
         Shot = ShotController.GetShotControl;
         Alt = AltShotController.GetAltControl;
         Melee = MeleeController.GetMeleeControl;
+        Spec = SpecialController.GetSpecialController;
         SM = manager;
         Name = name;
         Duration = dur;

@@ -9,8 +9,9 @@ public class PlayerStateManager : MonoBehaviour
     protected static MovementController MoveControl;
     protected static ShotController ShotControl;
     protected static AltShotController AltControl;
-    protected static EquipmentManager EquipControl;
+    //protected static EquipmentManager EquipControl;
     protected static MeleeController MeleeControl;
+    protected static WeaponManager WeaponControl;
     protected static Player this_Player;
 
     public PlayerState Ready;
@@ -22,6 +23,7 @@ public class PlayerStateManager : MonoBehaviour
     public PlayerState Special;
     public PlayerState Damaged;
 
+    public PlayerState MeleeAttack;
     public PlayerState Attack1;
     public PlayerState Attack2;
     public PlayerState Attack3;
@@ -36,7 +38,8 @@ public class PlayerStateManager : MonoBehaviour
         MoveControl = this.GetComponent<MovementController>();
         ShotControl = this.GetComponent<ShotController>();
         AltControl = this.GetComponent<AltShotController>();
-        EquipControl = FindObjectOfType<EquipmentManager>();
+        //EquipControl = FindObjectOfType<EquipmentManager>();
+        WeaponControl = FindObjectOfType<WeaponManager>();
         MeleeControl = this.GetComponent<MeleeController>();
 
         // Define States
@@ -45,26 +48,22 @@ public class PlayerStateManager : MonoBehaviour
         Dashing = new PlayerState_Dash(this_SM, "Dash", MoveControl.dashDuration);
         Damaged = new PlayerState_Damaged(this_SM, this_Player, "Damaged", this_Player.invulnDuration);
         AltFiring = new PlayerState_AltFire(this_SM, "AltFire");
-        Special = new PlayerState_Special(this_SM, "Special", MoveControl.specialDuration);
+        Special = new PlayerState_Special(this_SM, "Special");
         Reloading = new PlayerState_Reloading(this_SM, "Reloading", ShotControl.reloadDuration);
         Rechamber = new PlayerState_Rechamber(this_SM, "Rechamber", ShotControl.rechamberDuration);
-        Attack1 = new PlayerState_MeleeAttack(this_SM, "Attack1", MeleeControl.attackDuration_1, MeleeControl.preAttackDelay_1, 1);
-        Attack2 = new PlayerState_MeleeAttack(this_SM, "Attack2", MeleeControl.attackDuration_2, MeleeControl.preAttackDelay_2, 2);
-        Attack3 = new PlayerState_MeleeAttack(this_SM, "Attack3", MeleeControl.attackDuration_3, MeleeControl.preAttackDelay_3, 3);
-        AttackRecover = new PlayerState_MeleeRecover(this_SM, "AttackRecover", MeleeControl.recoverTime, 0, 1);
+
+        MeleeAttack = new PlayerState_MeleeAttack(this_SM, "MeleeAtk");
+        //Attack1 = new PlayerState_MeleeAttack(this_SM, "Attack1", MeleeControl.attackDuration_1, MeleeControl.preAttackDelay_1, 1);
+        //Attack2 = new PlayerState_MeleeAttack(this_SM, "Attack2", MeleeControl.attackDuration_2, MeleeControl.preAttackDelay_2, 2);
+        //Attack3 = new PlayerState_MeleeAttack(this_SM, "Attack3", MeleeControl.attackDuration_3, MeleeControl.preAttackDelay_3, 3);
+        AttackRecover = new PlayerState_MeleeRecover(this_SM, "AtkRecover", MeleeControl.recoverTime, 0, 1);
 
         ChangeState(Ready);
     }
 
     public bool IsMelee()
     {
-        if (EquipControl.currentWeapon == EquipmentManager.Weapon.Stave)
-            return true;
-        else if (EquipControl.currentWeapon == EquipmentManager.Weapon.Rifle)
-            return false;
-
-        else // TEMP -- Consider other weapons
-            return false;
+        return WeaponControl.IsMelee();
     }
 
     // Update is called once per frame

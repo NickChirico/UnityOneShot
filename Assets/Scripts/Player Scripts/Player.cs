@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     private bool canBeDamaged = true;
     private Vector2 hitPoint;
 
+    private bool nimble = false;
+
     private void Awake()
     {
         SM = this.GetComponent<PlayerStateManager>();
@@ -33,7 +35,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
     }
 
     public void TakeDamage(int damage)
@@ -52,6 +53,9 @@ public class Player : MonoBehaviour
     public bool CanBeDamaged()
     { return canBeDamaged; }
 
+    public bool IsNimble()
+    { return nimble; }
+
     IEnumerator FlashRed()
     {
         sp.color = Color.red;
@@ -59,5 +63,11 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(invulnDuration + invulnBuffer);
         canBeDamaged = true;
         sp.color = Color.white;
+    }
+
+    public void Nimble(bool b)
+    {
+        nimble = b;
+        Physics2D.IgnoreLayerCollision(3, 6, b);// 3 = player, 6 = hittableEntity
     }
 }

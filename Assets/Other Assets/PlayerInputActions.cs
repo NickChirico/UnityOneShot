@@ -35,6 +35,14 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Aim_Mouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""6fc3d41c-d4bf-4ed5-a1c9-2f724ab4dbfe"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Fire"",
                     ""type"": ""Button"",
                     ""id"": ""19296251-b8da-4ab5-94bd-073ade4acf63"",
@@ -292,6 +300,17 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a624b70b-ef3a-4e4c-868b-4ffc56fd7650"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Aim_Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -330,6 +349,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_Aim_Mouse = m_Player.FindAction("Aim_Mouse", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Fire2 = m_Player.FindAction("Fire2", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
@@ -387,6 +407,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_Aim_Mouse;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Fire2;
     private readonly InputAction m_Player_Reload;
@@ -399,6 +420,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        public InputAction @Aim_Mouse => m_Wrapper.m_Player_Aim_Mouse;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Fire2 => m_Wrapper.m_Player_Fire2;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
@@ -420,6 +442,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim_Mouse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim_Mouse;
+                @Aim_Mouse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim_Mouse;
+                @Aim_Mouse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim_Mouse;
                 @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
@@ -448,6 +473,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
+                @Aim_Mouse.started += instance.OnAim_Mouse;
+                @Aim_Mouse.performed += instance.OnAim_Mouse;
+                @Aim_Mouse.canceled += instance.OnAim_Mouse;
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
@@ -492,6 +520,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnAim_Mouse(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnFire2(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);

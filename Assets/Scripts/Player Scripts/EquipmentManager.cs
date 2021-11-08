@@ -65,7 +65,7 @@ public class EquipmentManager : MonoBehaviour
 
         UpdateEquipment();
 
-        UIControl.UpdateCurrentWeaponLabel(currentWeapon.ToString());
+        //UIControl.UpdateCurrentWeaponLabel(currentWeapon.ToString());
     }
 
     private void Update()
@@ -131,7 +131,7 @@ public class EquipmentManager : MonoBehaviour
             MeleeControl.tempAttackDisplay.GetComponent<SpriteRenderer>().enabled = true;
         }
         currentWeapon = w;
-        UIControl.UpdateCurrentWeaponLabel(currentWeapon.ToString());
+        //UIControl.UpdateCurrentWeaponLabel(currentWeapon.ToString());
     }
     public void SetGun(GunType gun)
     {

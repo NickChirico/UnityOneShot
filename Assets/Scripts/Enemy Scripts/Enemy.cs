@@ -147,7 +147,6 @@ public abstract class Enemy : MonoBehaviour
          * even if they dont have LineOfSight
          */
     }
-
     public void GotHit()
     {
         SM.ChangeState(SM.Knocked);
@@ -155,7 +154,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void Knockback()
     {
-        Vector2 knockBack = (-direction * knockbackForce);
+        Vector2 knockBack = ((-1 * direction) * knockbackForce);
         rb.velocity = Vector2.zero;
         rb.AddForce(knockBack);
     }
@@ -231,6 +230,7 @@ public abstract class Enemy : MonoBehaviour
                     player.TakeDamage(damageAttack + Random.Range(0, 4));
                 else
                     player.TakeDamage(damageCollision);
+
             }
         }
     }

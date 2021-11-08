@@ -22,6 +22,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Aim_Mouse",
+                    "type": "Value",
+                    "id": "6fc3d41c-d4bf-4ed5-a1c9-2f724ab4dbfe",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Fire",
                     "type": "Button",
                     "id": "19296251-b8da-4ab5-94bd-073ade4acf63",
@@ -277,6 +285,17 @@
                     "processors": "",
                     "groups": "XBOX_Controller",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a624b70b-ef3a-4e4c-868b-4ffc56fd7650",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Aim_Mouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
