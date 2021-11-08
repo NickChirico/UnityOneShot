@@ -26,8 +26,8 @@ public class AudioManager : MonoBehaviour
     public AudioSource MeleeSource;
     [Space(10)]
     public AudioClip[] shotSounds;
-    public AudioClip[] reloadSounds;
-    public AudioClip fullReloadSound;
+    public AudioClip[] rechamberSounds;
+    public AudioClip reloadSound;
     public AudioClip chargeSound;
     public AudioClip[] boostSounds;
     public AudioClip dashSound;
@@ -82,15 +82,15 @@ public class AudioManager : MonoBehaviour
         isCharging = false;
     }
 
-    public void PlayReloadSound()
+    public void PlayRechamberSound()
     {
-        ReloadSource.clip = reloadSounds[Random.Range(0, reloadSounds.Length)];
+        ReloadSource.clip = rechamberSounds[Random.Range(0, rechamberSounds.Length)];
         ReloadSource.Play();
     }
 
     public void PlayFullReloadSound()
     {
-        ReloadSource.clip = fullReloadSound;
+        ReloadSource.clip = reloadSound;
         ReloadSource.Play();
     }
 
@@ -167,5 +167,17 @@ public class AudioManager : MonoBehaviour
         }
 
         MeleeSource.Play();
+    }
+
+    // SET AUDIOCLIP[]'s
+
+    public void SetShotSounds(AudioClip[] sounds)
+    {
+        shotSounds = sounds;
+    }
+
+    public void SetReloadSound(AudioClip sound)
+    {
+        reloadSound = sound;
     }
 }

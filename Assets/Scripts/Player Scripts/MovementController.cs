@@ -12,7 +12,7 @@ public class MovementController : MonoBehaviour
 
     public EquipmentManager.SpecialType currentSpecial;
 
-    public enum Movement { Normal, Boost, AltHold, Roll, Hold }
+    public enum Movement { Normal, Boost, AltHold, Roll, Hold, Slow }
     public Movement currentMoveType;
 
     [Header("Debug Tools")]
@@ -163,6 +163,10 @@ public class MovementController : MonoBehaviour
                 t = Time.deltaTime * delayStopTime;
                 neutralSpeed = 0;
                 break;
+            case "Slow":
+                t = Time.deltaTime * delayStopTime;
+                neutralSpeed = baseMoveSpeed * 0.33f;
+                break;
             default:
                 // Normal 
                 neutralSpeed = baseMoveSpeed;
@@ -189,9 +193,9 @@ public class MovementController : MonoBehaviour
     }
 
     // ~~ Recoil ~~
-    public void Recoil(bool isDashFWD, Vector2 dir, float force, float duration)
+    public void Recoil(bool isDashMOVEdir, Vector2 dir, float force, float duration)
     {
-        if (isDashFWD)
+        if (isDashMOVEdir)
             rb.AddForce(direction * force);
         else
             rb.AddForce(dir * force);
@@ -249,11 +253,13 @@ public class MovementController : MonoBehaviour
     // ~~ DASH ~~
     public void Dash()
     {
+
         rb.velocity = Vector2.zero;
         rb.AddForce(direction * dashForce);
         audioManager.PlayDashSound();
         dashTimer = 0;
         StartCoroutine(DashCooldown());
+
     }
     IEnumerator DashCooldown()
     {

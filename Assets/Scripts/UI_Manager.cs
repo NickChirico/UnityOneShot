@@ -45,6 +45,9 @@ public class UI_Manager : MonoBehaviour
     [Space(10)]
     public TextMeshProUGUI controlDisplay;
 
+    [Header("Weapons Panel")]
+    public TextMeshProUGUI currentWeaponTMP;
+
     [Header("Pause Window")]
     public GameObject PausePanel;
     public Button ResumeButton;
@@ -58,9 +61,11 @@ public class UI_Manager : MonoBehaviour
     public GameObject weaponPanel;
     public TextMeshProUGUI currentWeaponLabel;
     public TextMeshProUGUI ammoLabel;
+    public GameObject ammoSubPanel;
     public Image healthbar;
 
     [Header("UI Elements")]
+    public Button firstSelected;
     public Color EButton_NormalColor;
     public Color EButton_SelectedColor;
     public Color ammoLabelColor_Normal;
@@ -97,9 +102,13 @@ public class UI_Manager : MonoBehaviour
         bulletButtons = new Button[] { SelectBullet_Basic, SelectBullet_Pierce, SelectBullet_Impact };
         altButtons = new Button[] { SelectAlt_Shotgun, SelectAlt_Burst, SelectAlt_Flamethrower };
 
-        EquipmentPanel.SetActive(false);
-        TogglePlayerControl(true);
+        EquipmentPanel.SetActive(true);
+        TogglePlayerControl(false);
+        ToggleControlDisplay(shot.usingMouse);
+        SwitchCurrentMenu(1); // 1:Weap , 2:Serap , 3:Options
         SetInitialEquipment();
+
+        EventSystem.current.SetSelectedGameObject(firstSelected.gameObject);
     }
 
     bool pressedM = false;
@@ -108,7 +117,7 @@ public class UI_Manager : MonoBehaviour
     {
         //manaBar.fillAmount = Mathf.Lerp(manaBar.fillAmount, alt.currentMana / alt.maxMana, Time.deltaTime * 8);
 
-        // ~~~ Menu
+        // ~~~ Menu (*select)
         float menuPressed = playerInputActions.Player.Menu.ReadValue<float>();
 
         if (menuPressed > 0 && !PausePanel.activeSelf && !SettingsPanel.activeSelf) // open EQUIP if PAUSE && SETTINGS are NOT open
@@ -124,7 +133,7 @@ public class UI_Manager : MonoBehaviour
             if (!pressedM)
                 pressedM = !pressedM;
         }
-        // ~~~ Pause
+        // ~~~ Pause (*start)
         float pausePressed = playerInputActions.Player.Pause.ReadValue<float>();
         if (pausePressed > 0)
         {
@@ -151,14 +160,9 @@ public class UI_Manager : MonoBehaviour
             HighlightActiveEquipment();
         }
 
-    }
-
-    private void Escape()
-    {
-        if (EquipmentPanel.activeSelf)
-        {
-            ToggleEquipmentPanel();
-        }
+        // UPDATE:: Tool Tips
+        if(weaponPanel.activeSelf)
+            ManageTooltips();
     }
 
     private void SetInitialEquipment()
@@ -169,7 +173,7 @@ public class UI_Manager : MonoBehaviour
         SetAltFire(Equipment.currentAltFire.ToString());
     }
 
-    private void ToggleEquipmentPanel()
+    public void ToggleEquipmentPanel()
     {
         if (EquipmentPanel.activeSelf)
         {
@@ -180,7 +184,7 @@ public class UI_Manager : MonoBehaviour
         {
             EquipmentPanel.SetActive(true);
             EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(SelectWeap_Melee.gameObject);
+            EventSystem.current.SetSelectedGameObject(firstSelected.gameObject);
             TogglePlayerControl(false);
             ButtonEffect_equipment();
         }
@@ -283,7 +287,6 @@ public class UI_Manager : MonoBehaviour
         Equipment.UpdateEquipment();
     }
 
-
     public void SetWeapon(string name)
     {
         switch (name)
@@ -374,7 +377,7 @@ public class UI_Manager : MonoBehaviour
         ButtonEffect_equipment();
     }
 
-    public void ToggleControl()
+    public void ToggleControlType()
     {
         melee.usingMouse = !melee.usingMouse;
         shot.usingMouse = !shot.usingMouse;
@@ -384,9 +387,9 @@ public class UI_Manager : MonoBehaviour
     private void ToggleControlDisplay(bool on)
     {
         if (on)
-            controlDisplay.text = "Selected: Mouse";
+            controlDisplay.text = "Selected: MOUSE";
         else
-            controlDisplay.text = "Selected: Controller";
+            controlDisplay.text = "Selected: CONTROLLER";
     }
     public void RestartScene()
     {
@@ -394,17 +397,43 @@ public class UI_Manager : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
     }
 
+    [Header("Sub-Panels")]
+    public GameObject OptionsPanel;
+    public GameObject WeaponsPanel;
+    public GameObject SeraphimPanel;
+    public void SwitchCurrentMenu(int num)
+    {
+        switch(num)
+        {
+            case 1: // go to Weapons panel
+                WeaponsPanel.SetActive(true);
+                SeraphimPanel.SetActive(false);
+                OptionsPanel.SetActive(false);
+                break;
+            case 2: // go to Seraphim panel
+                WeaponsPanel.SetActive(false);
+                SeraphimPanel.SetActive(true);
+                OptionsPanel.SetActive(false);
+                break;
+            case 3: // go to Options panel
+                WeaponsPanel.SetActive(false);
+                SeraphimPanel.SetActive(false);
+                OptionsPanel.SetActive(true);
+                break;
+        }
+    }
+
+    public void UpdateCurrentWeaponPanelTMP(string weap)
+    {
+        currentWeaponTMP.text = weap;
+    }
+
     // ~~~~~~ In-Game HUD UI ~~~~~~~~~
 
-    public void UpdateCurrentWeaponLabel(string name)
+    public void UpdateCurrentWeaponLabel(string name, bool melee)
     {
         currentWeaponLabel.text = name;
-        if (name == "Rifle")
-        {
-            ammoLabel.enabled = true;
-        }
-        else
-            ammoLabel.enabled = false;
+        ammoSubPanel.SetActive(!melee);
     }
     public void UpdateAmmo(int cur, int max)
     {
@@ -420,6 +449,61 @@ public class UI_Manager : MonoBehaviour
         healthbar.fillAmount = ((float)curr / (float)max);
     }
 
-    public void test()
-    { }
+    // ~~~~~~ Menu Tooltips ~~~~~~~~~
+    [Header("Menu: Tool Tips")]
+    public Button[] weaponButtons;
+    public RectTransform background;
+    public TextMeshProUGUI weaponTypeTMP;
+    public TextMeshProUGUI descriptionTMP;
+    public TextMeshProUGUI specialTMP;
+    public float tooltip_Width;
+    public float textPadding;
+    public Vector2 offset;
+    bool showingTooltip = false;
+
+    GameObject currentSelected;
+    public void ManageTooltips()
+    {
+        currentSelected = EventSystem.current.currentSelectedGameObject;
+        foreach (Button b in weaponButtons)
+        {
+            if (b.gameObject == currentSelected)
+            {
+                UI_Tooltip i = b.GetComponent<UI_Tooltip>();
+
+                background.gameObject.SetActive(true);
+                int onRight = i.onRight;
+                float newX = b.transform.position.x + (offset.x * onRight);
+                float newY = b.transform.position.y - offset.y;
+                Vector2 pos = new Vector2(newX, newY);
+                background.position = pos;
+                background.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, tooltip_Width);
+                //textBox.text = i.description;
+
+                weaponTypeTMP.text = i.weaponType;
+                descriptionTMP.text = i.description;
+                specialTMP.text = "Special:\n" + i.specialName;
+                showingTooltip = true;
+            }
+        }
+
+
+        if(showingTooltip)
+        {
+            bool doShow = false;
+            foreach (Button b in weaponButtons)
+            {
+                if (b.gameObject == currentSelected)
+                {
+                    doShow = true;
+                }
+            }
+            if (!doShow)
+            {
+                background.gameObject.SetActive(false);
+                showingTooltip = false;
+            }
+        }
+    }
+
 }

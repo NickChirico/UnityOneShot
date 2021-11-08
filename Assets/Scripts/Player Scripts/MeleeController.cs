@@ -54,7 +54,17 @@ public class MeleeController : MonoBehaviour
     private Vector3 direction, rayOrigin, attackPoint;
     private bool canAim = true;
     private bool canAttack = true;
+
+    [Header("NEW VARS")]
     public int intervalCount = 0;
+    public int currentInterval;
+    public int[] damageArr;
+    public float[] attackDurArr;
+    public float[] swingRangeArr;
+    public float[] attackRadiusArr;
+    public float[] thrustForceArr;
+    public float[] thrustDurArr;
+    public float[] preDelayArr;
 
     private void Awake()
     {
@@ -71,8 +81,27 @@ public class MeleeController : MonoBehaviour
         //attackDuration2 = thrustDuration_2 + preAttackDelay_2;
         //attackDuration3 = thrustDuration_3 + preAttackDelay_3;
     }
+    public void SetWeaponStats(MeleeWeapon weap)
+    {
+        intervalCount = weap.intervalCount;
+        currentInterval = 0;
+        damageArr = weap.damageArr;
+        attackDurArr = weap.attackDurArr;
+        swingRangeArr = weap.swingRangeArr;
+        attackRadiusArr = weap.attackRadiusArr;
+        thrustForceArr = weap.thrustForceArr;
+        thrustDurArr = weap.thrustDurArr;
+        preDelayArr = weap.preDelayArr;
+        recoverTime = weap.recoverTime;
+        meleeCooldown = weap.comboCooldown;
+    }
 
-    void Update()
+    public void SetIndicator(bool b)
+    {
+        tempAttackDisplay.GetComponent<SpriteRenderer>().enabled = b;
+    }
+
+    private void Update()
     {
         if (canAim)
             UpdateDirection();
@@ -90,6 +119,18 @@ public class MeleeController : MonoBehaviour
     }
     public bool CanAttack()
     { return canAttack; }
+
+    public int GetCurrentInterval()
+    { return currentInterval; }
+
+    public Vector3 GetDirection()
+    {
+        return direction;
+    }
+    public Vector3 GetRayOrigin()
+    {
+        return rayOrigin;
+    }
 
     private void UpdateDirection()
     {
@@ -122,22 +163,7 @@ public class MeleeController : MonoBehaviour
             this.transform.position.y + 0.25f,
             this.transform.position.z);
 
-        float swingRange;
-        switch (intervalCount)
-        {
-            case 0:
-                swingRange = swingRange_1;
-                break;
-            case 1:
-                swingRange = swingRange_2;
-                break;
-            case 2:
-                swingRange = swingRange_3;
-                break;
-            default:
-                swingRange = swingRange_1;
-                break;
-        }
+        float swingRange = swingRangeArr[currentInterval];
 
         attackPoint = rayOrigin + (direction * swingRange);
 
@@ -146,7 +172,18 @@ public class MeleeController : MonoBehaviour
 
     public void AttackThrust(int interval)
     {
-        switch(interval)
+        float dur = thrustDurArr[interval];
+        float force = thrustForceArr[interval];
+
+        if (dur != 0 && force != 0)
+        {
+            moveController.Thrust(direction, force, dur);
+        }
+
+        // Play sound based on attack interval
+        audioManager.PlayMeleeSound(interval);
+
+        /*switch (interval)
         {
             case 1:
                 moveController.Thrust(direction, thrustForce_1, thrustDuration_1);
@@ -162,7 +199,7 @@ public class MeleeController : MonoBehaviour
         }
 
         // Play sound based on attack interval
-        audioManager.PlayMeleeSound(interval);
+        audioManager.PlayMeleeSound(interval);*/
 
     }
 
@@ -170,50 +207,20 @@ public class MeleeController : MonoBehaviour
     {
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.yellow;
 
-        switch (interval)
-        {
-            case 1:
-                tempAttackDisplay.transform.localScale = Vector3.one * attackRadius_1 * 1.25f; //diameter
-                break;
-            case 2:
-                tempAttackDisplay.transform.localScale = Vector3.one * attackRadius_2 * 1.25f; //diameter
-                break;
-            case 3:
-                tempAttackDisplay.transform.localScale = Vector3.one * attackRadius_3 * 1.25f; //diameter
-                break;
-            default:
-                break;
-        }
+        float rad = attackRadiusArr[interval];
+        tempAttackDisplay.transform.localScale = Vector3.one * rad * 1.25f;
     }
     public void Attack(int interval)
     {
         // TEMP DISPLAY STUFF
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.red;
-        Collider2D[] hitEnemies = null;
+        Collider2D[] hitEnemies;
 
-        int damageToPass;
+        float rad = attackRadiusArr[interval];
+        int damageToPass = damageArr[interval];
 
-        switch (interval)
-        {
-            case 1:
-                tempAttackDisplay.transform.localScale = Vector3.one * attackRadius_1 * 2; //diameter TEMP display
-                hitEnemies = Physics2D.OverlapCircleAll(attackPoint, attackRadius_1, hittableEntity);
-                damageToPass = attack_1_Damage;
-                break;
-            case 2:
-                tempAttackDisplay.transform.localScale = Vector3.one * attackRadius_2 * 2; //diameter TEMP display
-                hitEnemies = Physics2D.OverlapCircleAll(attackPoint, attackRadius_2, hittableEntity);
-                damageToPass = attack_2_Damage;
-                break;
-            case 3:
-                tempAttackDisplay.transform.localScale = Vector3.one * attackRadius_3 * 2; //diameter TEMP display
-                hitEnemies = Physics2D.OverlapCircleAll(attackPoint, attackRadius_3, hittableEntity);
-                damageToPass = attack_3_Damage;
-                break;
-            default:
-                damageToPass = attack_1_Damage;
-                break;
-        }
+        tempAttackDisplay.transform.localScale = Vector3.one * (rad * 2); //diameter - TEMP display
+        hitEnemies = Physics2D.OverlapCircleAll(attackPoint, rad, hittableEntity);
 
         if (hitEnemies != null)
         {
@@ -237,12 +244,15 @@ public class MeleeController : MonoBehaviour
     {
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.green;
         tempAttackDisplay.transform.localScale = Vector3.one * 0.25f;
-        intervalCount++;
+        if (currentInterval < intervalCount - 1)
+            currentInterval++;
+        else
+            ResetAttackSequence();
     }
 
     public void ResetAttackSequence()
     {
-        intervalCount = 0;
+        currentInterval = 0;
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.black;
         tempAttackDisplay.transform.localScale = Vector3.one * 0.25f;
 
