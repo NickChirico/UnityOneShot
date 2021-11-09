@@ -12,7 +12,7 @@ public class TempEnemy : MonoBehaviour
     void Start()
     {
         thisEntity = this.GetComponent<ShootableEntity>();
-        health = thisEntity.currentHealth;
+        //health = thisEntity.currentHealth;
     }
 
     void Update()

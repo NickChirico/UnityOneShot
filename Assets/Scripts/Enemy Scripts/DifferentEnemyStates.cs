@@ -198,7 +198,7 @@ public class EnemyState_Patrol : EnemyState
         thisEnemy.sp.color = Color.cyan;
 
         dest = thisEnemy.GetPatrolPoint();
-        Debug.Log(dest);
+        //Debug.Log(dest);
     }
 
     public override void Exit()
@@ -298,6 +298,41 @@ public class EnemyState_Dodge : EnemyState
 
     public EnemyState_Dodge(EnemyStateManager myManager, Enemy thisEnemy, string myName, float myDur, float mySpeed) :
         base(myManager, thisEnemy, myName, myDur, mySpeed)
+    {
+
+    }
+
+}
+
+// KNOCKED BACK
+public class EnemyState_Knocked : EnemyState
+{
+    public override void DoState()
+    {
+        if (timer < Duration)
+        {
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            SM.ChangeState(SM.Alert);
+        }
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        thisEnemy.sp.color = Color.black;
+        thisEnemy.Knockback();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
+    public EnemyState_Knocked(EnemyStateManager myManager, Enemy thisEnemy, string myName, float myDur) :
+        base(myManager, thisEnemy, myName, myDur)
     {
 
     }
