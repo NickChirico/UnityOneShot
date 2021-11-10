@@ -19,4 +19,31 @@ public class DoorManager : MonoBehaviour
     {
         
     }
+
+    public void LoadNewDoor(int targetX, int targetY)
+    {
+        //unlocked.SetActive(false);
+        if (myMapLoader.operatingMap[targetX, targetY] == 'X')
+        {
+            unlocked.SetActive(false);
+            myLoader.enabled = false;
+            deadEnd.SetActive(true);
+        }
+        else if (myMapLoader.operatingMap[targetX, targetY] == 'D')
+        {
+            unlocked.SetActive(true);
+            myLoader.enabled = true;
+            myLoader.traveled = false;
+            deadEnd.SetActive(false);
+        }
+    }
+
+    public void Unlock()
+    {
+        if (locked.activeInHierarchy)
+        {
+            locked.SetActive(false);
+            unlocked.SetActive(true);
+        }
+    }
 }

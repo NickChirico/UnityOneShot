@@ -45,7 +45,7 @@ public class MapGenerator : MonoBehaviour
 
     public char[,] roomArray = new char[15,15];
     public int numDoneRooms;
-
+    public MapLoader myLoader;
     public Text screenText;
     // Start is called before the first frame update
     void Start()
@@ -92,6 +92,7 @@ public class MapGenerator : MonoBehaviour
                 stillGenerating = false;
             }
         }
+        myLoader.operatingMap = roomArray;
         //ShowMapOnScreen();
         //ShowMap();
     }
@@ -139,7 +140,7 @@ public class MapGenerator : MonoBehaviour
 
     public void ExpandRoom(int targetX, int targetY)
     {
-        ShowMapOnScreen();
+        //ShowMapOnScreen();
         List<string> possibleConnections = new List<string>();
         //print("Here we go");
         int minConnections;

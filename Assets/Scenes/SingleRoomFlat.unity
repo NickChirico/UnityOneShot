@@ -2897,7 +2897,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &205356102
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6525,6 +6525,7 @@ GameObject:
   - component: {fileID: 549368440}
   - component: {fileID: 549368439}
   - component: {fileID: 549368438}
+  - component: {fileID: 549368441}
   m_Layer: 0
   m_Name: South Unlocked
   m_TagString: Untagged
@@ -6712,6 +6713,21 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &549368441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549368436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80631d1df8458e49b062a141b793694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: south
+  myMapLoader: {fileID: 1021954353}
+  traveled: 0
 --- !u!1 &551316297
 GameObject:
   m_ObjectHideFlags: 0
@@ -7273,6 +7289,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 602343042}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &609270796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 609270797}
+  m_Layer: 0
+  m_Name: West Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &609270797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609270796}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2053671262}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619459575
 GameObject:
   m_ObjectHideFlags: 0
@@ -13937,6 +13983,7 @@ GameObject:
   - component: {fileID: 828007212}
   - component: {fileID: 828007211}
   - component: {fileID: 828007210}
+  - component: {fileID: 828007213}
   m_Layer: 0
   m_Name: West Unlocked
   m_TagString: Untagged
@@ -14124,6 +14171,21 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &828007213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828007208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80631d1df8458e49b062a141b793694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: west
+  myMapLoader: {fileID: 1021954353}
+  traveled: 0
 --- !u!1001 &832916799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15542,6 +15604,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 898122330}
+  - component: {fileID: 898122331}
   m_Layer: 0
   m_Name: North Door
   m_TagString: Untagged
@@ -15566,6 +15629,24 @@ Transform:
   m_Father: {fileID: 1021954350}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &898122331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898122329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58ce866027d2454aa05472afe3c8ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myMap: {fileID: 1889801340}
+  deadEnd: {fileID: 193373050}
+  locked: {fileID: 1881743342}
+  unlocked: {fileID: 1893121767}
+  myMapLoader: {fileID: 1021954353}
+  myLoader: {fileID: 1893121772}
 --- !u!1 &899509197
 GameObject:
   m_ObjectHideFlags: 0
@@ -17176,6 +17257,7 @@ GameObject:
   - component: {fileID: 1021954350}
   - component: {fileID: 1021954352}
   - component: {fileID: 1021954351}
+  - component: {fileID: 1021954353}
   m_Layer: 0
   m_Name: Room
   m_TagString: Untagged
@@ -17199,6 +17281,7 @@ Transform:
   - {fileID: 1685512968}
   - {fileID: 1234954219}
   - {fileID: 1333237843}
+  - {fileID: 2053671262}
   m_Father: {fileID: 1111990051}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19112,6 +19195,30 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1021954353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021954349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a99116ed55c338c40bd788c882036afd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myMap: {fileID: 1889801340}
+  currentXLoc: 0
+  currentYLoc: 0
+  northDoor: {fileID: 898122331}
+  eastDoor: {fileID: 1333237844}
+  southDoor: {fileID: 1685512969}
+  westDoor: {fileID: 1234954220}
+  northSpawn: {fileID: 1345047532}
+  eastSpawn: {fileID: 1070506576}
+  southSpawn: {fileID: 1421737597}
+  westSpawn: {fileID: 609270797}
+  myPlayer: {fileID: 1066259633}
 --- !u!1 &1028567696
 GameObject:
   m_ObjectHideFlags: 0
@@ -19521,8 +19628,8 @@ MonoBehaviour:
   currentSpecial: 0
   currentMoveType: 0
   RightClickToMoveDEACT: 0
-  baseMoveSpeed: 1.5
-  maxMoveSpeed: 4
+  baseMoveSpeed: 4
+  maxMoveSpeed: 8
   slowMoveSpeed_alt: 0.5
   currentMoveSpeed: 1
   boostAmount: 1.5
@@ -19626,6 +19733,36 @@ Transform:
   - {fileID: 667569765}
   - {fileID: 483259680}
   m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1070506575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1070506576}
+  m_Layer: 0
+  m_Name: East Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1070506576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070506575}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2053671262}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1074948971
@@ -21937,6 +22074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1234954219}
+  - component: {fileID: 1234954220}
   m_Layer: 0
   m_Name: West Door
   m_TagString: Untagged
@@ -21961,6 +22099,24 @@ Transform:
   m_Father: {fileID: 1021954350}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1234954220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234954218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58ce866027d2454aa05472afe3c8ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myMap: {fileID: 1889801340}
+  deadEnd: {fileID: 252731701}
+  locked: {fileID: 318271481}
+  unlocked: {fileID: 828007208}
+  myMapLoader: {fileID: 1021954353}
+  myLoader: {fileID: 828007213}
 --- !u!1 &1241093217
 GameObject:
   m_ObjectHideFlags: 0
@@ -22871,6 +23027,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1333237843}
+  - component: {fileID: 1333237844}
   m_Layer: 0
   m_Name: East Door
   m_TagString: Untagged
@@ -22895,6 +23052,24 @@ Transform:
   m_Father: {fileID: 1021954350}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1333237844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333237842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58ce866027d2454aa05472afe3c8ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myMap: {fileID: 1889801340}
+  deadEnd: {fileID: 1502311251}
+  locked: {fileID: 620737328}
+  unlocked: {fileID: 1708000976}
+  myMapLoader: {fileID: 1021954353}
+  myLoader: {fileID: 1708000981}
 --- !u!1 &1334331863
 GameObject:
   m_ObjectHideFlags: 0
@@ -23030,6 +23205,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1334331863}
   m_CullTransparentMesh: 0
+--- !u!1 &1345047531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1345047532}
+  m_Layer: 0
+  m_Name: North Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1345047532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345047531}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2053671262}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1348065967
 GameObject:
   m_ObjectHideFlags: 0
@@ -23647,6 +23852,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5956503121566175135}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1421737596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1421737597}
+  m_Layer: 0
+  m_Name: South Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1421737597
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421737596}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2053671262}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1431436777
 GameObject:
   m_ObjectHideFlags: 0
@@ -41537,6 +41772,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1685512968}
+  - component: {fileID: 1685512969}
   m_Layer: 0
   m_Name: South Door
   m_TagString: Untagged
@@ -41561,6 +41797,24 @@ Transform:
   m_Father: {fileID: 1021954350}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1685512969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685512967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58ce866027d2454aa05472afe3c8ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myMap: {fileID: 1889801340}
+  deadEnd: {fileID: 1645102691}
+  locked: {fileID: 1074948971}
+  unlocked: {fileID: 549368436}
+  myMapLoader: {fileID: 1021954353}
+  myLoader: {fileID: 549368441}
 --- !u!1 &1685712000
 GameObject:
   m_ObjectHideFlags: 0
@@ -41887,6 +42141,7 @@ GameObject:
   - component: {fileID: 1708000980}
   - component: {fileID: 1708000979}
   - component: {fileID: 1708000978}
+  - component: {fileID: 1708000981}
   m_Layer: 0
   m_Name: East Unlocked
   m_TagString: Untagged
@@ -42074,6 +42329,21 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1708000981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708000976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80631d1df8458e49b062a141b793694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: east
+  myMapLoader: {fileID: 1021954353}
+  traveled: 0
 --- !u!1001 &1709788936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44298,6 +44568,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numDoneRooms: 0
+  myLoader: {fileID: 1021954353}
+  screenText: {fileID: 0}
 --- !u!1 &1893121767
 GameObject:
   m_ObjectHideFlags: 0
@@ -44310,6 +44582,7 @@ GameObject:
   - component: {fileID: 1893121771}
   - component: {fileID: 1893121770}
   - component: {fileID: 1893121769}
+  - component: {fileID: 1893121772}
   m_Layer: 0
   m_Name: North Unlocked
   m_TagString: Untagged
@@ -44497,6 +44770,21 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1893121772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893121767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80631d1df8458e49b062a141b793694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: north
+  myMapLoader: {fileID: 1021954353}
+  traveled: 0
 --- !u!1 &1905804103
 GameObject:
   m_ObjectHideFlags: 0
@@ -45889,6 +46177,40 @@ MonoBehaviour:
           m_StringArgument: Saber
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &2053671261
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2053671262}
+  m_Layer: 0
+  m_Name: Player Spawns
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2053671262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053671261}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1345047532}
+  - {fileID: 1070506576}
+  - {fileID: 1421737597}
+  - {fileID: 609270797}
+  m_Father: {fileID: 1021954350}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2065302040
 GameObject:
   m_ObjectHideFlags: 0

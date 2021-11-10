@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class MapLoader : MonoBehaviour
 {
+    public char[,] operatingMap;
     public MapGenerator myMap;
     public bool[,] CompletedRooms = new bool[15,15];
     public int currentXLoc, currentYLoc;
-    public DoorManager[] allDoors;
+    public DoorManager northDoor, eastDoor, southDoor, westDoor;
     public Transform northSpawn, eastSpawn, southSpawn, westSpawn;
     public Player myPlayer;
-    private bool _temp;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +29,15 @@ public class MapLoader : MonoBehaviour
                 }
             }
         }
+        currentXLoc = 7;
+        currentYLoc = 7;
+        myMap.GenerateMap();
+        myMap.roomArray[currentXLoc, currentYLoc] = 'H';
+        myMap.ShowMap();
+        northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
+        eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
+        southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
+        westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
     }
 
     // Update is called once per frame
@@ -36,11 +45,10 @@ public class MapLoader : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            currentXLoc = 7;
-            currentYLoc = 7;
-            myMap.GenerateMap();
-            myMap.roomArray[currentXLoc, currentYLoc] = 'H';
-            myMap.ShowMapOnScreen();
+            northDoor.Unlock();
+            eastDoor.Unlock();
+            southDoor.Unlock();
+            westDoor.Unlock();
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -62,7 +70,7 @@ public class MapLoader : MonoBehaviour
 
     public void LoadRoom(string targetDirection)
     {
-        //Transform targetSpawn = myPlayer.transform;
+        Transform targetSpawn = myPlayer.transform;
         int targetX = currentXLoc;
         int targetY = currentYLoc;
         switch (targetDirection)
@@ -70,33 +78,36 @@ public class MapLoader : MonoBehaviour
             case "north":
                 targetX = currentXLoc - 1;
                 targetY = currentYLoc;
-                //targetSpawn = southSpawn;
+                targetSpawn = southSpawn;
                 break;
             case "east":
                 targetX = currentXLoc;
                 targetY = currentYLoc + 1;
-                //targetSpawn = westSpawn;
+                targetSpawn = westSpawn;
                 break;
             case "south":
                 targetX = currentXLoc + 1;
                 targetY = currentYLoc;
-                //targetSpawn = northSpawn;
+                targetSpawn = northSpawn;
                 break;
             case "west":
                 targetX = currentXLoc;
                 targetY = currentYLoc - 1;
-                //targetSpawn = eastSpawn;
+                targetSpawn = eastSpawn;
                 break;
         }
-
-        if (myMap.roomArray[targetX, targetY] == 'D')
+        if (operatingMap[targetX, targetY] == 'D')
         {
-            myMap.roomArray[targetX, targetY] = 'H';
-            myMap.roomArray[currentXLoc, currentYLoc] = 'D';
+            operatingMap[targetX, targetY] = 'H';
+            operatingMap[currentXLoc, currentYLoc] = 'D';
             currentXLoc = targetX;
             currentYLoc = targetY;
-            //myPlayer.gameObject.transform.position = targetSpawn.position;
-            myMap.ShowMapOnScreen();
+            northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
+            eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
+            southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
+            westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
+            myPlayer.gameObject.transform.position = targetSpawn.position;
+            //myMap.ShowMapOnScreen();
         }
         else
         {
