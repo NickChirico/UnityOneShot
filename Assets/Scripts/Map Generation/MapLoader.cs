@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MapLoader : MonoBehaviour
 {
+    public EnemySpawner mySpawner;
     public char[,] operatingMap;
     public MapGenerator myMap;
     public bool[,] CompletedRooms = new bool[15,15];
@@ -19,14 +20,7 @@ public class MapLoader : MonoBehaviour
         {
             for (int j = 0; j < 15; j++)
             {
-                if (i == 7 && j == 7)
-                {
-                    CompletedRooms[i, j] = true;
-                }
-                else
-                {
-                    CompletedRooms[i, j] = false;
-                }
+                CompletedRooms[i, j] = false;
             }
         }
         currentXLoc = 7;
@@ -38,6 +32,7 @@ public class MapLoader : MonoBehaviour
         eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
         southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
         westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
+        mySpawner.SpawnEnemies(currentXLoc, currentYLoc);
     }
 
     // Update is called once per frame
@@ -70,6 +65,7 @@ public class MapLoader : MonoBehaviour
 
     public void LoadRoom(string targetDirection)
     {
+        
         Transform targetSpawn = myPlayer.transform;
         int targetX = currentXLoc;
         int targetY = currentYLoc;
@@ -107,7 +103,9 @@ public class MapLoader : MonoBehaviour
             southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
             westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
             myPlayer.gameObject.transform.position = targetSpawn.position;
+            mySpawner.SpawnEnemies(currentXLoc, currentYLoc);
             //myMap.ShowMapOnScreen();
+            print(CompletedRooms[currentXLoc, currentYLoc]);
         }
         else
         {
