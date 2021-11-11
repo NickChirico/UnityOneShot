@@ -7,6 +7,8 @@ public class Markshot : Projectile
     public GameObject impactEffect;
     public int impactDamage;
     public float markDuration;
+
+
     private void OnCollisionEnter2D(Collision2D coll)
     {
         Instantiate(impactEffect, this.transform.position, Quaternion.identity);
