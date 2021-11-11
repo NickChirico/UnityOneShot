@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShootableEntity : MonoBehaviour
 {
+    public EnemySpawner mySpawner;
     public PopUpDamageText damageText;
     public enum DropType { Green, Red, Purple, Blue, White };
     public DropType thisDropType;
@@ -124,7 +125,13 @@ public class ShootableEntity : MonoBehaviour
     private void Die()
     {
         gameObject.SetActive(false);
+        mySpawner.CheckEnemiesAlive();
         //Destroy(this.gameObject);
+    }
+
+    public void ResetHealth()
+    {
+        currentHealth = health;
     }
 
     // NOT BEING USED
