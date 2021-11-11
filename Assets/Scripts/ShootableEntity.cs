@@ -124,9 +124,10 @@ public class ShootableEntity : MonoBehaviour
 
     private void Die()
     {
-        gameObject.SetActive(false);
-        mySpawner.CheckEnemiesAlive();
-        //Destroy(this.gameObject);
+        //gameObject.SetActive(false);
+        if(mySpawner != null)
+            mySpawner.CheckEnemiesAlive();
+        Destroy(this.gameObject);
     }
 
     public void ResetHealth()

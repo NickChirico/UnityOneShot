@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Grunt
-  maxHealth: 40
+  maxHealth: 50
   sp: {fileID: 0}
   rb: {fileID: 0}
   lineRend: {fileID: 5645802314197854380}
