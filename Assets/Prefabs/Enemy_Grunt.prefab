@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Grunt
-  maxHealth: 50
+  maxHealth: 40
   sp: {fileID: 0}
   rb: {fileID: 0}
   lineRend: {fileID: 5645802314197854380}
@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 019ac56116c754c46b4441555f6c0728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySpawner: {fileID: 0}
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
   thisDropType: 1

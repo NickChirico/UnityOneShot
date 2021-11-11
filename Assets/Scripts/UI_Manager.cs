@@ -102,9 +102,11 @@ public class UI_Manager : MonoBehaviour
         bulletButtons = new Button[] { SelectBullet_Basic, SelectBullet_Pierce, SelectBullet_Impact };
         altButtons = new Button[] { SelectAlt_Shotgun, SelectAlt_Burst, SelectAlt_Flamethrower };
 
-        EquipmentPanel.SetActive(true);
+        EquipmentPanel.SetActive(false);
         TogglePlayerControl(false);
-        ToggleControlDisplay(shot.usingMouse);
+        ToggleControlDisplay(shot.usingMouse); 
+
+        ToggleEquipmentPanel(); // Sets to ENABLE on start
         SwitchCurrentMenu(1); // 1:Weap , 2:Serap , 3:Options
         SetInitialEquipment();
 
@@ -177,11 +179,13 @@ public class UI_Manager : MonoBehaviour
     {
         if (EquipmentPanel.activeSelf)
         {
+            Time.timeScale = 1;
             EquipmentPanel.SetActive(false);
             TogglePlayerControl(true);
         }
         else
         {
+            Time.timeScale = 0;
             EquipmentPanel.SetActive(true);
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(firstSelected.gameObject);
@@ -395,6 +399,14 @@ public class UI_Manager : MonoBehaviour
     {
         TogglePausePanel();
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
+    }
+
+    public void LoadScene(int i)
+    {
+        if (i == 0)
+            SceneManager.LoadScene("SampleScene");
+        else if(i == 1)
+            SceneManager.LoadScene("SingleRoomFlat");
     }
 
     [Header("Sub-Panels")]
