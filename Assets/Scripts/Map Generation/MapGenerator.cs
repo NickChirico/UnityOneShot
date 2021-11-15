@@ -44,7 +44,8 @@ public class MapGenerator : MonoBehaviour
     };
 
     public char[,] roomArray = new char[15,15];
-    public int numDoneRooms;
+    public int numDoneRooms, numDeadEnds;
+    public List<int> deadEndXPos, deadEndYPos;
     public MapLoader myLoader;
     public Text screenText;
     // Start is called before the first frame update
@@ -59,57 +60,41 @@ public class MapGenerator : MonoBehaviour
         
     }
 
-    public void ShowMap()
+    public char[,] GenerateMap(string direction)
     {
-        string willPrint = "";
-        for (int i = 0; i < 15; i++)
-        {
-            for (int j = 0; j < 15; j++)
-            {
-                willPrint += roomArray[i, j] + " ";
-            }
-
-            willPrint += "\n";
-        }
-
-        print(willPrint);
-    }
-
-    public void GenerateMap()
-    {
+        //direction determines if we start on the top, bottom, left, or right of the map, and where the final boss is
         bool stillGenerating = true;
         //ShowMap();
         while (stillGenerating)
         {
             ResetMap();
             IterateMap();
-            if (numDoneRooms <= 16)
-            {
-                stillGenerating = true;
-            }
-            else
+            if (numDoneRooms > 16 && numDeadEnds > 3)
             {
                 stillGenerating = false;
             }
+            OrientMap(direction);
         }
-        myLoader.operatingMap = roomArray;
-        //ShowMapOnScreen();
-        //ShowMap();
+        return roomArray;
     }
 
-    public void ShowMapOnScreen()
+    public void OrientMap(string direction)
     {
-        string willShow = "";
-        for (int i = 0; i < 15; i++)
+        switch (direction)
         {
-            for (int j = 0; j < 15; j++)
-            {
-                willShow += roomArray[i, j] + " ";
-            }
-
-            willShow += "\n";
+            case "North":
+                
+                break;
+            case "South":
+                
+                break;
+            case "West":
+                
+                break;
+            case "East":
+                
+                break;
         }
-        screenText.text = willShow;
     }
 
     public void IterateMap()
@@ -188,7 +173,6 @@ public class MapGenerator : MonoBehaviour
                     break;
             }
         }
-
         if (targetY > 0)
         {
             switch (roomArray[targetX, targetY - 1])
@@ -208,7 +192,6 @@ public class MapGenerator : MonoBehaviour
                     break;
             }
         }
-
         if (targetY < 14)
         {
             switch (roomArray[targetX, targetY + 1])
@@ -287,13 +270,17 @@ public class MapGenerator : MonoBehaviour
                     break;
             }
         }
+        if (numConnections == 1)
+        {
+            deadEndXPos.Add(targetX);
+            deadEndYPos.Add(targetY);
+        }
         var numToConnect = numConnections - (numWaiting + numDone);
         if (numToConnect > numEmpty)
         {
             numToConnect = numEmpty;
         }
-        //print("The Number of Connections we want is " + numConnections + ", which means we have to make " +
-              //numToConnect + " new connections");
+        
         if (numToConnect > 0)
         {
             for (int i = 0; i < numToConnect; i++)
@@ -344,8 +331,7 @@ public class MapGenerator : MonoBehaviour
     {
         if (tempChanged)
         {
-            //print("it was changed");
-            numDoneRooms = 20;
+            //numDoneRooms = 20;
             IterateMap();
         }
         else
@@ -361,6 +347,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
             numDoneRooms = CountRooms();
+            numDeadEnds = deadEndXPos.Count;
         }
     }
 
@@ -401,6 +388,7 @@ public class MapGenerator : MonoBehaviour
             {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
         };
         numDoneRooms = 0;
+        numDeadEnds = 0;
     }
     
 }

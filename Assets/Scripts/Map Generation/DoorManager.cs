@@ -2,27 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorManager : MonoBehaviour
+public class DoorManager : Unlockable
 {
     public MapGenerator myMap;
     public GameObject deadEnd, locked, unlocked;
     public MapLoader myMapLoader;
     public DoorLoader myLoader;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void LoadNewDoor(int targetX, int targetY)
     {
         unlocked.SetActive(false);
+        myLoader.portal = false;
         if (myMapLoader.operatingMap[targetX, targetY] == 'X')
         {
             locked.SetActive(false);
@@ -42,12 +32,17 @@ public class DoorManager : MonoBehaviour
         }
     }
 
-    public void Unlock()
+    public override void Unlock()
     {
         if (locked.activeInHierarchy)
         {
             locked.SetActive(false);
             unlocked.SetActive(true);
         }
+    }
+
+    public void LoadPortal(MapLoader.Area targetArea)
+    {
+        myLoader.SetPortal(targetArea);
     }
 }

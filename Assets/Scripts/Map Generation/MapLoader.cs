@@ -6,12 +6,35 @@ public class MapLoader : MonoBehaviour
 {
     public EnemySpawner mySpawner;
     public char[,] operatingMap;
+    public char[,] woodsMap, churchMap, marketMap, academyMap;
     public MapGenerator myMap;
     public bool[,] CompletedRooms = new bool[15,15];
+    public bool[,] CompletedWoods = new bool[15,15];
+    public bool[,] CompletedChurch = new bool[15,15];
+    public bool[,] CompletedMarket = new bool[15,15];
+    public bool[,] CompletedAcademy = new bool[15,15];
     public int currentXLoc, currentYLoc;
+    public enum Area
+    {
+        Start,
+        Woods,
+        Church,
+        Market,
+        Academy
+    }
+    public Area currentArea;
+    public int woodsStartX,
+        woodsStartY,
+        churchStartX,
+        churchStartY,
+        marketStartX,
+        marketStartY,
+        academyStartX,
+        academyStartY;
     public DoorManager northDoor, eastDoor, southDoor, westDoor;
     public Transform northSpawn, eastSpawn, southSpawn, westSpawn;
     public Player myPlayer;
+    public Unlockable[] allUnlockables;
 
     // Start is called before the first frame update
     void Start()
@@ -21,17 +44,21 @@ public class MapLoader : MonoBehaviour
             for (int j = 0; j < 15; j++)
             {
                 CompletedRooms[i, j] = false;
+                CompletedWoods[i, j] = false;
+                CompletedChurch[i, j] = false;
+                CompletedMarket[i, j] = false;
+                CompletedAcademy[i, j] = false;
             }
         }
         currentXLoc = 7;
         currentYLoc = 7;
-        myMap.GenerateMap();
+        currentArea = Area.Start;
+        woodsMap = myMap.GenerateMap("North");
+        churchMap = myMap.GenerateMap("West");
+        academyMap = myMap.GenerateMap("East");
+        marketMap = myMap.GenerateMap("South");
         myMap.roomArray[currentXLoc, currentYLoc] = 'H';
-        myMap.ShowMap();
-        northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
-        eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
-        southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
-        westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
+        
         mySpawner.SpawnEnemies(currentXLoc, currentYLoc);
     }
 
@@ -110,6 +137,51 @@ public class MapLoader : MonoBehaviour
         else
         {
             print("Invalid Room!");
+        }
+    }
+
+    public void LoadArea()
+    {
+        switch (currentArea)
+        {
+            case Area.Start:
+                northDoor.LoadPortal(Area.Woods);
+                eastDoor.LoadPortal(Area.Church);
+                southDoor.LoadPortal(Area.Market);
+                westDoor.LoadPortal(Area.Academy);
+                break;
+            case Area.Woods:
+                currentXLoc = woodsStartX;
+                currentYLoc = woodsStartY;
+                northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
+                eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
+                southDoor.LoadPortal(Area.Start);
+                westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
+                break;
+            case Area.Church:
+                currentXLoc = churchStartX;
+                currentYLoc = churchStartY;
+                northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
+                eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
+                southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
+                westDoor.LoadPortal(Area.Start);
+                break;
+            case Area.Market:
+                currentXLoc = marketStartX;
+                currentYLoc = marketStartY;
+                northDoor.LoadPortal(Area.Start);
+                eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
+                southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
+                westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
+                break;
+            case Area.Academy:
+                currentXLoc = academyStartX;
+                currentYLoc = academyStartY;
+                northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
+                eastDoor.LoadPortal(Area.Start);
+                southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
+                westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
+                break;
         }
     }
 }

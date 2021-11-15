@@ -9,20 +9,6 @@ public class EnemySpawner : MonoBehaviour
     public MapLoader myMapLoader;
     public GameObject[] allEnemies;
     public Transform[] spawnLocations;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!myMapLoader.CompletedRooms[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
-        {
-            
-        }
-    }
 
     public void SpawnEnemies(int roomPosX, int roomPosY)
     {
@@ -56,6 +42,10 @@ public class EnemySpawner : MonoBehaviour
     {
         //roomComplete = true;
         myMapLoader.CompletedRooms[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
+        for (int i = 0; i < myMapLoader.allUnlockables.Length; i++)
+        {
+            myMapLoader.allUnlockables[i].Unlock();
+        }
         myMapLoader.northDoor.Unlock();
         myMapLoader.eastDoor.Unlock();
         myMapLoader.southDoor.Unlock();

@@ -7,18 +7,9 @@ public class DoorLoader : MonoBehaviour
 {
     public string direction;
     public MapLoader myMapLoader;
-    public bool traveled;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool traveled, portal;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private MapLoader.Area destination;
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -27,5 +18,11 @@ public class DoorLoader : MonoBehaviour
             traveled = true;
             myMapLoader.LoadRoom(direction);
         }
+    }
+
+    public void SetPortal(MapLoader.Area portalDestination)
+    {
+        portal = true;
+        destination = portalDestination;
     }
 }
