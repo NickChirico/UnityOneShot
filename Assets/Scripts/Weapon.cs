@@ -6,6 +6,8 @@ public abstract class Weapon : MonoBehaviour
 {
     public string weaponName;
 
+    public abstract WeaponManager.WeaponType GetWeaponType();
+
     //public abstract Weapon GetThisWeapon();
 }
 
@@ -30,29 +32,17 @@ public class RangedWeapon : Weapon
     public float coneAngle;
 
     [Space(10)]
-    public SpecialController.Special specialType_R;
-    public string sp_Name;
-    public int sp_Damage;
-    public int sp_Capacity;
-    public float sp_Range;
-    public float sp_Duration;
-    public float sp_PreDelay;
-    public float sp_Cooldown;
-    public AnimationCurve arcCurve;
-    public bool sp_isArc;
-    public float sp_travelTime;
-    public Projectile projectile_prefab;
-
-    [Space(10)]
     public AudioClip[] shotSounds;
-    public AudioClip[] sp_Sounds;
     public AudioClip reload_Sound;
 
-
+    public override WeaponManager.WeaponType GetWeaponType()
+    {
+        return WeaponManager.WeaponType.Ranged;
+    }
 }
 
 
-    public class MeleeWeapon : Weapon
+public class MeleeWeapon : Weapon
 {
     [Space(5)]
     public int intervalCount; // -1 for infinite
@@ -68,20 +58,39 @@ public class RangedWeapon : Weapon
     public float comboCooldown;
 
     [Space(10)]
-    public SpecialController.Special specialType_M;
-    public string sp_Name;
+    public AudioClip[] swingSounds;
+
+    public override WeaponManager.WeaponType GetWeaponType()
+    {
+        return WeaponManager.WeaponType.Melee;
+    }
+}
+
+public class SpecialWeapon : Weapon
+{
+    [Space(5)]
+    public SpecialController.Special specialType;  
     public int sp_Damage;
+    public int sp_Capacity;
+    public float sp_Range;
+    public float sp_Radius;
+    public float sp_Knock;
     public float sp_Duration;
     public float sp_PreDelay;
     public float sp_Cooldown;
+    public AnimationCurve arcCurve;
+    public bool sp_isArc;
+    public float sp_travelTime;
+    public Projectile projectile_prefab;
 
-    [Space(10)]
-    public AudioClip[] swingSounds;
     public AudioClip[] sp_Sounds;
 
+    public override WeaponManager.WeaponType GetWeaponType()
+    {
+        return WeaponManager.WeaponType.Special;
+    }
 }
 
-// ~~~~~~~~~~~
 
 
 
