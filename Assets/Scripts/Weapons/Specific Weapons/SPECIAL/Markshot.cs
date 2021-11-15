@@ -24,7 +24,7 @@ public class Markshot : Projectile
                 if (entity != null)
                 {
                     Vector2 hitPoint = new Vector2(entity.transform.position.x, entity.transform.position.y + 0.15f);
-                    entity.TakeDamage(impactDamage, hitPoint);
+                    entity.TakeDamage(impactDamage, hitPoint, 0);
                     entity.Mark(markDuration);
                 }
             }

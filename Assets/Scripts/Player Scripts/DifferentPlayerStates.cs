@@ -226,7 +226,8 @@ public class PlayerState_Special : PlayerState
         if (didShoot)
         {
             if (meleeC > 0)
-            {                
+            {    
+                /*
                 timer += Time.deltaTime;
 
 
@@ -250,7 +251,7 @@ public class PlayerState_Special : PlayerState
                     Melee.Attack(meleeC);
                 }
 
-
+                */
             }
             else
             { // perform "other ranged" special

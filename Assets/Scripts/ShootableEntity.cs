@@ -22,17 +22,21 @@ public class ShootableEntity : MonoBehaviour
     float markTimer;
     float markDuration;
 
+    public GameObject contaminateParticles_prefab;
+
     private void Start()
     {
         canTakeDamage = true;
         currentHealth = health; // temp for 123 spawn in enemies
         try 
-        { 
+        {
+            mySpawner = FindObjectOfType<EnemySpawner>();
             thisEnemy = this.GetComponent<Enemy>();
         }
         catch
         {
             thisEnemy = null;
+            mySpawner = null;
         }
 
         SetMarkIndicator(false);
@@ -52,6 +56,9 @@ public class ShootableEntity : MonoBehaviour
                 SetMarkIndicator(false);
             }
         }
+
+        if(isContaminated) // CONTAMINATE -- variables and methods at bottom of class
+            UpdateContaminate();
     }
 
     public void SetValues(int hp, float cd)
@@ -61,7 +68,7 @@ public class ShootableEntity : MonoBehaviour
         invulnTime = cd;
     }
 
-    public bool TakeDamage(int damageAmount, Vector2 damageSpot)
+    public bool TakeDamage(int damageAmount, Vector2 damageSpot, float knockForce)
     {
         if (canTakeDamage)
         {
@@ -82,9 +89,10 @@ public class ShootableEntity : MonoBehaviour
             PopUpDamageText T = Instantiate(damageText, damageSpot, Quaternion.identity);
             T.SendMessage("SetTextRun", damageAmount);
 
-            if (thisEnemy != null)
+            if (thisEnemy != null && knockForce > 0)
             {
-                thisEnemy.GotHit();
+                thisEnemy.GotKnocked();
+                thisEnemy.Knockback(knockForce);
             }
         }
 
@@ -124,10 +132,10 @@ public class ShootableEntity : MonoBehaviour
 
     private void Die()
     {
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
         if(mySpawner != null)
             mySpawner.CheckEnemiesAlive();
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
     }
 
     public void ResetHealth()
@@ -149,5 +157,54 @@ public class ShootableEntity : MonoBehaviour
     public DropType GetDropType()
     {
         return thisDropType;
+    }
+
+    //   ~~~~~~~~~ Seraph Afflications ~~~~~~~~~~
+    [Header("AFFLICTIONS")]
+    bool isContaminated;
+    int contaminateDamage;
+    float contaminateDuration;
+    float contaminateInterval;
+    float contaminateTimer;
+    float contaminateTimer_D;
+    GameObject particles;
+
+    public void Contaminate(int damage, float duration, float interval)
+    {
+        isContaminated = true;
+        contaminateTimer = 0;
+        contaminateDamage = damage;
+        contaminateDuration = duration;
+        contaminateInterval = interval;
+        if (contaminateParticles_prefab != null)
+        {
+            if(particles == null)
+                particles = Instantiate(contaminateParticles_prefab, this.transform);
+        }
+    }
+
+    private void UpdateContaminate() // called in update if 'isContaminated'
+    {
+        if (contaminateTimer < contaminateDuration)
+        {
+            contaminateTimer += Time.deltaTime;
+
+            if (contaminateTimer_D < contaminateInterval)
+            {
+                contaminateTimer_D += Time.deltaTime;
+            }
+            else
+            {
+                TakeDamage(contaminateDamage, this.transform.position, 0);
+                contaminateTimer_D = 0;
+            }
+        }
+        else
+        {
+            isContaminated = false;
+
+            if (particles != null)
+                Destroy(particles);
+        }
     }
 }

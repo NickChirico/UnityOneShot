@@ -18,6 +18,8 @@ public class UI_Manager : MonoBehaviour
     AltShotController alt;
     MeleeController melee;
     PlayerStateManager SM;
+    SeraphController seraphs;
+    WeaponManager weapons;
 
     EquipmentManager Equipment;
     PauseController pause;
@@ -47,6 +49,7 @@ public class UI_Manager : MonoBehaviour
 
     [Header("Weapons Panel")]
     public TextMeshProUGUI currentWeaponTMP;
+    public TextMeshProUGUI currentSpecialTMP;
 
     [Header("Pause Window")]
     public GameObject PausePanel;
@@ -93,6 +96,8 @@ public class UI_Manager : MonoBehaviour
         alt = AltShotController.GetAltControl;
         melee = MeleeController.GetMeleeControl;
         SM = FindObjectOfType<PlayerStateManager>();
+        seraphs = SeraphController.GetSeraphController;
+        weapons = WeaponManager.GetWeaponManager;
 
         Equipment = EquipmentManager.GetEquipManager;
         pause = PauseController.GetPauseController;
@@ -143,9 +148,9 @@ public class UI_Manager : MonoBehaviour
             {
                 TogglePausePanel();
                 if (SettingsPanel.activeSelf)
-                    SettingsPanel.SetActive(false);
+                    ToggleSettingsPanel();
                 if (EquipmentPanel.activeSelf)
-                    EquipmentPanel.SetActive(false);
+                    ToggleEquipmentPanel();
                 pressedP = !pressedP;
             }
         }
@@ -163,8 +168,10 @@ public class UI_Manager : MonoBehaviour
         }
 
         // UPDATE:: Tool Tips
-        if(weaponPanel.activeSelf)
+        if (weaponPanel.activeSelf)
+        {
             ManageTooltips();
+        }
     }
 
     private void SetInitialEquipment()
@@ -179,6 +186,8 @@ public class UI_Manager : MonoBehaviour
     {
         if (EquipmentPanel.activeSelf)
         {
+            seraphs.UpdateSeraphLists();
+
             Time.timeScale = 1;
             EquipmentPanel.SetActive(false);
             TogglePlayerControl(true);
@@ -191,6 +200,7 @@ public class UI_Manager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(firstSelected.gameObject);
             TogglePlayerControl(false);
             ButtonEffect_equipment();
+            SwitchCurrentMenu(1);
         }
     }
 
@@ -421,11 +431,14 @@ public class UI_Manager : MonoBehaviour
                 WeaponsPanel.SetActive(true);
                 SeraphimPanel.SetActive(false);
                 OptionsPanel.SetActive(false);
+                weapons.GoToSpots();
+                
                 break;
             case 2: // go to Seraphim panel
                 WeaponsPanel.SetActive(false);
                 SeraphimPanel.SetActive(true);
                 OptionsPanel.SetActive(false);
+                seraphs.GoToSpots();
                 break;
             case 3: // go to Options panel
                 WeaponsPanel.SetActive(false);
@@ -440,6 +453,12 @@ public class UI_Manager : MonoBehaviour
         currentWeaponTMP.text = weap;
     }
 
+    public void UpdateCurrentSpecialPanelTMP(string spec)
+    {
+        currentSpecialTMP.text = spec;
+    }
+
+
     // ~~~~~~ In-Game HUD UI ~~~~~~~~~
 
     public void UpdateCurrentWeaponLabel(string name, bool melee)
@@ -447,6 +466,12 @@ public class UI_Manager : MonoBehaviour
         currentWeaponLabel.text = name;
         ammoSubPanel.SetActive(!melee);
     }
+
+    public void UpdateCurrentSpecialLabel(string name)
+    {
+        // CREATE A HUD FOR SPECIAL
+    }
+
     public void UpdateAmmo(int cur, int max)
     {
         ammoLabel.text = "" + cur + "/" + max;
