@@ -7,6 +7,7 @@ public class ShotController : MonoBehaviour
     public static ShotController _shotControl;
     public static ShotController GetShotControl { get { return _shotControl; } }
 
+
     #region ## PARAMETERS ##
     private PlayerInputActions playerInputActions;
     public enum Special { None, Projectile, Burst }
@@ -30,6 +31,7 @@ public class ShotController : MonoBehaviour
     private AltShotController altControl;
     private AudioManager audioManager;
     private UI_Manager uiControl;
+    private SeraphController seraphControl;
 
     [Header("Range Indicator")]
     public LineRenderer RangeIndicator;
@@ -106,7 +108,9 @@ public class ShotController : MonoBehaviour
         altControl = AltShotController.GetAltControl;
         audioManager = AudioManager.GetAudioManager;
         uiControl = UI_Manager.GetUIManager;
-
+        //
+        seraphControl = SeraphController.GetSeraphController;
+        //
         ShotTrail.gameObject.SetActive(true);
         RangeIndicator.gameObject.SetActive(true);
         AimLine.gameObject.SetActive(true);
@@ -133,6 +137,7 @@ public class ShotController : MonoBehaviour
         baseDamage = weap.shotDamage;
         weaponRange = weap.range;
         reloadDuration = weap.reloadDuration;
+        hitForce = weap.knockbackForce;
 
         delayBetweenShots = weap.delayBetweenShots;
         doRechamber = weap.doRechamber;
@@ -536,21 +541,25 @@ public class ShotController : MonoBehaviour
         }
 
         // Deal Damage
-        bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint);
+        bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint, hitForce);
 
         // Apply Knockback
         // --here
-        // APPLY KNOCKBACK
         // APPLY KNOCKBACK
         // APPLY KNOCKBACK
 
         // Speed Boost
         moveControl.SpeedBoost(isKillShot);
 
+        // APPLY SERAPH EFFECTS
+        seraphControl.ActivateMainWeaponSeraphs(entityHit, hitPoint);
+
+
         // Bonus Effects
         /*
         // APPLY PROXIMITY
         // APPLY PROXIMITY et al
+
 
         switch (currentDamageEffect.ToString())
         {

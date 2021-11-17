@@ -7,6 +7,10 @@ public class MapLoader : MonoBehaviour
     public EnemySpawner mySpawner;
     public char[,] operatingMap;
     public char[,] woodsMap, churchMap, marketMap, academyMap;
+    public char[,] startMap =
+    {
+        {'H'}
+    };
     public MapGenerator myMap;
     public bool[,] CompletedRooms = new bool[15,15];
     public bool[,] CompletedWoods = new bool[15,15];
@@ -55,9 +59,9 @@ public class MapLoader : MonoBehaviour
         currentYLoc = 7;
         currentArea = Area.Start;
         woodsMap = myMap.GenerateMap("North");
-        churchMap = myMap.GenerateMap("North"); //west
-        academyMap = myMap.GenerateMap("North"); //east
-        marketMap = myMap.GenerateMap("North"); //south
+        churchMap = myMap.GenerateMap("West"); //west
+        academyMap = myMap.GenerateMap("East"); //east
+        marketMap = myMap.GenerateMap("South"); //south
         //ShowMap(woodsMap);
         //ShowMap(churchMap);
         //ShowMap(marketMap);
@@ -71,7 +75,7 @@ public class MapLoader : MonoBehaviour
         southDoor.LoadPortal(Area.Market);
         westDoor.LoadPortal(Area.Academy);
         //myMap.roomArray[currentXLoc, currentYLoc] = 'H';
-        mySpawner.SpawnEnemies(currentXLoc, currentYLoc);
+        //mySpawner.SpawnEnemies(currentXLoc, currentYLoc);
     }
 
     // Update is called once per frame
@@ -104,7 +108,7 @@ public class MapLoader : MonoBehaviour
 
     public void LoadRoom(string targetDirection)
     {
-        
+        print("loading room");
         Transform targetSpawn = myPlayer.transform;
         int targetX = currentXLoc;
         int targetY = currentYLoc;
@@ -131,7 +135,7 @@ public class MapLoader : MonoBehaviour
                 targetSpawn = eastSpawn;
                 break;
         }
-        if (operatingMap[targetX, targetY] == 'D')
+        if (GetAreaMap()[targetX, targetY] == 'D')
         {
             operatingMap[targetX, targetY] = 'H';
             operatingMap[currentXLoc, currentYLoc] = 'D';
@@ -142,7 +146,7 @@ public class MapLoader : MonoBehaviour
             southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
             westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
             myPlayer.gameObject.transform.position = targetSpawn.position;
-            mySpawner.SpawnEnemies(currentXLoc, currentYLoc);
+            mySpawner.SpawnEnemies();
             //myMap.ShowMapOnScreen();
             print(CompletedRooms[currentXLoc, currentYLoc]);
         }
@@ -240,7 +244,7 @@ public class MapLoader : MonoBehaviour
                 westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
                 break;
         }
-
+        print(currentXLoc + ", " + currentYLoc);
         myPlayer.gameObject.transform.position = targetSpawn.position;
     }
 
@@ -293,5 +297,43 @@ public class MapLoader : MonoBehaviour
             willPrint += "\n";
         }
         print(willPrint);
+    }
+
+    public char[,] GetAreaMap()
+    {
+        switch (currentArea)
+        {
+            case Area.Start:
+                return startMap;
+            case Area.Woods:
+                return woodsMap;
+            case Area.Church:
+                return churchMap;
+            case Area.Market:
+                return marketMap;
+            case Area.Academy:
+                return academyMap;
+        }
+        return startMap;
+    }
+
+    public bool[,] GetCompletionMap()
+    {
+        bool[,] defaultMap =
+        {
+            {true}
+        };
+        switch (currentArea)
+        {
+            case Area.Woods:
+                return CompletedWoods;
+            case Area.Church:
+                return CompletedChurch;
+            case Area.Market:
+                return CompletedMarket;
+            case Area.Academy:
+                return CompletedAcademy;
+        }
+        return defaultMap;
     }
 }

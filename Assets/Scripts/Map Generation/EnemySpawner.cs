@@ -10,9 +10,9 @@ public class EnemySpawner : MonoBehaviour
     public GameObject[] allEnemies;
     public Transform[] spawnLocations;
 
-    public void SpawnEnemies(int roomPosX, int roomPosY)
+    public void SpawnEnemies()
     {
-        switch (myMapLoader.currentArea)
+        switch (myMapLoader.currentArea) //can use GetCompletionMap function
         {
             case MapLoader.Area.Start:
                 roomComplete = true;
@@ -34,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
                 roomComplete = myMapLoader.CompletedAcademy[myMapLoader.currentXLoc, myMapLoader.currentYLoc];
                 break;
         }
+        print(roomComplete);
         switch (roomComplete)
         {
             case true:
@@ -62,25 +63,8 @@ public class EnemySpawner : MonoBehaviour
     public void FinishRoom()
     {
         //roomComplete = true;
-        switch (myMapLoader.currentArea)
-        {
-            case MapLoader.Area.Start:
-                myMapLoader.CompletedRooms[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Woods:
-                myMapLoader.CompletedWoods[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Church:
-                myMapLoader.CompletedChurch[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Market:
-                myMapLoader.CompletedMarket[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Academy:
-                myMapLoader.CompletedAcademy[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-        }
-        
+        myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
+
         for (int i = 0; i < myMapLoader.allUnlockables.Length; i++)
         {
             myMapLoader.allUnlockables[i].Unlock();

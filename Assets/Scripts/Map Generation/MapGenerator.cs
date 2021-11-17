@@ -45,19 +45,13 @@ public class MapGenerator : MonoBehaviour
 
     public char[,] roomArray = new char[15,15];
     public int numDoneRooms, numDeadEnds, xMin, xMax, yMin, yMax;
-    public List<int> deadEndXPos, deadEndYPos;
+    public List<int> deadEndXPos, deadEndYPos, allRoomsXPos, allRoomsYPos;
     public MapLoader myLoader;
     public Text screenText;
     // Start is called before the first frame update
     void Start()
     {
         ResetMap();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public char[,] GenerateMap(string direction)
@@ -69,7 +63,7 @@ public class MapGenerator : MonoBehaviour
         {
             ResetMap();
             IterateMap();
-            if (numDoneRooms > 16 && numDeadEnds > 2)
+            if (numDoneRooms > 16 && numDeadEnds > 2 && CheckOrientation(direction))
             {
                 stillGenerating = false;
             }
@@ -83,12 +77,14 @@ public class MapGenerator : MonoBehaviour
     public void OrientMap(string direction)
     {
         int idealValue;
+        int finalValue;
         int startLoc = 0;
-        //int endLoc = 0;
+        int endLoc = 0;
         switch (direction)
         {
             case "North": //smallest x pos
                 idealValue = 0;
+                finalValue = 14;
                 for (int i = 0; i < deadEndXPos.Count; i++)
                 {
                     if (deadEndXPos[i] > idealValue)
@@ -96,10 +92,16 @@ public class MapGenerator : MonoBehaviour
                         startLoc = i;
                         idealValue = deadEndXPos[i];
                     }
+                    if (deadEndXPos[i] < finalValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndXPos[i];
+                    }
                 }
                 break;
             case "South": //largest x pos
                 idealValue = 14;
+                finalValue = 0;
                 for (int i = 0; i < deadEndXPos.Count; i++)
                 {
                     if (deadEndXPos[i] < idealValue)
@@ -107,10 +109,16 @@ public class MapGenerator : MonoBehaviour
                         startLoc = i;
                         idealValue = deadEndXPos[i];
                     }
+                    if (deadEndXPos[i] > finalValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndXPos[i];
+                    }
                 }
                 break;
             case "West": //smallest y pos
                 idealValue = 0;
+                finalValue = 14;
                 for (int i = 0; i < deadEndYPos.Count; i++)
                 {
                     if (deadEndYPos[i] > idealValue)
@@ -118,10 +126,16 @@ public class MapGenerator : MonoBehaviour
                         startLoc = i;
                         idealValue = deadEndYPos[i];
                     }
+                    if (deadEndYPos[i] < finalValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndYPos[i];
+                    }
                 }
                 break;
             case "East": //largest y pos
                 idealValue = 14;
+                finalValue = 0;
                 for (int i = 0; i < deadEndYPos.Count; i++)
                 {
                     if (deadEndYPos[i] < idealValue)
@@ -129,11 +143,16 @@ public class MapGenerator : MonoBehaviour
                         startLoc = i;
                         idealValue = deadEndYPos[i];
                     }
+                    if (deadEndYPos[i] > finalValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndYPos[i];
+                    }
                 }
                 break;
         }
         roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = 'H';
-        //roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = 'B';
+        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = 'B';
         for (int i = 0; i < deadEndXPos.Count; i++)
         {
             if (roomArray[deadEndXPos[i], deadEndYPos[i]] == 'D')
@@ -420,6 +439,27 @@ public class MapGenerator : MonoBehaviour
                 if (roomArray[i,j] == 'D')
                 {
                     counted++;
+                    allRoomsXPos.Add(i);
+                    allRoomsYPos.Add(j);
+                    if (i < xMin)
+                    {
+                        xMin = i;
+                    }
+
+                    if (i > xMax)
+                    {
+                        xMax = i;
+                    }
+
+                    if (j < yMin)
+                    {
+                        yMin = j;
+                    }
+
+                    if (j > yMax)
+                    {
+                        yMax = j;
+                    }
                 }
             }
         }
@@ -446,6 +486,12 @@ public class MapGenerator : MonoBehaviour
             {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
             {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
         };
+        xMin = 14;
+        xMax = 0;
+        yMin = 14;
+        yMax = 0;
+        allRoomsXPos.Clear();
+        allRoomsYPos.Clear();
         deadEndXPos.Clear();
         deadEndYPos.Clear();
         numDoneRooms = 0;
@@ -465,6 +511,42 @@ public class MapGenerator : MonoBehaviour
             willPrint += "\n";
         }
         print(willPrint);
+    }
+
+    public bool CheckOrientation(string direction)
+    {
+        bool toReturn = false;
+        bool maxEnd = false;
+        bool minEnd = false;
+        if (direction == "North" || direction == "South") //check vertical orientation
+        {
+            for (int i = 0; i < deadEndXPos.Count; i++)
+            {
+                if (deadEndXPos[i] == xMax) //a dead end exists at the max
+                {
+                    maxEnd = true;
+                }
+                if (deadEndXPos[i] == xMin) //a dead end exists at the min
+                {
+                    minEnd = true;
+                }
+            }
+        }
+        else if (direction == "East" || direction == "West") //check horizontal orientation
+        {
+            for (int i = 0; i < deadEndYPos.Count; i++)
+            {
+                if (deadEndYPos[i] == yMax) //a dead end exists at the max
+                {
+                    maxEnd = true;
+                }
+                if (deadEndYPos[i] == yMin) //a dead end exists at the min
+                {
+                    minEnd = true;
+                }
+            }
+        }
+        return minEnd && maxEnd;
     }
     
 }
