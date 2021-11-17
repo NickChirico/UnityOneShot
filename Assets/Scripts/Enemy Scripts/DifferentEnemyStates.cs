@@ -323,7 +323,6 @@ public class EnemyState_Knocked : EnemyState
     {
         base.Enter();
         thisEnemy.sp.color = Color.black;
-        thisEnemy.Knockback();
     }
 
     public override void Exit()

@@ -386,7 +386,7 @@ public class AltShotController : MonoBehaviour
         }
 
         // Deal Damage
-        bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint);
+        bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint, 0);
         // DO SOMETHING WITH KillShot?
     }
 

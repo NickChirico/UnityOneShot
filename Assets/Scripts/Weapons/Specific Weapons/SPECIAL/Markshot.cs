@@ -7,6 +7,8 @@ public class Markshot : Projectile
     public GameObject impactEffect;
     public int impactDamage;
     public float markDuration;
+
+
     private void OnCollisionEnter2D(Collision2D coll)
     {
         Instantiate(impactEffect, this.transform.position, Quaternion.identity);
@@ -22,7 +24,7 @@ public class Markshot : Projectile
                 if (entity != null)
                 {
                     Vector2 hitPoint = new Vector2(entity.transform.position.x, entity.transform.position.y + 0.15f);
-                    entity.TakeDamage(impactDamage, hitPoint);
+                    entity.TakeDamage(impactDamage, hitPoint, 0);
                     entity.Mark(markDuration);
                 }
             }
