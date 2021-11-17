@@ -59,9 +59,9 @@ public class MapLoader : MonoBehaviour
         currentYLoc = 7;
         currentArea = Area.Start;
         woodsMap = myMap.GenerateMap("North");
-        churchMap = myMap.GenerateMap("North"); //west
-        academyMap = myMap.GenerateMap("North"); //east
-        marketMap = myMap.GenerateMap("North"); //south
+        churchMap = myMap.GenerateMap("West"); //west
+        academyMap = myMap.GenerateMap("East"); //east
+        marketMap = myMap.GenerateMap("South"); //south
         //ShowMap(woodsMap);
         //ShowMap(churchMap);
         //ShowMap(marketMap);
@@ -75,7 +75,7 @@ public class MapLoader : MonoBehaviour
         southDoor.LoadPortal(Area.Market);
         westDoor.LoadPortal(Area.Academy);
         //myMap.roomArray[currentXLoc, currentYLoc] = 'H';
-        mySpawner.SpawnEnemies(currentXLoc, currentYLoc);
+        //mySpawner.SpawnEnemies(currentXLoc, currentYLoc);
     }
 
     // Update is called once per frame
@@ -108,7 +108,7 @@ public class MapLoader : MonoBehaviour
 
     public void LoadRoom(string targetDirection)
     {
-        
+        print("loading room");
         Transform targetSpawn = myPlayer.transform;
         int targetX = currentXLoc;
         int targetY = currentYLoc;
@@ -135,7 +135,7 @@ public class MapLoader : MonoBehaviour
                 targetSpawn = eastSpawn;
                 break;
         }
-        if (operatingMap[targetX, targetY] == 'D')
+        if (GetAreaMap()[targetX, targetY] == 'D')
         {
             operatingMap[targetX, targetY] = 'H';
             operatingMap[currentXLoc, currentYLoc] = 'D';

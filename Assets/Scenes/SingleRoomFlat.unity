@@ -1353,7 +1353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomComplete: 0
   numToSpawn: 0
-  myMapLoader: {fileID: 0}
+  myMapLoader: {fileID: 781654628}
   allEnemies:
   - {fileID: 0}
   - {fileID: 0}
@@ -6768,6 +6768,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f535ef3060007a4ba340951bd595c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &781654628 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3978597813127980012, guid: 8888fc3c037b340108138db2f8d64c2e,
+    type: 3}
+  m_PrefabInstance: {fileID: 393755754}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a99116ed55c338c40bd788c882036afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &785863925
@@ -12790,6 +12802,11 @@ PrefabInstance:
       propertyPath: mainWeapSlots.Array.data[2]
       value: 
       objectReference: {fileID: 2050129034}
+    - target: {fileID: 9065206378532746238, guid: 8be2991a4d4864e4c98b03ae38dd4f94,
+        type: 3}
+      propertyPath: _slider
+      value: 
+      objectReference: {fileID: 1834562361}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be2991a4d4864e4c98b03ae38dd4f94, type: 3}
 --- !u!114 &1447674365 stripped

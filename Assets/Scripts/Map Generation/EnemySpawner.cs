@@ -34,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
                 roomComplete = myMapLoader.CompletedAcademy[myMapLoader.currentXLoc, myMapLoader.currentYLoc];
                 break;
         }
+        print(roomComplete);
         switch (roomComplete)
         {
             case true:

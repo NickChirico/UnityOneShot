@@ -38,7 +38,7 @@ public class DoorManager : Unlockable
                     break;
             }
         }
-        else if (myMapLoader.operatingMap[targetX, targetY] == 'D')
+        else if (myMapLoader.GetAreaMap()[targetX, targetY] == 'D' || myMapLoader.GetAreaMap()[targetX, targetY] == 'H' || myMapLoader.GetAreaMap()[targetX, targetY] == 'B')
         {
             locked.SetActive(true);
             myLoader.enabled = true;
