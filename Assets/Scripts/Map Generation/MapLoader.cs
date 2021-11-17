@@ -58,10 +58,17 @@ public class MapLoader : MonoBehaviour
                 CompletedAcademy[i, j] = false;
             }
         }
-        currentXLoc = 7;
-        currentYLoc = 7;
+        //currentXLoc = 7;
+        //currentYLoc = 7;
         currentArea = Area.Test;
         operatingMap = myMap.GenerateMap("North");
+        AssignStartPositions(operatingMap, Area.Test);
+        currentXLoc = testStartX;
+        currentYLoc = testStartY;
+        northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
+        eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
+        southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
+        westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
         //woodsMap = myMap.GenerateMap("North");
         //churchMap = myMap.GenerateMap("West"); //west
         //academyMap = myMap.GenerateMap("East"); //east
@@ -74,7 +81,6 @@ public class MapLoader : MonoBehaviour
         //AssignStartPositions(churchMap, Area.Church);
         //AssignStartPositions(marketMap, Area.Market);
         //AssignStartPositions(academyMap, Area.Academy);
-        AssignStartPositions(operatingMap, Area.Test);
         //northDoor.LoadPortal(Area.Woods);
         //eastDoor.LoadPortal(Area.Church);
         //southDoor.LoadPortal(Area.Market);
@@ -124,10 +130,10 @@ public class MapLoader : MonoBehaviour
                 targetSpawn = eastSpawn;
                 break;
         }
-        if (GetAreaMap()[targetX, targetY] == 'D')
+        if (GetAreaMap()[targetX, targetY] == 'D' || GetAreaMap()[targetX, targetY] == 'H' || GetAreaMap()[targetX, targetY] == 'B' || GetAreaMap()[targetX, targetY] == 'S')
         {
-            operatingMap[targetX, targetY] = 'H';
-            operatingMap[currentXLoc, currentYLoc] = 'D';
+            //operatingMap[targetX, targetY] = 'H';
+            //operatingMap[currentXLoc, currentYLoc] = 'D';
             currentXLoc = targetX;
             currentYLoc = targetY;
             northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
