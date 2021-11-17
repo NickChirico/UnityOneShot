@@ -63,7 +63,7 @@ public class MapGenerator : MonoBehaviour
     public char[,] GenerateMap(string direction)
     {
         //direction determines if we start on the top, bottom, left, or right of the map, and where the final boss is
-        bool stillGenerating = true;
+        bool stillGenerating = true; //allows us to remake a map if it isn't satisfactory
         //ShowMap();
         while (stillGenerating)
         {
@@ -73,27 +73,96 @@ public class MapGenerator : MonoBehaviour
             {
                 stillGenerating = false;
             }
-            OrientMap(direction);
         }
+        OrientMap(direction);
         return roomArray;
     }
 
     public void OrientMap(string direction)
     {
+        int idealValue;
+        int finalValue;
+        int startLoc = 0;
+        int endLoc = 0;
         switch (direction)
         {
-            case "North":
-                
+            case "North": //smallest x pos
+                idealValue = 14;
+                finalValue = 0;
+                for (int i = 0; i < deadEndXPos.Count; i++)
+                {
+                    if (deadEndXPos[i] < idealValue)
+                    {
+                        startLoc = i;
+                        idealValue = deadEndXPos[i];
+                    }
+                    if (deadEndXPos[i] > idealValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndXPos[i];
+                    }
+                }
                 break;
-            case "South":
-                
+            case "South": //largest x pos
+                idealValue = 0;
+                finalValue = 14;
+                for (int i = 0; i < deadEndXPos.Count; i++)
+                {
+                    if (deadEndXPos[i] > idealValue)
+                    {
+                        startLoc = i;
+                        idealValue = deadEndXPos[i];
+                    }
+                    if (deadEndXPos[i] < idealValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndXPos[i];
+                    }
+                }
                 break;
-            case "West":
-                
+            case "West": //smallest y pos
+                idealValue = 14;
+                finalValue = 0;
+                for (int i = 0; i < deadEndYPos.Count; i++)
+                {
+                    if (deadEndYPos[i] < idealValue)
+                    {
+                        startLoc = i;
+                        idealValue = deadEndYPos[i];
+                    }
+                    if (deadEndYPos[i] > idealValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndYPos[i];
+                    }
+                }
                 break;
-            case "East":
-                
+            case "East": //largest y pos
+                idealValue = 0;
+                finalValue = 14;
+                for (int i = 0; i < deadEndYPos.Count; i++)
+                {
+                    if (deadEndYPos[i] > idealValue)
+                    {
+                        startLoc = i;
+                        idealValue = deadEndYPos[i];
+                    }
+                    if (deadEndYPos[i] < finalValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndYPos[i];
+                    }
+                }
                 break;
+        }
+        roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = 'H';
+        roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = 'B';
+        for (int i = 0; i < deadEndXPos.Count; i++)
+        {
+            if (roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] == 'D')
+            {
+                roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = 'S';
+            }
         }
     }
 
@@ -367,7 +436,7 @@ public class MapGenerator : MonoBehaviour
         return counted;
     }
 
-    public void ResetMap()
+    public void ResetMap() //prepares the room array for a new generation
     {
         roomArray = new [,]
         {

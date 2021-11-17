@@ -8,15 +8,22 @@ public class DoorLoader : MonoBehaviour
     public string direction;
     public MapLoader myMapLoader;
     public bool traveled, portal;
-
-    private MapLoader.Area destination;
+    public MapLoader.Area destination;
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !traveled)
+        if (portal)
         {
-            traveled = true;
-            myMapLoader.LoadRoom(direction);
+            myMapLoader.currentArea = destination;
+            myMapLoader.LoadArea(direction);
+        }
+        else
+        {
+            if (other.CompareTag("Player") && !traveled)
+            {
+                traveled = true;
+                myMapLoader.LoadRoom(direction);
+            }
         }
     }
 
