@@ -495,7 +495,7 @@ public class MapGenerator : MonoBehaviour
         bool minEnd = false;
         if (direction == "North" || direction == "South") //check vertical orientation
         {
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < deadEndXPos.Count; i++)
             {
                 if (deadEndXPos[i] == xMax) //a dead end exists at the max
                 {
@@ -509,7 +509,7 @@ public class MapGenerator : MonoBehaviour
         }
         else if (direction == "East" || direction == "West") //check horizontal orientation
         {
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < deadEndYPos.Count; i++)
             {
                 if (deadEndYPos[i] == yMax) //a dead end exists at the max
                 {
@@ -521,11 +521,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-        if (maxEnd && minEnd)
-        {
-            return true;
-        }
-        return false;
+        return minEnd && maxEnd;
     }
     
 }
