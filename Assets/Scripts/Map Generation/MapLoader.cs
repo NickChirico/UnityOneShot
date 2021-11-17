@@ -55,13 +55,13 @@ public class MapLoader : MonoBehaviour
         currentYLoc = 7;
         currentArea = Area.Start;
         woodsMap = myMap.GenerateMap("North");
-        churchMap = myMap.GenerateMap("West");
-        academyMap = myMap.GenerateMap("East");
-        marketMap = myMap.GenerateMap("South");
-        ShowMap(woodsMap);
-        ShowMap(churchMap);
-        ShowMap(marketMap);
-        ShowMap(academyMap);
+        churchMap = myMap.GenerateMap("North"); //west
+        academyMap = myMap.GenerateMap("North"); //east
+        marketMap = myMap.GenerateMap("North"); //south
+        //ShowMap(woodsMap);
+        //ShowMap(churchMap);
+        //ShowMap(marketMap);
+        //ShowMap(academyMap);
         AssignStartPositions(woodsMap, Area.Woods);
         AssignStartPositions(churchMap, Area.Church);
         AssignStartPositions(marketMap, Area.Market);
