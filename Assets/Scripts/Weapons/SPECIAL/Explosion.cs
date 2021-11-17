@@ -6,7 +6,6 @@ public class Explosion : MonoBehaviour
 {
     public int damage;
     public float radius;
-    public float knockForce;
     public float explosionTime;
     public LayerMask hittableEntity;
 
@@ -31,19 +30,11 @@ public class Explosion : MonoBehaviour
                     {
                         //ApplyAttack(entity, hit.transform.position, damageToDeal);
                         Vector2 hitPoint = new Vector2(entity.transform.position.x, entity.transform.position.y + 0.35f);
-                        entity.TakeDamage(damageToDeal, hitPoint, knockForce);
+                        entity.TakeDamage(damageToDeal, hitPoint);
                     }
                 }
             }
         }
-    }
-
-    public void SetValues(int dmg, float radi, float knock, float duration)
-    {
-        damage = dmg;
-        radius = radi;
-        knockForce = knock;
-        explosionTime = duration;
     }
 
     IEnumerator DestoryAfterDelay()
