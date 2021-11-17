@@ -20,7 +20,6 @@ public abstract class Enemy : MonoBehaviour
     [Header("Components")]
     public LineRenderer lineRend;
     public bool EnableLineRend;
-    ShootableEntity entity;
 
 
     [Header("Variables")]
@@ -50,14 +49,11 @@ public abstract class Enemy : MonoBehaviour
     public float invulnTime;
     public float knockbackForce;
 
-
-
     private void Awake()
     {
-        //sp = this.GetComponentInChildren<SpriteRenderer>();
+        sp = this.GetComponent<SpriteRenderer>();
         rb = this.GetComponent<Rigidbody2D>();
         SM = this.GetComponent<EnemyStateManager>();
-        entity = this.GetComponent<ShootableEntity>();
         playerLoc = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         if (EnableLineRend)
@@ -69,7 +65,7 @@ public abstract class Enemy : MonoBehaviour
 
     private void Start()
     {
-        
+        ShootableEntity entity = this.GetComponent<ShootableEntity>();
         entity.SetValues(maxHealth, invulnTime);
 
         Introduction();
@@ -151,14 +147,14 @@ public abstract class Enemy : MonoBehaviour
          * even if they dont have LineOfSight
          */
     }
-    public void GotKnocked()
+    public void GotHit()
     {
         SM.ChangeState(SM.Knocked);
     }
 
-    public void Knockback(float force)
+    public void Knockback()
     {
-        Vector2 knockBack = ((-1 * direction) * force);
+        Vector2 knockBack = ((-1 * direction) * knockbackForce);
         rb.velocity = Vector2.zero;
         rb.AddForce(knockBack);
     }
@@ -231,9 +227,9 @@ public abstract class Enemy : MonoBehaviour
             if (player.CanBeDamaged() && SM.GetCurrentState() != SM.Knocked) // PLayer can be damaged and enemy is not in "Knocked"
             {
                 if (SM.GetCurrentState() == SM.Attack)
-                    player.TakeDamage(entity, damageAttack + Random.Range(0, 4));
+                    player.TakeDamage(damageAttack + Random.Range(0, 4));
                 else
-                    player.TakeDamage(entity, damageCollision);
+                    player.TakeDamage(damageCollision);
 
             }
         }

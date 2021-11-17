@@ -172,7 +172,7 @@ public class OneShot : MonoBehaviour
     {
         PlayerMove.SpeedBoost(Entity.CheckOneShot(damage));
 
-        Entity.TakeDamage(damage, point, 0);
+        Entity.TakeDamage(damage, point);
 
     }
 
