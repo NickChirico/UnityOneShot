@@ -2,46 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Seraph : MonoBehaviour
+public abstract class Seraph : MonoBehaviour
 {
-    public enum Genome { None, Rupture, Siphon, Contaminate, Surge, Calcify }
-    public Genome seraphType;
+    //public enum Genome { None, Rupture, Siphon, Contaminate, Surge, Calcify }
+    //public Genome seraphType;
 
-    [Range(0,100)] public int level_Blood;
-    [Range(0,100)] public int level_Carapace;
-    [Range(0,100)] public int level_Temperment;
+    public string MyName;
 
-    public string desc_Blood;
-    public string desc_Carapace;
-    public string desc_Temperment;
+    public enum BloodType { A, B, AB, O }
+    public BloodType myBlood;
 
-    private void Start()
+    private void Awake()
     {
-        desc_Blood = DetermineDescription(level_Blood);
-        desc_Carapace = DetermineDescription(level_Carapace);
-        desc_Temperment = DetermineDescription(level_Temperment);
-        this.GetComponent<SpriteRenderer>().color = DetermineTypeColor(seraphType);
-    }
+        int roll = Random.Range(0, 102);
 
-    private Color DetermineTypeColor(Genome g)
-    {
-        return g switch
-        {
-            Genome.Rupture => Color.red,
-            Genome.Siphon => Color.green,
-            Genome.Contaminate => Color.magenta,
-            Genome.Surge => Color.blue,
-            Genome.Calcify => Color.yellow,
-            _ => Color.black,
-        };
-    }
-    private string DetermineDescription(int level)
-    {
-        if (level > 66)
-            return "High";
-        else if (level > 33)
-            return "Moderate";
+        if (roll < 31)
+            myBlood = BloodType.A; // 30% chance
+        else if (roll < 61)
+            myBlood = BloodType.B; // 30% chance
+        else if (roll < 76)
+            myBlood = BloodType.AB;// 15% chance
         else
-            return "Low";
+            myBlood = BloodType.O; // 25% chance
+    }
+
+    private Vector2 targetPos;
+
+    public abstract void StartEffect(ShootableEntity entity, Vector2 hitPoint);
+    public abstract void DoEffect();
+    public abstract void EndEffect();
+
+    public virtual void SetTargetPos(Vector2 pos)
+    {
+        targetPos = pos;
+    }
+
+    public virtual Seraph GetThisSeraph()
+    {
+        return this;
     }
 }
