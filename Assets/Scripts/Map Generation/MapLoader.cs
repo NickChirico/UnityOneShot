@@ -24,7 +24,8 @@ public class MapLoader : MonoBehaviour
         Woods,
         Church,
         Market,
-        Academy
+        Academy,
+        Test
     }
     public Area currentArea;
     public int woodsStartX,
@@ -34,7 +35,9 @@ public class MapLoader : MonoBehaviour
         marketStartX,
         marketStartY,
         academyStartX,
-        academyStartY;
+        academyStartY,
+        testStartX,
+        testStartY;
     public DoorManager northDoor, eastDoor, southDoor, westDoor;
     public Transform northSpawn, eastSpawn, southSpawn, westSpawn;
     public Player myPlayer;
@@ -57,23 +60,25 @@ public class MapLoader : MonoBehaviour
         }
         currentXLoc = 7;
         currentYLoc = 7;
-        currentArea = Area.Start;
-        woodsMap = myMap.GenerateMap("North");
-        churchMap = myMap.GenerateMap("West"); //west
-        academyMap = myMap.GenerateMap("East"); //east
-        marketMap = myMap.GenerateMap("South"); //south
+        currentArea = Area.Test;
+        operatingMap = myMap.GenerateMap("North");
+        //woodsMap = myMap.GenerateMap("North");
+        //churchMap = myMap.GenerateMap("West"); //west
+        //academyMap = myMap.GenerateMap("East"); //east
+        //marketMap = myMap.GenerateMap("South"); //south
         //ShowMap(woodsMap);
         //ShowMap(churchMap);
         //ShowMap(marketMap);
         //ShowMap(academyMap);
-        AssignStartPositions(woodsMap, Area.Woods);
-        AssignStartPositions(churchMap, Area.Church);
-        AssignStartPositions(marketMap, Area.Market);
-        AssignStartPositions(academyMap, Area.Academy);
-        northDoor.LoadPortal(Area.Woods);
-        eastDoor.LoadPortal(Area.Church);
-        southDoor.LoadPortal(Area.Market);
-        westDoor.LoadPortal(Area.Academy);
+        //AssignStartPositions(woodsMap, Area.Woods);
+        //AssignStartPositions(churchMap, Area.Church);
+        //AssignStartPositions(marketMap, Area.Market);
+        //AssignStartPositions(academyMap, Area.Academy);
+        AssignStartPositions(operatingMap, Area.Test);
+        //northDoor.LoadPortal(Area.Woods);
+        //eastDoor.LoadPortal(Area.Church);
+        //southDoor.LoadPortal(Area.Market);
+        //westDoor.LoadPortal(Area.Academy);
         //myMap.roomArray[currentXLoc, currentYLoc] = 'H';
         //mySpawner.SpawnEnemies(currentXLoc, currentYLoc);
     }
@@ -87,22 +92,6 @@ public class MapLoader : MonoBehaviour
             eastDoor.Unlock();
             southDoor.Unlock();
             westDoor.Unlock();
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            LoadRoom("north");
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            LoadRoom("east");
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            LoadRoom("south");
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            LoadRoom("west");
         }
     }
 
@@ -281,6 +270,10 @@ public class MapLoader : MonoBehaviour
                 academyStartX = tempX;
                 academyStartY = tempY;
                 break;
+            case Area.Test:
+                testStartX = tempX;
+                testStartY = tempY;
+                break;
         }
     }
 
@@ -313,6 +306,8 @@ public class MapLoader : MonoBehaviour
                 return marketMap;
             case Area.Academy:
                 return academyMap;
+            case Area.Test:
+                return operatingMap;
         }
         return startMap;
     }
@@ -333,6 +328,8 @@ public class MapLoader : MonoBehaviour
                 return CompletedMarket;
             case Area.Academy:
                 return CompletedAcademy;
+            case Area.Test:
+                return CompletedRooms;
         }
         return defaultMap;
     }

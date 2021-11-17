@@ -10,9 +10,14 @@ public class DoorLoader : MonoBehaviour
     public bool traveled, portal;
     public MapLoader.Area destination;
 
+    void Start()
+    {
+        portal = false;
+    }
+
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (portal)
+        /*if (portal)
         {
             myMapLoader.currentArea = destination;
             myMapLoader.LoadArea(direction);
@@ -24,6 +29,11 @@ public class DoorLoader : MonoBehaviour
                 traveled = true;
                 myMapLoader.LoadRoom(direction);
             }
+        }*/
+        if (other.CompareTag("Player") && !traveled)
+        {
+            traveled = true;
+            myMapLoader.LoadRoom(direction);
         }
     }
 
