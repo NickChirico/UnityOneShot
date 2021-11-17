@@ -2,41 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorManager : Unlockable
+public class DoorManager : MonoBehaviour
 {
     public MapGenerator myMap;
     public GameObject deadEnd, locked, unlocked;
-    public GameObject deadEndWoods, deadEndChurch, deadEndMarket, deadEndAcademy;
     public MapLoader myMapLoader;
     public DoorLoader myLoader;
-    public MapLoader.Area currentArea;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 
     public void LoadNewDoor(int targetX, int targetY)
     {
         unlocked.SetActive(false);
-        myLoader.portal = false;
         if (myMapLoader.operatingMap[targetX, targetY] == 'X')
         {
             locked.SetActive(false);
             myLoader.enabled = false;
-            switch (currentArea)
-            {
-                case MapLoader.Area.Start:
-                    deadEnd.SetActive(true);
-                    break;
-                case MapLoader.Area.Woods:
-                    deadEndWoods.SetActive(true);
-                    break;
-                case MapLoader.Area.Church:
-                    deadEndChurch.SetActive(true);
-                    break;
-                case MapLoader.Area.Market:
-                    deadEndMarket.SetActive(true);
-                    break;
-                case MapLoader.Area.Academy:
-                    deadEndAcademy.SetActive(true);
-                    break;
-            }
+            deadEnd.SetActive(true);
         }
         else if (myMapLoader.operatingMap[targetX, targetY] == 'D')
         {
@@ -44,10 +35,6 @@ public class DoorManager : Unlockable
             myLoader.enabled = true;
             myLoader.traveled = false;
             deadEnd.SetActive(false);
-            deadEndWoods.SetActive(false);
-            deadEndChurch.SetActive(false);
-            deadEndMarket.SetActive(false);
-            deadEndAcademy.SetActive(false);
         }
         if (myMapLoader.CompletedRooms[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
         {
@@ -55,18 +42,12 @@ public class DoorManager : Unlockable
         }
     }
 
-    public override void Unlock()
+    public void Unlock()
     {
         if (locked.activeInHierarchy)
         {
             locked.SetActive(false);
             unlocked.SetActive(true);
         }
-    }
-
-    public void LoadPortal(MapLoader.Area targetArea)
-    {
-        unlocked.SetActive(true);
-        myLoader.SetPortal(targetArea);
     }
 }

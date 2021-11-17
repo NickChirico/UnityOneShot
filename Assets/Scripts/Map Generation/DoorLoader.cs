@@ -7,29 +7,25 @@ public class DoorLoader : MonoBehaviour
 {
     public string direction;
     public MapLoader myMapLoader;
-    public bool traveled, portal;
-    public MapLoader.Area destination;
+    public bool traveled;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (portal)
+        if (other.CompareTag("Player") && !traveled)
         {
-            myMapLoader.currentArea = destination;
-            myMapLoader.LoadArea(direction);
+            traveled = true;
+            myMapLoader.LoadRoom(direction);
         }
-        else
-        {
-            if (other.CompareTag("Player") && !traveled)
-            {
-                traveled = true;
-                myMapLoader.LoadRoom(direction);
-            }
-        }
-    }
-
-    public void SetPortal(MapLoader.Area portalDestination)
-    {
-        portal = true;
-        destination = portalDestination;
     }
 }

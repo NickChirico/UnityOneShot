@@ -11,11 +11,12 @@ public class SpecialController : MonoBehaviour
     MeleeController MeleeControl;
     MovementController MoveControl;
     Player player;
+    SeraphController SeraphControl;
 
     public GameObject mortarAimIndicator;
     public AnimationCurve aimCurve_arc;
 
-    public enum Special { None, Mark, Burst, Mortar, Smokescreen, Lunge, GreatSlam, SweepBack }
+    public enum Special { None, Mark, Burst, Mortar, Smokescreen, Lunge, GreatSlam, SweepBack, Bat }
 
     [Header("New SPECIAL vars")]
     public Special currentSpecial;
@@ -23,6 +24,8 @@ public class SpecialController : MonoBehaviour
     public int sp_Damage;
     public int sp_Capacity;
     public float sp_Range;
+    public float sp_Radius;
+    public float sp_Knock;
     public float sp_Duration;
     public float sp_PreDelay;
     public float sp_travelTime;
@@ -32,7 +35,7 @@ public class SpecialController : MonoBehaviour
     public Projectile projectile_prefab;
 
     // for melee
-    
+
     //
 
     // Private vars
@@ -51,6 +54,7 @@ public class SpecialController : MonoBehaviour
         ShotControl = ShotController.GetShotControl;
         MeleeControl = MeleeController.GetMeleeControl;
         MoveControl = MovementController.GetMoveController;
+        SeraphControl = SeraphController.GetSeraphController;
 
     }
     private void Update()
@@ -81,8 +85,10 @@ public class SpecialController : MonoBehaviour
                 //MoveControl.Recoil(false, MeleeControl.GetDirection(), sp_thrustF, sp_thrustDur);
                 player.Nimble(true);
                 break;
-            case Special.GreatSlam:
-
+            case Special.Bat:
+                MoveControl.Recoil(true, Vector2.zero, 0, sp_Duration);
+                MeleeAttack();
+                StartCoroutine(HideAttackIndicator());
                 break;
 
             default:
@@ -96,13 +102,15 @@ public class SpecialController : MonoBehaviour
     public bool CanSpecial()
     { return canSpecial; }
 
-    public void SetSpecialStats(RangedWeapon weap)
+    public void SetSpecialStats(SpecialWeapon weap)
     {
-        currentSpecial = weap.specialType_R;
-        sp_Name = weap.sp_Name;
+        sp_Name = weap.weaponName;
+        currentSpecial = weap.specialType;
         sp_Damage = weap.sp_Damage;
         sp_Capacity = weap.sp_Capacity;
         sp_Range = weap.sp_Range;
+        sp_Radius = weap.sp_Radius;
+        sp_Knock = weap.sp_Knock;
         sp_Duration = weap.sp_Duration;
         sp_PreDelay = weap.sp_PreDelay;
         sp_Cooldown = weap.sp_Cooldown;
@@ -110,9 +118,11 @@ public class SpecialController : MonoBehaviour
         sp_arcCurve = weap.arcCurve;
         sp_travelTime = weap.sp_travelTime;
         projectile_prefab = weap.projectile_prefab;
+
+        Debug.Log(" --Special: " + sp_Name);
     }
 
-    public void SetSpecialStats(MeleeWeapon weap)
+    /*public void SetSpecialStats(MeleeWeapon weap)
     {
         currentSpecial = weap.specialType_M;
         sp_Name = weap.sp_Name;
@@ -120,7 +130,7 @@ public class SpecialController : MonoBehaviour
         sp_Duration = weap.sp_Duration;
         sp_PreDelay = weap.sp_PreDelay;
         sp_Cooldown = weap.sp_Cooldown;
-    }
+    }*/
 
     public Special GetCurSpecial()
     { return currentSpecial; }
@@ -147,6 +157,49 @@ public class SpecialController : MonoBehaviour
 
         bullet.SetVals(rayOrigin, direction, distance, sp_arcCurve, sp_travelTime, timeRatio);
 
+    }
+
+    public GameObject tempAttackDisplay;
+    public LayerMask hittableEntity;
+    public void MeleeAttack()
+    {
+        tempAttackDisplay.SetActive(true);
+        //tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.red;
+        Collider2D[] hitEnemies;
+
+        float rad = sp_Radius;
+        int damageToPass = sp_Damage;
+        Vector2 zone = MeleeControl.GetRayOrigin() + (MeleeControl.GetDirection() * sp_Range);
+
+        tempAttackDisplay.transform.position = zone;
+        tempAttackDisplay.transform.localScale = Vector3.one * (rad * 2); //diameter - TEMP display
+        hitEnemies = Physics2D.OverlapCircleAll(zone, rad, hittableEntity);
+
+        if (hitEnemies != null)
+        {
+            foreach (Collider2D hit in hitEnemies)
+            {
+                if (hit.CompareTag("Terrain"))
+                { }
+                else if (hit.CompareTag("Enemy"))
+                {
+                    ShootableEntity entity = hit.GetComponent<ShootableEntity>();
+                    if (entity != null)
+                    {
+                        ApplySpecial(entity, hit.transform.position, damageToPass);
+                    }
+                }
+            }
+        }
+    }
+
+    public void ApplySpecial(ShootableEntity entity, Vector2 hitPoint, int dam)
+    {
+        entity.TakeDamage(dam, hitPoint, sp_Knock);
+
+
+        // SERAPH
+        SeraphControl.ActivateSpecWeaponSeraphs(entity, hitPoint);
     }
 
 
@@ -179,12 +232,6 @@ public class SpecialController : MonoBehaviour
             player.Nimble(false);
     }
 
-
-    public void ApplySpecial()
-    {
-
-    }
-
     //
     private IEnumerator SpecialCooldown()
     {
@@ -211,6 +258,12 @@ public class SpecialController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         mortarAimIndicator.SetActive(false);
+
+    }
+    private IEnumerator HideAttackIndicator()
+    {
+        yield return new WaitForSeconds(sp_Duration/2f);
+        tempAttackDisplay.SetActive(false);
 
     }
 
