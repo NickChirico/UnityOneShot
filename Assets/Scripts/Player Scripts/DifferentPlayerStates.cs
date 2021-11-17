@@ -107,6 +107,7 @@ public class PlayerState_Shooting : PlayerState
     public override void Enter()
     {
         base.Enter();
+        timer = 0;
         //Shot.ButtonPress(); // Commence Shot
         Shot.CommenceShot();
         Duration = Shot.delayBetweenShots;
@@ -226,8 +227,7 @@ public class PlayerState_Special : PlayerState
         if (didShoot)
         {
             if (meleeC > 0)
-            {    
-                /*
+            {                
                 timer += Time.deltaTime;
 
 
@@ -251,7 +251,7 @@ public class PlayerState_Special : PlayerState
                     Melee.Attack(meleeC);
                 }
 
-                */
+
             }
             else
             { // perform "other ranged" special
@@ -302,6 +302,7 @@ public class PlayerState_Special : PlayerState
 
         doArc = (Spec.GetCurSpecial().Equals(SpecialController.Special.Mortar));
         didShoot = false;
+        timer = 0;
         t1 = 0;
         Duration = Spec.sp_Duration;
         PrepDuration = Spec.sp_PreDelay;
