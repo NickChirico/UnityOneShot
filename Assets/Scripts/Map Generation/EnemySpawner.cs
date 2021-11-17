@@ -9,31 +9,24 @@ public class EnemySpawner : MonoBehaviour
     public MapLoader myMapLoader;
     public GameObject[] allEnemies;
     public Transform[] spawnLocations;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!myMapLoader.CompletedRooms[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
+        {
+            
+        }
+    }
 
     public void SpawnEnemies(int roomPosX, int roomPosY)
     {
-        switch (myMapLoader.currentArea)
-        {
-            case MapLoader.Area.Start:
-                roomComplete = true;
-                myMapLoader.northDoor.Unlock();
-                myMapLoader.eastDoor.Unlock();
-                myMapLoader.southDoor.Unlock();
-                myMapLoader.westDoor.Unlock();
-                break;
-            case MapLoader.Area.Woods:
-                roomComplete = myMapLoader.CompletedWoods[myMapLoader.currentXLoc, myMapLoader.currentYLoc];
-                break;
-            case MapLoader.Area.Church:
-                roomComplete = myMapLoader.CompletedChurch[myMapLoader.currentXLoc, myMapLoader.currentYLoc];
-                break;
-            case MapLoader.Area.Market:
-                roomComplete = myMapLoader.CompletedMarket[myMapLoader.currentXLoc, myMapLoader.currentYLoc];
-                break;
-            case MapLoader.Area.Academy:
-                roomComplete = myMapLoader.CompletedAcademy[myMapLoader.currentXLoc, myMapLoader.currentYLoc];
-                break;
-        }
+        roomComplete = myMapLoader.CompletedRooms[roomPosX, roomPosY];
         switch (roomComplete)
         {
             case true:
@@ -62,29 +55,7 @@ public class EnemySpawner : MonoBehaviour
     public void FinishRoom()
     {
         //roomComplete = true;
-        switch (myMapLoader.currentArea)
-        {
-            case MapLoader.Area.Start:
-                myMapLoader.CompletedRooms[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Woods:
-                myMapLoader.CompletedWoods[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Church:
-                myMapLoader.CompletedChurch[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Market:
-                myMapLoader.CompletedMarket[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Academy:
-                myMapLoader.CompletedAcademy[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-        }
-        
-        for (int i = 0; i < myMapLoader.allUnlockables.Length; i++)
-        {
-            myMapLoader.allUnlockables[i].Unlock();
-        }
+        myMapLoader.CompletedRooms[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
         myMapLoader.northDoor.Unlock();
         myMapLoader.eastDoor.Unlock();
         myMapLoader.southDoor.Unlock();

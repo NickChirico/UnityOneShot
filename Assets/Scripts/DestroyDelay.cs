@@ -16,4 +16,7 @@ public class DestroyDelay : MonoBehaviour
         yield return new WaitForSeconds(time);
         Destroy(this.gameObject);
     }
+
+    public void SetDelay(float f)
+    { Delay = f; }
 }

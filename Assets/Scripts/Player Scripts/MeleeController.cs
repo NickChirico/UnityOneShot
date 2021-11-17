@@ -12,6 +12,7 @@ public class MeleeController : MonoBehaviour
     [Header("Components")]
     private MovementController moveController;
     private AudioManager audioManager;
+    private SeraphController seraphControl;
 
     [Header("GAME OPTIONS")]
     public bool usingMouse;
@@ -59,12 +60,14 @@ public class MeleeController : MonoBehaviour
     public int intervalCount = 0;
     public int currentInterval;
     public int[] damageArr;
+    public float[] knockForceArr;
     public float[] attackDurArr;
     public float[] swingRangeArr;
     public float[] attackRadiusArr;
     public float[] thrustForceArr;
     public float[] thrustDurArr;
     public float[] preDelayArr;
+
 
     private void Awake()
     {
@@ -76,6 +79,7 @@ public class MeleeController : MonoBehaviour
     {
         moveController = MovementController.GetMoveController;
         audioManager = AudioManager.GetAudioManager;
+        seraphControl = SeraphController.GetSeraphController;
 
         //attackDuration1 = thrustDuration_1 + preAttackDelay_1;
         //attackDuration2 = thrustDuration_2 + preAttackDelay_2;
@@ -273,8 +277,11 @@ public class MeleeController : MonoBehaviour
         // ...CalculateProximityDamage(damage, hitDistance)
 
 
-        entityHit.TakeDamage(damageToDeal, hitPoint);
+        entityHit.TakeDamage(damageToDeal, hitPoint, knockForceArr[currentInterval]);
 
+
+        // SERAPH
+        seraphControl.ActivateMainWeaponSeraphs(entityHit, hitPoint);
     }
 
     private void OnDrawGizmos()
