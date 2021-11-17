@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+//MAKE IT MAKE SURE THAT THE START AND END ARE DEAD ENDS, KEEP TRACK OF THE LOWEST AND HIGHEST X AND Y VALUES
 public class MapGenerator : MonoBehaviour
 {
     public int[,] maxArray = new[,]
@@ -44,7 +44,8 @@ public class MapGenerator : MonoBehaviour
     };
 
     public char[,] roomArray = new char[15,15];
-    public int numDoneRooms;
+    public int numDoneRooms, numDeadEnds, xMin, xMax, yMin, yMax;
+    public List<int> deadEndXPos, deadEndYPos;
     public MapLoader myLoader;
     public Text screenText;
     // Start is called before the first frame update
@@ -59,57 +60,87 @@ public class MapGenerator : MonoBehaviour
         
     }
 
-    public void ShowMap()
+    public char[,] GenerateMap(string direction)
     {
-        string willPrint = "";
-        for (int i = 0; i < 15; i++)
-        {
-            for (int j = 0; j < 15; j++)
-            {
-                willPrint += roomArray[i, j] + " ";
-            }
-
-            willPrint += "\n";
-        }
-
-        print(willPrint);
-    }
-
-    public void GenerateMap()
-    {
-        bool stillGenerating = true;
+        //direction determines if we start on the top, bottom, left, or right of the map, and where the final boss is
+        bool stillGenerating = true; //allows us to remake a map if it isn't satisfactory
         //ShowMap();
         while (stillGenerating)
         {
             ResetMap();
             IterateMap();
-            if (numDoneRooms <= 16)
-            {
-                stillGenerating = true;
-            }
-            else
+            if (numDoneRooms > 16 && numDeadEnds > 2)
             {
                 stillGenerating = false;
             }
         }
-        myLoader.operatingMap = roomArray;
-        //ShowMapOnScreen();
-        //ShowMap();
+        ShowMap();
+        OrientMap(direction);
+        ShowMap();
+        return roomArray;
     }
 
-    public void ShowMapOnScreen()
+    public void OrientMap(string direction)
     {
-        string willShow = "";
-        for (int i = 0; i < 15; i++)
+        int idealValue;
+        int startLoc = 0;
+        //int endLoc = 0;
+        switch (direction)
         {
-            for (int j = 0; j < 15; j++)
-            {
-                willShow += roomArray[i, j] + " ";
-            }
-
-            willShow += "\n";
+            case "North": //smallest x pos
+                idealValue = 0;
+                for (int i = 0; i < deadEndXPos.Count; i++)
+                {
+                    if (deadEndXPos[i] > idealValue)
+                    {
+                        startLoc = i;
+                        idealValue = deadEndXPos[i];
+                    }
+                }
+                break;
+            case "South": //largest x pos
+                idealValue = 14;
+                for (int i = 0; i < deadEndXPos.Count; i++)
+                {
+                    if (deadEndXPos[i] < idealValue)
+                    {
+                        startLoc = i;
+                        idealValue = deadEndXPos[i];
+                    }
+                }
+                break;
+            case "West": //smallest y pos
+                idealValue = 0;
+                for (int i = 0; i < deadEndYPos.Count; i++)
+                {
+                    if (deadEndYPos[i] > idealValue)
+                    {
+                        startLoc = i;
+                        idealValue = deadEndYPos[i];
+                    }
+                }
+                break;
+            case "East": //largest y pos
+                idealValue = 14;
+                for (int i = 0; i < deadEndYPos.Count; i++)
+                {
+                    if (deadEndYPos[i] < idealValue)
+                    {
+                        startLoc = i;
+                        idealValue = deadEndYPos[i];
+                    }
+                }
+                break;
         }
-        screenText.text = willShow;
+        roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = 'H';
+        //roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = 'B';
+        for (int i = 0; i < deadEndXPos.Count; i++)
+        {
+            if (roomArray[deadEndXPos[i], deadEndYPos[i]] == 'D')
+            {
+                roomArray[deadEndXPos[i], deadEndYPos[i]] = 'S';
+            }
+        }
     }
 
     public void IterateMap()
@@ -188,7 +219,6 @@ public class MapGenerator : MonoBehaviour
                     break;
             }
         }
-
         if (targetY > 0)
         {
             switch (roomArray[targetX, targetY - 1])
@@ -208,7 +238,6 @@ public class MapGenerator : MonoBehaviour
                     break;
             }
         }
-
         if (targetY < 14)
         {
             switch (roomArray[targetX, targetY + 1])
@@ -287,13 +316,30 @@ public class MapGenerator : MonoBehaviour
                     break;
             }
         }
+        if (numConnections == 1)
+        {
+            deadEndXPos.Add(targetX);
+            deadEndYPos.Add(targetY);
+            string xList = "";
+            string yList = "";
+            for (int i = 0; i < deadEndXPos.Count; i++)
+            {
+                xList += deadEndXPos[i] + ", ";
+            }
+
+            for (int i = 0; i < deadEndYPos.Count; i++)
+            {
+                yList += deadEndYPos[i] + ", ";
+            }
+            //print(xList);
+            //print(yList);
+        }
         var numToConnect = numConnections - (numWaiting + numDone);
         if (numToConnect > numEmpty)
         {
             numToConnect = numEmpty;
         }
-        //print("The Number of Connections we want is " + numConnections + ", which means we have to make " +
-              //numToConnect + " new connections");
+        
         if (numToConnect > 0)
         {
             for (int i = 0; i < numToConnect; i++)
@@ -344,8 +390,7 @@ public class MapGenerator : MonoBehaviour
     {
         if (tempChanged)
         {
-            //print("it was changed");
-            numDoneRooms = 20;
+            //numDoneRooms = 20;
             IterateMap();
         }
         else
@@ -361,6 +406,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
             numDoneRooms = CountRooms();
+            numDeadEnds = deadEndXPos.Count;
         }
     }
 
@@ -380,7 +426,7 @@ public class MapGenerator : MonoBehaviour
         return counted;
     }
 
-    public void ResetMap()
+    public void ResetMap() //prepares the room array for a new generation
     {
         roomArray = new [,]
         {
@@ -400,7 +446,25 @@ public class MapGenerator : MonoBehaviour
             {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
             {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
         };
+        deadEndXPos.Clear();
+        deadEndYPos.Clear();
         numDoneRooms = 0;
+        numDeadEnds = 0;
+    }
+
+    public void ShowMap()
+    {
+        string willPrint = "";
+        for (int i = 0; i < 15; i++)
+        {
+            for (int j = 0; j < 15; j++)
+            {
+                willPrint += roomArray[i, j] + " ";
+            }
+
+            willPrint += "\n";
+        }
+        print(willPrint);
     }
     
 }
