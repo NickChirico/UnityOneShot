@@ -7,6 +7,10 @@ public class MapLoader : MonoBehaviour
     public EnemySpawner mySpawner;
     public char[,] operatingMap;
     public char[,] woodsMap, churchMap, marketMap, academyMap;
+    public char[,] startMap =
+    {
+        {'H'}
+    };
     public MapGenerator myMap;
     public bool[,] CompletedRooms = new bool[15,15];
     public bool[,] CompletedWoods = new bool[15,15];
@@ -293,5 +297,43 @@ public class MapLoader : MonoBehaviour
             willPrint += "\n";
         }
         print(willPrint);
+    }
+
+    public char[,] GetAreaMap()
+    {
+        switch (currentArea)
+        {
+            case Area.Start:
+                return startMap;
+            case Area.Woods:
+                return woodsMap;
+            case Area.Church:
+                return churchMap;
+            case Area.Market:
+                return marketMap;
+            case Area.Academy:
+                return academyMap;
+        }
+        return startMap;
+    }
+
+    public bool[,] GetCompletionMap()
+    {
+        bool[,] defaultMap =
+        {
+            {true}
+        };
+        switch (currentArea)
+        {
+            case Area.Woods:
+                return CompletedWoods;
+            case Area.Church:
+                return CompletedChurch;
+            case Area.Market:
+                return CompletedMarket;
+            case Area.Academy:
+                return CompletedAcademy;
+        }
+        return defaultMap;
     }
 }

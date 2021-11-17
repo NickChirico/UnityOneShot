@@ -15,7 +15,7 @@ public class DoorManager : Unlockable
     {
         unlocked.SetActive(false);
         myLoader.portal = false;
-        if (myMapLoader.operatingMap[targetX, targetY] == 'X')
+        if (myMapLoader.GetAreaMap()[targetX, targetY] == 'X')
         {
             locked.SetActive(false);
             myLoader.enabled = false;
@@ -49,7 +49,7 @@ public class DoorManager : Unlockable
             deadEndMarket.SetActive(false);
             deadEndAcademy.SetActive(false);
         }
-        if (myMapLoader.CompletedRooms[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
+        if (myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
         {
             Unlock();
         }
