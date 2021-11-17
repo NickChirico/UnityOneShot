@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject[] allEnemies;
     public Transform[] spawnLocations;
 
-    public void SpawnEnemies(int roomPosX, int roomPosY)
+    public void SpawnEnemies()
     {
         switch (myMapLoader.currentArea) //can use GetCompletionMap function
         {

@@ -77,12 +77,14 @@ public class MapGenerator : MonoBehaviour
     public void OrientMap(string direction)
     {
         int idealValue;
+        int finalValue;
         int startLoc = 0;
-        //int endLoc = 0;
+        int endLoc = 0;
         switch (direction)
         {
             case "North": //smallest x pos
                 idealValue = 0;
+                finalValue = 14;
                 for (int i = 0; i < deadEndXPos.Count; i++)
                 {
                     if (deadEndXPos[i] > idealValue)
@@ -90,10 +92,16 @@ public class MapGenerator : MonoBehaviour
                         startLoc = i;
                         idealValue = deadEndXPos[i];
                     }
+                    if (deadEndXPos[i] < finalValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndXPos[i];
+                    }
                 }
                 break;
             case "South": //largest x pos
                 idealValue = 14;
+                finalValue = 0;
                 for (int i = 0; i < deadEndXPos.Count; i++)
                 {
                     if (deadEndXPos[i] < idealValue)
@@ -101,10 +109,16 @@ public class MapGenerator : MonoBehaviour
                         startLoc = i;
                         idealValue = deadEndXPos[i];
                     }
+                    if (deadEndXPos[i] > finalValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndXPos[i];
+                    }
                 }
                 break;
             case "West": //smallest y pos
                 idealValue = 0;
+                finalValue = 14;
                 for (int i = 0; i < deadEndYPos.Count; i++)
                 {
                     if (deadEndYPos[i] > idealValue)
@@ -112,10 +126,16 @@ public class MapGenerator : MonoBehaviour
                         startLoc = i;
                         idealValue = deadEndYPos[i];
                     }
+                    if (deadEndYPos[i] < finalValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndYPos[i];
+                    }
                 }
                 break;
             case "East": //largest y pos
                 idealValue = 14;
+                finalValue = 0;
                 for (int i = 0; i < deadEndYPos.Count; i++)
                 {
                     if (deadEndYPos[i] < idealValue)
@@ -123,11 +143,16 @@ public class MapGenerator : MonoBehaviour
                         startLoc = i;
                         idealValue = deadEndYPos[i];
                     }
+                    if (deadEndYPos[i] > finalValue)
+                    {
+                        endLoc = i;
+                        finalValue = deadEndYPos[i];
+                    }
                 }
                 break;
         }
         roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = 'H';
-        //roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = 'B';
+        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = 'B';
         for (int i = 0; i < deadEndXPos.Count; i++)
         {
             if (roomArray[deadEndXPos[i], deadEndYPos[i]] == 'D')

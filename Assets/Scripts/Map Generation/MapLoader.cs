@@ -146,7 +146,7 @@ public class MapLoader : MonoBehaviour
             southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
             westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
             myPlayer.gameObject.transform.position = targetSpawn.position;
-            mySpawner.SpawnEnemies(currentXLoc, currentYLoc);
+            mySpawner.SpawnEnemies();
             //myMap.ShowMapOnScreen();
             print(CompletedRooms[currentXLoc, currentYLoc]);
         }
@@ -244,7 +244,7 @@ public class MapLoader : MonoBehaviour
                 westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
                 break;
         }
-
+        print(currentXLoc + ", " + currentYLoc);
         myPlayer.gameObject.transform.position = targetSpawn.position;
     }
 
