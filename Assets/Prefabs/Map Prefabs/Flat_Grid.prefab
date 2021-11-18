@@ -1289,7 +1289,7 @@ Transform:
   - {fileID: 5226519831185226403}
   - {fileID: 2570069135722807166}
   m_Father: {fileID: 3978597813461829855}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5987673225507698941
 SpriteRenderer:
@@ -1393,8 +1393,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Grunt
   maxHealth: 50
-  sp: {fileID: 0}
-  rb: {fileID: 0}
+  sp: {fileID: 5987673225507698941}
+  rb: {fileID: 2049070390135156206}
   lineRend: {fileID: 5884127371555990523}
   EnableLineRend: 0
   damageCollision: 8
@@ -1446,6 +1446,7 @@ MonoBehaviour:
     type: 3}
   thisDropType: 1
   markedIndicator: {fileID: 5196554874499769826}
+  contaminateParticles_prefab: {fileID: 0}
 --- !u!1 &3978597812441996341
 GameObject:
   m_ObjectHideFlags: 0
@@ -1483,7 +1484,7 @@ Transform:
   - {fileID: 5969210535801467789}
   - {fileID: 6792802078758971977}
   m_Father: {fileID: 3978597813461829855}
-  m_RootOrder: 9
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8001064221870849060
 SpriteRenderer:
@@ -1587,8 +1588,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Grunt
   maxHealth: 50
-  sp: {fileID: 0}
-  rb: {fileID: 0}
+  sp: {fileID: 8001064221870849060}
+  rb: {fileID: 2416734630366029487}
   lineRend: {fileID: 5936522760440334600}
   EnableLineRend: 0
   damageCollision: 8
@@ -1640,6 +1641,7 @@ MonoBehaviour:
     type: 3}
   thisDropType: 1
   markedIndicator: {fileID: 290627638370608155}
+  contaminateParticles_prefab: {fileID: 0}
 --- !u!1 &3978597812513755600
 GameObject:
   m_ObjectHideFlags: 0
@@ -1677,7 +1679,7 @@ Transform:
   - {fileID: 3654582535779021410}
   - {fileID: 549669969277319988}
   m_Father: {fileID: 3978597813461829855}
-  m_RootOrder: 5
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5901478942040944764
 SpriteRenderer:
@@ -1781,8 +1783,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Grunt
   maxHealth: 50
-  sp: {fileID: 0}
-  rb: {fileID: 0}
+  sp: {fileID: 5901478942040944764}
+  rb: {fileID: 692636128854738911}
   lineRend: {fileID: 5390279249032116966}
   EnableLineRend: 0
   damageCollision: 8
@@ -1834,6 +1836,7 @@ MonoBehaviour:
     type: 3}
   thisDropType: 1
   markedIndicator: {fileID: 681232441098616165}
+  contaminateParticles_prefab: {fileID: 0}
 --- !u!1 &3978597812524211873
 GameObject:
   m_ObjectHideFlags: 0
@@ -2009,8 +2012,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Grunt
   maxHealth: 50
-  sp: {fileID: 0}
-  rb: {fileID: 0}
+  sp: {fileID: 3219934302901182969}
+  rb: {fileID: 1156555415391307923}
   lineRend: {fileID: 6552540738709722114}
   EnableLineRend: 0
   damageCollision: 8
@@ -2062,6 +2065,7 @@ MonoBehaviour:
     type: 3}
   thisDropType: 1
   markedIndicator: {fileID: 5336280557182418635}
+  contaminateParticles_prefab: {fileID: 0}
 --- !u!1 &3978597812615571739
 GameObject:
   m_ObjectHideFlags: 0
@@ -2336,6 +2340,8 @@ MonoBehaviour:
   yMax: 0
   deadEndXPos: 
   deadEndYPos: 
+  allRoomsXPos: 
+  allRoomsYPos: 
   myLoader: {fileID: 3978597813127980012}
   screenText: {fileID: 0}
 --- !u!1 &3978597812629096466
@@ -4426,7 +4432,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3978597813461829855}
-  m_RootOrder: 14
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3978597812928516511
 GameObject:
@@ -4858,7 +4864,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3978597813461829855}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3978597813004346543
 GameObject:
@@ -5156,6 +5162,8 @@ MonoBehaviour:
   marketStartY: 0
   academyStartX: 0
   academyStartY: 0
+  testStartX: 0
+  testStartY: 0
   northDoor: {fileID: 3978597813608388007}
   eastDoor: {fileID: 3978597813246873512}
   southDoor: {fileID: 3978597812827370741}
@@ -5644,7 +5652,7 @@ Transform:
   - {fileID: 7514415377807671815}
   - {fileID: 81610895755878732}
   m_Father: {fileID: 3978597813461829855}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8901211541398039911
 SpriteRenderer:
@@ -5748,8 +5756,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Grunt
   maxHealth: 50
-  sp: {fileID: 0}
-  rb: {fileID: 0}
+  sp: {fileID: 8901211541398039911}
+  rb: {fileID: 7907114604672935167}
   lineRend: {fileID: 5855276528264760851}
   EnableLineRend: 0
   damageCollision: 8
@@ -5801,6 +5809,7 @@ MonoBehaviour:
     type: 3}
   thisDropType: 1
   markedIndicator: {fileID: 8360020861965927315}
+  contaminateParticles_prefab: {fileID: 0}
 --- !u!1 &3978597813246873518
 GameObject:
   m_ObjectHideFlags: 0
@@ -6973,16 +6982,16 @@ Transform:
   - {fileID: 3978597814049418599}
   - {fileID: 3978597813580901916}
   - {fileID: 3978597813707299108}
-  - {fileID: 3978597812513755607}
   - {fileID: 3978597812993627575}
-  - {fileID: 3978597813465991373}
   - {fileID: 3978597814506180790}
-  - {fileID: 3978597812441996340}
   - {fileID: 3978597814424916704}
-  - {fileID: 3978597813234879910}
   - {fileID: 3978597814502468992}
-  - {fileID: 3978597812403055354}
   - {fileID: 3978597812903048506}
+  - {fileID: 3978597812513755607}
+  - {fileID: 3978597813465991373}
+  - {fileID: 3978597812441996340}
+  - {fileID: 3978597813234879910}
+  - {fileID: 3978597812403055354}
   - {fileID: 3978597813591629349}
   - {fileID: 3978597812601865841}
   - {fileID: 3978597814265398762}
@@ -7039,7 +7048,7 @@ Transform:
   - {fileID: 5338889173625480302}
   - {fileID: 5995908061425613112}
   m_Father: {fileID: 3978597813461829855}
-  m_RootOrder: 7
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1661094295049342331
 SpriteRenderer:
@@ -7143,8 +7152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Grunt
   maxHealth: 50
-  sp: {fileID: 0}
-  rb: {fileID: 0}
+  sp: {fileID: 1661094295049342331}
+  rb: {fileID: 667337355445610118}
   lineRend: {fileID: 5751884463237006527}
   EnableLineRend: 0
   damageCollision: 8
@@ -7196,6 +7205,7 @@ MonoBehaviour:
     type: 3}
   thisDropType: 1
   markedIndicator: {fileID: 4246343063030291171}
+  contaminateParticles_prefab: {fileID: 0}
 --- !u!1 &3978597813488950993
 GameObject:
   m_ObjectHideFlags: 0
@@ -9542,8 +9552,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Grunt
   maxHealth: 50
-  sp: {fileID: 0}
-  rb: {fileID: 0}
+  sp: {fileID: 7909854791902718415}
+  rb: {fileID: 6554237355374155838}
   lineRend: {fileID: 3680133490107785093}
   EnableLineRend: 0
   damageCollision: 8
@@ -9595,6 +9605,7 @@ MonoBehaviour:
     type: 3}
   thisDropType: 1
   markedIndicator: {fileID: 529956691356226766}
+  contaminateParticles_prefab: {fileID: 0}
 --- !u!1 &3978597813608388005
 GameObject:
   m_ObjectHideFlags: 0
@@ -15244,8 +15255,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Grunt
   maxHealth: 50
-  sp: {fileID: 0}
-  rb: {fileID: 0}
+  sp: {fileID: 1478808090723853763}
+  rb: {fileID: 2773560449477303994}
   lineRend: {fileID: 3252563063032400415}
   EnableLineRend: 0
   damageCollision: 8
@@ -15297,6 +15308,7 @@ MonoBehaviour:
     type: 3}
   thisDropType: 1
   markedIndicator: {fileID: 7854505673267234596}
+  contaminateParticles_prefab: {fileID: 0}
 --- !u!1 &3978597814323001033
 GameObject:
   m_ObjectHideFlags: 0
@@ -15926,7 +15938,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3978597813461829855}
-  m_RootOrder: 10
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3978597814438473604
 GameObject:
@@ -17902,7 +17914,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3978597813461829855}
-  m_RootOrder: 12
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3978597814506180789
 GameObject:
@@ -17932,7 +17944,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3978597813461829855}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3978597814542259518
 GameObject:

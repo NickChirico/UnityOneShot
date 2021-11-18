@@ -69,6 +69,10 @@ public class MapLoader : MonoBehaviour
         eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
         southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
         westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
+        northDoor.Unlock();
+        eastDoor.Unlock();
+        southDoor.Unlock();
+        westDoor.Unlock();
         //woodsMap = myMap.GenerateMap("North");
         //churchMap = myMap.GenerateMap("West"); //west
         //academyMap = myMap.GenerateMap("East"); //east
