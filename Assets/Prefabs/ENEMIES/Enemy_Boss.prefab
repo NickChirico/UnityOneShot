@@ -392,7 +392,7 @@ MonoBehaviour:
   damageAttack: 18
   visionRange: 4
   playerSpotted: 0
-  idleDuration: 1.25
+  idleDuration: 1.5
   alertDuration: 0.15
   patrolRange: 2
   patrolDuration: 2

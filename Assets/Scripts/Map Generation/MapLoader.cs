@@ -105,7 +105,7 @@ public class MapLoader : MonoBehaviour
             eastDoor.Unlock();
             southDoor.Unlock();
             westDoor.Unlock();
-        }*/
+        }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             LoadRoom("north");
@@ -122,6 +122,7 @@ public class MapLoader : MonoBehaviour
         {
             LoadRoom("east");
         }
+        */
     }
 
     public void LoadRoom(string targetDirection)
