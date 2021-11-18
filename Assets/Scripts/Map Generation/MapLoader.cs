@@ -11,6 +11,8 @@ public class MapLoader : MonoBehaviour
     {
         {'H'}
     };
+
+    public HealingSpring mySpring;
     public MapGenerator myMap;
     public bool[,] CompletedRooms = new bool[15,15];
     public bool[,] CompletedWoods = new bool[15,15];
@@ -96,12 +98,29 @@ public class MapLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Space))
         {
             northDoor.Unlock();
             eastDoor.Unlock();
             southDoor.Unlock();
             westDoor.Unlock();
+        }*/
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            LoadRoom("north");
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            LoadRoom("south");
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            LoadRoom("west");
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            LoadRoom("east");
         }
     }
 
@@ -147,7 +166,8 @@ public class MapLoader : MonoBehaviour
             myPlayer.gameObject.transform.position = targetSpawn.position;
             mySpawner.SpawnEnemies();
             //myMap.ShowMapOnScreen();
-            print(CompletedRooms[currentXLoc, currentYLoc]);
+            //print(CompletedRooms[currentXLoc, currentYLoc]);
+            mySpring.LoadSpring();
         }
         else
         {
