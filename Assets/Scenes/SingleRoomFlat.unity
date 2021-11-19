@@ -1503,6 +1503,7 @@ MonoBehaviour:
   - {fileID: 1287965951}
   - {fileID: 443880766}
   - {fileID: 393755756}
+  bossSpawned: 0
 --- !u!4 &300116823
 Transform:
   m_ObjectHideFlags: 0
@@ -1950,7 +1951,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2143605104}
         m_TargetAssemblyTypeName: UI_Manager, Assembly-CSharp
         m_MethodName: TogglePausePanel
         m_Mode: 1
@@ -2417,7 +2418,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2143605104}
         m_TargetAssemblyTypeName: UI_Manager, Assembly-CSharp
         m_MethodName: ToggleSettingsPanel
         m_Mode: 1
@@ -30124,7 +30125,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2143605104}
         m_TargetAssemblyTypeName: UI_Manager, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 3
@@ -30858,7 +30859,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2143605104}
         m_TargetAssemblyTypeName: UI_Manager, Assembly-CSharp
         m_MethodName: RestartScene
         m_Mode: 1

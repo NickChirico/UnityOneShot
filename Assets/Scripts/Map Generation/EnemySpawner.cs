@@ -9,7 +9,28 @@ public class EnemySpawner : MonoBehaviour
     public MapLoader myMapLoader;
     public GameObject[] allEnemies;
     public Transform[] spawnLocations;
+    public bool bossSpawned;
 
+    void Start()
+    {
+        bossSpawned = false;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!bossSpawned)
+            {
+                allEnemies[8].transform.position = spawnLocations[8].position;
+                allEnemies[8].SetActive(true);
+                allEnemies[8].GetComponent<ShootableEntity>().ResetHealth();
+                myMapLoader.myPlayer.gameObject.transform.position = myMapLoader.southSpawn.position;
+                bossSpawned = true;
+            }
+        }
+    }
+    
     public void SpawnEnemies()
     {
         /*
@@ -92,7 +113,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void FinishRoom()
     {
-        //roomComplete = true;
+        roomComplete = true;
         myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
         for (int i = 0; i < myMapLoader.allUnlockables.Length; i++)
         {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 public class MapLoader : MonoBehaviour
@@ -19,7 +20,7 @@ public class MapLoader : MonoBehaviour
     public bool[,] CompletedChurch = new bool[15,15];
     public bool[,] CompletedMarket = new bool[15,15];
     public bool[,] CompletedAcademy = new bool[15,15];
-    public int currentXLoc, currentYLoc;
+    public int currentXLoc, currentYLoc, bossXLoc, bossYLoc;
     public enum Area
     {
         Start,
@@ -49,10 +50,21 @@ public class MapLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        //currentXLoc = 7;
+        //currentYLoc = 7;
+        currentArea = Area.Test;
+        operatingMap = myMap.GenerateMap("North");
+        AssignStartPositions(operatingMap, Area.Test);
         for (int i = 0; i < 15; i++)
         {
             for (int j = 0; j < 15; j++)
             {
+                if (GetAreaMap()[i, j] == 'B')
+                {
+                    bossXLoc = i;
+                    bossYLoc = j;
+                }
                 CompletedRooms[i, j] = false;
                 CompletedWoods[i, j] = false;
                 CompletedChurch[i, j] = false;
@@ -60,11 +72,6 @@ public class MapLoader : MonoBehaviour
                 CompletedAcademy[i, j] = false;
             }
         }
-        //currentXLoc = 7;
-        //currentYLoc = 7;
-        currentArea = Area.Test;
-        operatingMap = myMap.GenerateMap("North");
-        AssignStartPositions(operatingMap, Area.Test);
         currentXLoc = testStartX;
         currentYLoc = testStartY;
         northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
@@ -99,6 +106,17 @@ public class MapLoader : MonoBehaviour
     void Update()
     {
         /*
+        if (Input.GetKeyDown(KeyCode.Space) && GetAreaMap()[currentXLoc, currentYLoc] != 'B' && mySpawner.roomComplete)
+        {
+            currentXLoc = bossXLoc;
+            currentYLoc = bossYLoc;
+            northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
+            eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
+            southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
+            westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
+            myPlayer.gameObject.transform.position = southSpawn.position;
+            mySpawner.SpawnEnemies();
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             northDoor.Unlock();
