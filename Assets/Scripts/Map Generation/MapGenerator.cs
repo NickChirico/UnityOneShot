@@ -44,7 +44,7 @@ public class MapGenerator : MonoBehaviour
     };
 
     public char[,] roomArray = new char[15,15];
-    public int numDoneRooms, numDeadEnds, xMin, xMax, yMin, yMax;
+    public int numDoneRooms, numDeadEnds, xMin, xMax, yMin, yMax, bossXLoc, bossYLoc;
     public List<int> deadEndXPos, deadEndYPos, allRoomsXPos, allRoomsYPos;
     public MapLoader myLoader;
     public Text screenText;
@@ -153,6 +153,8 @@ public class MapGenerator : MonoBehaviour
         }
         roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = 'H';
         roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = 'B';
+        bossXLoc = deadEndXPos[endLoc];
+        bossYLoc = deadEndYPos[endLoc];
         for (int i = 0; i < deadEndXPos.Count; i++)
         {
             if (roomArray[deadEndXPos[i], deadEndYPos[i]] == 'D')

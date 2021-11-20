@@ -76,4 +76,10 @@ public class Player : MonoBehaviour
         nimble = b;
         Physics2D.IgnoreLayerCollision(3, 6, b);// 3 = player, 6 = hittableEntity
     }
+
+    public void RestoreFullHealth()
+    {
+        currentHealth = maxHealth;
+        ui.UpdateHealth(currentHealth, maxHealth);
+    }
 }
