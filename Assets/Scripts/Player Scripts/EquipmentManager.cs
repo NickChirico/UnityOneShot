@@ -57,11 +57,11 @@ public class EquipmentManager : MonoBehaviour
         MeleeControl = MeleeController.GetMeleeControl;
         UIControl = UI_Manager.GetUIManager;
 
-        calibrumMeter.fillAmount = 0;
-        severumMeter.fillAmount = 0;
-        gravitumMeter.fillAmount = 0;
-        infernumMeter.fillAmount = 0;
-        cresendumMeter.fillAmount = 0;
+        //calibrumMeter.fillAmount = 0;
+        //severumMeter.fillAmount = 0;
+        //gravitumMeter.fillAmount = 0;
+        //infernumMeter.fillAmount = 0;
+        //cresendumMeter.fillAmount = 0;
 
         UpdateEquipment();
 

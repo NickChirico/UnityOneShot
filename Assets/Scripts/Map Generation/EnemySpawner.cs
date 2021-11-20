@@ -9,10 +9,32 @@ public class EnemySpawner : MonoBehaviour
     public MapLoader myMapLoader;
     public GameObject[] allEnemies;
     public Transform[] spawnLocations;
+    public bool bossSpawned;
 
-    public void SpawnEnemies(int roomPosX, int roomPosY)
+    void Start()
     {
-        switch (myMapLoader.currentArea)
+        bossSpawned = false;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!bossSpawned)
+            {
+                allEnemies[8].transform.position = spawnLocations[8].position;
+                allEnemies[8].SetActive(true);
+                allEnemies[8].GetComponent<ShootableEntity>().ResetHealth();
+                myMapLoader.myPlayer.gameObject.transform.position = myMapLoader.southSpawn.position;
+                bossSpawned = true;
+            }
+        }
+    }
+    
+    public void SpawnEnemies()
+    {
+        /*
+        switch (myMapLoader.currentArea) //can use GetCompletionMap function
         {
             case MapLoader.Area.Start:
                 roomComplete = true;
@@ -34,6 +56,7 @@ public class EnemySpawner : MonoBehaviour
                 roomComplete = myMapLoader.CompletedAcademy[myMapLoader.currentXLoc, myMapLoader.currentYLoc];
                 break;
         }
+        //print(roomComplete);
         switch (roomComplete)
         {
             case true:
@@ -42,45 +65,56 @@ public class EnemySpawner : MonoBehaviour
             case false:
                 numToSpawn = Random.Range(2, 6);
                 break;
-        }
-        for (int i = 0; i < numToSpawn; i++)
+        }*/
+        switch (myMapLoader.GetAreaMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
         {
-            int selection = Random.Range(0, allEnemies.Length);
-            if (!allEnemies[selection].activeInHierarchy)
-            {
-                allEnemies[selection].transform.position = spawnLocations[selection].position;
-                allEnemies[selection].SetActive(true);
-                allEnemies[selection].GetComponent<ShootableEntity>().ResetHealth();
-            }
-            else
-            {
-                i--;
-            }
+            case 'H':
+                //numToSpawn = 0;
+                FinishRoom();
+                break;
+            case 'D':
+                if (!myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
+                {
+                    numToSpawn = Random.Range(2, 6);
+                    for (int i = 0; i < numToSpawn; i++)
+                    {
+                        int selection = Random.Range(0, allEnemies.Length - 1);
+                        if (!allEnemies[selection].activeInHierarchy)
+                        {
+                            allEnemies[selection].transform.position = spawnLocations[selection].position;
+                            allEnemies[selection].SetActive(true);
+                            allEnemies[selection].GetComponent<ShootableEntity>().ResetHealth();
+                        }
+                        else
+                        {
+                            i--;
+                        }
+                    }
+                }
+                break;
+            case 'S':
+                //numToSpawn = 0;
+                FinishRoom();
+                break;
+            case 'U':
+                //numToSpawn = 0;
+                FinishRoom();
+                break;
+            case 'B':
+                if (!myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
+                {
+                    allEnemies[8].transform.position = spawnLocations[8].position;
+                    allEnemies[8].SetActive(true);
+                    allEnemies[8].GetComponent<ShootableEntity>().ResetHealth();
+                }
+                break;
         }
     }
 
     public void FinishRoom()
     {
-        //roomComplete = true;
-        switch (myMapLoader.currentArea)
-        {
-            case MapLoader.Area.Start:
-                myMapLoader.CompletedRooms[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Woods:
-                myMapLoader.CompletedWoods[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Church:
-                myMapLoader.CompletedChurch[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Market:
-                myMapLoader.CompletedMarket[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-            case MapLoader.Area.Academy:
-                myMapLoader.CompletedAcademy[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
-                break;
-        }
-        
+        roomComplete = true;
+        myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
         for (int i = 0; i < myMapLoader.allUnlockables.Length; i++)
         {
             myMapLoader.allUnlockables[i].Unlock();

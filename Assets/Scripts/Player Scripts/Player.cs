@@ -5,8 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public SpriteRenderer sp;
-    PlayerStateManager SM;
-    UI_Manager ui;
+
+    private PlayerStateManager SM;
+    private UI_Manager ui;
+    private SeraphController seraphControl;
+
 
     public PopUpDamageText damageText;
 
@@ -29,6 +32,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         ui = UI_Manager.GetUIManager;
+        seraphControl = SeraphController.GetSeraphController;
 
         currentHealth = maxHealth;
     }
@@ -37,8 +41,10 @@ public class Player : MonoBehaviour
     {
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(ShootableEntity entity, int damage)
     {
+        seraphControl.ActivateArmorSeraphs(entity, this.transform.position);
+
         currentHealth -= damage;
         ui.UpdateHealth(currentHealth, maxHealth);
 
@@ -69,5 +75,11 @@ public class Player : MonoBehaviour
     {
         nimble = b;
         Physics2D.IgnoreLayerCollision(3, 6, b);// 3 = player, 6 = hittableEntity
+    }
+
+    public void RestoreFullHealth()
+    {
+        currentHealth = maxHealth;
+        ui.UpdateHealth(currentHealth, maxHealth);
     }
 }

@@ -15,7 +15,7 @@ public class DoorManager : Unlockable
     {
         unlocked.SetActive(false);
         myLoader.portal = false;
-        if (myMapLoader.operatingMap[targetX, targetY] == 'X')
+        if (myMapLoader.GetAreaMap()[targetX, targetY] == 'X')
         {
             locked.SetActive(false);
             myLoader.enabled = false;
@@ -38,7 +38,8 @@ public class DoorManager : Unlockable
                     break;
             }
         }
-        else if (myMapLoader.operatingMap[targetX, targetY] == 'D')
+        else if (myMapLoader.GetAreaMap()[targetX, targetY] == 'D' || myMapLoader.GetAreaMap()[targetX, targetY] == 'H' ||
+                 myMapLoader.GetAreaMap()[targetX, targetY] == 'B' ||myMapLoader.GetAreaMap()[targetX, targetY] == 'S' ||myMapLoader.GetAreaMap()[targetX, targetY] == 'U')
         {
             locked.SetActive(true);
             myLoader.enabled = true;
@@ -49,7 +50,7 @@ public class DoorManager : Unlockable
             deadEndMarket.SetActive(false);
             deadEndAcademy.SetActive(false);
         }
-        if (myMapLoader.CompletedRooms[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
+        if (myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
         {
             Unlock();
         }
