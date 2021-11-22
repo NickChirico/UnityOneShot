@@ -662,6 +662,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6451256429670179206, guid: a9979658b498e6a4280bb36a9c081ae3,
+        type: 3}
+      propertyPath: dialogue.name
+      value: Guy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451256429670179206, guid: a9979658b498e6a4280bb36a9c081ae3,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451256429670179206, guid: a9979658b498e6a4280bb36a9c081ae3,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: Hello!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451256429670179206, guid: a9979658b498e6a4280bb36a9c081ae3,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: I am in a box
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9979658b498e6a4280bb36a9c081ae3, type: 3}
 --- !u!1001 &8305793833768671412
