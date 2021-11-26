@@ -3037,6 +3037,99 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37027d6f06e247e408ded89079ea5a85, type: 3}
+--- !u!1 &129836800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 129836801}
+  - component: {fileID: 129836802}
+  m_Layer: 0
+  m_Name: MortarObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &129836801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129836800}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1411302753}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &129836802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129836800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c9cd1615ec88b4bb64b036b1db2d2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isValidWeapon: 1
+  weaponName: Mortar
+  specialType: 1
+  sp_Damage: 0
+  sp_Capacity: 1
+  sp_Range: 4
+  sp_Radius: 0
+  sp_Knock: 0
+  sp_Duration: 0.25
+  sp_PreDelay: 0.35
+  sp_Cooldown: 2
+  arcCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 13.333333
+      outSlope: 13.333333
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.75
+      value: 10
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -40
+      outSlope: -40
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  sp_isArc: 1
+  sp_travelTime: 1
+  projectile_prefab: {fileID: 9094840151918621209, guid: 0335451d6e80d764689ba11d6cf7524c,
+    type: 3}
+  aimIndicator_mortar: {fileID: 342066963753301927}
+  sp_Sounds: []
 --- !u!1 &130334700
 GameObject:
   m_ObjectHideFlags: 0
@@ -9606,7 +9699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isValidWeapon: 0
-  weaponName: not yet imp...
+  weaponName: null
   shotDamage: 0
   ammoCapacity: 2
   currentAmmo: 0
@@ -9642,7 +9735,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1411302753}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &357509921
 GameObject:
@@ -34194,6 +34287,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813554058}
   m_CullTransparentMesh: 1
+--- !u!1 &827675262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 827675263}
+  - component: {fileID: 827675264}
+  m_Layer: 0
+  m_Name: MarkObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &827675263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827675262}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1411302753}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &827675264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827675262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 547f645d4e50e9647b17dce003ade22d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isValidWeapon: 1
+  weaponName: Markshot
+  specialType: 0
+  sp_Damage: 0
+  sp_Capacity: 2
+  sp_Range: 0
+  sp_Radius: 0
+  sp_Knock: 0
+  sp_Duration: 0.25
+  sp_PreDelay: 0.35
+  sp_Cooldown: 2
+  arcCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  sp_isArc: 0
+  sp_travelTime: 0
+  projectile_prefab: {fileID: 3207061465583402553, guid: 014fcc57a13c7ed4faef4af008d5a2f3,
+    type: 3}
+  aimIndicator_mortar: {fileID: 0}
+  sp_Sounds: []
 --- !u!1 &836323176
 GameObject:
   m_ObjectHideFlags: 0
@@ -35617,14 +35776,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884425267}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5c9cd1615ec88b4bb64b036b1db2d2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isValidWeapon: 0
   weaponName: Mortar
-  specialType: 3
+  specialType: 1
   sp_Damage: 0
   sp_Capacity: 0
   sp_Range: 4
@@ -35670,6 +35829,7 @@ MonoBehaviour:
   sp_travelTime: 1
   projectile_prefab: {fileID: 9094840151918621209, guid: 0335451d6e80d764689ba11d6cf7524c,
     type: 3}
+  aimIndicator_mortar: {fileID: 0}
   sp_Sounds: []
 --- !u!114 &884425270
 MonoBehaviour:
@@ -35678,14 +35838,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884425267}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 547f645d4e50e9647b17dce003ade22d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isValidWeapon: 0
   weaponName: Marking Dart
-  specialType: 1
+  specialType: 0
   sp_Damage: 0
   sp_Capacity: 0
   sp_Range: 6
@@ -35704,6 +35864,7 @@ MonoBehaviour:
   sp_travelTime: 0
   projectile_prefab: {fileID: 3207061465583402553, guid: 014fcc57a13c7ed4faef4af008d5a2f3,
     type: 3}
+  aimIndicator_mortar: {fileID: 0}
   sp_Sounds: []
 --- !u!114 &884425271
 MonoBehaviour:
@@ -35712,7 +35873,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884425267}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca5210ad082b1394ba16d55f21b65cd1, type: 3}
   m_Name: 
@@ -47898,8 +48059,11 @@ Transform:
   - {fileID: 1040408038}
   - {fileID: 1607896529}
   - {fileID: 1179742995}
+  - {fileID: 827675263}
+  - {fileID: 129836801}
   - {fileID: 356458951}
   - {fileID: 1869925747}
+  - {fileID: 1676795234}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52622,6 +52786,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675758529}
   m_CullTransparentMesh: 0
+--- !u!1 &1676795233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1676795234}
+  - component: {fileID: 1676795235}
+  m_Layer: 0
+  m_Name: Null_SpecialObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1676795234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676795233}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1411302753}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1676795235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676795233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaf9cd021f4721468592d9bac2ba887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isValidWeapon: 0
+  weaponName: null
+  specialType: 0
+  sp_Damage: 0
+  sp_Capacity: 1
+  sp_Range: 0
+  sp_Radius: 0
+  sp_Knock: 0
+  sp_Duration: 0
+  sp_PreDelay: 0
+  sp_Cooldown: 0
+  arcCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  sp_isArc: 0
+  sp_travelTime: 0
+  projectile_prefab: {fileID: 0}
+  aimIndicator_mortar: {fileID: 0}
+  sp_Sounds: []
 --- !u!1 &1677334868
 GameObject:
   m_ObjectHideFlags: 0
@@ -59926,7 +60155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isValidWeapon: 0
-  weaponName: not yet impl...
+  weaponName: null
   intervalCount: 1
   damageArr: 00000000
   knockForceArr:
@@ -59965,7 +60194,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1411302753}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1869953981
 GameObject:
@@ -63182,9 +63411,6 @@ MonoBehaviour:
   dashForce: 30
   dashDuration: 0.5
   dashCooldown: 1.5
-  specialDuration: 0
-  specialCooldown: 0
-  specialSpeed: 0
   delayStopTime: 3
 --- !u!114 &2004752715
 MonoBehaviour:
@@ -63393,8 +63619,10 @@ MonoBehaviour:
   altWeapon: {fileID: 1869925746}
   rangedWeap1: {fileID: 356458950}
   meleeWeap1: {fileID: 1869925746}
+  specWeap1: {fileID: 0}
   rangedWeap2: {fileID: 356458950}
   meleeWeap2: {fileID: 1869925746}
+  specWeap2: {fileID: 0}
   AimLine: {fileID: 691955137}
   RangeCircleMain: {fileID: 1717804452}
   RangeCircleAlt: {fileID: 0}
@@ -69184,7 +69412,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 342066963753301927}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.4231772, y: 18.808445, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 2084965176}

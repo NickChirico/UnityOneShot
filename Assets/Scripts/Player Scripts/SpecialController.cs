@@ -105,7 +105,7 @@ public class SpecialController : MonoBehaviour
     public void SetSpecialStats(SpecialWeapon weap)
     {
         sp_Name = weap.weaponName;
-        currentSpecial = weap.specialType;
+        //currentSpecial = weap.specialType;
         sp_Damage = weap.sp_Damage;
         sp_Capacity = weap.sp_Capacity;
         sp_Range = weap.sp_Range;

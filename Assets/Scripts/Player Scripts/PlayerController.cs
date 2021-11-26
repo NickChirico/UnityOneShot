@@ -16,8 +16,10 @@ public class PlayerController : MonoBehaviour
 
     public RangedWeapon rangedWeap1;
     public MeleeWeapon meleeWeap1;
+    public SpecialWeapon specWeap1;
     public RangedWeapon rangedWeap2;
     public MeleeWeapon meleeWeap2;
+    public SpecialWeapon specWeap2;
 
     private PlayerInputActions playerInputActions;
     private UI_Manager uiControl;
@@ -41,8 +43,12 @@ public class PlayerController : MonoBehaviour
     Hammer hammer;
     Bat bat;
 
+    sp_Mortar mortar;
+    sp_Mark mark;
+
     null_ranged nullRanged;
     null_melee nullMelee;
+    null_special nullSpec;
 
 
     void Awake()
@@ -56,9 +62,13 @@ public class PlayerController : MonoBehaviour
         knife = FindObjectOfType<Knife>();
         hammer = FindObjectOfType<Hammer>();
         bat = FindObjectOfType<Bat>();
+        mortar = FindObjectOfType<sp_Mortar>();
+        mark = FindObjectOfType<sp_Mark>();
 
         nullRanged = FindObjectOfType<null_ranged>();
         nullMelee = FindObjectOfType<null_melee>();
+        nullSpec = FindObjectOfType<null_special>();
+        
 
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
@@ -90,7 +100,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void FireMainWeapon()
+    private void FireMainWeapon() // OLD
     {
         if (rangedWeap1 != null)
         {
@@ -98,7 +108,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void FireAltWeapon()
+    private void FireAltWeapon() // OLD
     {
         if (meleeWeap1 != null)
         {
@@ -138,6 +148,9 @@ public class PlayerController : MonoBehaviour
         this.transform.position.y + 0.25f,
         this.transform.position.z);
     }
+
+    public Vector2 GetOrigin() { return rayOrigin; }
+    public Vector2 GetDirection() { return direction; }
 
     void UpdateAimLine(bool enabled, Vector2 direction)
     {
@@ -307,6 +320,12 @@ public class PlayerController : MonoBehaviour
             case "Bat":
                 newWeapon = bat;
                 break;
+            case "Mortar":
+                newWeapon = mortar;
+                break;
+            case "Mark":
+                newWeapon = mark;
+                break;
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             default:
                 Debug.Log("weapon not implemented");
@@ -341,12 +360,20 @@ public class PlayerController : MonoBehaviour
         {
             rangedWeap1 = (RangedWeapon)mainWeapon;
             meleeWeap1 = nullMelee;
+            specWeap1 = nullSpec;
         }
         else if (mainWeapon is MeleeWeapon)
         {
             meleeWeap1 = (MeleeWeapon)mainWeapon;
             rangedWeap1 = nullRanged;
+            specWeap1 = nullSpec;
             isMelee = true;
+        }
+        else if (mainWeapon is SpecialWeapon)
+        {
+            specWeap1 = (SpecialWeapon)mainWeapon;
+            rangedWeap1 = nullRanged;
+            meleeWeap1 = nullMelee;
         }
         uiControl.UpdateWeaponHUD_Main(mainWeapon.weaponName, isMelee);
 
@@ -356,13 +383,21 @@ public class PlayerController : MonoBehaviour
         {
             rangedWeap2 = (RangedWeapon)altWeapon;
             meleeWeap2 = nullMelee;
+            specWeap2 = nullSpec;
             isMelee = false;
         }
         else if (altWeapon is MeleeWeapon)
         {
             meleeWeap2 = (MeleeWeapon)altWeapon;
             rangedWeap2 = nullRanged;
+            specWeap2 = nullSpec;
             isMelee = true;
+        }
+        else if (altWeapon is SpecialWeapon)
+        {
+            specWeap2 = (SpecialWeapon)altWeapon;
+            meleeWeap2 = nullMelee;
+            rangedWeap2 = nullRanged;
         }
         uiControl.UpdateWeaponHUD_Alt(altWeapon.weaponName, isMelee);
         // distinguish ammo for both? main and alt

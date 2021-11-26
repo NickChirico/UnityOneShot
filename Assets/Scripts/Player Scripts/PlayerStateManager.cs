@@ -35,12 +35,14 @@ public class PlayerStateManager : MonoBehaviour
     public PlayerState ReloadMain;
     public PlayerState AttackMain;
     public PlayerState RecoverMain;
+    public PlayerState SpecMain;
 
     public PlayerState ShootAlt;
     public PlayerState RechamberAlt;
     public PlayerState ReloadAlt;
     public PlayerState AttackAlt;
     public PlayerState RecoverAlt;
+    public PlayerState SpecAlt;
 
     bool isActive;
 
@@ -60,7 +62,7 @@ public class PlayerStateManager : MonoBehaviour
         Shooting = new PlayerState_Shooting(this_SM, "Shooting", ShotControl.shotDuration);
         Dashing = new PlayerState_Dash(this_SM, "Dash", MoveControl.dashDuration);
         Damaged = new PlayerState_Damaged(this_SM, this_Player, "Damaged", this_Player.invulnDuration);
-        AltFiring = new PlayerState_AltFire(this_SM, "AltFire");
+        //AltFiring = new PlayerState_AltFire(this_SM, "AltFire");
         Special = new PlayerState_Special(this_SM, "Special");
         Reloading = new PlayerState_Reloading(this_SM, "Reloading", true);
         Rechamber = new PlayerState_Rechamber(this_SM, "Rechamber", true);
@@ -76,12 +78,14 @@ public class PlayerStateManager : MonoBehaviour
         ReloadMain = new PlayerState_Reloading(this_SM, "Reload-Main", true);
         AttackMain = new PlayerState_MeleeFire(this_SM, "Attack-Main", true);
         RecoverMain = new PlayerState_MeleeRecover(this_SM, "Recover-Main", true);
+        SpecMain = new PlayerState_SpecialFire(this_SM, "Spec-Main", true);
 
         ShootAlt = new PlayerState_RangedFire(this_SM, "Shoot-Alt", false);
         RechamberAlt = new PlayerState_Rechamber(this_SM, "Rechamber-Alt", false);
         ReloadAlt = new PlayerState_Reloading(this_SM, "Reload-Alt", false);
         AttackAlt = new PlayerState_MeleeFire(this_SM, "Attack-Alt", false);
         RecoverAlt = new PlayerState_MeleeRecover(this_SM, "Recover-Alt", false);
+        SpecAlt = new PlayerState_SpecialFire(this_SM, "Spec-Alt", false);
 
         ChangeState(Ready);
     }

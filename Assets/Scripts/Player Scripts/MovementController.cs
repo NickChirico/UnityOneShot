@@ -41,12 +41,6 @@ public class MovementController : MonoBehaviour
     public float dashCooldown;
     private bool canDash = true;
 
-
-    [Header("Special")]
-    public float specialDuration;
-    public float specialCooldown;
-    public float specialSpeed;
-
     [Header("Melee Attributes")]
     [Range(1, 10)] public float delayStopTime;
 

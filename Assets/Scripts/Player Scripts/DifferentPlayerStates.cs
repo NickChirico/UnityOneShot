@@ -35,7 +35,8 @@ public class PlayerState_Ready : PlayerState
                         SM.ChangeState(SM.AttackMain);
                     break;
                 case WeaponManager.WeaponType.Special:
-                    //SM.ChangeState(SM.ShootMain);
+                    if(playerControl.specWeap1.CanSpecial())
+                        SM.ChangeState(SM.SpecMain);
                     break;
             }
         }
@@ -51,7 +52,8 @@ public class PlayerState_Ready : PlayerState
                         SM.ChangeState(SM.AttackAlt);
                     break;
                 case WeaponManager.WeaponType.Special:
-                    //SM.ChangeState(SM.ShootMain);
+                    if (playerControl.specWeap2.CanSpecial())
+                        SM.ChangeState(SM.SpecAlt);
                     break;
             }
         }
@@ -327,8 +329,108 @@ public class PlayerState_AltFire : PlayerState
         Move.SetAltHold(false);
     }
 
-    public PlayerState_AltFire(PlayerStateManager myManager, string myName) :
-        base(myManager, myName)
+    public PlayerState_AltFire(PlayerStateManager myManager, string myName, bool isMain) :
+        base(myManager, myName, isMain)
+    {
+    }
+}
+
+// NEW SPECIAL
+
+public class PlayerState_SpecialFire : PlayerState
+{
+    SpecialWeapon weapon;
+
+    float t1;
+    bool didShoot = false;
+    bool doArc = false;
+    public override void DoState()
+    {
+        float specialPressed;
+        if (isMainWeap)
+            specialPressed = InputAction.Player.Fire.ReadValue<float>();
+        else
+            specialPressed = InputAction.Player.Fire2.ReadValue<float>();
+
+        if (doArc && !didShoot)
+        {
+            if (specialPressed == 0) // shoot early
+            {
+                if (weapon.CanSpecial() && !didShoot)
+                    ShootSpecial();
+            }
+            else
+            {
+                if (t1 < 1)
+                {
+                    t1 += Time.deltaTime;
+                    float lerpRatio = t1;
+                    //Vector2 offset = Spec.aimCurve_arc.Evaluate(lerpRatio) * new Vector2(1,0);
+                    weapon.AimProjectileArc(lerpRatio);//, offset);   
+                }
+                else // shoot after time
+                {
+                    if (weapon.CanSpecial())
+                        ShootSpecial();
+                }
+            }
+        }
+        else if (!didShoot)
+        {
+            ShootSpecial(); // sets --> didShoot = true
+        }
+
+        if (didShoot)
+        {
+            if (timer < Duration)
+            { timer += Time.deltaTime; }
+            else
+            {
+                SM.BackToReady();
+            }
+        }
+
+    }
+
+    private void ShootSpecial()
+    {
+        didShoot = true;
+        playerControl.FireWeapon(weapon);
+        if (doArc)
+            weapon.InitArcAim(false);
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        if (isMainWeap)
+            weapon = (SpecialWeapon)playerControl.mainWeapon;
+        else
+            weapon = (SpecialWeapon)playerControl.altWeapon;
+        //Move.SetMoveType(MovementController.Movement.Slow);
+        didShoot = false;
+        t1 = 0;
+
+        doArc = weapon.sp_isArc;
+
+        Duration = weapon.sp_Duration;
+        PrepDuration = weapon.sp_PreDelay;
+
+        //
+        if (doArc)
+            weapon.InitArcAim(true);
+        //
+    }
+    public override void Exit()
+    {
+        base.Exit();
+        Move.SetMoveType(MovementController.Movement.Normal);
+        //Spec.EndNimble();
+    }
+
+    public PlayerState_SpecialFire(PlayerStateManager myManager, string myName, bool isMain) :
+    base(myManager, myName, isMain)
     {
     }
 }

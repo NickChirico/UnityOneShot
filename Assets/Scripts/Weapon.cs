@@ -425,10 +425,12 @@ public class MeleeWeapon : Weapon
 
 public class SpecialWeapon : Weapon
 {
+    public enum SpecialType { Projectile, Arc, Lunge }
     [Space(5)]
-    public SpecialController.Special specialType;  
+    public SpecialType specialType;  
     public int sp_Damage;
     public int sp_Capacity;
+    private int currentAmmo;
     public float sp_Range;
     public float sp_Radius;
     public float sp_Knock;
@@ -439,6 +441,7 @@ public class SpecialWeapon : Weapon
     public bool sp_isArc;
     public float sp_travelTime;
     public Projectile projectile_prefab;
+    public GameObject aimIndicator_mortar;
 
     public AudioClip[] sp_Sounds;
 
@@ -447,9 +450,117 @@ public class SpecialWeapon : Weapon
         return WeaponManager.WeaponType.Special;
     }
 
+    MovementController moveControl;
+    PlayerController playerControl;
+    AudioManager audioManager;
+    UI_Manager uiControl;
+
+    Vector2 direction;
+    Vector2 rayOrigin;
+
+    void Start()
+    {
+        moveControl = MovementController.GetMoveController;
+        playerControl = PlayerController.GetPlayerController;
+        audioManager = AudioManager.GetAudioManager;
+        uiControl = UI_Manager.GetUIManager;
+        currentAmmo = sp_Capacity;
+    }
+
+    bool canSpecial = true;
+    public bool CanSpecial()
+    { return canSpecial; }
     public override void Fire(Vector2 origin, Vector2 dir)
     {
+        rayOrigin = origin;
+        direction = dir;
 
+        switch (specialType)
+        {
+            case SpecialType.Projectile:
+                if (projectile_prefab != null && currentAmmo > 0)
+                    ShootProjectileStraight();
+                break;
+            case SpecialType.Arc:
+                if (projectile_prefab != null)
+                    ShootProjectileArc();
+                break;
+            //
+            case SpecialType.Lunge:
+                //MoveControl.Recoil(false, MeleeControl.GetDirection(), sp_thrustF, sp_thrustDur);
+                //player.Nimble(true);
+                break;
+
+            default:
+                break;
+        }
+
+        if(currentAmmo <= 0)
+            StartCoroutine(SpecialCooldown());
+    }
+
+    public void ShootProjectileStraight()
+    {
+        Vector2 dir = playerControl.GetDirection();
+        Vector2 origin = playerControl.GetOrigin();
+
+        float rot_z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Projectile bullet = Instantiate(projectile_prefab, origin, Quaternion.Euler(0, 0, rot_z - 90));
+        Rigidbody2D rbb = bullet.gameObject.GetComponent<Rigidbody2D>();
+        rbb.AddForce(dir * bullet.force_noArc, ForceMode2D.Impulse);
+        currentAmmo--;
+    }
+    public void ShootProjectileArc()
+    {
+        Vector2 dir = playerControl.GetDirection();
+        Vector2 origin = playerControl.GetOrigin();
+
+        float rot_z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Projectile bullet = Instantiate(projectile_prefab, origin, Quaternion.Euler(0, 0, rot_z - 90));
+
+        float distance = (aimIndicator_mortar.transform.position - playerControl.transform.position).magnitude;
+        float timeRatio = (distance / sp_Range);
+        Debug.Log(distance);
+        bullet.SetVals(origin, dir, distance, arcCurve, sp_travelTime, timeRatio);
+        currentAmmo--;
+    }
+
+    // Helper Functions 
+    public void InitArcAim(bool b)
+    {
+        if (b)
+        {
+            aimIndicator_mortar.SetActive(true);
+            aimIndicator_mortar.transform.position = playerControl.GetOrigin();// + direction*0.5f;
+        }
+        else
+        {
+            StartCoroutine(HideArcIndicator());
+        }
+    }
+    public void AimProjectileArc(float ratio)//, Vector2 offset)
+    {
+        rayOrigin = playerControl.GetOrigin();
+        direction = playerControl.GetDirection();
+
+        if (aimIndicator_mortar.activeSelf)
+        {
+            aimIndicator_mortar.transform.position = Vector2.Lerp(rayOrigin, rayOrigin + direction * sp_Range, ratio);// + offset;
+        }
+    }
+    private IEnumerator HideArcIndicator()
+    {
+        yield return new WaitForSeconds(0.5f);
+        aimIndicator_mortar.SetActive(false);
+    }
+
+    // 
+    private IEnumerator SpecialCooldown()
+    {
+        canSpecial = false;
+        yield return new WaitForSeconds(sp_Cooldown);
+        canSpecial = true;
+        currentAmmo = sp_Capacity;
     }
 }
 #endregion
