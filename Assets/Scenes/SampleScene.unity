@@ -41106,7 +41106,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -125}
+  m_AnchoredPosition: {x: 0, y: -125.000015}
   m_SizeDelta: {x: -50, y: -300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1115189684
@@ -47861,7 +47861,7 @@ MonoBehaviour:
   - {fileID: 1220326759}
   - {fileID: 923140122}
   altWeapSlots:
-  - {fileID: 852822112}
+  - {fileID: 1321466168}
   - {fileID: 852822112}
   - {fileID: 1580721115}
   armorSlots:

@@ -47,14 +47,14 @@ public class AugmentSlot : MonoBehaviour, IDropHandler, IBeginDragHandler
                 {
                     mySeraph_ui = eventData.pointerDrag.GetComponent<Seraph_UI>();//.ReturnSeraph();
                     mySeraph_ui.Slot.ClearSeraph();
-                    mySeraph_ui.Slot=this;
+                    mySeraph_ui.Slot = this;
                     SetSeraphLocation();
-                    Debug.Log(mySeraph_ui.name);
+                    //Debug.Log(mySeraph_ui.name);
                     //seraphControl.AddToSeraphList(mySeraph_ui, myEquipment);
                 }
                 else
                 {
-                    
+
                 }
             }
         }

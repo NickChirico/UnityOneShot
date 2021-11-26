@@ -7,6 +7,8 @@ public abstract class Weapon : MonoBehaviour
     public bool isValidWeapon;
     public string weaponName;
 
+    private Seraph_UI[] seraphs;
+
     public abstract WeaponManager.WeaponType GetWeaponType();
 
     //public abstract Weapon GetThisWeapon();
@@ -14,7 +16,24 @@ public abstract class Weapon : MonoBehaviour
     public abstract void Fire(Vector2 origin, Vector2 dir);
 
     public virtual void Equip()
-    { }
+    {
+        
+    }
+
+    public void SetSeraphs(List<Seraph_UI> list)
+    {
+        seraphs = list.ToArray();
+    }
+    public void ActivateSeraphs(ShootableEntity entity, Vector2 pos)
+    {
+        if (seraphs.Length > 0)
+        {
+            foreach (Seraph_UI S in seraphs)
+            {
+                S.mySeraph.StartEffect(entity, pos);
+            }
+        }
+    }
 }
 
 #region Ranged Weapon
@@ -63,12 +82,14 @@ public class RangedWeapon : Weapon
     Vector2 rayOrigin;
 
     MovementController moveControl;
+    PlayerController playerControl;
     AudioManager audioManager;
     UI_Manager uiControl;
 
     void Start()
     {
         moveControl = MovementController.GetMoveController;
+        playerControl = PlayerController.GetPlayerController;
         audioManager = AudioManager.GetAudioManager;
         uiControl = UI_Manager.GetUIManager;
         currentAmmo = ammoCapacity;
@@ -187,7 +208,7 @@ public class RangedWeapon : Weapon
         moveControl.SpeedBoost(isKillShot);
 
         // APPLY SERAPH EFFECTS
-        //seraphControl.ActivateMainWeaponSeraphs(entityHit, hitPoint);
+        ActivateSeraphs(entityHit, hitPoint);
 
     }
 
@@ -384,7 +405,7 @@ public class MeleeWeapon : Weapon
         entityHit.TakeDamage(damageToDeal, hitPoint, knockForceArr[currentInterval]);
 
         // SERAPH
-        //seraphControl.ActivateMainWeaponSeraphs(entityHit, hitPoint);
+        ActivateSeraphs(entityHit, hitPoint);
     }
 
     public void Recover()
@@ -450,6 +471,11 @@ public class SpecialWeapon : Weapon
         return WeaponManager.WeaponType.Special;
     }
 
+    public override void Equip()
+    {
+        uiControl.UpdateAmmo(currentAmmo, sp_Capacity);
+    }
+
     MovementController moveControl;
     PlayerController playerControl;
     AudioManager audioManager;
@@ -480,10 +506,12 @@ public class SpecialWeapon : Weapon
             case SpecialType.Projectile:
                 if (projectile_prefab != null && currentAmmo > 0)
                     ShootProjectileStraight();
+                uiControl.UpdateAmmo(currentAmmo, sp_Capacity);
                 break;
             case SpecialType.Arc:
                 if (projectile_prefab != null)
                     ShootProjectileArc();
+                uiControl.UpdateAmmo(currentAmmo, sp_Capacity);
                 break;
             //
             case SpecialType.Lunge:
@@ -520,7 +548,6 @@ public class SpecialWeapon : Weapon
 
         float distance = (aimIndicator_mortar.transform.position - playerControl.transform.position).magnitude;
         float timeRatio = (distance / sp_Range);
-        Debug.Log(distance);
         bullet.SetVals(origin, dir, distance, arcCurve, sp_travelTime, timeRatio);
         currentAmmo--;
     }
@@ -561,6 +588,7 @@ public class SpecialWeapon : Weapon
         yield return new WaitForSeconds(sp_Cooldown);
         canSpecial = true;
         currentAmmo = sp_Capacity;
+        uiControl.UpdateAmmo(currentAmmo, sp_Capacity);
     }
 }
 #endregion

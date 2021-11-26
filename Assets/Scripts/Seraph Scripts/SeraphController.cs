@@ -135,6 +135,11 @@ public class SeraphController : MonoBehaviour
             if (slot.HasSeraph())
                 ArmorSeraphs.Add(slot.mySeraph_ui);
         }
+        foreach (AugmentSlot slot in bootsSlots)
+        {
+            if (slot.HasSeraph())
+                BootsSeraphs.Add(slot.mySeraph_ui);
+        }
 
         foreach (AugmentSlot slot in bagSlots)
         {

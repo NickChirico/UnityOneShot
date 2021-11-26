@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInputActions playerInputActions;
     private UI_Manager uiControl;
+    private SeraphController seraphControl;
 
     Vector2 direction;
     Vector2 rayOrigin;
@@ -54,7 +55,6 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         _Control = this;
-        uiControl = UI_Manager.GetUIManager;
 
         rifle = FindObjectOfType<Rifle>();
         repeater = FindObjectOfType<Repeater>();
@@ -76,6 +76,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        seraphControl = SeraphController.GetSeraphController;
+        uiControl = UI_Manager.GetUIManager;
         UpdateWeapon();
     }
 
@@ -402,5 +404,11 @@ public class PlayerController : MonoBehaviour
         uiControl.UpdateWeaponHUD_Alt(altWeapon.weaponName, isMelee);
         // distinguish ammo for both? main and alt
 
+    }
+
+    public void UpdateSeraphs() // called in UI manager when window closed
+    {
+        mainWeapon.SetSeraphs(seraphControl.MainWeapSeraphs);
+        altWeapon.SetSeraphs(seraphControl.AltWeapSeraphs);
     }
 }

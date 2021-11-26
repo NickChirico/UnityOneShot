@@ -191,6 +191,7 @@ public class UI_Manager : MonoBehaviour
         if (EquipmentPanel.activeSelf)
         {
             seraphs.UpdateSeraphLists();
+            playerControl.UpdateSeraphs();
 
             Time.timeScale = 1;
             EquipmentPanel.SetActive(false);
