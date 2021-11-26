@@ -12,6 +12,7 @@ public class PlayerStateManager : MonoBehaviour
     //protected static EquipmentManager EquipControl;
     protected static MeleeController MeleeControl;
     protected static WeaponManager WeaponControl;
+
     protected static Player this_Player;
 
     public PlayerState Ready;
@@ -28,6 +29,18 @@ public class PlayerStateManager : MonoBehaviour
     public PlayerState Attack2;
     public PlayerState Attack3;
     public PlayerState AttackRecover;
+
+    public PlayerState ShootMain;
+    public PlayerState RechamberMain;
+    public PlayerState ReloadMain;
+    public PlayerState AttackMain;
+    public PlayerState RecoverMain;
+
+    public PlayerState ShootAlt;
+    public PlayerState RechamberAlt;
+    public PlayerState ReloadAlt;
+    public PlayerState AttackAlt;
+    public PlayerState RecoverAlt;
 
     bool isActive;
 
@@ -49,14 +62,26 @@ public class PlayerStateManager : MonoBehaviour
         Damaged = new PlayerState_Damaged(this_SM, this_Player, "Damaged", this_Player.invulnDuration);
         AltFiring = new PlayerState_AltFire(this_SM, "AltFire");
         Special = new PlayerState_Special(this_SM, "Special");
-        Reloading = new PlayerState_Reloading(this_SM, "Reloading", ShotControl.reloadDuration);
-        Rechamber = new PlayerState_Rechamber(this_SM, "Rechamber", ShotControl.rechamberDuration);
+        Reloading = new PlayerState_Reloading(this_SM, "Reloading", true);
+        Rechamber = new PlayerState_Rechamber(this_SM, "Rechamber", true);
 
         MeleeAttack = new PlayerState_MeleeAttack(this_SM, "MeleeAtk");
         //Attack1 = new PlayerState_MeleeAttack(this_SM, "Attack1", MeleeControl.attackDuration_1, MeleeControl.preAttackDelay_1, 1);
         //Attack2 = new PlayerState_MeleeAttack(this_SM, "Attack2", MeleeControl.attackDuration_2, MeleeControl.preAttackDelay_2, 2);
         //Attack3 = new PlayerState_MeleeAttack(this_SM, "Attack3", MeleeControl.attackDuration_3, MeleeControl.preAttackDelay_3, 3);
-        AttackRecover = new PlayerState_MeleeRecover(this_SM, "AtkRecover", MeleeControl.recoverTime, 0, 1);
+        //AttackRecover = new PlayerState_MeleeRecover(this_SM, "AtkRecover", MeleeControl.recoverTime, 0, 1);
+
+        ShootMain = new PlayerState_RangedFire(this_SM, "Shoot-Main", true);
+        RechamberMain = new PlayerState_Rechamber(this_SM, "Rechamber-Main", true);
+        ReloadMain = new PlayerState_Reloading(this_SM, "Reload-Main", true);
+        AttackMain = new PlayerState_MeleeFire(this_SM, "Attack-Main", true);
+        RecoverMain = new PlayerState_MeleeRecover(this_SM, "Recover-Main", true);
+
+        ShootAlt = new PlayerState_RangedFire(this_SM, "Shoot-Alt", false);
+        RechamberAlt = new PlayerState_Rechamber(this_SM, "Rechamber-Alt", false);
+        ReloadAlt = new PlayerState_Reloading(this_SM, "Reload-Alt", false);
+        AttackAlt = new PlayerState_MeleeFire(this_SM, "Attack-Alt", false);
+        RecoverAlt = new PlayerState_MeleeRecover(this_SM, "Recover-Alt", false);
 
         ChangeState(Ready);
     }

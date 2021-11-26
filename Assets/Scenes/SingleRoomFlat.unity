@@ -9407,6 +9407,92 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 876406176}
   m_CullTransparentMesh: 1
+--- !u!1 &884922775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 884922777}
+  - component: {fileID: 884922776}
+  m_Layer: 0
+  m_Name: SaberObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &884922776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884922775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f12828a29807a844aa1ba28970f49929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isValidWeapon: 1
+  weaponName: Saber
+  intervalCount: 2
+  damageArr: 080000000c0000000000000006000000
+  knockForceArr:
+  - 1000
+  - 1000
+  attackDurArr:
+  - 0.3
+  - 0.25
+  swingRangeArr:
+  - 0.5
+  - 0.6
+  - 0
+  - 0.5
+  attackRadiusArr:
+  - 0.5
+  - 0.6
+  - 0
+  - 0.6
+  thrustForceArr:
+  - 300
+  - 200
+  - 0
+  - 2000
+  thrustDurArr:
+  - 0.15
+  - 0.15
+  - 0
+  - 0.8
+  preDelayArr:
+  - 0.1
+  - 0.05
+  recoverTime: 0.3
+  comboCooldown: 0.2
+  collisionInterval: 0.25
+  swingSounds: []
+  tempAttackDisplay: {fileID: 0}
+  hittableEntity:
+    serializedVersion: 2
+    m_Bits: 64
+  currentInterval: 0
+  canAttack: 1
+--- !u!4 &884922777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884922775}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.8193314, y: -0.38927495, z: -0.90115243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &893174171
 GameObject:
   m_ObjectHideFlags: 0
@@ -15601,6 +15687,76 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269863689}
   m_CullTransparentMesh: 1
+--- !u!1 &1281055038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1281055040}
+  - component: {fileID: 1281055039}
+  m_Layer: 0
+  m_Name: RifleObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1281055039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281055038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e0b42dde2597fe4dbcf336cd9317113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isValidWeapon: 1
+  weaponName: Rifle
+  shotDamage: 14
+  ammoCapacity: 4
+  currentAmmo: 0
+  range: 4.5
+  reloadDuration: 2.5
+  knockbackForce: 200
+  doRecoil: 0
+  recoilForce: 0
+  recoilDuration: 0
+  delayBetweenShots: 0.5
+  doRechamber: 1
+  rechamberDuration: 0.5
+  doCone: 0
+  coneSpread: 0
+  coneAngle: 0
+  shotSounds:
+  - {fileID: 8300000, guid: 26911a83d6a92554e9fd7da1814e1f7e, type: 3}
+  - {fileID: 8300000, guid: 54f793159d6ac0346b8c0d578d61b4df, type: 3}
+  - {fileID: 8300000, guid: 4557b5f4d9d17b940bef7fb277761412, type: 3}
+  reload_Sound: {fileID: 8300000, guid: 9fd46ebf8b63e124182e9e08f21f1c6c, type: 3}
+  ShotTrail_prefab: {fileID: 998725183318589660, guid: 60e4168ed312640489c8221df7236823,
+    type: 3}
+  ImpactBurst_prefab: {fileID: 2525939174598934099, guid: 8a2645ae9f5420343bec8b6c41903285,
+    type: 3}
+  shotVFX_duration: 0.1
+--- !u!4 &1281055040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281055038}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.8193314, y: -0.38927495, z: -0.90115243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1304115174
 GameObject:
   m_ObjectHideFlags: 0

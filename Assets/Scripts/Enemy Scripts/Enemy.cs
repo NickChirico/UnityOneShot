@@ -160,7 +160,8 @@ public abstract class Enemy : MonoBehaviour
     {
         Vector2 knockBack = ((-1 * direction) * force);
         rb.velocity = Vector2.zero;
-        rb.AddForce(knockBack);
+        rb.angularVelocity = 0;
+        rb.AddForce(knockBack, ForceMode2D.Impulse);
     }
 
     // ********************
@@ -212,7 +213,7 @@ public abstract class Enemy : MonoBehaviour
     {
         // ATTACK LOGIC base
         canAttack = false;
-        rb.AddForce(dir * attackLungeForce);
+        rb.AddForce(dir * attackLungeForce, ForceMode2D.Impulse);
 
     }
 

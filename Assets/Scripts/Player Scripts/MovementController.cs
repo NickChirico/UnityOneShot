@@ -196,9 +196,9 @@ public class MovementController : MonoBehaviour
     public void Recoil(bool isDashMOVEdir, Vector2 dir, float force, float duration)
     {
         if (isDashMOVEdir)
-            rb.AddForce(direction * force);
+            rb.AddForce(direction * force, ForceMode2D.Impulse);
         else
-            rb.AddForce(dir * force);
+            rb.AddForce(dir * force, ForceMode2D.Impulse);
         recoilTimer = 0;
         recoilDuration = duration;
     }
@@ -237,7 +237,7 @@ public class MovementController : MonoBehaviour
     // ~~ Thrust ~~
     public void Thrust(Vector2 dir, float force, float dur)
     {
-        rb.AddForce(dir * force);
+        rb.AddForce(dir * force, ForceMode2D.Impulse);
         thrustTimer = 0;
         thrustDuration = dur;
     }
@@ -255,7 +255,7 @@ public class MovementController : MonoBehaviour
     {
 
         rb.velocity = Vector2.zero;
-        rb.AddForce(direction * dashForce);
+        rb.AddForce(direction * dashForce, ForceMode2D.Impulse);
         audioManager.PlayDashSound();
         dashTimer = 0;
         StartCoroutine(DashCooldown());

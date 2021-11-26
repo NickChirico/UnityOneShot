@@ -136,6 +136,7 @@ public class MeleeController : MonoBehaviour
         return rayOrigin;
     }
 
+
     private void UpdateDirection()
     {
         if (usingMouse)

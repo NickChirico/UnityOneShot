@@ -25,17 +25,35 @@ public class PlayerState_Ready : PlayerState
 
         if (firePressed > 0)
         {
-            if (SM.IsMelee()) // If (IsMelee)
+            switch (playerControl.mainWeapon.GetWeaponType())
             {
-                if(Melee.CanAttack())
-                    SM.ChangeState(SM.MeleeAttack); // Go to ATTACKING State
+                case WeaponManager.WeaponType.Ranged:
+                    SM.ChangeState(SM.ShootMain);
+                    break;
+                case WeaponManager.WeaponType.Melee:
+                    if(playerControl.meleeWeap1.CanAttack())
+                        SM.ChangeState(SM.AttackMain);
+                    break;
+                case WeaponManager.WeaponType.Special:
+                    //SM.ChangeState(SM.ShootMain);
+                    break;
             }
-            else if (Shot.HasShot())
-                SM.ChangeState(SM.Shooting); //  Go to SHOOTING State
         }
-        if (specPressed > 0 && Spec.CanSpecial())
+        if (specPressed > 0)
         {
-            SM.ChangeState(SM.Special);
+            switch (playerControl.altWeapon.GetWeaponType())
+            {
+                case WeaponManager.WeaponType.Ranged:
+                    SM.ChangeState(SM.ShootAlt);
+                    break;
+                case WeaponManager.WeaponType.Melee:
+                    if (playerControl.meleeWeap2.CanAttack())
+                        SM.ChangeState(SM.AttackAlt);
+                    break;
+                case WeaponManager.WeaponType.Special:
+                    //SM.ChangeState(SM.ShootMain);
+                    break;
+            }
         }
         if (reloadPressed > 0 && Shot.currentAmmo < Shot.ammoCapacity)
         {
@@ -59,6 +77,144 @@ public class PlayerState_Ready : PlayerState
 
     public PlayerState_Ready(PlayerStateManager myManager, string myName) :
         base(myManager, myName)
+    {
+    }
+}
+
+public class PlayerState_RangedFire : PlayerState
+{
+    RangedWeapon weapon;
+    public override void DoState()
+    {
+        if (timer < Duration)
+        {
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            if (weapon.currentAmmo > 0)
+            {
+                if (weapon.doRechamber)
+                {
+                    if(isMainWeap)
+                        SM.ChangeState(SM.RechamberMain);
+                    else
+                        SM.ChangeState(SM.RechamberAlt);
+                }
+                else
+                {
+                    weapon.SetHasShot(true);
+                    SM.BackToReady();
+                }
+            }
+            else
+            {
+                if (isMainWeap)
+                    SM.ChangeState(SM.ReloadMain);
+                else
+                    SM.ChangeState(SM.ReloadAlt);
+            }
+        }
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        if (isMainWeap)
+            weapon = (RangedWeapon)playerControl.mainWeapon;
+        else
+            weapon = (RangedWeapon)playerControl.altWeapon;
+
+        Duration = weapon.delayBetweenShots;
+
+        playerControl.FireWeapon(weapon);
+
+        //playerControl.FireMainWeapon();
+        //playerControl.ToggleAimLineColor(true);
+        //Duration = playerControl.rangedWeap1.delayBetweenShots;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
+    public PlayerState_RangedFire(PlayerStateManager myManager, string myName, bool mainWeap) :
+    base(myManager, myName, mainWeap)
+    {
+    }
+}
+
+public class PlayerState_MeleeFire : PlayerState
+{
+    MeleeWeapon weapon;
+    float atimer = 0;
+    bool canThrust;
+    public override void DoState()
+    {
+        timer += Time.deltaTime;
+
+        if (timer > Duration)
+        {
+            if (isMainWeap)
+                SM.ChangeState(SM.RecoverMain); // to RECOVER
+            else
+                SM.ChangeState(SM.RecoverAlt);
+        }
+        else if (timer > PrepDuration)
+        {
+            atimer += Time.deltaTime;
+            if (canThrust)
+            {
+                weapon.AttackThrust(AttackInterval);
+                canThrust = false;
+            }
+        }
+
+        if (atimer > weapon.collisionInterval)
+        {
+            atimer = 0;
+            weapon.Attack(AttackInterval);
+        }
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        if (isMainWeap)
+            weapon = (MeleeWeapon)playerControl.mainWeapon;
+        else
+            weapon = (MeleeWeapon)playerControl.altWeapon;
+
+        AttackInterval = weapon.GetCurrentInterval();
+        Duration = weapon.attackDurArr[AttackInterval];
+        PrepDuration = weapon.preDelayArr[AttackInterval];
+
+        // if(!canMoveWhileAttacking)
+        Move.Hold();
+        canThrust = true;
+        //Melee.CanAim(false);
+        atimer = weapon.collisionInterval;
+
+
+        //playerControl.FireAltWeapon();
+        playerControl.FireWeapon(weapon);
+        weapon.PrepAttack(AttackInterval);
+
+    }
+
+    public override void Exit()
+    {
+        //Melee.CanAim(true);
+        Move.MoveNormal();
+        weapon.SetIndicator(false);
+        base.Exit();
+    }
+
+    public PlayerState_MeleeFire(PlayerStateManager myManager, string myName, bool mainWeap) :
+    base(myManager, myName, mainWeap)
     {
     }
 }
@@ -332,6 +488,7 @@ public class PlayerState_Special : PlayerState
  */
 public class PlayerState_Reloading : PlayerState
 {
+    RangedWeapon weapon;
     bool soundPlayed;
     public override void DoState()
     {
@@ -342,10 +499,10 @@ public class PlayerState_Reloading : PlayerState
         {
             SM.ChangeState(SM.Dashing);
         }
-        else if (fire2Pressed > 0 && Spec.CanSpecial())
+        /*else if (fire2Pressed > 0 && Spec.CanSpecial())
         {
-            SM.ChangeState(SM.Special);
-        }
+            //SM.ChangeState(SM.Special);
+        }*/
         else if (timer < Duration)
         {
             timer += Time.deltaTime;
@@ -365,11 +522,16 @@ public class PlayerState_Reloading : PlayerState
     public override void Enter()
     {
         base.Enter();
-        soundPlayed = false;
-        Duration = Shot.reloadDuration;
-        Shot.PlayFullReloadSound();
+        if (isMainWeap)
+            weapon = (RangedWeapon)playerControl.mainWeapon;
+        else
+            weapon = (RangedWeapon)playerControl.altWeapon;
 
-        Shot.ToggleAimLineColor(true);
+
+        soundPlayed = false;
+        Duration = weapon.reloadDuration;
+
+        weapon.PlayFullReloadSound();
     }
 
     public override void Exit()
@@ -379,43 +541,42 @@ public class PlayerState_Reloading : PlayerState
 
     private void ReloadSuccess()
     {
-        Shot.currentAmmo = Shot.ammoCapacity;
-        Shot.ToggleAimLineColor(false);
-        Shot.SetHasShot(true);
-        Shot.UpdateAmmoUI();
+        weapon.Reload();
+        playerControl.ToggleAimLineColor(false);
+        //Shot.UpdateAmmoUI();
     }
 
-    public PlayerState_Reloading(PlayerStateManager myManager, string myName, float myDur) :
-        base(myManager, myName, myDur)
+    public PlayerState_Reloading(PlayerStateManager myManager, string myName, bool mainWeap) :
+        base(myManager, myName, mainWeap)
     {
     }
 }
 
 public class PlayerState_Rechamber : PlayerState
 {
+    RangedWeapon weapon;
     bool soundPlayed;
     public override void DoState()
     {
         float altFirePressed = InputAction.Player.Fire2.ReadValue<float>();
         float dashPressed = InputAction.Player.Dash.ReadValue<float>();
 
-        if (altFirePressed > 0 && Alt.CanAltFire())
+        /*if (altFirePressed > 0 && Alt.CanAltFire())
         {
             SM.ChangeState(SM.AltFiring);
         }
         if (dashPressed > 0 && Move.CanDash())
         {
             SM.ChangeState(SM.Dashing);
-        }
-        else if (timer < Duration)
+        }*/
+        if (timer < Duration)
         {
             timer += Time.deltaTime;
-            if (timer > Duration * 0.40f && !soundPlayed)
+            if (timer > Duration * 0.4f && !soundPlayed)
             {
-                Shot.SetHasShot(true);
-                Shot.ToggleAimLineColor(false);
+                weapon.SetHasShot(true);
+                //playerControl.ToggleAimLineColor(false);
 
-                Shot.PlayReloadSound();
                 soundPlayed = true;
             }
         }
@@ -428,13 +589,25 @@ public class PlayerState_Rechamber : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        if (isMainWeap)
+            weapon = (RangedWeapon)playerControl.mainWeapon;
+        else
+            weapon = (RangedWeapon)playerControl.altWeapon;
+
+
         soundPlayed = false;
-        Duration = Shot.rechamberDuration;
+        Duration = weapon.rechamberDuration;
 
-        Shot.ToggleAimLineColor(true);
+        if (weapon.currentAmmo < 1)
+        {
+            if (isMainWeap)
+                SM.ChangeState(SM.ReloadMain);
+            else
+                SM.ChangeState(SM.ReloadAlt);
+        }
 
-        if (Shot.currentAmmo < 1)
-            SM.ChangeState(SM.Reloading);
+        weapon.PlayRechamberSound();
     }
 
     public override void Exit()
@@ -442,8 +615,8 @@ public class PlayerState_Rechamber : PlayerState
         base.Exit();
     }
 
-    public PlayerState_Rechamber(PlayerStateManager myManager, string myName, float myDur) :
-        base(myManager, myName, myDur)
+    public PlayerState_Rechamber(PlayerStateManager myManager, string myName, bool mainWeap) :
+        base(myManager, myName, mainWeap)
     {
     }
 }
@@ -509,6 +682,7 @@ public class PlayerState_MeleeAttack : PlayerState
 
 public class PlayerState_MeleeRecover : PlayerState
 {
+    MeleeWeapon weapon;
     public override void DoState()
     {
         float firePressed = InputAction.Player.Fire.ReadValue<float>();
@@ -519,43 +693,42 @@ public class PlayerState_MeleeRecover : PlayerState
 
         if (timer > Duration)
         {
-            Melee.ResetAttackSequence();
+            weapon.ResetAttackSequence();
             SM.BackToReady();
         }
-        else if (firePressed > 0)
+        else if (weapon.CanAttack() && AttackInterval < weapon.intervalCount)
         {
-            if (SM.IsMelee() && Melee.CanAttack() && AttackInterval < Melee.intervalCount)
+            if (isMainWeap && firePressed > 0)
             {
-                /*switch(Melee.intervalCount)
-                {
-                    case 1:
-                        SM.ChangeState(SM.Attack2);
-                        break;
-                    case 2:
-                        SM.ChangeState(SM.Attack3);
-                        break;
-                    default:
-                        break;
-                }*/
-                SM.ChangeState(SM.MeleeAttack);
+                SM.ChangeState(SM.AttackMain);
+            }
+            else if (!isMainWeap && fire2Pressed > 0)
+            {
+                SM.ChangeState(SM.AttackAlt);
             }
         }
-        else if (fire2Pressed > 0 && Spec.CanSpecial())
+        /*else if (fire2Pressed > 0 && Spec.CanSpecial())
         {
-            SM.ChangeState(SM.Special);
+            //SM.ChangeState(SM.Special);
         }
         else if (dashPressed > 0 && Move.CanDash())
         {
             SM.ChangeState(SM.Dashing);
-        }
+        }*/
     }
 
     public override void Enter()
     {
         base.Enter();
-        Duration = Melee.recoverTime;
-        AttackInterval = Melee.GetCurrentInterval();
-        Melee.Recover();
+
+        if (isMainWeap)
+            weapon = (MeleeWeapon)playerControl.mainWeapon;
+        else
+            weapon = (MeleeWeapon)playerControl.altWeapon;
+
+        Duration = weapon.recoverTime;
+        AttackInterval = weapon.GetCurrentInterval();
+        weapon.Recover();
     }
 
     public override void Exit()
@@ -563,8 +736,8 @@ public class PlayerState_MeleeRecover : PlayerState
         base.Exit();
     }
 
-    public PlayerState_MeleeRecover(PlayerStateManager myManager, string myName, float myDur, float myPrep, int myInterval) :
-        base(myManager, myName, myDur, myPrep, myInterval)
+    public PlayerState_MeleeRecover(PlayerStateManager myManager, string myName, bool mainWeap) :
+        base(myManager, myName, mainWeap)
     {
     }
 }
@@ -577,10 +750,16 @@ public class PlayerState_Dash : PlayerState
 
         if (timer > Duration)
         {
-            if (SM.IsMelee() || (!SM.IsMelee() && Shot.HasShot()))
+            /*if (SM.IsMelee() || (!SM.IsMelee() && Shot.HasShot()))
                 SM.BackToReady();
             else
-                SM.ChangeState(SM.Reloading);
+                SM.ChangeState(SM.Reloading);*/
+            if (!playerControl.rangedWeap1.HasShot())
+            {
+                SM.ChangeState(SM.RechamberMain);
+            }
+            else
+                SM.BackToReady();
         }
     }
 
@@ -589,8 +768,8 @@ public class PlayerState_Dash : PlayerState
         base.Enter();
         Move.Dash();
 
-        if (SM.IsMelee())
-            Melee.ResetAttackSequence();
+        playerControl.meleeWeap1.ResetAttackSequence();
+        playerControl.meleeWeap2.ResetAttackSequence();
     }
 
     public override void Exit()
@@ -612,10 +791,12 @@ public class PlayerState_Damaged : PlayerState
 
         if (timer > Duration)
         {
-            if (SM.IsMelee() || (!SM.IsMelee() && Shot.HasShot()))
-                SM.BackToReady();
+            if (!playerControl.rangedWeap1.HasShot())
+            {
+                SM.ChangeState(SM.RechamberMain);
+            }
             else
-                SM.ChangeState(SM.Reloading);
+                SM.BackToReady();
         }
     }
 
@@ -625,8 +806,8 @@ public class PlayerState_Damaged : PlayerState
         Vector2 knockDir = new Vector2(Random.Range(-360, 360), Random.Range(-360, 360)).normalized;
         Move.Recoil(false, knockDir, player.knockedForce, player.invulnDuration);
 
-        if (SM.IsMelee())
-            Melee.ResetAttackSequence();
+        playerControl.meleeWeap1.ResetAttackSequence();
+        playerControl.meleeWeap2.ResetAttackSequence();
     }
 
     public override void Exit()

@@ -4,18 +4,26 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    public bool isValidWeapon;
     public string weaponName;
 
     public abstract WeaponManager.WeaponType GetWeaponType();
 
     //public abstract Weapon GetThisWeapon();
+
+    public abstract void Fire(Vector2 origin, Vector2 dir);
+
+    public virtual void Equip()
+    { }
 }
 
+#region Ranged Weapon
 public class RangedWeapon : Weapon
 {
     [Space(5)]
     public int shotDamage;
     public int ammoCapacity;
+    public int currentAmmo;
     public float range;
     public float reloadDuration;
     public float knockbackForce;
@@ -34,19 +42,234 @@ public class RangedWeapon : Weapon
     [Space(10)]
     public AudioClip[] shotSounds;
     public AudioClip reload_Sound;
+    public LineRenderer ShotTrail_prefab;
+    public GameObject ImpactBurst_prefab;
+    public float shotVFX_duration;
+
+    private bool hasShot = true;
+
 
     public override WeaponManager.WeaponType GetWeaponType()
     {
         return WeaponManager.WeaponType.Ranged;
     }
+    public override void Equip()
+    {
+        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+    }
+
+    Ray2D[] rays;
+    LineRenderer[] lineTrails;
+    Vector2 rayOrigin;
+
+    MovementController moveControl;
+    AudioManager audioManager;
+    UI_Manager uiControl;
+
+    void Start()
+    {
+        moveControl = MovementController.GetMoveController;
+        audioManager = AudioManager.GetAudioManager;
+        uiControl = UI_Manager.GetUIManager;
+        currentAmmo = ammoCapacity;
+    }
+
+
+    public bool HasShot()
+    {
+        return hasShot;
+    }
+    public void SetHasShot(bool b)
+    {
+        hasShot = b;
+    }
+
+    public override void Fire(Vector2 origin, Vector2 direction)
+    {
+        rayOrigin = origin;
+        if (doCone)
+        {
+            rays = new Ray2D[coneSpread];
+            for (int i = 0; i < rays.Length; i++)
+            {
+                rays[i] = new Ray2D(rayOrigin, RandomConeAngle(direction));
+            }
+        }
+        else
+        {
+            rays = new Ray2D[1];
+            rays[0] = new Ray2D(rayOrigin, direction * range);
+        }
+
+        lineTrails = new LineRenderer[rays.Length];
+
+        // Do the shot(s)
+        Shoot(FindHitsFromRays(rays));
+        //
+        ShotRecoil(-direction);
+        //
+        LoseAmmo();
+        //
+        StartCoroutine(ShotEffect());
+    }
+
+    private RaycastHit2D[] FindHitsFromRays(Ray2D[] rays)
+    {
+        RaycastHit2D[] hits = new RaycastHit2D[rays.Length];
+        for (int i = 0; i < rays.Length; i++)
+        {
+            hits[i] = Physics2D.Raycast(rayOrigin, rays[i].direction, range);
+        }
+        return hits;
+    }
+
+    private void Shoot(RaycastHit2D[] hits)
+    {
+        hasShot = false;
+        int i = 0;
+        foreach (RaycastHit2D hit in hits)
+        {
+            LineRenderer line = Instantiate(ShotTrail_prefab, this.transform);
+            line.SetPosition(0, rayOrigin);
+
+            if (hit.collider != null)
+            {
+                line.SetPosition(1, hit.point);
+                Vector2 hitPoint = new Vector2(hit.point.x, hit.point.y);
+
+                if (hit.collider.CompareTag("Terrain"))
+                {
+                    //HitTerrain();
+                    Instantiate(ImpactBurst_prefab, hit.point, Quaternion.identity);
+                }
+                else if (hit.collider.CompareTag("Enemy"))
+                {
+                    ShootableEntity entity = hit.collider.GetComponent<ShootableEntity>();
+                    if (entity != null)
+                    {
+                        ApplyShot(entity, hit.point, hit.distance, shotDamage); // PASS DAMAGE TO ApplyShot(damage);
+                        Instantiate(ImpactBurst_prefab, hitPoint, Quaternion.identity);
+                    }
+                }
+                else // other entities hit...
+                { }
+            }
+            else
+            {
+                // Miss!
+                Vector2 rayOrigin2D = new Vector2(rayOrigin.x, rayOrigin.y);
+                line.SetPosition(1, rayOrigin2D + rays[i].direction * range);
+            }
+            lineTrails[i] = line;
+            i++;
+        }
+
+
+    }
+
+    private void ApplyShot(ShootableEntity entityHit, Vector2 hitPoint, float hitDistance, int damage)
+    {
+        // Determine Damage
+        int damageToDeal = damage;
+
+        /*if (doPierce)
+        {
+            damageToDeal = CalculateProximityDamage(damage, hitDistance);
+        }*/
+
+        // Deal Damage
+        bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint, knockbackForce);
+
+        // Apply Knockback
+        // --here
+
+        // Speed Boost
+        moveControl.SpeedBoost(isKillShot);
+
+        // APPLY SERAPH EFFECTS
+        //seraphControl.ActivateMainWeaponSeraphs(entityHit, hitPoint);
+
+    }
+
+    public void ShotRecoil(Vector2 dir)
+    {
+        if (doRecoil)
+        {
+            moveControl.Recoil(false, dir, recoilForce, recoilDuration);
+        }
+    }
+    public void LoseAmmo()
+    {
+        currentAmmo--;
+        SetAmmoUI();
+    }
+
+    public void SetAmmoUI()
+    {
+        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+    }
+
+    public void Reload()
+    {
+        currentAmmo = ammoCapacity;
+        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+        SetHasShot(true);
+    }
+
+    private IEnumerator ShotEffect()
+    {
+        audioManager.SetShotSounds(shotSounds);
+        audioManager.PlayShotSound(1);
+        //Instanciate(GameObject shotEffect);
+        yield return new WaitForSeconds(shotVFX_duration);
+        DestoryTrailLines();
+    }
+    public void PlayRechamberSound()
+    {
+        audioManager.PlayRechamberSound();
+    }
+    public void PlayFullReloadSound()
+    {
+        audioManager.SetReloadSound(reload_Sound);
+        audioManager.PlayFullReloadSound();
+    }
+
+    void DestoryTrailLines()
+    {
+        foreach (LineRenderer line in lineTrails)
+        {
+            Destroy(line.gameObject);
+        }
+    }
+
+    // ~~
+    private Vector2 RandomConeAngle(Vector2 dir)
+    {
+        float x = dir.x;
+        float y = dir.y;
+
+        float randomAngle = Random.Range(-coneAngle, coneAngle);
+
+        float angle = randomAngle * Mathf.Deg2Rad;
+
+        float cos = Mathf.Cos(angle);
+        float sin = Mathf.Sin(angle);
+        float x2 = x * cos - y * sin;
+        float y2 = x * sin + y * cos;
+
+        return new Vector2(x2, y2);
+    }
 }
+#endregion
 
 
+#region Melee Weapon
 public class MeleeWeapon : Weapon
 {
     [Space(5)]
     public int intervalCount; // -1 for infinite
     public int[] damageArr;
+    public float[] knockForceArr;
     public float[] attackDurArr;
     public float[] swingRangeArr;
     public float[] attackRadiusArr;
@@ -56,15 +279,149 @@ public class MeleeWeapon : Weapon
     public float[] preDelayArr;
     public float recoverTime;
     public float comboCooldown;
+    public float collisionInterval;
 
     [Space(10)]
     public AudioClip[] swingSounds;
+
+    [Space(10)]
+    public GameObject tempAttackDisplay;
+    public LayerMask hittableEntity;
+
+
+    MovementController moveControl;
+    AudioManager audioManager;
+    Vector2 attackPoint;
+    Vector2 direction;
+    public int currentInterval = 0;
+    public bool canAttack = true;
 
     public override WeaponManager.WeaponType GetWeaponType()
     {
         return WeaponManager.WeaponType.Melee;
     }
+
+    void Start()
+    {
+        moveControl = MovementController.GetMoveController;
+        audioManager = AudioManager.GetAudioManager;
+    }
+
+    public override void Fire(Vector2 origin, Vector2 dir)
+    {
+        direction = dir;
+        float swingRange = swingRangeArr[currentInterval];
+        attackPoint = origin + (dir * swingRange);
+        SetIndicator(true);
+        tempAttackDisplay.transform.position = attackPoint;
+    }
+    public void SetIndicator(bool b)
+    {
+        tempAttackDisplay.GetComponent<SpriteRenderer>().enabled = b;
+    }
+
+    public void PrepAttack(int interval)
+    {
+        tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.yellow;
+
+        float rad = attackRadiusArr[interval];
+        tempAttackDisplay.transform.localScale = Vector3.one * rad * 1.25f;
+    }
+
+    public void AttackThrust(int interval)
+    {
+        float dur = thrustDurArr[interval];
+        float force = thrustForceArr[interval];
+
+        if (dur != 0 && force != 0)
+        {
+            moveControl.Thrust(direction, force, dur);
+        }
+
+        // Play sound based on attack interval
+        audioManager.PlayMeleeSound(interval);
+    }
+
+    public void Attack(int interval)
+    {
+        // TEMP DISPLAY STUFF
+        tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.red;
+        Collider2D[] hitEnemies;
+
+        float rad = attackRadiusArr[interval];
+        int damageToPass = damageArr[interval];
+
+        tempAttackDisplay.transform.localScale = Vector3.one * (rad * 2); //diameter - TEMP display
+        hitEnemies = Physics2D.OverlapCircleAll(attackPoint, rad, hittableEntity);
+
+        if (hitEnemies != null)
+        {
+            foreach (Collider2D hit in hitEnemies)
+            {
+                if (hit.CompareTag("Terrain"))
+                { }
+                else if (hit.CompareTag("Enemy"))
+                {
+                    ShootableEntity entity = hit.GetComponent<ShootableEntity>();
+                    if (entity != null)
+                    {
+                        ApplyAttack(entity, hit.transform.position, damageToPass);
+                    }
+                }
+            }
+        }
+
+    }
+
+    private void ApplyAttack(ShootableEntity entityHit, Vector2 hitPoint, int damage)
+    {
+        int damageToDeal = damage;
+        // switch( CURRENT ATTACK EFFECT??)
+        // { different augments? }
+        // ...CalculateProximityDamage(damage, hitDistance)
+
+
+        entityHit.TakeDamage(damageToDeal, hitPoint, knockForceArr[currentInterval]);
+
+        // SERAPH
+        //seraphControl.ActivateMainWeaponSeraphs(entityHit, hitPoint);
+    }
+
+    public void Recover()
+    {
+        tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.green;
+        tempAttackDisplay.transform.localScale = Vector3.one * 0.25f;
+        if (currentInterval < intervalCount - 1)
+            currentInterval++;
+        else
+            ResetAttackSequence();
+    }
+
+    public void ResetAttackSequence()
+    {
+        //Debug.Log("ATTACK COOLDOWN");
+        currentInterval = 0;
+        tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.black;
+        tempAttackDisplay.transform.localScale = Vector3.one * 0.25f;
+
+        canAttack = false;
+        StartCoroutine(AttackCooldown());
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(comboCooldown);
+        canAttack = true;
+    }
+
+    public bool CanAttack()
+    { return canAttack; }
+    public int GetCurrentInterval()
+    { return currentInterval; }
 }
+#endregion
+
+#region SpecialWeapon
 
 public class SpecialWeapon : Weapon
 {
@@ -89,8 +446,13 @@ public class SpecialWeapon : Weapon
     {
         return WeaponManager.WeaponType.Special;
     }
-}
 
+    public override void Fire(Vector2 origin, Vector2 dir)
+    {
+
+    }
+}
+#endregion
 
 
 

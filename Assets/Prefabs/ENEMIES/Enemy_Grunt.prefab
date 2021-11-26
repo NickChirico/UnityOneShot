@@ -155,7 +155,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.05679238, y: 0}
+  m_Offset: {x: -0.03, y: 0.24}
   serializedVersion: 2
   m_Radius: 0.3382076
 --- !u!114 &5645802313161577576
@@ -191,10 +191,10 @@ MonoBehaviour:
   attackRange: 1.5
   attackDuration: 1.5
   attackDelay: 0.25
-  attackLungeForce: 800
+  attackLungeForce: 12
   canAttack: 1
   invulnTime: 0.2
-  knockbackForce: 800
+  knockbackForce: 10
   gruntSpeed: 0
 --- !u!114 &5645802313161577577
 MonoBehaviour:

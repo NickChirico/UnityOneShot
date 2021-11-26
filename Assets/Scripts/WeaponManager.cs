@@ -61,7 +61,7 @@ public class WeaponManager : MonoBehaviour
         // shotgun
         mortar = this.GetComponentInChildren<sp_Mortar>();
         // lunge
-        bat = this.GetComponentInChildren<sp_Bat>();
+        //  bat = this.GetComponentInChildren<Bat>();
     }
 
     private void Start()
@@ -70,6 +70,8 @@ public class WeaponManager : MonoBehaviour
         ShotControl = ShotController.GetShotControl;
         SpecControl = SpecialController.GetSpecialController;
         MeleeControl = MeleeController.GetMeleeControl;
+
+
         UIControl = UI_Manager.GetUIManager;
         //SM = FindObjectOfType<PlayerStateManager>();
 
@@ -104,7 +106,7 @@ public class WeaponManager : MonoBehaviour
         else if (currentM != null)
             weapName = currentM.weaponName;
         //
-        UIControl.UpdateCurrentWeaponLabel(weapName, IsMelee());
+        UIControl.UpdateWeaponHUD_Main(weapName, IsMelee());
     }
 
     public void UpdateSpecial()

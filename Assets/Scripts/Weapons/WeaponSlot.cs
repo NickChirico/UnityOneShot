@@ -8,7 +8,7 @@ public class WeaponSlot : MonoBehaviour, IDropHandler, IBeginDragHandler
     WeaponManager weaponControl;
     RectTransform rect;
 
-    Weapon_DragUI myWeapon;
+    public Weapon_DragUI myWeapon;
 
     private void Awake()
     {
@@ -33,7 +33,7 @@ public class WeaponSlot : MonoBehaviour, IDropHandler, IBeginDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -42,13 +42,24 @@ public class WeaponSlot : MonoBehaviour, IDropHandler, IBeginDragHandler
         {
             if (eventData.pointerDrag.GetComponent<Weapon_DragUI>() != null)
             {
+                Weapon_DragUI newWeapon = eventData.pointerDrag.GetComponent<Weapon_DragUI>();
                 if (myWeapon == null)
                 {
-                    myWeapon = eventData.pointerDrag.GetComponent<Weapon_DragUI>();
+                    myWeapon = newWeapon;
                     myWeapon.Slot.ClearWeapon();
                     myWeapon.Slot = this;
                     SetWeaponLocation();
                 }
+            }
+            else if (eventData.pointerDrag.GetComponent<WeaponSlot>() != null)
+            {
+                WeaponSlot newSlot = eventData.pointerDrag.GetComponent<WeaponSlot>();
+
+                Debug.Log("NEW WEAPON");
+                //myWeapon.Slot = newWeapon.Slot;
+                //myWeapon.Slot.SetWeaponLocation();
+                //myWeapon = newWeapon;
+                //myWeapon.Slot.SetWeaponLocation();
             }
         }
     }
@@ -67,5 +78,8 @@ public class WeaponSlot : MonoBehaviour, IDropHandler, IBeginDragHandler
     {
         return myWeapon;
     }
+
+    public Vector2 GetPosition()
+    { return rect.position; }
 
 }
