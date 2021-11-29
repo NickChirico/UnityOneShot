@@ -7,11 +7,11 @@ public class PlayerStateManager : MonoBehaviour
     [SerializeField] private PlayerState currentState;
     protected static PlayerStateManager this_SM;
     protected static MovementController MoveControl;
-    protected static ShotController ShotControl;
-    protected static AltShotController AltControl;
+    //protected static ShotController ShotControl;
+    //protected static AltShotController AltControl;
     //protected static EquipmentManager EquipControl;
-    protected static MeleeController MeleeControl;
-    protected static WeaponManager WeaponControl;
+    //protected static MeleeController MeleeControl;
+    //protected static WeaponManager WeaponControl;
 
     protected static Player this_Player;
 
@@ -51,15 +51,15 @@ public class PlayerStateManager : MonoBehaviour
         this_SM = this;
         this_Player = this.GetComponent<Player>();
         MoveControl = this.GetComponent<MovementController>();
-        ShotControl = this.GetComponent<ShotController>();
-        AltControl = this.GetComponent<AltShotController>();
+        //ShotControl = this.GetComponent<ShotController>();
+        //AltControl = this.GetComponent<AltShotController>();
         //EquipControl = FindObjectOfType<EquipmentManager>();
-        WeaponControl = FindObjectOfType<WeaponManager>();
-        MeleeControl = this.GetComponent<MeleeController>();
+        //WeaponControl = FindObjectOfType<WeaponManager>();
+        //MeleeControl = this.GetComponent<MeleeController>();
 
         // Define States
         Ready = new PlayerState_Ready(this_SM, "Ready");
-        Shooting = new PlayerState_Shooting(this_SM, "Shooting", ShotControl.shotDuration);
+        //Shooting = new PlayerState_Shooting(this_SM, "Shooting", ShotControl.shotDuration);
         Dashing = new PlayerState_Dash(this_SM, "Dash", MoveControl.dashDuration);
         Damaged = new PlayerState_Damaged(this_SM, this_Player, "Damaged", this_Player.invulnDuration);
         //AltFiring = new PlayerState_AltFire(this_SM, "AltFire");
@@ -90,10 +90,10 @@ public class PlayerStateManager : MonoBehaviour
         ChangeState(Ready);
     }
 
-    public bool IsMelee()
+    /*public bool IsMelee()
     {
         return WeaponControl.IsMelee();
-    }
+    }*/
 
     // Update is called once per frame
     void Update()

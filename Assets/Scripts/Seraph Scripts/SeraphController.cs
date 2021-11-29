@@ -209,28 +209,28 @@ public class SeraphController : MonoBehaviour
 
 
     #region Activation Functions 
-    public void ActivateMainWeaponSeraphs(ShootableEntity entity, Vector2 pos)
+    public void ActivateMainWeaponSeraphs(Entity entity, Vector2 pos)
     {
         foreach (Seraph_UI S in MainWeapSeraphs)
         {
             S.mySeraph.StartEffect(entity, pos);
         }
     }
-    public void ActivateSpecWeaponSeraphs(ShootableEntity entity, Vector2 pos)
+    public void ActivateSpecWeaponSeraphs(Entity entity, Vector2 pos)
     {
         foreach (Seraph_UI S in AltWeapSeraphs)
         {
             S.mySeraph.StartEffect(entity, pos);
         }
     }
-    public void ActivateArmorSeraphs(ShootableEntity entity, Vector2 pos)
+    public void ActivateArmorSeraphs(Entity entity, Vector2 pos)
     {
         foreach (Seraph_UI S in ArmorSeraphs)
         {
             S.mySeraph.StartEffect(entity, pos);
         }
     }
-    public void ActivateBootsSeraphs(ShootableEntity entity, Vector2 pos)
+    public void ActivateBootsSeraphs(Entity entity, Vector2 pos)
     {
         foreach (Seraph_UI S in BootsSeraphs)
         {

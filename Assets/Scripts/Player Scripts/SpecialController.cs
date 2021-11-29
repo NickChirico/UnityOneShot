@@ -199,7 +199,7 @@ public class SpecialController : MonoBehaviour
 
 
         // SERAPH
-        SeraphControl.ActivateSpecWeaponSeraphs(entity, hitPoint);
+        //SeraphControl.ActivateSpecWeaponSeraphs(entity, hitPoint);
     }
 
 

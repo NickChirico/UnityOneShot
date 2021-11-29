@@ -57,10 +57,10 @@ public class PlayerState_Ready : PlayerState
                     break;
             }
         }
-        if (reloadPressed > 0 && Shot.currentAmmo < Shot.ammoCapacity)
+        /*if (reloadPressed > 0 && playerControl.mainWeapon.currentAmmo < Shot.ammoCapacity)
         {
             SM.ChangeState(SM.Reloading);
-        }
+        }*/
         if (dashPressed > 0 && Move.CanDash())
         {
             SM.ChangeState(SM.Dashing);

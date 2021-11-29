@@ -6,6 +6,7 @@ public abstract class Weapon : MonoBehaviour
 {
     public bool isValidWeapon;
     public string weaponName;
+    public float postureDamage;
 
     private Seraph_UI[] seraphs;
 
@@ -24,7 +25,7 @@ public abstract class Weapon : MonoBehaviour
     {
         seraphs = list.ToArray();
     }
-    public void ActivateSeraphs(ShootableEntity entity, Vector2 pos)
+    public void ActivateSeraphs(Entity entity, Vector2 pos)
     {
         if (seraphs.Length > 0)
         {
@@ -165,7 +166,7 @@ public class RangedWeapon : Weapon
                 }
                 else if (hit.collider.CompareTag("Enemy"))
                 {
-                    ShootableEntity entity = hit.collider.GetComponent<ShootableEntity>();
+                    Entity entity = hit.collider.GetComponent<Enemy>();
                     if (entity != null)
                     {
                         ApplyShot(entity, hit.point, hit.distance, shotDamage); // PASS DAMAGE TO ApplyShot(damage);
@@ -188,7 +189,7 @@ public class RangedWeapon : Weapon
 
     }
 
-    private void ApplyShot(ShootableEntity entityHit, Vector2 hitPoint, float hitDistance, int damage)
+    private void ApplyShot(Entity entityHit, Vector2 hitPoint, float hitDistance, int damage)
     {
         // Determine Damage
         int damageToDeal = damage;
@@ -199,7 +200,7 @@ public class RangedWeapon : Weapon
         }*/
 
         // Deal Damage
-        bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint, knockbackForce);
+        bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint, knockbackForce, postureDamage);
 
         // Apply Knockback
         // --here
@@ -383,7 +384,7 @@ public class MeleeWeapon : Weapon
                 { }
                 else if (hit.CompareTag("Enemy"))
                 {
-                    ShootableEntity entity = hit.GetComponent<ShootableEntity>();
+                    Entity entity = hit.GetComponent<Enemy>();
                     if (entity != null)
                     {
                         ApplyAttack(entity, hit.transform.position, damageToPass);
@@ -394,7 +395,7 @@ public class MeleeWeapon : Weapon
 
     }
 
-    private void ApplyAttack(ShootableEntity entityHit, Vector2 hitPoint, int damage)
+    private void ApplyAttack(Entity entityHit, Vector2 hitPoint, int damage)
     {
         int damageToDeal = damage;
         // switch( CURRENT ATTACK EFFECT??)
@@ -402,7 +403,7 @@ public class MeleeWeapon : Weapon
         // ...CalculateProximityDamage(damage, hitDistance)
 
 
-        entityHit.TakeDamage(damageToDeal, hitPoint, knockForceArr[currentInterval]);
+        entityHit.TakeDamage(damageToDeal, hitPoint, knockForceArr[currentInterval], postureDamage);
 
         // SERAPH
         ActivateSeraphs(entityHit, hitPoint);

@@ -113,7 +113,7 @@ public class UI_Manager : MonoBehaviour
 
         //EquipmentPanel.SetActive(false);
         TogglePlayerControl(false);
-        ToggleControlDisplay(shot.usingMouse); 
+        ToggleControlDisplay(playerControl.usingMouse); 
 
         //ToggleEquipmentPanel(); // Sets to ENABLE on start
         //SwitchCurrentMenu(1); // 1:Weap , 2:Serap , 3:Options

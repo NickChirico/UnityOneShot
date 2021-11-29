@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     Blunderbuss blunderbuss;
 
     Knife knife;
+    Saber saber;
     Hammer hammer;
     Bat bat;
 
@@ -60,6 +61,7 @@ public class PlayerController : MonoBehaviour
         repeater = FindObjectOfType<Repeater>();
         blunderbuss = FindObjectOfType<Blunderbuss>();
         knife = FindObjectOfType<Knife>();
+        saber = FindObjectOfType<Saber>();
         hammer = FindObjectOfType<Hammer>();
         bat = FindObjectOfType<Bat>();
         mortar = FindObjectOfType<sp_Mortar>();
@@ -315,6 +317,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case "Knife":
                 newWeapon = knife;
+                break;
+            case "Saber":
+                newWeapon = saber;
                 break;
             case "Hammer":
                 newWeapon = hammer;
