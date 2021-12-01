@@ -44,6 +44,8 @@ public class PlayerStateManager : MonoBehaviour
     public PlayerState RecoverAlt;
     public PlayerState SpecAlt;
 
+    public PlayerState FullReload;
+
     bool isActive;
 
     void Start()
@@ -86,6 +88,8 @@ public class PlayerStateManager : MonoBehaviour
         AttackAlt = new PlayerState_MeleeFire(this_SM, "Attack-Alt", false);
         RecoverAlt = new PlayerState_MeleeRecover(this_SM, "Recover-Alt", false);
         SpecAlt = new PlayerState_SpecialFire(this_SM, "Spec-Alt", false);
+
+        FullReload = new PlayerState_Reloading(this_SM, "FullReload", true);
 
         ChangeState(Ready);
     }

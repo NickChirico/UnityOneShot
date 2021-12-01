@@ -114,6 +114,47 @@ public abstract class PlayerState
     }
 
 
+    public void GoToMainWeapon()
+    {
+        switch (playerControl.mainWeapon.GetWeaponType())
+        {
+            case WeaponManager.WeaponType.Ranged:
+                SM.ChangeState(SM.ShootMain);
+                break;
+            case WeaponManager.WeaponType.Melee:
+                if (playerControl.meleeWeap1.CanAttack())
+                    SM.ChangeState(SM.AttackMain);
+                break;
+            case WeaponManager.WeaponType.Special:
+                if (playerControl.specWeap1.CanSpecial())
+                    SM.ChangeState(SM.SpecMain);
+                break;
+        }
+    }
+
+    public void GoToAltWeapon()
+    {
+        switch (playerControl.altWeapon.GetWeaponType())
+        {
+            case WeaponManager.WeaponType.Ranged:
+                SM.ChangeState(SM.ShootAlt);
+                break;
+            case WeaponManager.WeaponType.Melee:
+                if (playerControl.meleeWeap2.CanAttack())
+                    SM.ChangeState(SM.AttackAlt);
+                break;
+            case WeaponManager.WeaponType.Special:
+                if (playerControl.specWeap2.CanSpecial())
+                    SM.ChangeState(SM.SpecAlt);
+                break;
+        }
+    }
+
+    public void GoToDash()
+    {
+        SM.ChangeState(SM.Dashing);
+    }
+
 
 
 }

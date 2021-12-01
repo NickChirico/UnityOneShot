@@ -65,8 +65,11 @@ public class UI_Manager : MonoBehaviour
     [Header("In-Game HUD")]
     public GameObject weaponPanel;
     public TextMeshProUGUI currentWeaponLabel;
+    public TextMeshProUGUI currentWeaponLabel_alt;
     public TextMeshProUGUI ammoLabel;
+    public TextMeshProUGUI ammoLabel_alt;
     public GameObject ammoSubPanel;
+    public GameObject ammoSubPanel_alt;
     public Image healthbar;
 
     [Header("UI Elements")]
@@ -525,8 +528,8 @@ public class UI_Manager : MonoBehaviour
 
     public void UpdateWeaponHUD_Alt(string name, bool melee)
     {
-        //currentWeaponLabel.text = name;
-        //ammoSubPanel.SetActive(!melee);
+        currentWeaponLabel_alt.text = name;
+        ammoSubPanel_alt.SetActive(!melee);
     }
 
     public void UpdateCurrentSpecialLabel(string name)
@@ -534,13 +537,24 @@ public class UI_Manager : MonoBehaviour
         // CREATE A HUD FOR SPECIAL
     }
 
-    public void UpdateAmmo(int cur, int max)
+    public void UpdateAmmo(int cur, int max, bool mainWeap)
     {
-        ammoLabel.text = "" + cur + "/" + max;
-        if (cur <= (float)max*0.2f)
-            ammoLabel.color = ammoLabelColor_Low;
-        else if(cur == max)
-            ammoLabel.color = ammoLabelColor_Normal;
+        if (mainWeap)
+        {
+            ammoLabel.text = "" + cur + "/" + max;
+            if (cur <= (float)max * 0.2f)
+                ammoLabel.color = ammoLabelColor_Low;
+            else if (cur == max)
+                ammoLabel.color = ammoLabelColor_Normal;
+        }
+        else
+        {
+            ammoLabel_alt.text = "" + cur + "/" + max;
+            if (cur <= (float)max * 0.2f)
+                ammoLabel_alt.color = ammoLabelColor_Low;
+            else if (cur == max)
+                ammoLabel_alt.color = ammoLabelColor_Normal;
+        }
     }
 
     public void UpdateHealth(int curr, int max)

@@ -230,7 +230,7 @@ public class EnemyState_Attack : EnemyState
                 // should be an animation event, so we dont need this
             }
             else
-            {
+            { 
                 if(thisEnemy.canAttack)
                     thisEnemy.Attack(attackDir);    
             }

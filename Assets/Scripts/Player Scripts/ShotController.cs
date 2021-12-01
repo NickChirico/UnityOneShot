@@ -118,7 +118,7 @@ public class ShotController : MonoBehaviour
         hasShot = true;
 
         currentAmmo = ammoCapacity;
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+        //uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
     }
 
     public bool HasShot()
@@ -153,7 +153,7 @@ public class ShotController : MonoBehaviour
 
         ammoCapacity = weap.ammoCapacity;
         currentAmmo = ammoCapacity;
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+        //uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
 
         audioManager.SetShotSounds(weap.shotSounds);
         audioManager.SetReloadSound(weap.reload_Sound);
@@ -640,7 +640,7 @@ public class ShotController : MonoBehaviour
 
     public void UpdateAmmoUI()
     {
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+        //uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
     }
     #endregion
 
