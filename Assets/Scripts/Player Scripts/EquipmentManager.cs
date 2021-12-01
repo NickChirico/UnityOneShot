@@ -10,9 +10,6 @@ public class EquipmentManager : MonoBehaviour
     public static EquipmentManager GetEquipManager { get { return _instanceEquip; } }
 
     MovementController MoveControl;
-    ShotController ShotControl;
-    AltShotController AltFireControl;
-    MeleeController MeleeControl;
     UI_Manager UIControl;
 
     public enum Weapon { Stave, Rifle, Stave2, Rifle2, None }
@@ -52,9 +49,6 @@ public class EquipmentManager : MonoBehaviour
     private void Start()
     {
         MoveControl = MovementController.GetMoveController;
-        ShotControl = ShotController.GetShotControl;
-        AltFireControl = AltShotController.GetAltControl;
-        MeleeControl = MeleeController.GetMeleeControl;
         UIControl = UI_Manager.GetUIManager;
 
         //calibrumMeter.fillAmount = 0;
@@ -104,7 +98,7 @@ public class EquipmentManager : MonoBehaviour
 
     public void UpdateEquipment()
     {
-        if (ShotControl.currentGun != currentGun ||
+        /*if (ShotControl.currentGun != currentGun ||
             ShotControl.currentDamageEffect != currentDamageEffect ||
             ShotControl.currentBullet != currentBullet ||
             MoveControl.currentSpecial != currentSpecial ||
@@ -113,7 +107,7 @@ public class EquipmentManager : MonoBehaviour
             MoveControl.UpdateCurrentEquipment(currentSpecial);
             ShotControl.UpdateCurrentEquipment(currentGun, currentDamageEffect, currentBullet);
             AltFireControl.UpdateCurrentEquipment(currentAltFire);
-        }
+        }*/
     }
 
     // From Buttons -- Never called from code
@@ -122,13 +116,13 @@ public class EquipmentManager : MonoBehaviour
     {
         if (w == Weapon.Rifle)
         {
-            ShotControl.aimLineEnabled = true;
-            MeleeControl.tempAttackDisplay.GetComponent<SpriteRenderer>().enabled = false; // TEMP TODO: better indicator
+            //ShotControl.aimLineEnabled = true;
+            //MeleeControl.tempAttackDisplay.GetComponent<SpriteRenderer>().enabled = false; // TEMP TODO: better indicator
         }
         else if (w == Weapon.Stave)
         {
-            ShotControl.aimLineEnabled = false;
-            MeleeControl.tempAttackDisplay.GetComponent<SpriteRenderer>().enabled = true;
+            //ShotControl.aimLineEnabled = false;
+            //MeleeControl.tempAttackDisplay.GetComponent<SpriteRenderer>().enabled = true;
         }
         currentWeapon = w;
         //UIControl.UpdateCurrentWeaponLabel(currentWeapon.ToString());

@@ -34,7 +34,7 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
         seraphControl = SeraphController.GetSeraphController;
         myRect = this.GetComponent<RectTransform>();
         image = this.GetComponent<Image>();
-        canvas = FindObjectOfType<Canvas>();
+        canvas = FindObjectOfType<MainCanvas>().GetCanvas();
         canvasGroup = this.GetComponent<CanvasGroup>();
 
         //mySeraph = Instantiate(mySeraphPrefab, seraphControl.seraphParent).GetComponent<Seraph>();

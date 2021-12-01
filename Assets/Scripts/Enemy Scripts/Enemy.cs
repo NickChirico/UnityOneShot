@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : Entity
 {
+    [Header("ENEMY")]
+
     [SerializeField] public string enemyName;
-    [SerializeField] private int maxHealth;
 
     private Transform playerLoc;
     private EnemyStateManager SM;
 
-    public SpriteRenderer sp;
-    public Rigidbody2D rb;
 
     //[Header("Information")]
     private Vector2 rayOrigin;
@@ -18,16 +17,20 @@ public abstract class Enemy : MonoBehaviour
     //public Ray2D rayToPlayer;
 
     [Header("Components")]
+    public SpriteRenderer sp;
+    public Rigidbody2D rb;
     public LineRenderer lineRend;
     public bool EnableLineRend;
-    ShootableEntity entity;
+    //ShootableEntity entity;
 
 
     [Header("Variables")]
     public int damageCollision;
     public int damageAttack;
+    public float postureColl, postureAtk;
     public float visionRange;
-    public bool playerSpotted;
+    [HideInInspector] public bool playerSpotted;
+
     [Header("Idle")]
     public float idleDuration;
     [Header("Alert")]
@@ -57,7 +60,7 @@ public abstract class Enemy : MonoBehaviour
         //sp = this.GetComponentInChildren<SpriteRenderer>();
         rb = this.GetComponent<Rigidbody2D>();
         SM = this.GetComponent<EnemyStateManager>();
-        entity = this.GetComponent<ShootableEntity>();
+        //entity = this.GetComponent<ShootableEntity>();
         playerLoc = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         if (EnableLineRend)
@@ -67,25 +70,18 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    private void Start()
+    public override void Start()
     {
-        
-        entity.SetValues(maxHealth, invulnTime);
-
-        Introduction();
-    }
-
-    private void Introduction()
-    {
-        //Debug.Log(enemyName + ", " + playerLoc);
+        base.Start();
+        SetUp();
     }
 
     // UPDATE
-    private void Update()
+    public override void Update()
     {
+        base.Update();
 
         UpdateInformation();
-
     }
 
     public void CheckCollisionPlayer()
@@ -104,6 +100,11 @@ public abstract class Enemy : MonoBehaviour
     }
 
     // GETTERS/SETTERS
+
+    public Vector2 GetRayOrigin()
+    {
+        return rayOrigin;
+    }
     public Vector2 GetDirection()
     {
         return direction;
@@ -160,12 +161,31 @@ public abstract class Enemy : MonoBehaviour
     {
         Vector2 knockBack = ((-1 * direction) * force);
         rb.velocity = Vector2.zero;
-        rb.AddForce(knockBack);
+        rb.angularVelocity = 0;
+        rb.AddForce(knockBack, ForceMode2D.Impulse);
     }
 
     // ********************
     // * Override Methods *
     // ********************
+
+    public override bool TakeDamage(int damageAmount, Vector2 damageSpot, float knockForce, float postureDamage)
+    {
+        bool b = base.TakeDamage(damageAmount, damageSpot, knockForce, postureDamage);
+        if (guardBroken)
+        {
+            GotKnocked();
+            Knockback(knockForce);
+        }
+        return b;
+    }
+
+    public override void GuardBreak()
+    {
+        base.GuardBreak();
+
+    }
+
     public abstract void SetUp();
 
     public virtual void Patrol(Vector2 dest)
@@ -212,7 +232,7 @@ public abstract class Enemy : MonoBehaviour
     {
         // ATTACK LOGIC base
         canAttack = false;
-        rb.AddForce(dir * attackLungeForce);
+        rb.AddForce(dir * attackLungeForce, ForceMode2D.Impulse);
 
     }
 
@@ -223,6 +243,9 @@ public abstract class Enemy : MonoBehaviour
 
     }
 
+    public virtual void Aim(Vector2 dir)
+    { }
+
     private void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.CompareTag("Player"))
@@ -231,9 +254,9 @@ public abstract class Enemy : MonoBehaviour
             if (player.CanBeDamaged() && SM.GetCurrentState() != SM.Knocked) // PLayer can be damaged and enemy is not in "Knocked"
             {
                 if (SM.GetCurrentState() == SM.Attack)
-                    player.TakeDamage(entity, damageAttack + Random.Range(0, 4));
+                    player.TakeDamage(this, damageAttack + Random.Range(0, 4), postureAtk);
                 else
-                    player.TakeDamage(entity, damageCollision);
+                    player.TakeDamage(this, damageCollision, postureColl);
 
             }
         }

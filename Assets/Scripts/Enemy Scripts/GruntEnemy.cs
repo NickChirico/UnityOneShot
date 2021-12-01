@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GruntEnemy : Enemy
 {
-    [Header("Grunt Variables")]
+    [Header("GRUNT")]
     public float gruntSpeed;
 
     public override void SetUp()

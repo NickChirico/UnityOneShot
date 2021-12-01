@@ -5,6 +5,7 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     public int damage;
+    public float postureDamage;
     public float radius;
     public float knockForce;
     public float explosionTime;
@@ -26,12 +27,12 @@ public class Explosion : MonoBehaviour
                 { }
                 else if (hit.CompareTag("Enemy"))
                 {
-                    ShootableEntity entity = hit.GetComponent<ShootableEntity>();
+                    Entity entity = hit.GetComponent<Entity>();
                     if (entity != null)
                     {
                         //ApplyAttack(entity, hit.transform.position, damageToDeal);
                         Vector2 hitPoint = new Vector2(entity.transform.position.x, entity.transform.position.y + 0.35f);
-                        entity.TakeDamage(damageToDeal, hitPoint, knockForce);
+                        entity.TakeDamage(damageToDeal, hitPoint, knockForce, postureDamage);
                     }
                 }
             }
