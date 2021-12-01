@@ -5,7 +5,7 @@ using UnityEngine;
 public class DoorManager : Unlockable
 {
     public MapGenerator myMap;
-    public GameObject deadEnd, locked, unlocked;
+    public GameObject deadEnd, locked, unlocked, door;
     public GameObject deadEndWoods, deadEndChurch, deadEndMarket, deadEndAcademy;
     public MapLoader myMapLoader;
     public DoorLoader myLoader;
@@ -60,7 +60,7 @@ public class DoorManager : Unlockable
     {
         if (locked.activeInHierarchy)
         {
-            locked.SetActive(false);
+            //locked.SetActive(false);
             unlocked.SetActive(true);
         }
     }

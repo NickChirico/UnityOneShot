@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MapLoader : MonoBehaviour
 {
+    public Room loadedRoom;
     public EnemySpawner mySpawner;
     public char[,] operatingMap;
     public char[,] woodsMap, churchMap, marketMap, academyMap;
@@ -178,10 +179,7 @@ public class MapLoader : MonoBehaviour
             //operatingMap[currentXLoc, currentYLoc] = 'D';
             currentXLoc = targetX;
             currentYLoc = targetY;
-            northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
-            eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
-            southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
-            westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
+            loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
             myPlayer.gameObject.transform.position = targetSpawn.position;
             mySpawner.SpawnEnemies();
             //myMap.ShowMapOnScreen();
@@ -192,6 +190,11 @@ public class MapLoader : MonoBehaviour
         {
             print("Invalid Room!");
         }
+    }
+
+    public void LoadRoomFromPath(string roomCode)
+    {
+        
     }
 
     public void LoadArea(string direction)
