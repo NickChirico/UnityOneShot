@@ -118,7 +118,8 @@ public class Entity : MonoBehaviour
             }
 
             currentHealth -= damageAmount;
-            healthBar.SetHealth((float)currentHealth/(float)MaxHealth);
+            if (healthBar != null) // HP BAR
+                healthBar.SetHealth((float)currentHealth/(float)MaxHealth);
 
             PopUpDamageText T = Instantiate(damageText, damageSpot, Quaternion.identity);
             T.SendMessage("SetTextRun", damageAmount);
@@ -140,7 +141,8 @@ public class Entity : MonoBehaviour
         //gameObject.SetActive(false);
         //if (mySpawner != null)
         //    mySpawner.CheckEnemiesAlive();
-        Destroy(this.gameObject);
+        if(this.tag != "Player")
+            Destroy(this.gameObject);
     }
 
     public virtual void UpdateHealth()

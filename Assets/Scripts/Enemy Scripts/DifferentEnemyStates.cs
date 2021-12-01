@@ -249,6 +249,8 @@ public class EnemyState_Attack : EnemyState
         delay = thisEnemy.attackDelay;
         attackDir = thisEnemy.GetDirection();
         thisEnemy.sp.color = Color.red;
+
+        thisEnemy.Aim(attackDir);
     }
 
     public override void Exit()

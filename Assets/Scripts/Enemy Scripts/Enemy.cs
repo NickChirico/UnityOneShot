@@ -73,6 +73,7 @@ public abstract class Enemy : Entity
     public override void Start()
     {
         base.Start();
+        SetUp();
     }
 
     // UPDATE
@@ -99,6 +100,11 @@ public abstract class Enemy : Entity
     }
 
     // GETTERS/SETTERS
+
+    public Vector2 GetRayOrigin()
+    {
+        return rayOrigin;
+    }
     public Vector2 GetDirection()
     {
         return direction;
@@ -236,6 +242,9 @@ public abstract class Enemy : Entity
         Debug.Log("Dodging...");
 
     }
+
+    public virtual void Aim(Vector2 dir)
+    { }
 
     private void OnCollisionEnter2D(Collision2D coll)
     {

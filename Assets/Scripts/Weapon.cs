@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     public bool isValidWeapon;
+    public bool isPlayerWeapon;
     public string weaponName;
     public float postureDamage;
 
@@ -173,8 +174,15 @@ public class RangedWeapon : Weapon
                         Instantiate(ImpactBurst_prefab, hitPoint, Quaternion.identity);
                     }
                 }
-                else // other entities hit...
-                { }
+                else if (hit.collider.CompareTag("Player") && !isPlayerWeapon)
+                {
+                    Entity entity = hit.collider.GetComponent<Player>();
+                    if (entity != null)
+                    {
+                        ApplyShot(entity, hit.point, hit.distance, shotDamage); // PASS DAMAGE TO ApplyShot(damage);
+                        Instantiate(ImpactBurst_prefab, hitPoint, Quaternion.identity);
+                    }
+                }
             }
             else
             {
@@ -205,11 +213,15 @@ public class RangedWeapon : Weapon
         // Apply Knockback
         // --here
 
-        // Speed Boost
-        moveControl.SpeedBoost(isKillShot);
+        if(isPlayerWeapon)
+        {
+            // Speed Boost
+            moveControl.SpeedBoost(isKillShot);
 
-        // APPLY SERAPH EFFECTS
-        ActivateSeraphs(entityHit, hitPoint);
+            // APPLY SERAPH EFFECTS
+            ActivateSeraphs(entityHit, hitPoint);
+        }
+
 
     }
 
@@ -223,7 +235,14 @@ public class RangedWeapon : Weapon
     public void LoseAmmo()
     {
         currentAmmo--;
-        SetAmmoUI();
+
+        if (isPlayerWeapon)
+            SetAmmoUI();
+        else if (currentAmmo <= 0)
+        {
+            
+        }
+            
     }
 
     public void SetAmmoUI()
