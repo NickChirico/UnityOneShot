@@ -25,45 +25,21 @@ public class PlayerState_Ready : PlayerState
 
         if (firePressed > 0)
         {
-            switch (playerControl.mainWeapon.GetWeaponType())
-            {
-                case WeaponManager.WeaponType.Ranged:
-                    SM.ChangeState(SM.ShootMain);
-                    break;
-                case WeaponManager.WeaponType.Melee:
-                    if(playerControl.meleeWeap1.CanAttack())
-                        SM.ChangeState(SM.AttackMain);
-                    break;
-                case WeaponManager.WeaponType.Special:
-                    if(playerControl.specWeap1.CanSpecial())
-                        SM.ChangeState(SM.SpecMain);
-                    break;
-            }
+            GoToMainWeapon();
         }
         if (specPressed > 0)
         {
-            switch (playerControl.altWeapon.GetWeaponType())
-            {
-                case WeaponManager.WeaponType.Ranged:
-                    SM.ChangeState(SM.ShootAlt);
-                    break;
-                case WeaponManager.WeaponType.Melee:
-                    if (playerControl.meleeWeap2.CanAttack())
-                        SM.ChangeState(SM.AttackAlt);
-                    break;
-                case WeaponManager.WeaponType.Special:
-                    if (playerControl.specWeap2.CanSpecial())
-                        SM.ChangeState(SM.SpecAlt);
-                    break;
-            }
+            GoToAltWeapon();
         }
-        /*if (reloadPressed > 0 && playerControl.mainWeapon.currentAmmo < Shot.ammoCapacity)
+        if (reloadPressed > 0)
         {
-            SM.ChangeState(SM.Reloading);
-        }*/
+            if(playerControl.rangedWeap1.currentAmmo < playerControl.rangedWeap1.ammoCapacity ||
+                playerControl.rangedWeap2.currentAmmo < playerControl.rangedWeap2.ammoCapacity)
+            SM.ChangeState(SM.FullReload);
+        }
         if (dashPressed > 0 && Move.CanDash())
         {
-            SM.ChangeState(SM.Dashing);
+            GoToDash();
         }
     }
 
@@ -595,7 +571,17 @@ public class PlayerState_Reloading : PlayerState
     public override void DoState()
     {
         float dashPressed = InputAction.Player.Dash.ReadValue<float>();
-        float fire2Pressed = InputAction.Player.Dash.ReadValue<float>();
+        float firePressed = InputAction.Player.Fire.ReadValue<float>();
+        float specPressed = InputAction.Player.Fire2.ReadValue<float>();
+
+        if (firePressed > 0 && !isMainWeap)
+        {
+            GoToMainWeapon();
+        }
+        if (specPressed > 0 && isMainWeap)
+        {
+            GoToAltWeapon();
+        }
 
         if (dashPressed > 0 && Move.CanDash())
         {
@@ -632,6 +618,10 @@ public class PlayerState_Reloading : PlayerState
 
         soundPlayed = false;
         Duration = weapon.reloadDuration;
+        if (Name == "FullReload")
+        {
+            Duration = 3f;
+        }
 
         weapon.PlayFullReloadSound();
     }
@@ -643,7 +633,14 @@ public class PlayerState_Reloading : PlayerState
 
     private void ReloadSuccess()
     {
-        weapon.Reload();
+        if (Name == "FullReload")
+        {
+            playerControl.ReloadBothWeapons();
+        }
+        else
+        {
+            weapon.Reload();
+        }
         playerControl.ToggleAimLineColor(false);
         //Shot.UpdateAmmoUI();
     }
@@ -796,7 +793,13 @@ public class PlayerState_MeleeRecover : PlayerState
         if (timer > Duration)
         {
             weapon.ResetAttackSequence();
-            SM.BackToReady();
+
+            if (!playerControl.rangedWeap1.HasShot())
+            {
+                SM.ChangeState(SM.RechamberMain);
+            }
+            else
+                SM.BackToReady();
         }
         else if (weapon.CanAttack() && AttackInterval < weapon.intervalCount)
         {
@@ -809,6 +812,7 @@ public class PlayerState_MeleeRecover : PlayerState
                 SM.ChangeState(SM.AttackAlt);
             }
         }
+
         /*else if (fire2Pressed > 0 && Spec.CanSpecial())
         {
             //SM.ChangeState(SM.Special);

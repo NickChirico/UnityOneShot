@@ -44,6 +44,13 @@ public class Player : Entity
         StartCoroutine(FlashRed());
     }
 
+    public override bool TakeDamage(int damageAmount, Vector2 damageSpot, float knockForce, float postureDamage)
+    {
+        SM.ChangeState(SM.Damaged);
+        StartCoroutine(FlashRed());
+        return base.TakeDamage(damageAmount, damageSpot, knockForce, postureDamage);
+    }
+
     public bool CanBeDamaged()
     { return canBeDamaged; }
 

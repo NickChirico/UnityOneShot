@@ -788,7 +788,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4274466616857454598}
   - component: {fileID: 4274466616857454618}
-  - component: {fileID: 4274466616857454621}
+  - component: {fileID: 3724176050305211193}
   - component: {fileID: 4274466616857454616}
   - component: {fileID: 4274466616857454594}
   m_Layer: 6
@@ -839,8 +839,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &4274466616857454621
-CircleCollider2D:
+--- !u!70 &3724176050305211193
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -848,13 +848,13 @@ CircleCollider2D:
   m_GameObject: {fileID: 4274466616857454620}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 13dda27655d966d4e83cae5c2412ed33, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.03, y: 0.24}
-  serializedVersion: 2
-  m_Radius: 0.3382076
+  m_Offset: {x: -0.05, y: 0.43}
+  m_Size: {x: 0.45, y: 0.76}
+  m_Direction: 0
 --- !u!114 &4274466616857454616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,11 +879,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 315412ab8616e5443b0dd269775b2ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 50
+  MaxHealth: 40
   currentHealth: 0
   postureMax: 10
   posture: 0
-  postureDecayRate: 4
+  postureDecayRate: 3
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
@@ -917,7 +917,7 @@ MonoBehaviour:
   attackDelay: 0.5
   attackLungeForce: 0
   canAttack: 1
-  invulnTime: 0
+  invulnTime: 0.2
   knockbackForce: 0
   enemyWeapon: {fileID: 4132644651413726360, guid: 6aaa37d5cf54dc446820bc813f715f26,
     type: 3}
@@ -993,9 +993,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 6950016548773981367, guid: 22938aeb177549446b5f78ff6cfe9285,
-    type: 3}
-  m_Color: {r: 1, g: 0.4189905, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: f646449e80388c64d94cbc5abe6db776, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1246,10 +1245,10 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 0, a: 1}
-      key1: {r: 1, g: 0.9667889, b: 0, a: 1}
+      key0: {r: 1, g: 0, b: 0.046051025, a: 1}
+      key1: {r: 1, g: 0, b: 0.046051025, a: 1}
       key2: {r: 1, g: 0, b: 0.046051025, a: 0}
-      key3: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 1, g: 0, b: 0.046051025, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
@@ -1257,7 +1256,7 @@ LineRenderer:
       ctime0: 0
       ctime1: 65535
       ctime2: 65535
-      ctime3: 0
+      ctime3: 65535
       ctime4: 0
       ctime5: 0
       ctime6: 0

@@ -97,7 +97,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 25
+  postureDamage: 25
   radius: 1
+  knockForce: 10
   explosionTime: 0.5
   hittableEntity:
     serializedVersion: 2

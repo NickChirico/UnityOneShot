@@ -104,20 +104,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FireMainWeapon() // OLD
+    public void ReloadBothWeapons()
     {
-        if (rangedWeap1 != null)
-        {
-            rangedWeap1.Fire(rayOrigin, direction);
-        }
-    }
-
-    private void FireAltWeapon() // OLD
-    {
-        if (meleeWeap1 != null)
-        {
-            meleeWeap1.Fire(rayOrigin, direction);
-        }
+        if (rangedWeap1 != nullRanged)
+            rangedWeap1.Reload();
+        if (rangedWeap2 != nullRanged)
+            rangedWeap2.Reload();
     }
 
     private Vector2 UpdateDirection(bool mouse)
@@ -344,7 +336,7 @@ public class PlayerController : MonoBehaviour
         if (doChange_Main)
         {
             mainWeapon = newWeapon;
-            mainWeapon.Equip();
+            mainWeapon.Equip(true);
             UpdateWeapon();
             uiControl.UpdateWeapon_uiPanel(newWeapon, true);
             doChange_Main = false;
@@ -352,7 +344,7 @@ public class PlayerController : MonoBehaviour
         else if (doChange_Alt)
         {
             altWeapon = newWeapon;
-            altWeapon.Equip();
+            altWeapon.Equip(false);
             UpdateWeapon();
             uiControl.UpdateWeapon_uiPanel(newWeapon, false);
             doChange_Alt = false;

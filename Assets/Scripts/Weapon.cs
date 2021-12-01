@@ -6,6 +6,7 @@ public abstract class Weapon : MonoBehaviour
 {
     public bool isValidWeapon;
     public bool isPlayerWeapon;
+    public bool isMainWeapon;
     public string weaponName;
     public float postureDamage;
 
@@ -17,9 +18,9 @@ public abstract class Weapon : MonoBehaviour
 
     public abstract void Fire(Vector2 origin, Vector2 dir);
 
-    public virtual void Equip()
+    public virtual void Equip(bool isMain)
     {
-        
+        isMainWeapon = isMain;
     }
 
     public void SetSeraphs(List<Seraph_UI> list)
@@ -74,9 +75,10 @@ public class RangedWeapon : Weapon
     {
         return WeaponManager.WeaponType.Ranged;
     }
-    public override void Equip()
+    public override void Equip(bool b)
     {
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+        base.Equip(b);
+        uiControl.UpdateAmmo(currentAmmo, ammoCapacity, isMainWeapon);
     }
 
     Ray2D[] rays;
@@ -247,13 +249,13 @@ public class RangedWeapon : Weapon
 
     public void SetAmmoUI()
     {
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+        uiControl.UpdateAmmo(currentAmmo, ammoCapacity, isMainWeapon);
     }
 
     public void Reload()
     {
         currentAmmo = ammoCapacity;
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+        uiControl.UpdateAmmo(currentAmmo, ammoCapacity, isMainWeapon);
         SetHasShot(true);
     }
 
@@ -491,9 +493,10 @@ public class SpecialWeapon : Weapon
         return WeaponManager.WeaponType.Special;
     }
 
-    public override void Equip()
+    public override void Equip(bool b)
     {
-        uiControl.UpdateAmmo(currentAmmo, sp_Capacity);
+        base.Equip(b);
+        uiControl.UpdateAmmo(currentAmmo, sp_Capacity, isMainWeapon);
     }
 
     MovementController moveControl;
@@ -526,12 +529,12 @@ public class SpecialWeapon : Weapon
             case SpecialType.Projectile:
                 if (projectile_prefab != null && currentAmmo > 0)
                     ShootProjectileStraight();
-                uiControl.UpdateAmmo(currentAmmo, sp_Capacity);
+                uiControl.UpdateAmmo(currentAmmo, sp_Capacity, isMainWeapon);
                 break;
             case SpecialType.Arc:
                 if (projectile_prefab != null)
                     ShootProjectileArc();
-                uiControl.UpdateAmmo(currentAmmo, sp_Capacity);
+                uiControl.UpdateAmmo(currentAmmo, sp_Capacity, isMainWeapon);
                 break;
             //
             case SpecialType.Lunge:
@@ -608,7 +611,7 @@ public class SpecialWeapon : Weapon
         yield return new WaitForSeconds(sp_Cooldown);
         canSpecial = true;
         currentAmmo = sp_Capacity;
-        uiControl.UpdateAmmo(currentAmmo, sp_Capacity);
+        uiControl.UpdateAmmo(currentAmmo, sp_Capacity, isMainWeapon);
     }
 }
 #endregion
