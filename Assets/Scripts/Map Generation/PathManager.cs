@@ -27,7 +27,8 @@ public class PathManager : MonoBehaviour
 
     //public MapGenerator myMapGen;
 
-    public string[] previousPaths, newPaths;
+    public string[] newPaths;
+    public string previousPath;
 
     //public InputAction menuNav;
 
@@ -42,8 +43,8 @@ public class PathManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        layerNum = 0;
-        previousPaths = new[] {"healing", "shop", "mystery"};
+        layerNum = 1;
+        //previousPaths = new[] {"healing", "shop", "mystery"};
         //LoadPathScene();
     }
 
@@ -80,10 +81,7 @@ public class PathManager : MonoBehaviour
             if (navActions.UI.Select.triggered)
             {
                 print("here ya go");
-                for (int i = 0; i < allOptions.Length; i++)
-                {
-                    previousPaths[i] = allOptions[i].pathCode;
-                }
+                previousPath = allOptions[currentOption].pathCode;
                 //myMapGen.GenerateMapFromPath(layerNum, allOptions[currentOption].pathCode);
                 choosingPath = false;
             }
@@ -147,9 +145,15 @@ public class PathManager : MonoBehaviour
         string[] options = new string[3];
         List<string> pathOptions = new List<string>()
             { "rupture", "siphon", "contaminate", "gold", "healing", "shop", "weapon", "mystery"};
-        for (int i = 0; i < previousPaths.Length; i++)
+        if (layerNum == 1)
         {
-            pathOptions.Remove(previousPaths[i]);
+            pathOptions.Remove("healing");
+            pathOptions.Remove("shop");
+            pathOptions.Remove("mystery");
+        }
+        else
+        {
+            pathOptions.Remove(previousPath);
         }
         int currentSelection;
         for (int i = 0; i < options.Length; i++)
