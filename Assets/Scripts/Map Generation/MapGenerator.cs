@@ -111,6 +111,7 @@ public class MapGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         allTierLimits = new[] {tier1Limits, tier2Limits, tier3Limits, tier4Limits, tier5Limits};
         ResetMap();
     }
@@ -835,9 +836,9 @@ public class MapGenerator : MonoBehaviour
         print(willPrint);
     }
 
-    public void GenerateMapFromPath()
+    public void GenerateMapFromPath(int tierLevel, string pathCode)
     {
         
     }
-    
+
 }
