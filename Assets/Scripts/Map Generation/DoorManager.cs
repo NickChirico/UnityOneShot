@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DoorManager : Unlockable
 {
+    public GameObject checkSymbol, lockSymbol;
     public MapGenerator myMap;
     public GameObject deadEnd, locked, unlocked, door;
     public GameObject deadEndWoods, deadEndChurch, deadEndMarket, deadEndAcademy;
@@ -15,6 +16,7 @@ public class DoorManager : Unlockable
     {
         unlocked.SetActive(false);
         myLoader.portal = false;
+        checkSymbol.SetActive(myMapLoader.GetCompletionMap()[targetX, targetY]);
         if (myMapLoader.GetAreaMap()[targetX, targetY] == 'X')
         {
             locked.SetActive(false);
@@ -42,6 +44,7 @@ public class DoorManager : Unlockable
                  myMapLoader.GetAreaMap()[targetX, targetY] == 'B' ||myMapLoader.GetAreaMap()[targetX, targetY] == 'S' ||myMapLoader.GetAreaMap()[targetX, targetY] == 'U')
         {
             locked.SetActive(true);
+            lockSymbol.SetActive(true);
             myLoader.enabled = true;
             myLoader.traveled = false;
             deadEnd.SetActive(false);
@@ -62,6 +65,7 @@ public class DoorManager : Unlockable
         {
             //locked.SetActive(false);
             unlocked.SetActive(true);
+            lockSymbol.SetActive(false);
         }
     }
 

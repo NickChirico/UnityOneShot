@@ -181,7 +181,10 @@ public class MapLoader : MonoBehaviour
             currentYLoc = targetY;
             loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
             myPlayer.gameObject.transform.position = targetSpawn.position;
-            mySpawner.SpawnEnemies();
+            if (!CompletedRooms[currentXLoc, currentYLoc])
+            {
+                mySpawner.SpawnEnemies(loadedRoom);
+            }
             //myMap.ShowMapOnScreen();
             //print(CompletedRooms[currentXLoc, currentYLoc]);
             mySpring.LoadSpring();
