@@ -74,7 +74,7 @@ public class Player : Entity
 
     public void RestoreFullHealth()
     {
-        currentHealth = maxHealth;
-        ui.UpdateHealth(currentHealth, maxHealth);
+        //currentHealth = maxHealth;
+        //ui.UpdateHealth(currentHealth, maxHealth);
     }
 }
