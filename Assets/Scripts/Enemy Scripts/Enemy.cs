@@ -21,6 +21,8 @@ public abstract class Enemy : Entity
     public Rigidbody2D rb;
     public LineRenderer lineRend;
     public bool EnableLineRend;
+
+    public EnemySpawner mySpawner;
     //ShootableEntity entity;
 
 
@@ -60,6 +62,7 @@ public abstract class Enemy : Entity
         //sp = this.GetComponentInChildren<SpriteRenderer>();
         rb = this.GetComponent<Rigidbody2D>();
         SM = this.GetComponent<EnemyStateManager>();
+        mySpawner = GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>();
         //entity = this.GetComponent<ShootableEntity>();
         playerLoc = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
@@ -178,6 +181,12 @@ public abstract class Enemy : Entity
             Knockback(knockForce);
         }
         return b;
+    }
+
+    public override void Die()
+    {
+        mySpawner.allEnemies.Remove(gameObject);
+        base.Die();
     }
 
     public override void GuardBreak()

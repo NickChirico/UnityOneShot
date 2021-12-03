@@ -8,6 +8,7 @@ public class MapLoader : MonoBehaviour
     public Room loadedRoom;
     public EnemySpawner mySpawner;
     public char[,] operatingMap;
+    public string[,] complexMap;
     public char[,] woodsMap, churchMap, marketMap, academyMap;
     public char[,] startMap =
     {
@@ -46,7 +47,8 @@ public class MapLoader : MonoBehaviour
     public Transform northSpawn, eastSpawn, southSpawn, westSpawn;
     public Player myPlayer;
     public Unlockable[] allUnlockables;
-    public GameObject entranceRoom, woodsRoom, churchRoom, marketRoom, academyRoom;
+    public GameObject entranceRoom;
+    //woodsRoom, churchRoom, marketRoom, academyRoom;
 
     // Start is called before the first frame update
     void Start()
@@ -200,6 +202,7 @@ public class MapLoader : MonoBehaviour
         
     }
 
+    /*
     public void LoadArea(string direction)
     {
         northDoor.currentArea = currentArea;
@@ -290,7 +293,7 @@ public class MapLoader : MonoBehaviour
         }
         print(currentXLoc + ", " + currentYLoc);
         myPlayer.gameObject.transform.position = targetSpawn.position;
-    }
+    }*/
 
     public void AssignStartPositions(char[,] tempMap, Area whichArea)
     {
