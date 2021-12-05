@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class MapLoader : MonoBehaviour
 {
+    public GameObject rupturePickup, contaminatePickup, siphonPickup;
     public Room loadedRoom;
     public EnemySpawner mySpawner;
     public char[,] operatingMap;
+    public string[,] complexMap;
     public char[,] woodsMap, churchMap, marketMap, academyMap;
     public char[,] startMap =
     {
@@ -46,16 +48,21 @@ public class MapLoader : MonoBehaviour
     public Transform northSpawn, eastSpawn, southSpawn, westSpawn;
     public Player myPlayer;
     public Unlockable[] allUnlockables;
-    public GameObject entranceRoom, woodsRoom, churchRoom, marketRoom, academyRoom;
+    public GameObject entranceRoom;
+    //woodsRoom, churchRoom, marketRoom, academyRoom;
 
+    void Awake()
+    {
+        myMap = GameObject.Find("Map Generator").GetComponent<MapGenerator>();
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
-        
         //currentXLoc = 7;
         //currentYLoc = 7;
         currentArea = Area.Test;
-        operatingMap = myMap.GenerateMap("North");
+        operatingMap = myMap.roomArray;
         AssignStartPositions(operatingMap, Area.Test);
         for (int i = 0; i < 15; i++)
         {
@@ -75,14 +82,14 @@ public class MapLoader : MonoBehaviour
         }
         currentXLoc = testStartX;
         currentYLoc = testStartY;
-        northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
-        eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
-        southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
-        westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
-        northDoor.Unlock();
-        eastDoor.Unlock();
-        southDoor.Unlock();
-        westDoor.Unlock();
+        loadedRoom.northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
+        loadedRoom.eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
+        loadedRoom.southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
+        loadedRoom.westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
+        loadedRoom.northDoor.Unlock();
+        loadedRoom.eastDoor.Unlock();
+        loadedRoom.southDoor.Unlock();
+        loadedRoom.westDoor.Unlock();
         //woodsMap = myMap.GenerateMap("North");
         //churchMap = myMap.GenerateMap("West"); //west
         //academyMap = myMap.GenerateMap("East"); //east
@@ -200,6 +207,7 @@ public class MapLoader : MonoBehaviour
         
     }
 
+    /*
     public void LoadArea(string direction)
     {
         northDoor.currentArea = currentArea;
@@ -290,7 +298,7 @@ public class MapLoader : MonoBehaviour
         }
         print(currentXLoc + ", " + currentYLoc);
         myPlayer.gameObject.transform.position = targetSpawn.position;
-    }
+    }*/
 
     public void AssignStartPositions(char[,] tempMap, Area whichArea)
     {

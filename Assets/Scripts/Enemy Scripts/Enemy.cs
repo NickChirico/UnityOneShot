@@ -21,6 +21,8 @@ public abstract class Enemy : Entity
     public Rigidbody2D rb;
     public LineRenderer lineRend;
     public bool EnableLineRend;
+
+    public EnemySpawner mySpawner;
     //ShootableEntity entity;
 
 
@@ -29,6 +31,7 @@ public abstract class Enemy : Entity
     public int damageAttack;
     public float postureColl, postureAtk;
     public float visionRange;
+    public GameObject rupturePickup, contaminatePickup, siphonPickup;
     [HideInInspector] public bool playerSpotted;
 
     [Header("Idle")]
@@ -60,6 +63,7 @@ public abstract class Enemy : Entity
         //sp = this.GetComponentInChildren<SpriteRenderer>();
         rb = this.GetComponent<Rigidbody2D>();
         SM = this.GetComponent<EnemyStateManager>();
+        mySpawner = GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>();
         //entity = this.GetComponent<ShootableEntity>();
         playerLoc = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
@@ -178,6 +182,25 @@ public abstract class Enemy : Entity
             Knockback(knockForce);
         }
         return b;
+    }
+
+    public override void Die()
+    {
+        int dropNumber = Random.Range(0, 99);
+        if (dropNumber > 39 && dropNumber <= 59)
+        {
+            Instantiate(rupturePickup, transform);
+        }
+        else if (dropNumber > 59 && dropNumber <= 79)
+        {
+            Instantiate(contaminatePickup, transform);
+        }
+        else if (dropNumber > 79 && dropNumber <= 99)
+        {
+            Instantiate(siphonPickup, transform);
+        }
+        mySpawner.allEnemies.Remove(gameObject);
+        base.Die();
     }
 
     public override void GuardBreak()

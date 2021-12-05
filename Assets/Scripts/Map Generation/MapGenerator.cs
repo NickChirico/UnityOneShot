@@ -114,6 +114,7 @@ public class MapGenerator : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         allTierLimits = new[] {tier1Limits, tier2Limits, tier3Limits, tier4Limits, tier5Limits};
         ResetMap();
+        //myLoader.complexMap = GenerateMapFromPath(1, "test");
     }
 
     void Update()
@@ -125,7 +126,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    public char[,] GenerateMap(string direction)
+    public void GenerateMap(string direction)
     {
         //direction determines if we start on the top, bottom, left, or right of the map, and where the final boss is
         bool stillGenerating = true; //allows us to remake a map if it isn't satisfactory
@@ -142,7 +143,7 @@ public class MapGenerator : MonoBehaviour
         ShowMap();
         OrientMap(direction);
         ShowMap();
-        return roomArray;
+        //return roomArray;
     }
 
     public void OrientMap(string direction)
@@ -412,19 +413,6 @@ public class MapGenerator : MonoBehaviour
         {
             deadEndXPos.Add(targetX);
             deadEndYPos.Add(targetY);
-            string xList = "";
-            string yList = "";
-            for (int i = 0; i < deadEndXPos.Count; i++)
-            {
-                xList += deadEndXPos[i] + ", ";
-            }
-
-            for (int i = 0; i < deadEndYPos.Count; i++)
-            {
-                yList += deadEndYPos[i] + ", ";
-            }
-            //print(xList);
-            //print(yList);
         }
         var numToConnect = numConnections - (numWaiting + numDone);
         if (numToConnect > numEmpty)
@@ -836,9 +824,24 @@ public class MapGenerator : MonoBehaviour
         print(willPrint);
     }
 
-    public void GenerateMapFromPath(int tierLevel, string pathCode)
+    public string[,] GenerateMapFromPath(int tierLevel, string pathCode)
     {
-        
+        string[,] toReturn = new string[1,1];
+        switch (tierLevel)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
+
+        return toReturn;
     }
 
 }

@@ -19,9 +19,9 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        
+
     }
-    
+
     public void SpawnEnemies(Room toSpawn)
     {
         int spawnSelection = Random.Range(0, toSpawn.spawnOptions.Length);
@@ -29,27 +29,29 @@ public class EnemySpawner : MonoBehaviour
         {
             if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'M')
             {
-                Instantiate(meleePrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]);
+                allEnemies.Add(Instantiate(meleePrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
             }
             else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'R')
             {
-                Instantiate(rangedPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]);
+                allEnemies.Add(Instantiate(rangedPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
             }
             else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'B')
             {
-                Instantiate(bossPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]);
+                allEnemies.Add(Instantiate(bossPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
             }
         }
     }
 
     public void FinishRoom()
     {
+        print("finished");
         roomComplete = true;
         myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
         for (int i = 0; i < myMapLoader.allUnlockables.Length; i++)
         {
             myMapLoader.allUnlockables[i].Unlock();
         }
+
         myMapLoader.northDoor.Unlock();
         myMapLoader.eastDoor.Unlock();
         myMapLoader.southDoor.Unlock();
@@ -58,8 +60,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void CheckEnemiesAlive()
     {
-        bool willEnd = true;
-        if (willEnd)
+        if (allEnemies.Count <= 0)
         {
             FinishRoom();
         }

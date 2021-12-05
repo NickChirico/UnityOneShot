@@ -7,7 +7,7 @@ public class DoorManager : Unlockable
     public GameObject checkSymbol, lockSymbol;
     public MapGenerator myMap;
     public GameObject deadEnd, locked, unlocked, door;
-    public GameObject deadEndWoods, deadEndChurch, deadEndMarket, deadEndAcademy;
+    //public GameObject deadEndWoods, deadEndChurch, deadEndMarket, deadEndAcademy;
     public MapLoader myMapLoader;
     public DoorLoader myLoader;
     public MapLoader.Area currentArea;
@@ -21,24 +21,7 @@ public class DoorManager : Unlockable
         {
             locked.SetActive(false);
             myLoader.enabled = false;
-            switch (currentArea)
-            {
-                case MapLoader.Area.Start:
-                    deadEnd.SetActive(true);
-                    break;
-                case MapLoader.Area.Woods:
-                    deadEndWoods.SetActive(true);
-                    break;
-                case MapLoader.Area.Church:
-                    deadEndChurch.SetActive(true);
-                    break;
-                case MapLoader.Area.Market:
-                    deadEndMarket.SetActive(true);
-                    break;
-                case MapLoader.Area.Academy:
-                    deadEndAcademy.SetActive(true);
-                    break;
-            }
+            deadEnd.SetActive(true);
         }
         else if (myMapLoader.GetAreaMap()[targetX, targetY] == 'D' || myMapLoader.GetAreaMap()[targetX, targetY] == 'H' ||
                  myMapLoader.GetAreaMap()[targetX, targetY] == 'B' ||myMapLoader.GetAreaMap()[targetX, targetY] == 'S' ||myMapLoader.GetAreaMap()[targetX, targetY] == 'U')
@@ -48,10 +31,10 @@ public class DoorManager : Unlockable
             myLoader.enabled = true;
             myLoader.traveled = false;
             deadEnd.SetActive(false);
-            deadEndWoods.SetActive(false);
-            deadEndChurch.SetActive(false);
-            deadEndMarket.SetActive(false);
-            deadEndAcademy.SetActive(false);
+            //deadEndWoods.SetActive(false);
+            //deadEndChurch.SetActive(false);
+            //deadEndMarket.SetActive(false);
+            //deadEndAcademy.SetActive(false);
         }
         if (myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
         {

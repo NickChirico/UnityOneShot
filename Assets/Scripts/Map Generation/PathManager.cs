@@ -25,7 +25,7 @@ public class PathManager : MonoBehaviour
 
     public Text layerText;
 
-    //public MapGenerator myMapGen;
+    public MapGenerator myMapGen;
 
     public string[] newPaths;
     public string previousPath;
@@ -82,7 +82,9 @@ public class PathManager : MonoBehaviour
             {
                 print("here ya go");
                 previousPath = allOptions[currentOption].pathCode;
+                myMapGen.GenerateMap("North");
                 //myMapGen.GenerateMapFromPath(layerNum, allOptions[currentOption].pathCode);
+                SceneManager.LoadScene("SingleRoomIso");
                 choosingPath = false;
             }
         }

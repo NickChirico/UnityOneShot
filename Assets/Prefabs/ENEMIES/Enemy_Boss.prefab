@@ -382,15 +382,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3eff752a48d8064eaa44c88208a6c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHealth: 0
+  currentHealth: 0
+  postureMax: 0
+  posture: 0
+  postureDecayRate: 0
+  guardBreakDuration: 0
+  damageText: {fileID: 0}
+  markedIndicator: {fileID: 0}
+  contaminateParticles_prefab: {fileID: 0}
+  healthBar: {fileID: 0}
+  postureBar: {fileID: 0}
+  guardBroken: 0
   enemyName: Grunt
-  maxHealth: 200
   sp: {fileID: 6021705352283120089}
   rb: {fileID: 8172086663118015373}
   lineRend: {fileID: 8172086661981615946}
   EnableLineRend: 0
+  mySpawner: {fileID: 0}
   damageCollision: 12
   damageAttack: 18
+  postureColl: 0
+  postureAtk: 0
   visionRange: 4
+  rupturePickup: {fileID: 403632358609029537, guid: 15a1369f717d6664ebd4a0be28103bc0,
+    type: 3}
+  contaminatePickup: {fileID: 6066597285942191914, guid: 9960b7266f24d6346bbbc76553b2f027,
+    type: 3}
+  siphonPickup: {fileID: 320607767360861005, guid: cf570d270e993a64ca7ce71fbee2f4f5,
+    type: 3}
   playerSpotted: 0
   idleDuration: 1.5
   alertDuration: 0.15
