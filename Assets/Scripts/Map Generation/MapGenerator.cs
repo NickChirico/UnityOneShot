@@ -114,7 +114,7 @@ public class MapGenerator : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         allTierLimits = new[] {tier1Limits, tier2Limits, tier3Limits, tier4Limits, tier5Limits};
         ResetMap();
-        myLoader.complexMap = GenerateMapFromPath(1, "test");
+        //myLoader.complexMap = GenerateMapFromPath(1, "test");
     }
 
     void Update()
@@ -126,7 +126,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    public char[,] GenerateMap(string direction)
+    public void GenerateMap(string direction)
     {
         //direction determines if we start on the top, bottom, left, or right of the map, and where the final boss is
         bool stillGenerating = true; //allows us to remake a map if it isn't satisfactory
@@ -143,7 +143,7 @@ public class MapGenerator : MonoBehaviour
         ShowMap();
         OrientMap(direction);
         ShowMap();
-        return roomArray;
+        //return roomArray;
     }
 
     public void OrientMap(string direction)

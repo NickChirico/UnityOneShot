@@ -11599,7 +11599,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &471240778
 MonoBehaviour:
@@ -11613,10 +11613,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176bf603cae07d848a731ea522f5965b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mySR: {fileID: 0}
-  unusedSpring: {fileID: 0}
-  usedSpring: {fileID: 0}
-  myMap: {fileID: 0}
+  mySR: {fileID: 471240776}
+  unusedSpring: {fileID: 21300000, guid: 4baa37a5def89114da60566842939385, type: 3}
+  usedSpring: {fileID: 21300000, guid: 22b8ec21e08ce4442af693d180af4b14, type: 3}
+  myMap: {fileID: 1457603090}
   used: 0
 --- !u!1 &473728339
 GameObject:
@@ -16512,11 +16512,15 @@ MonoBehaviour:
   rb: {fileID: 0}
   lineRend: {fileID: 0}
   EnableLineRend: 0
+  mySpawner: {fileID: 0}
   damageCollision: 0
   damageAttack: 0
   postureColl: 0
   postureAtk: 0
   visionRange: 5
+  rupturePickup: {fileID: 0}
+  contaminatePickup: {fileID: 0}
+  siphonPickup: {fileID: 0}
   playerSpotted: 0
   idleDuration: 3
   alertDuration: 0.25
@@ -25403,7 +25407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkSymbol: {fileID: 1256785541}
   lockSymbol: {fileID: 1640516655}
-  myMap: {fileID: 1076768872}
+  myMap: {fileID: 0}
   deadEnd: {fileID: 1038951620}
   locked: {fileID: 458099594}
   unlocked: {fileID: 1850521584}
@@ -28410,9 +28414,8 @@ MonoBehaviour:
     type: 3}
   roomComplete: 0
   numToSpawn: 0
-  myMapLoader: {fileID: 0}
-  allEnemies:
-  - {fileID: 0}
+  myMapLoader: {fileID: 1457603090}
+  allEnemies: []
   spawnLocation: []
   bossSpawned: 0
 --- !u!1 &1038951620
@@ -29414,64 +29417,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1059209347}
   m_CullTransparentMesh: 1
---- !u!1 &1076768871
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1076768873}
-  - component: {fileID: 1076768872}
-  m_Layer: 0
-  m_Name: Map Generator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1076768872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1076768871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63f972df4eeb4f7408fb202977c06536, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomSizes: 0500000005000000070000000700000007000000
-  numDoneRooms: 0
-  numDeadEnds: 0
-  xMin: 0
-  xMax: 0
-  yMin: 0
-  yMax: 0
-  bossXLoc: 0
-  bossYLoc: 0
-  deadEndXPos: 
-  deadEndYPos: 
-  allRoomsXPos: 
-  allRoomsYPos: 
-  myLoader: {fileID: 1457603090}
-  screenText: {fileID: 0}
---- !u!4 &1076768873
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1076768871}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.501314, y: -4.107881, z: -43.99861}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1082636590
 GameObject:
   m_ObjectHideFlags: 0
@@ -37576,7 +37521,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1457603090
 MonoBehaviour:
@@ -37593,7 +37538,7 @@ MonoBehaviour:
   loadedRoom: {fileID: 1493341772}
   mySpawner: {fileID: 1036814737}
   mySpring: {fileID: 471240778}
-  myMap: {fileID: 1076768872}
+  myMap: {fileID: 0}
   currentXLoc: 0
   currentYLoc: 0
   bossXLoc: 0
@@ -49887,7 +49832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkSymbol: {fileID: 844863350}
   lockSymbol: {fileID: 856175605}
-  myMap: {fileID: 1076768872}
+  myMap: {fileID: 0}
   deadEnd: {fileID: 1609780514}
   locked: {fileID: 488841186}
   unlocked: {fileID: 541800207}
@@ -51956,7 +51901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkSymbol: {fileID: 1199439081}
   lockSymbol: {fileID: 1810668766}
-  myMap: {fileID: 1076768872}
+  myMap: {fileID: 0}
   deadEnd: {fileID: 1987425675}
   locked: {fileID: 1751138694}
   unlocked: {fileID: 2144477694}
@@ -52903,7 +52848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkSymbol: {fileID: 64743547}
   lockSymbol: {fileID: 1283607967}
-  myMap: {fileID: 1076768872}
+  myMap: {fileID: 0}
   deadEnd: {fileID: 1603292174}
   locked: {fileID: 305175419}
   unlocked: {fileID: 1566092076}
@@ -56822,7 +56767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8674e4243baf8b4595a85b023334c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTypeArray: 4d004d004d004d004d00
+  enemyTypeArray: 52005200520052005200
   spawnLocationsArray:
   - {fileID: 184554253}
   - {fileID: 421355618}

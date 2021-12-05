@@ -44,6 +44,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void FinishRoom()
     {
+        print("finished");
         roomComplete = true;
         myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
         for (int i = 0; i < myMapLoader.allUnlockables.Length; i++)

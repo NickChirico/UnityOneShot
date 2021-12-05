@@ -31,6 +31,7 @@ public abstract class Enemy : Entity
     public int damageAttack;
     public float postureColl, postureAtk;
     public float visionRange;
+    public GameObject rupturePickup, contaminatePickup, siphonPickup;
     [HideInInspector] public bool playerSpotted;
 
     [Header("Idle")]
@@ -185,6 +186,19 @@ public abstract class Enemy : Entity
 
     public override void Die()
     {
+        int dropNumber = Random.Range(0, 99);
+        if (dropNumber > 39 && dropNumber <= 59)
+        {
+            Instantiate(rupturePickup, transform);
+        }
+        else if (dropNumber > 59 && dropNumber <= 79)
+        {
+            Instantiate(contaminatePickup, transform);
+        }
+        else if (dropNumber > 79 && dropNumber <= 99)
+        {
+            Instantiate(siphonPickup, transform);
+        }
         mySpawner.allEnemies.Remove(gameObject);
         base.Die();
     }
