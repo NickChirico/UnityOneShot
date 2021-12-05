@@ -1337,7 +1337,7 @@ MonoBehaviour:
       m_Action: Select Option
       m_Flags: 0
   layerText: {fileID: 0}
-  myMapGen: {fileID: 0}
+  myMapGen: {fileID: 1076768872}
   newPaths: []
   previousPath: 
   uiMap:
