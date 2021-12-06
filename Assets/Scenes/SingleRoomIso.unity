@@ -3538,6 +3538,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99116ed55c338c40bd788c882036afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rupturePickup: {fileID: 0}
+  contaminatePickup: {fileID: 0}
+  siphonPickup: {fileID: 0}
   loadedRoom: {fileID: 0}
   mySpawner: {fileID: 1036814737}
   mySpring: {fileID: 0}
@@ -37535,6 +37538,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99116ed55c338c40bd788c882036afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rupturePickup: {fileID: 0}
+  contaminatePickup: {fileID: 0}
+  siphonPickup: {fileID: 0}
   loadedRoom: {fileID: 1493341772}
   mySpawner: {fileID: 1036814737}
   mySpring: {fileID: 471240778}
@@ -54025,8 +54031,8 @@ MonoBehaviour:
   currentSpecial: 0
   currentMoveType: 0
   RightClickToMoveDEACT: 0
-  baseMoveSpeed: 1.5
-  maxMoveSpeed: 4
+  baseMoveSpeed: 3
+  maxMoveSpeed: 8
   slowMoveSpeed_alt: 0.5
   currentMoveSpeed: 1
   boostAmount: 1.5

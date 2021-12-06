@@ -14,11 +14,14 @@ public class DoorManager : Unlockable
 
     public void LoadNewDoor(int targetX, int targetY)
     {
+        door.SetActive(true);
         unlocked.SetActive(false);
         myLoader.portal = false;
+        lockSymbol.SetActive(true);
         checkSymbol.SetActive(myMapLoader.GetCompletionMap()[targetX, targetY]);
         if (myMapLoader.GetAreaMap()[targetX, targetY] == 'X')
         {
+            door.SetActive(false);
             locked.SetActive(false);
             myLoader.enabled = false;
             deadEnd.SetActive(true);
@@ -44,6 +47,7 @@ public class DoorManager : Unlockable
 
     public override void Unlock()
     {
+        print("unlocking");
         if (locked.activeInHierarchy)
         {
             //locked.SetActive(false);

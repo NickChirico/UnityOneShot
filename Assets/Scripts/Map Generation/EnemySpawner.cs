@@ -60,6 +60,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void CheckEnemiesAlive()
     {
+        print("Checking enemies alive");
         if (allEnemies.Count <= 0)
         {
             FinishRoom();

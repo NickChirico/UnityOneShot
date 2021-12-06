@@ -154,6 +154,7 @@ public class MapLoader : MonoBehaviour
     public void LoadRoom(string targetDirection)
     {
         print("loading room");
+        Vector3 spawnPosition = new Vector3(0,0,0);
         Transform targetSpawn = myPlayer.transform;
         int targetX = currentXLoc;
         int targetY = currentYLoc;
@@ -163,21 +164,25 @@ public class MapLoader : MonoBehaviour
                 targetX = currentXLoc - 1;
                 targetY = currentYLoc;
                 targetSpawn = southSpawn;
+                spawnPosition = southSpawn.position;
                 break;
             case "east":
                 targetX = currentXLoc;
                 targetY = currentYLoc + 1;
                 targetSpawn = westSpawn;
+                spawnPosition = westSpawn.position;
                 break;
             case "south":
                 targetX = currentXLoc + 1;
                 targetY = currentYLoc;
                 targetSpawn = northSpawn;
+                spawnPosition = northSpawn.position;
                 break;
             case "west":
                 targetX = currentXLoc;
                 targetY = currentYLoc - 1;
                 targetSpawn = eastSpawn;
+                spawnPosition = eastSpawn.position;
                 break;
         }
         if (GetAreaMap()[targetX, targetY] == 'D' || GetAreaMap()[targetX, targetY] == 'H' || GetAreaMap()[targetX, targetY] == 'B' || GetAreaMap()[targetX, targetY] == 'S')
@@ -187,7 +192,7 @@ public class MapLoader : MonoBehaviour
             currentXLoc = targetX;
             currentYLoc = targetY;
             loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
-            myPlayer.gameObject.transform.position = targetSpawn.position;
+            myPlayer.gameObject.transform.position = spawnPosition;
             if (!CompletedRooms[currentXLoc, currentYLoc])
             {
                 mySpawner.SpawnEnemies(loadedRoom);

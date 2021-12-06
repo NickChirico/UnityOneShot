@@ -167,6 +167,8 @@ public class PathManager : MonoBehaviour
             pathOptions.RemoveAt(currentSelection);
             
         }
-        return options;
+
+        string[] demoOptions = {"rupture", "contaminate", "siphon"};
+        return demoOptions;
     }
 }
