@@ -576,9 +576,9 @@ MonoBehaviour:
   pathNameText: {fileID: 365121653}
   pathInfoText: {fileID: 1862861854}
   pathSymbol: {fileID: 248969064}
-  ruptureSymbol: {fileID: 21300000, guid: eb362ce57d4d5c34785268ff560756bf, type: 3}
-  siphonSymbol: {fileID: 21300000, guid: 1047e6989a8f6c34289e4df2e2d1da60, type: 3}
-  contaminateSymbol: {fileID: 21300000, guid: b735bd73c3df77d48b4bf939f3a5e70b, type: 3}
+  ruptureSymbol: {fileID: 21300000, guid: 33d5c28ba588a5d44978410c704bca0d, type: 3}
+  siphonSymbol: {fileID: 21300000, guid: 128f40e563a8b374a873a319e6d0cc70, type: 3}
+  contaminateSymbol: {fileID: 21300000, guid: 61b9511a3a9433a44942b645c879b418, type: 3}
   goldSymbol: {fileID: 21300000, guid: a2df1216d33a7ae46915da46cb248b54, type: 3}
   shopSymbol: {fileID: 21300000, guid: 6733afaf9fb4c5f46b08f07d0a06f290, type: 3}
   healingSymbol: {fileID: 21300000, guid: 5078a2c632dce624990055d8e37f8397, type: 3}
@@ -797,9 +797,9 @@ MonoBehaviour:
   pathNameText: {fileID: 1369476008}
   pathInfoText: {fileID: 1295797126}
   pathSymbol: {fileID: 451642531}
-  ruptureSymbol: {fileID: 21300000, guid: eb362ce57d4d5c34785268ff560756bf, type: 3}
-  siphonSymbol: {fileID: 21300000, guid: 1047e6989a8f6c34289e4df2e2d1da60, type: 3}
-  contaminateSymbol: {fileID: 21300000, guid: b735bd73c3df77d48b4bf939f3a5e70b, type: 3}
+  ruptureSymbol: {fileID: 21300000, guid: 33d5c28ba588a5d44978410c704bca0d, type: 3}
+  siphonSymbol: {fileID: 21300000, guid: 128f40e563a8b374a873a319e6d0cc70, type: 3}
+  contaminateSymbol: {fileID: 21300000, guid: 61b9511a3a9433a44942b645c879b418, type: 3}
   goldSymbol: {fileID: 21300000, guid: a2df1216d33a7ae46915da46cb248b54, type: 3}
   shopSymbol: {fileID: 21300000, guid: 6733afaf9fb4c5f46b08f07d0a06f290, type: 3}
   healingSymbol: {fileID: 21300000, guid: 5078a2c632dce624990055d8e37f8397, type: 3}
@@ -1873,9 +1873,9 @@ MonoBehaviour:
   pathNameText: {fileID: 1891957610}
   pathInfoText: {fileID: 314110213}
   pathSymbol: {fileID: 75872792}
-  ruptureSymbol: {fileID: 21300000, guid: eb362ce57d4d5c34785268ff560756bf, type: 3}
-  siphonSymbol: {fileID: 21300000, guid: 1047e6989a8f6c34289e4df2e2d1da60, type: 3}
-  contaminateSymbol: {fileID: 21300000, guid: b735bd73c3df77d48b4bf939f3a5e70b, type: 3}
+  ruptureSymbol: {fileID: 21300000, guid: 33d5c28ba588a5d44978410c704bca0d, type: 3}
+  siphonSymbol: {fileID: 21300000, guid: 128f40e563a8b374a873a319e6d0cc70, type: 3}
+  contaminateSymbol: {fileID: 21300000, guid: 61b9511a3a9433a44942b645c879b418, type: 3}
   goldSymbol: {fileID: 21300000, guid: a2df1216d33a7ae46915da46cb248b54, type: 3}
   shopSymbol: {fileID: 21300000, guid: 6733afaf9fb4c5f46b08f07d0a06f290, type: 3}
   healingSymbol: {fileID: 21300000, guid: 5078a2c632dce624990055d8e37f8397, type: 3}

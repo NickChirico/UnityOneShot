@@ -14,20 +14,28 @@ public class DoorManager : Unlockable
 
     public void LoadNewDoor(int targetX, int targetY)
     {
-        door.SetActive(true);
-        unlocked.SetActive(false);
         myLoader.portal = false;
-        lockSymbol.SetActive(true);
-        checkSymbol.SetActive(myMapLoader.GetCompletionMap()[targetX, targetY]);
-        if (myMapLoader.GetAreaMap()[targetX, targetY] == 'X')
+        if (targetX >= myMap.roomSizes[myMap.GetCurrentTier()] || targetX < 0 || targetY >= myMap.roomSizes[myMap.GetCurrentTier()]
+            || targetY < 0 || myMapLoader.complexMap[targetX, targetY] == "X") //there is no neighboring room
         {
             door.SetActive(false);
-            locked.SetActive(false);
+            unlocked.SetActive(false);
+            lockSymbol.SetActive(false);
+            checkSymbol.SetActive(false);
             myLoader.enabled = false;
-            deadEnd.SetActive(true);
         }
-        else if (myMapLoader.GetAreaMap()[targetX, targetY] == 'D' || myMapLoader.GetAreaMap()[targetX, targetY] == 'H' ||
-                 myMapLoader.GetAreaMap()[targetX, targetY] == 'B' ||myMapLoader.GetAreaMap()[targetX, targetY] == 'S' ||myMapLoader.GetAreaMap()[targetX, targetY] == 'U')
+        else
+        {
+            locked.SetActive(true);
+            lockSymbol.SetActive(true);
+            myLoader.enabled = true;
+            myLoader.traveled = false;
+            deadEnd.SetActive(false);
+        }
+        checkSymbol.SetActive(myMapLoader.complexMap[targetX, targetY].StartsWith("*")); //check mark appears for completed rooms
+        /*
+        if (myMapLoader.complexMap[targetX, targetY].Contains("D") || myMapLoader.complexMap[targetX, targetY].Contains("H") || myMapLoader.complexMap[targetX, targetY].Contains("B")
+            || myMapLoader.complexMap[targetX, targetY].Contains("S") || myMapLoader.complexMap[targetX, targetY].Contains("R") || myMapLoader.complexMap[targetX, targetY].Contains("C"))
         {
             locked.SetActive(true);
             lockSymbol.SetActive(true);
@@ -39,7 +47,9 @@ public class DoorManager : Unlockable
             //deadEndMarket.SetActive(false);
             //deadEndAcademy.SetActive(false);
         }
-        if (myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc])
+        */
+        if (!myMapLoader.complexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc].StartsWith("*") || myMapLoader.complexMap[targetX, targetY].Contains("S") || myMapLoader.complexMap[targetX, targetY].Contains("H")
+            || myMapLoader.complexMap[targetX, targetY].Contains("R") || myMapLoader.complexMap[targetX, targetY].Contains("C")) //if we cleared out this room, unlock this door
         {
             Unlock();
         }

@@ -18,11 +18,11 @@ public class MapLoader : MonoBehaviour
 
     public HealingSpring mySpring;
     public MapGenerator myMap;
-    public bool[,] CompletedRooms = new bool[15,15];
-    public bool[,] CompletedWoods = new bool[15,15];
-    public bool[,] CompletedChurch = new bool[15,15];
-    public bool[,] CompletedMarket = new bool[15,15];
-    public bool[,] CompletedAcademy = new bool[15,15];
+    //public bool[,] CompletedRooms = new bool[1,1];
+    //public bool[,] CompletedWoods = new bool[15,15];
+    //public bool[,] CompletedChurch = new bool[15,15];
+    //public bool[,] CompletedMarket = new bool[15,15];
+    //public bool[,] CompletedAcademy = new bool[15,15];
     public int currentXLoc, currentYLoc, bossXLoc, bossYLoc;
     public enum Area
     {
@@ -62,22 +62,22 @@ public class MapLoader : MonoBehaviour
         //currentXLoc = 7;
         //currentYLoc = 7;
         currentArea = Area.Test;
-        operatingMap = myMap.roomArray;
-        AssignStartPositions(operatingMap, Area.Test);
+        complexMap = myMap.roomArray;
+        AssignStartPositions(complexMap, Area.Test);
         for (int i = 0; i < 15; i++)
         {
             for (int j = 0; j < 15; j++)
             {
-                if (GetAreaMap()[i, j] == 'B')
+                if (complexMap[i, j] == "B")
                 {
                     bossXLoc = i;
                     bossYLoc = j;
                 }
-                CompletedRooms[i, j] = false;
-                CompletedWoods[i, j] = false;
-                CompletedChurch[i, j] = false;
-                CompletedMarket[i, j] = false;
-                CompletedAcademy[i, j] = false;
+                //CompletedRooms[i, j] = false;
+                //CompletedWoods[i, j] = false;
+                //CompletedChurch[i, j] = false;
+                //CompletedMarket[i, j] = false;
+                //CompletedAcademy[i, j] = false;
             }
         }
         currentXLoc = testStartX;
@@ -185,15 +185,17 @@ public class MapLoader : MonoBehaviour
                 spawnPosition = eastSpawn.position;
                 break;
         }
-        if (GetAreaMap()[targetX, targetY] == 'D' || GetAreaMap()[targetX, targetY] == 'H' || GetAreaMap()[targetX, targetY] == 'B' || GetAreaMap()[targetX, targetY] == 'S')
+        if (complexMap[targetX, targetY] == "D" || complexMap[targetX, targetY] == "H" ||
+            complexMap[targetX, targetY] == "B" || complexMap[targetX, targetY] == "S" || complexMap[targetX, targetY] == "U" || 
+            complexMap[targetX, targetY] == "R" || complexMap[targetX, targetY] == "C" || complexMap[targetX, targetY] == "V")
         {
             //operatingMap[targetX, targetY] = 'H';
             //operatingMap[currentXLoc, currentYLoc] = 'D';
             currentXLoc = targetX;
             currentYLoc = targetY;
             loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
-            myPlayer.gameObject.transform.position = spawnPosition;
-            if (!CompletedRooms[currentXLoc, currentYLoc])
+            myPlayer.gameObject.transform.position = targetSpawn.position;
+            if (complexMap[currentXLoc, currentYLoc].StartsWith("*"))
             {
                 mySpawner.SpawnEnemies(loadedRoom);
             }
@@ -305,15 +307,15 @@ public class MapLoader : MonoBehaviour
         myPlayer.gameObject.transform.position = targetSpawn.position;
     }*/
 
-    public void AssignStartPositions(char[,] tempMap, Area whichArea)
+    public void AssignStartPositions(string[,] tempMap, Area whichArea)
     {
         int tempX = 0;
         int tempY = 0;
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < myMap.roomSizes[myMap.GetCurrentTier()]; i++)
         {
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < myMap.roomSizes[myMap.GetCurrentTier()]; j++)
             {
-                if (tempMap[i, j] == 'H')
+                if (tempMap[i, j] == "H" || tempMap[i, j] == "R" || tempMap[i, j] == "C" || tempMap[i, j] == "S")
                 {
                     tempX = i;
                     tempY = j;
@@ -343,62 +345,5 @@ public class MapLoader : MonoBehaviour
                 testStartY = tempY;
                 break;
         }
-    }
-
-    public void ShowMap(char[,] thisMap)
-    {
-        string willPrint = "";
-        for (int i = 0; i < 15; i++)
-        {
-            for (int j = 0; j < 15; j++)
-            {
-                willPrint += thisMap[i, j] + " ";
-            }
-
-            willPrint += "\n";
-        }
-        print(willPrint);
-    }
-
-    public char[,] GetAreaMap()
-    {
-        switch (currentArea)
-        {
-            case Area.Start:
-                return startMap;
-            case Area.Woods:
-                return woodsMap;
-            case Area.Church:
-                return churchMap;
-            case Area.Market:
-                return marketMap;
-            case Area.Academy:
-                return academyMap;
-            case Area.Test:
-                return operatingMap;
-        }
-        return startMap;
-    }
-
-    public bool[,] GetCompletionMap()
-    {
-        bool[,] defaultMap =
-        {
-            {true}
-        };
-        switch (currentArea)
-        {
-            case Area.Woods:
-                return CompletedWoods;
-            case Area.Church:
-                return CompletedChurch;
-            case Area.Market:
-                return CompletedMarket;
-            case Area.Academy:
-                return CompletedAcademy;
-            case Area.Test:
-                return CompletedRooms;
-        }
-        return defaultMap;
     }
 }

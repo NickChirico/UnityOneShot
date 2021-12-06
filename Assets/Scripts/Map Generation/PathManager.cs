@@ -82,10 +82,12 @@ public class PathManager : MonoBehaviour
             {
                 print("here ya go");
                 previousPath = allOptions[currentOption].pathCode;
-                myMapGen.GenerateMap("North");
-                //myMapGen.GenerateMapFromPath(layerNum, allOptions[currentOption].pathCode);
+                print("funny");
+                //myMapGen.GenerateMap("North");
+                myMapGen.GenerateMapFromPath(layerNum, allOptions[currentOption].pathCode);
+                //myMapGen.ShowMap();
                 SceneManager.LoadScene("SingleRoomIso");
-                choosingPath = false;
+                //choosingPath = false;
             }
         }
     }
