@@ -165,6 +165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c59c7476685164cab601d4fa319fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seraphIcon: {fileID: 585789184333713750}
+  ruptureSprite: {fileID: 21300000, guid: 33d5c28ba588a5d44978410c704bca0d, type: 3}
+  contaminateSprite: {fileID: 21300000, guid: 61b9511a3a9433a44942b645c879b418, type: 3}
+  siphonSprite: {fileID: 21300000, guid: 128f40e563a8b374a873a319e6d0cc70, type: 3}
   mySlot: {fileID: 0}
   mySeraph: {fileID: 0}
   seraphType: 0

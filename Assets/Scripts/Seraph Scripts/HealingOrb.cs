@@ -52,7 +52,7 @@ public class HealingOrb : MonoBehaviour
                 coll.gameObject.GetComponent<Player>().currentHealth = coll.gameObject.GetComponent<Player>().MaxHealth;
             }
             coll.gameObject.GetComponent<Player>().GetUIManager().UpdateHealth(coll.gameObject.GetComponent<Player>().currentHealth, coll.gameObject.GetComponent<Player>().MaxHealth);
-            Debug.Log("Player HEAL for " + healAmount);
+            //Debug.Log("Player HEAL for " + healAmount);
             //player.Augment(thisOrb);
             Destroy(this.gameObject);
         }

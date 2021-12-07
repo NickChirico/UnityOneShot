@@ -64,9 +64,9 @@ public class MapLoader : MonoBehaviour
         currentArea = Area.Test;
         complexMap = myMap.roomArray;
         AssignStartPositions(complexMap, Area.Test);
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < myMap.roomSizes[myMap.GetCurrentTier()]; i++)
         {
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < myMap.roomSizes[myMap.GetCurrentTier()]; j++)
             {
                 if (complexMap[i, j] == "B")
                 {
@@ -82,6 +82,8 @@ public class MapLoader : MonoBehaviour
         }
         currentXLoc = testStartX;
         currentYLoc = testStartY;
+        loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
+        /*
         loadedRoom.northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
         loadedRoom.eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
         loadedRoom.southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
@@ -90,6 +92,7 @@ public class MapLoader : MonoBehaviour
         loadedRoom.eastDoor.Unlock();
         loadedRoom.southDoor.Unlock();
         loadedRoom.westDoor.Unlock();
+        */
         //woodsMap = myMap.GenerateMap("North");
         //churchMap = myMap.GenerateMap("West"); //west
         //academyMap = myMap.GenerateMap("East"); //east
@@ -185,9 +188,9 @@ public class MapLoader : MonoBehaviour
                 spawnPosition = eastSpawn.position;
                 break;
         }
-        if (complexMap[targetX, targetY] == "D" || complexMap[targetX, targetY] == "H" ||
-            complexMap[targetX, targetY] == "B" || complexMap[targetX, targetY] == "S" || complexMap[targetX, targetY] == "U" || 
-            complexMap[targetX, targetY] == "R" || complexMap[targetX, targetY] == "C" || complexMap[targetX, targetY] == "V")
+        if (complexMap[targetX, targetY].Contains("D") || complexMap[targetX, targetY].Contains("H") ||
+            complexMap[targetX, targetY].Contains("B") || complexMap[targetX, targetY].Contains("R") || complexMap[targetX, targetY].Contains("C") || 
+            complexMap[targetX, targetY].Contains("S"))
         {
             //operatingMap[targetX, targetY] = 'H';
             //operatingMap[currentXLoc, currentYLoc] = 'D';
@@ -197,7 +200,11 @@ public class MapLoader : MonoBehaviour
             myPlayer.gameObject.transform.position = targetSpawn.position;
             if (complexMap[currentXLoc, currentYLoc].StartsWith("*"))
             {
-                mySpawner.SpawnEnemies(loadedRoom);
+                if (complexMap[currentXLoc, currentYLoc] == "*B")
+                {
+                    mySpawner.SpawnEnemies(loadedRoom, true);
+                }
+                mySpawner.SpawnEnemies(loadedRoom, false);
             }
             //myMap.ShowMapOnScreen();
             //print(CompletedRooms[currentXLoc, currentYLoc]);
@@ -315,35 +322,14 @@ public class MapLoader : MonoBehaviour
         {
             for (int j = 0; j < myMap.roomSizes[myMap.GetCurrentTier()]; j++)
             {
-                if (tempMap[i, j] == "H" || tempMap[i, j] == "R" || tempMap[i, j] == "C" || tempMap[i, j] == "S")
+                if (tempMap[i, j] == "*H" || tempMap[i, j] == "*R" || tempMap[i, j] == "*C" || tempMap[i, j] == "*S")
                 {
                     tempX = i;
                     tempY = j;
                 }
             }
         }
-        switch (whichArea)
-        {
-            case Area.Woods:
-                woodsStartX = tempX;
-                woodsStartY = tempY;
-                break;
-            case Area.Church:
-                churchStartX = tempX;
-                churchStartY = tempY;
-                break;
-            case Area.Market:
-                marketStartX = tempX;
-                marketStartY = tempY;
-                break;
-            case Area.Academy:
-                academyStartX = tempX;
-                academyStartY = tempY;
-                break;
-            case Area.Test:
-                testStartX = tempX;
-                testStartY = tempY;
-                break;
-        }
+        testStartX = tempX;
+        testStartY = tempY;
     }
 }

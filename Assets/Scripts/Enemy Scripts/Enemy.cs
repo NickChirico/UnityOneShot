@@ -186,20 +186,20 @@ public abstract class Enemy : Entity
     {
         int dropNumber = Random.Range(0, 99);
         //print(dropNumber);
-        if (dropNumber > 39 && dropNumber <= 59)
+        if (dropNumber > 54 && dropNumber <= 69)
         {
             //print("should spawn rupture");
             //mySeraphController.SpawnSeraph(0);
             Instantiate(rupturePickup, transform.position, Quaternion.identity);
 
         }
-        else if (dropNumber > 59 && dropNumber <= 79)
+        else if (dropNumber > 69 && dropNumber <= 84)
         {
             //print("should spawn contaminate");
             //mySeraphController.SpawnSeraph(1);
             Instantiate(contaminatePickup, transform.position, Quaternion.identity);
         }
-        else if (dropNumber > 79 && dropNumber <= 99)
+        else if (dropNumber > 84 && dropNumber <= 99)
         {
             //print("should spawn siphon");
             //mySeraphController.SpawnSeraph(2);

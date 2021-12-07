@@ -13,6 +13,8 @@ public class Room : MonoBehaviour
     public DoorManager northDoor, eastDoor, southDoor, westDoor;
 
     public SpawnArrangement[] spawnOptions;
+
+    public SpawnArrangement bossEncounter;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,16 +31,19 @@ public class Room : MonoBehaviour
     {
         if (myLoader.complexMap[tempX, tempY] == "*R")
         {
+            print("rupture room");
             Instantiate(rupturePrefab, pickupSpawnLoc.position, Quaternion.identity);
             myLoader.complexMap[tempX, tempY] = "R";
         }
         if (myLoader.complexMap[tempX, tempY] == "*C")
         {
+            print("contaminate room");
             Instantiate(contaminatePrefab, pickupSpawnLoc.position, Quaternion.identity);
             myLoader.complexMap[tempX, tempY] = "C";
         }
         if (myLoader.complexMap[tempX, tempY] == "*S")
         {
+            print("siphon room");
             Instantiate(siphonPrefab, pickupSpawnLoc.position, Quaternion.identity);
             myLoader.complexMap[tempX, tempY] = "S";
         }
