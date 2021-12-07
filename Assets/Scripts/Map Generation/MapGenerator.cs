@@ -107,7 +107,7 @@ public class MapGenerator : MonoBehaviour
     //public string[,] demoMap = new string[1, 1];
     private int _currentTier;
     private string _currentPathCode;
-    public int numDoneRooms, numDeadEnds, xMin, xMax, yMin, yMax, bossXLoc, bossYLoc;
+    public int numDoneRooms, numDeadEnds, xMin, xMax, yMin, yMax, numDifferentRooms, numBossRooms;
     public List<int> deadEndXPos, deadEndYPos, allRoomsXPos, allRoomsYPos;
     public MapLoader myLoader;
     public Text screenText;
@@ -185,19 +185,17 @@ public class MapGenerator : MonoBehaviour
         switch (_currentPathCode)
         {
             case "rupture":
-                startRoomChar = "*R";
+                startRoomChar = "*R/0";
                 break;
             case "contaminate":
-                startRoomChar = "*C";
+                startRoomChar = "*C/0";
                 break;
             case "siphon":
-                startRoomChar = "*S";
+                startRoomChar = "*S/0";
                 break;
         }
         roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = startRoomChar;
-        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = "*B";
-        bossXLoc = deadEndXPos[endLoc];
-        bossYLoc = deadEndYPos[endLoc];
+        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = "*B/" + Random.Range(0, numBossRooms);
         for (int i = 0; i < deadEndXPos.Count; i++)
         {
             /*
@@ -435,7 +433,7 @@ public class MapGenerator : MonoBehaviour
         {
             roomArray[targetX, targetY + 1] = "X";
         }
-        roomArray[targetX, targetY] = "*D";
+        roomArray[targetX, targetY] = "*D/" + Random.Range(0, numDifferentRooms);
     }
     
     public void FinalizeMap(bool tempChanged, int tempNum)
@@ -469,7 +467,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int j = 0; j < roomSizes[_currentTier-1]; j++)
             {
-                if (roomArray[i,j] == "*D")
+                if (roomArray[i,j].Contains("*D/"))
                 {
                     counted++;
                     allRoomsXPos.Add(i);
@@ -513,7 +511,7 @@ public class MapGenerator : MonoBehaviour
                     {"O", "O", "O", "O", "O"}
                 };
                 xMin = 4;
-                yMin = 4;
+                yMax = 4;
                 break;
             case 2:
                 roomArray = new[,]
@@ -569,7 +567,7 @@ public class MapGenerator : MonoBehaviour
                 break;
         }
         xMax = 0;
-        yMax = 0;
+        yMin = 0;
         allRoomsXPos.Clear();
         allRoomsYPos.Clear();
         deadEndXPos.Clear();
@@ -788,35 +786,35 @@ public class MapGenerator : MonoBehaviour
             {
                 valid = false;
             }
-            if (path[i, 0] == "*D")
+            if (path[i, 0].Contains("*D/"))
             {
                 if (path[i - 1, 0] == "X" && path[i - 1, 1] == "X")
                 {
                     valid = false;
                 }
             }
-            if (path[i, 1] == "*D")
+            if (path[i, 1].Contains("*D/"))
             {
                 if (path[i - 1, 0] == "X" && path[i - 1, 1] == "X" && path[i - 1, 2] == "X")
                 {
                     valid = false;
                 }
             }
-            if (path[i, 2] == "*D")
+            if (path[i, 2].Contains("*D/"))
             {
                 if (path[i - 1, 1] == "X" && path[i - 1, 2] == "X" && path[i - 1, 3] == "X")
                 {
                     valid = false;
                 }
             }
-            if (path[i, 3] == "*D")
+            if (path[i, 3].Contains("*D/"))
             {
                 if (path[i - 1, 2] == "X" && path[i - 1, 3] == "X" && path[i - 1, 4] == "X")
                 {
                     valid = false;
                 }
             }
-            if (path[i, 4] == "*D")
+            if (path[i, 4].Contains("*D/"))
             {
                 if (path[i - 1, 3] == "X" && path[i - 1, 4] == "X")
                 {

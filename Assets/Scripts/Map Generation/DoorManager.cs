@@ -21,10 +21,11 @@ public class DoorManager : Unlockable
     public void LoadNewDoor(int targetX, int targetY)
     {
         myLoader.portal = false;
+        unlocked.SetActive(false);
         if (targetX >= myMap.roomSizes[myMap.GetCurrentTier()] || targetX < 0 || targetY >= myMap.roomSizes[myMap.GetCurrentTier()]
-            || targetY < 0 || myMapLoader.complexMap[targetX, targetY] == "X") //there is no neighboring room
+            || targetY < 0 || myMapLoader.ComplexMap[targetX, targetY] == "X") //there is no neighboring room
         {
-            print("no neighbor at " + targetX + ", " + targetY);
+            //print("no neighbor at " + targetX + ", " + targetY);
             door.SetActive(false);
             unlocked.SetActive(false);
             lockSymbol.SetActive(false);
@@ -43,9 +44,8 @@ public class DoorManager : Unlockable
             myLoader.enabled = true;
             myLoader.traveled = false;
             deadEnd.SetActive(false);
-            checkSymbol.SetActive(myMapLoader.complexMap[targetX, targetY].StartsWith("*"));
-            if (!myMapLoader.complexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc].StartsWith("*") || myMapLoader.complexMap[targetX, targetY].Contains("S") || myMapLoader.complexMap[targetX, targetY].Contains("H")
-                || myMapLoader.complexMap[targetX, targetY].Contains("R") || myMapLoader.complexMap[targetX, targetY].Contains("C")) //if we cleared out this room, unlock this door
+            checkSymbol.SetActive(!myMapLoader.ComplexMap[targetX, targetY].StartsWith("*"));
+            if (!myMapLoader.ComplexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc].StartsWith("*")) //if we cleared out this room, unlock this door
             {
                 Unlock();
             }

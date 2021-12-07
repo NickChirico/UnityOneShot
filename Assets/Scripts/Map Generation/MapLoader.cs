@@ -7,9 +7,10 @@ public class MapLoader : MonoBehaviour
 {
     public GameObject rupturePickup, contaminatePickup, siphonPickup;
     public Room loadedRoom;
+    public Room[] allRooms, bossRooms;
     public EnemySpawner mySpawner;
     public char[,] operatingMap;
-    public string[,] complexMap;
+    public string[,] ComplexMap;
     public char[,] woodsMap, churchMap, marketMap, academyMap;
     public char[,] startMap =
     {
@@ -45,7 +46,6 @@ public class MapLoader : MonoBehaviour
         testStartX,
         testStartY;
     public DoorManager northDoor, eastDoor, southDoor, westDoor;
-    public Transform northSpawn, eastSpawn, southSpawn, westSpawn;
     public Player myPlayer;
     public Unlockable[] allUnlockables;
     public GameObject entranceRoom;
@@ -62,13 +62,13 @@ public class MapLoader : MonoBehaviour
         //currentXLoc = 7;
         //currentYLoc = 7;
         currentArea = Area.Test;
-        complexMap = myMap.roomArray;
-        AssignStartPositions(complexMap, Area.Test);
+        ComplexMap = myMap.roomArray;
+        AssignStartPositions(ComplexMap, Area.Test);
         for (int i = 0; i < myMap.roomSizes[myMap.GetCurrentTier()]; i++)
         {
             for (int j = 0; j < myMap.roomSizes[myMap.GetCurrentTier()]; j++)
             {
-                if (complexMap[i, j] == "B")
+                if (ComplexMap[i, j].Contains("*B"))
                 {
                     bossXLoc = i;
                     bossYLoc = j;
@@ -157,54 +157,52 @@ public class MapLoader : MonoBehaviour
     public void LoadRoom(string targetDirection)
     {
         print("loading room");
-        Vector3 spawnPosition = new Vector3(0,0,0);
         Transform targetSpawn = myPlayer.transform;
         int targetX = currentXLoc;
         int targetY = currentYLoc;
+        
         switch (targetDirection)
         {
             case "north":
-                targetX = currentXLoc - 1;
-                targetY = currentYLoc;
-                targetSpawn = southSpawn;
-                spawnPosition = southSpawn.position;
+                currentXLoc -= 1;
+                //change which room is loaded based on the path code, if it's a boss room, do the boss version
+                //turn the old room off, turn the new one on
+                loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
+                targetSpawn = loadedRoom.southSpawn;
                 break;
             case "east":
-                targetX = currentXLoc;
-                targetY = currentYLoc + 1;
-                targetSpawn = westSpawn;
-                spawnPosition = westSpawn.position;
+                currentYLoc += 1;
+                loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
+                targetSpawn = loadedRoom.westSpawn;
                 break;
             case "south":
-                targetX = currentXLoc + 1;
-                targetY = currentYLoc;
-                targetSpawn = northSpawn;
-                spawnPosition = northSpawn.position;
+                currentXLoc += 1;
+                loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
+                targetSpawn = loadedRoom.northSpawn;
                 break;
             case "west":
-                targetX = currentXLoc;
-                targetY = currentYLoc - 1;
-                targetSpawn = eastSpawn;
-                spawnPosition = eastSpawn.position;
+                currentYLoc -= 1;
+                loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
+                targetSpawn = loadedRoom.eastSpawn;
                 break;
         }
-        if (complexMap[targetX, targetY].Contains("D") || complexMap[targetX, targetY].Contains("H") ||
-            complexMap[targetX, targetY].Contains("B") || complexMap[targetX, targetY].Contains("R") || complexMap[targetX, targetY].Contains("C") || 
-            complexMap[targetX, targetY].Contains("S"))
+        if (ComplexMap[targetX, targetY].Contains("D") || ComplexMap[targetX, targetY].Contains("H") ||
+            ComplexMap[targetX, targetY].Contains("B") || ComplexMap[targetX, targetY].Contains("R") || ComplexMap[targetX, targetY].Contains("C") || 
+            ComplexMap[targetX, targetY].Contains("S"))
         {
             //operatingMap[targetX, targetY] = 'H';
             //operatingMap[currentXLoc, currentYLoc] = 'D';
-            currentXLoc = targetX;
-            currentYLoc = targetY;
-            loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
             myPlayer.gameObject.transform.position = targetSpawn.position;
-            if (complexMap[currentXLoc, currentYLoc].StartsWith("*"))
+            if (ComplexMap[currentXLoc, currentYLoc].StartsWith("*"))
             {
-                if (complexMap[currentXLoc, currentYLoc] == "*B")
+                if (ComplexMap[currentXLoc, currentYLoc].Contains("*B"))
                 {
                     mySpawner.SpawnEnemies(loadedRoom, true);
                 }
-                mySpawner.SpawnEnemies(loadedRoom, false);
+                else
+                {
+                    mySpawner.SpawnEnemies(loadedRoom, false);
+                }
             }
             //myMap.ShowMapOnScreen();
             //print(CompletedRooms[currentXLoc, currentYLoc]);
@@ -216,103 +214,6 @@ public class MapLoader : MonoBehaviour
         }
     }
 
-    public void LoadRoomFromPath(string roomCode)
-    {
-        
-    }
-
-    /*
-    public void LoadArea(string direction)
-    {
-        northDoor.currentArea = currentArea;
-        eastDoor.currentArea = currentArea;
-        southDoor.currentArea = currentArea;
-        westDoor.currentArea = currentArea;
-        Transform targetSpawn = myPlayer.transform;
-        switch (direction)
-        {
-            case "north":
-                targetSpawn = southSpawn;
-                break;
-            case "east":
-                targetSpawn = westSpawn;
-                break;
-            case "south":
-                targetSpawn = northSpawn;
-                break;
-            case "west":
-                targetSpawn = eastSpawn;
-                break;
-        }
-        switch (currentArea)
-        {
-            case Area.Start:
-                entranceRoom.SetActive(true);
-                woodsRoom.SetActive(false);
-                churchRoom.SetActive(false);
-                marketRoom.SetActive(false);
-                academyRoom.SetActive(false);
-                northDoor.LoadPortal(Area.Woods);
-                eastDoor.LoadPortal(Area.Church);
-                southDoor.LoadPortal(Area.Market);
-                westDoor.LoadPortal(Area.Academy);
-                break;
-            case Area.Woods:
-                entranceRoom.SetActive(false);
-                woodsRoom.SetActive(true);
-                churchRoom.SetActive(false);
-                marketRoom.SetActive(false);
-                academyRoom.SetActive(false);
-                currentXLoc = woodsStartX;
-                currentYLoc = woodsStartY;
-                northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
-                eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
-                southDoor.LoadPortal(Area.Start);
-                westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
-                break;
-            case Area.Church:
-                entranceRoom.SetActive(false);
-                woodsRoom.SetActive(false);
-                churchRoom.SetActive(true);
-                marketRoom.SetActive(false);
-                academyRoom.SetActive(false);
-                currentXLoc = churchStartX;
-                currentYLoc = churchStartY;
-                northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
-                eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
-                southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
-                westDoor.LoadPortal(Area.Start);
-                break;
-            case Area.Market:
-                entranceRoom.SetActive(false);
-                woodsRoom.SetActive(false);
-                churchRoom.SetActive(false);
-                marketRoom.SetActive(true);
-                academyRoom.SetActive(false);
-                currentXLoc = marketStartX;
-                currentYLoc = marketStartY;
-                northDoor.LoadPortal(Area.Start);
-                eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
-                southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
-                westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
-                break;
-            case Area.Academy:
-                entranceRoom.SetActive(false);
-                woodsRoom.SetActive(false);
-                churchRoom.SetActive(false);
-                marketRoom.SetActive(false);
-                academyRoom.SetActive(true);
-                currentXLoc = academyStartX;
-                currentYLoc = academyStartY;
-                northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
-                eastDoor.LoadPortal(Area.Start);
-                southDoor.LoadNewDoor(currentXLoc + 1, currentYLoc);
-                westDoor.LoadNewDoor(currentXLoc, currentYLoc - 1);
-                break;
-        }
-        print(currentXLoc + ", " + currentYLoc);
-        myPlayer.gameObject.transform.position = targetSpawn.position;
-    }*/
 
     public void AssignStartPositions(string[,] tempMap, Area whichArea)
     {
@@ -322,7 +223,7 @@ public class MapLoader : MonoBehaviour
         {
             for (int j = 0; j < myMap.roomSizes[myMap.GetCurrentTier()]; j++)
             {
-                if (tempMap[i, j] == "*H" || tempMap[i, j] == "*R" || tempMap[i, j] == "*C" || tempMap[i, j] == "*S")
+                if (tempMap[i, j].Contains("*H") || tempMap[i, j].Contains("*R") || tempMap[i, j].Contains("*C") || tempMap[i, j].Contains("*S"))
                 {
                     tempX = i;
                     tempY = j;

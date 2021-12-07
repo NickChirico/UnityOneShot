@@ -27,34 +27,49 @@ public class EnemySpawner : MonoBehaviour
         int spawnSelection;
         if (spawningBoss)
         {
-            spawnSelection = 0;
+            for (int i = 0; i < toSpawn.spawnOptions[0].spawnLocationsArray.Length; i++)
+            {
+                if (toSpawn.spawnOptions[0].enemyTypeArray[i] == 'M')
+                {
+                    allEnemies.Add(Instantiate(meleePrefab, toSpawn.spawnOptions[0].spawnLocationsArray[i]));
+                }
+                else if (toSpawn.spawnOptions[0].enemyTypeArray[i] == 'R')
+                {
+                    allEnemies.Add(Instantiate(rangedPrefab, toSpawn.spawnOptions[0].spawnLocationsArray[i]));
+                }
+                else if (toSpawn.spawnOptions[0].enemyTypeArray[i] == 'B')
+                {
+                    allEnemies.Add(Instantiate(bossPrefab, toSpawn.spawnOptions[0].spawnLocationsArray[i]));
+                }
+            }
         }
         else
         {
             spawnSelection = Random.Range(1, toSpawn.spawnOptions.Length);
+            for (int i = 0; i < toSpawn.spawnOptions[spawnSelection].spawnLocationsArray.Length; i++)
+            {
+                if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'M')
+                {
+                    allEnemies.Add(Instantiate(meleePrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+                }
+                else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'R')
+                {
+                    allEnemies.Add(Instantiate(rangedPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+                }
+                else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'B')
+                {
+                    allEnemies.Add(Instantiate(bossPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+                }
+            }
         }
-        for (int i = 0; i < toSpawn.spawnOptions[spawnSelection].spawnLocationsArray.Length; i++)
-        {
-            if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'M')
-            {
-                allEnemies.Add(Instantiate(meleePrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
-            }
-            else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'R')
-            {
-                allEnemies.Add(Instantiate(rangedPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
-            }
-            else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'B')
-            {
-                allEnemies.Add(Instantiate(bossPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
-            }
-        }
+        
     }
 
     public void FinishRoom()
     {
         print("finished");
         roomComplete = true;
-        myMapLoader.complexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = myMapLoader.complexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc].TrimStart('*');
+        myMapLoader.ComplexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = myMapLoader.ComplexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc].TrimStart('*');
         //myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
         for (int i = 0; i < myMapLoader.allUnlockables.Length; i++)
         {

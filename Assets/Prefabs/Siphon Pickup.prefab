@@ -112,6 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18b2a7a69524eda45bf87466fd52987a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seraphType: 2
+  seraphType: 1
   myController: {fileID: 0}
   used: 0
