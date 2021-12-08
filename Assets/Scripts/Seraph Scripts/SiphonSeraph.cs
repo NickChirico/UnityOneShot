@@ -17,7 +17,7 @@ public class SiphonSeraph : Seraph
     {
 
     }
-    public override void StartEffect(ShootableEntity entity, Vector2 hitPoint)
+    public override void StartEffect(Entity entity, Vector2 hitPoint)
     {
         HealingOrb H = Instantiate(healthOrb, hitPoint, Quaternion.identity);
         H.SetHealAmount(healAmount);

@@ -118,7 +118,7 @@ public class ShotController : MonoBehaviour
         hasShot = true;
 
         currentAmmo = ammoCapacity;
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+        //uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
     }
 
     public bool HasShot()
@@ -153,7 +153,7 @@ public class ShotController : MonoBehaviour
 
         ammoCapacity = weap.ammoCapacity;
         currentAmmo = ammoCapacity;
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+        //uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
 
         audioManager.SetShotSounds(weap.shotSounds);
         audioManager.SetReloadSound(weap.reload_Sound);
@@ -422,7 +422,7 @@ public class ShotController : MonoBehaviour
                     ShootableEntity entity = hit.collider.GetComponent<ShootableEntity>();
                     if (entity != null)
                     {
-                        ApplyShot(entity, hit.point, hit.distance, damage);
+                        //ApplyShot(entity, hit.point, hit.distance, damage);
                         Instantiate(ImpactBurst, hitPoint, Quaternion.identity);
 
                         if (hit.rigidbody != null)
@@ -451,7 +451,7 @@ public class ShotController : MonoBehaviour
                         ShootableEntity e = h.collider.GetComponent<ShootableEntity>();
                         if (e != null)
                         {
-                            ApplyShot(e, h.point, h.distance, (int)damageToPass);
+                            //ApplyShot(e, h.point, h.distance, (int)damageToPass);
                             damageToPass -= damageToPass * pierceDamageFalloff;
                             Instantiate(ImpactPierceBurst, h.point, Quaternion.identity);
 
@@ -510,7 +510,7 @@ public class ShotController : MonoBehaviour
                     ShootableEntity entity = hit.collider.GetComponent<ShootableEntity>();
                     if (entity != null)
                     {
-                        ApplyShot(entity, hit.point, hit.distance, baseDamage); // PASS DAMAGE TO ApplyShot(damage);
+                        //ApplyShot(entity, hit.point, hit.distance, baseDamage); // PASS DAMAGE TO ApplyShot(damage);
                         Instantiate(ImpactBurst_prefab, hitPoint, Quaternion.identity);
                     }
                 }
@@ -530,7 +530,7 @@ public class ShotController : MonoBehaviour
 
     }
 
-    private void ApplyShot(ShootableEntity entityHit, Vector2 hitPoint, float hitDistance, int damage)
+    private void ApplyShot(Entity entityHit, Vector2 hitPoint, float hitDistance, int damage)
     {
         // Determine Damage
         int damageToDeal = damage;
@@ -541,7 +541,7 @@ public class ShotController : MonoBehaviour
         }
 
         // Deal Damage
-        bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint, hitForce);
+        bool isKillShot = entityHit.TakeDamage(damageToDeal, hitPoint, hitForce, 0);
 
         // Apply Knockback
         // --here
@@ -640,7 +640,7 @@ public class ShotController : MonoBehaviour
 
     public void UpdateAmmoUI()
     {
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
+        //uiControl.UpdateAmmo(currentAmmo, ammoCapacity);
     }
     #endregion
 

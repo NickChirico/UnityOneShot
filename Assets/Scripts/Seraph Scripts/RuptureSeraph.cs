@@ -33,7 +33,7 @@ public class RuptureSeraph : Seraph
         }
     }
 
-    public override void StartEffect(ShootableEntity entity, Vector2 hitPoint)
+    public override void StartEffect(Entity entity, Vector2 hitPoint)
     {
         DestroyDelay P = Instantiate(preIndicator, hitPoint, Quaternion.identity);
         P.SetDelay(ruptureOnsetDelay);

@@ -136,6 +136,7 @@ public class MeleeController : MonoBehaviour
         return rayOrigin;
     }
 
+
     private void UpdateDirection()
     {
         if (usingMouse)
@@ -281,7 +282,7 @@ public class MeleeController : MonoBehaviour
 
 
         // SERAPH
-        seraphControl.ActivateMainWeaponSeraphs(entityHit, hitPoint);
+        //seraphControl.ActivateMainWeaponSeraphs(entityHit, hitPoint);
     }
 
     private void OnDrawGizmos()

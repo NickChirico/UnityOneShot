@@ -6,6 +6,8 @@ public abstract class PlayerState
 {
     protected PlayerStateManager SM;
     protected Player player;
+    protected PlayerController playerControl;
+
     protected MovementController Move;
     protected ShotController Shot;
     protected AltShotController Alt;
@@ -14,6 +16,7 @@ public abstract class PlayerState
 
     protected PlayerInputActions InputAction;
 
+    protected bool isMainWeap;
     protected string Name;
     protected float Duration;
     protected float PrepDuration;
@@ -31,6 +34,16 @@ public abstract class PlayerState
         Spec = SpecialController.GetSpecialController;
         SM = manager;
         Name = name;
+        playerControl = PlayerController.GetPlayerController;
+    }
+    public PlayerState(PlayerStateManager manager, string name, bool mainWeap)
+    {
+        InputAction = MovementController.GetInputActions;
+        SM = manager;
+        Name = name;
+        Move = MovementController.GetMoveController;
+        playerControl = PlayerController.GetPlayerController;
+        isMainWeap = mainWeap;
     }
 
     public PlayerState(PlayerStateManager manager, string name, float dur)
@@ -44,6 +57,7 @@ public abstract class PlayerState
         SM = manager;
         Name = name;
         Duration = dur;
+        playerControl = PlayerController.GetPlayerController;
     }
     public PlayerState(PlayerStateManager manager, Player p, string name, float dur)
     {
@@ -57,6 +71,7 @@ public abstract class PlayerState
         player = p;
         Name = name;
         Duration = dur;
+        playerControl = PlayerController.GetPlayerController;
     }
 
     public PlayerState(PlayerStateManager manager, string name, float dur, float prepDur, int interval)
@@ -72,6 +87,7 @@ public abstract class PlayerState
         Duration = dur;
         PrepDuration = prepDur;
         AttackInterval = interval;
+        playerControl = PlayerController.GetPlayerController;
     }
 
     // Update
@@ -97,6 +113,47 @@ public abstract class PlayerState
         return Duration;
     }
 
+
+    public void GoToMainWeapon()
+    {
+        switch (playerControl.mainWeapon.GetWeaponType())
+        {
+            case WeaponManager.WeaponType.Ranged:
+                SM.ChangeState(SM.ShootMain);
+                break;
+            case WeaponManager.WeaponType.Melee:
+                if (playerControl.meleeWeap1.CanAttack())
+                    SM.ChangeState(SM.AttackMain);
+                break;
+            case WeaponManager.WeaponType.Special:
+                if (playerControl.specWeap1.CanSpecial())
+                    SM.ChangeState(SM.SpecMain);
+                break;
+        }
+    }
+
+    public void GoToAltWeapon()
+    {
+        switch (playerControl.altWeapon.GetWeaponType())
+        {
+            case WeaponManager.WeaponType.Ranged:
+                SM.ChangeState(SM.ShootAlt);
+                break;
+            case WeaponManager.WeaponType.Melee:
+                if (playerControl.meleeWeap2.CanAttack())
+                    SM.ChangeState(SM.AttackAlt);
+                break;
+            case WeaponManager.WeaponType.Special:
+                if (playerControl.specWeap2.CanSpecial())
+                    SM.ChangeState(SM.SpecAlt);
+                break;
+        }
+    }
+
+    public void GoToDash()
+    {
+        SM.ChangeState(SM.Dashing);
+    }
 
 
 

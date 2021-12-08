@@ -5,6 +5,65 @@ using UnityEngine.UI;
 //MAKE IT MAKE SURE THAT THE START AND END ARE DEAD ENDS, KEEP TRACK OF THE LOWEST AND HIGHEST X AND Y VALUES
 public class MapGenerator : MonoBehaviour
 {
+    
+    public int[,,] tier1Limits = new int[,,]
+    {
+        {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}},
+        {{1,1}, {1,2}, {1,2}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {2,4}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {1,2}, {1,2}, {1,1}},
+        {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}}
+    };
+    public int[,,] tier2Limits = new int[,,]
+    {
+        {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}},
+        {{1,1}, {1,2}, {1,2}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {3,4}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {1,2}, {1,2}, {1,1}},
+        {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}}
+    };
+    public int[,,] tier3Limits = new int[,,]
+    {
+        {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}},
+        {{1,1}, {1,3}, {1,3}, {1,3}, {1,1}},
+        {{1,1}, {1,3}, {3,4}, {1,3}, {1,1}},
+        {{1,1}, {1,3}, {1,3}, {1,3}, {1,1}},
+        {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}}
+    };
+    public int[,,] tier4Limits = new int[,,]
+    {
+        {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}},
+        {{1,1}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {1,3}, {1,3}, {1,3}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {1,3}, {3,4}, {1,3}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {1,3}, {1,3}, {1,3}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,1}},
+        {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}}
+    };
+    public int[,,] tier5Limits = new int[,,]
+    {
+        {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}},
+        {{1,1}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {2,3}, {2,3}, {2,3}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {2,3}, {3,4}, {2,3}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {2,3}, {2,3}, {2,3}, {1,2}, {1,1}},
+        {{1,1}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,1}},
+        {{1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}, {1,1}}
+    };
+
+    public int[][,,] allTierLimits;
+
+    public int[][] tierRoomNumbers = new[]
+    {
+        new int[] {3,11},
+        new int[] {4,13},
+        new int[] {5,15},
+        new int[] {6,17},
+        new int[] {7,19}
+    };
+
+    public int[] roomSizes = new[] {5, 5, 7, 7, 7};
+    
     public int[,] maxArray = new[,]
     {
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -43,18 +102,46 @@ public class MapGenerator : MonoBehaviour
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
     };
 
-    public char[,] roomArray = new char[15,15];
-    public int numDoneRooms, numDeadEnds, xMin, xMax, yMin, yMax, bossXLoc, bossYLoc;
+    public string[,] roomArray = new string[1,1];
+    public string[,] path = new string[5, 5];
+    //public string[,] demoMap = new string[1, 1];
+    private int _currentTier;
+    private string _currentPathCode;
+    public int numDoneRooms, numDeadEnds, xMin, xMax, yMin, yMax, numDifferentRooms, numBossRooms;
     public List<int> deadEndXPos, deadEndYPos, allRoomsXPos, allRoomsYPos;
     public MapLoader myLoader;
     public Text screenText;
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
+        allTierLimits = new[] {tier1Limits, tier2Limits, tier3Limits, tier4Limits, tier5Limits};
         ResetMap();
+        //myLoader.complexMap = GenerateMapFromPath(1, "test");
     }
 
-    public char[,] GenerateMap(string direction)
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //GeneratePath();
+            GenerateMapFromPath(1, "rupture");
+            //ShowPath();
+            //ShowMap();
+        }
+    }
+
+    public void SetTier(int input)
+    {
+        _currentTier = input;
+    }
+
+    public void SetPathCode(string input)
+    {
+        _currentPathCode = input;
+    }
+
+    public void GenerateMap()
     {
         //direction determines if we start on the top, bottom, left, or right of the map, and where the final boss is
         bool stillGenerating = true; //allows us to remake a map if it isn't satisfactory
@@ -63,104 +150,59 @@ public class MapGenerator : MonoBehaviour
         {
             ResetMap();
             IterateMap();
-            if (numDoneRooms > 16 && numDeadEnds > 2 && CheckOrientation(direction))
+            if (numDoneRooms >= tierRoomNumbers[_currentTier-1][0] && numDoneRooms <= tierRoomNumbers[_currentTier-1][1] && numDeadEnds > 2 && CheckOrientation("North"))
             {
                 stillGenerating = false;
             }
         }
+        OrientMap();
+        //return roomArray;
         ShowMap();
-        OrientMap(direction);
-        ShowMap();
-        return roomArray;
     }
 
-    public void OrientMap(string direction)
+    public void OrientMap()
     {
+        string startRoomChar = "H";
         int idealValue;
         int finalValue;
         int startLoc = 0;
         int endLoc = 0;
-        switch (direction)
-        {
-            case "North": //smallest x pos
-                idealValue = 0;
-                finalValue = 14;
-                for (int i = 0; i < deadEndXPos.Count; i++)
-                {
-                    if (deadEndXPos[i] > idealValue)
-                    {
-                        startLoc = i;
-                        idealValue = deadEndXPos[i];
-                    }
-                    if (deadEndXPos[i] < finalValue)
-                    {
-                        endLoc = i;
-                        finalValue = deadEndXPos[i];
-                    }
-                }
-                break;
-            case "South": //largest x pos
-                idealValue = 14;
-                finalValue = 0;
-                for (int i = 0; i < deadEndXPos.Count; i++)
-                {
-                    if (deadEndXPos[i] < idealValue)
-                    {
-                        startLoc = i;
-                        idealValue = deadEndXPos[i];
-                    }
-                    if (deadEndXPos[i] > finalValue)
-                    {
-                        endLoc = i;
-                        finalValue = deadEndXPos[i];
-                    }
-                }
-                break;
-            case "West": //smallest y pos
-                idealValue = 0;
-                finalValue = 14;
-                for (int i = 0; i < deadEndYPos.Count; i++)
-                {
-                    if (deadEndYPos[i] > idealValue)
-                    {
-                        startLoc = i;
-                        idealValue = deadEndYPos[i];
-                    }
-                    if (deadEndYPos[i] < finalValue)
-                    {
-                        endLoc = i;
-                        finalValue = deadEndYPos[i];
-                    }
-                }
-                break;
-            case "East": //largest y pos
-                idealValue = 14;
-                finalValue = 0;
-                for (int i = 0; i < deadEndYPos.Count; i++)
-                {
-                    if (deadEndYPos[i] < idealValue)
-                    {
-                        startLoc = i;
-                        idealValue = deadEndYPos[i];
-                    }
-                    if (deadEndYPos[i] > finalValue)
-                    {
-                        endLoc = i;
-                        finalValue = deadEndYPos[i];
-                    }
-                }
-                break;
-        }
-        roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = 'H';
-        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = 'B';
-        bossXLoc = deadEndXPos[endLoc];
-        bossYLoc = deadEndYPos[endLoc];
+        idealValue = 0;
+        finalValue = roomSizes[_currentTier-1]-1;
         for (int i = 0; i < deadEndXPos.Count; i++)
         {
-            if (roomArray[deadEndXPos[i], deadEndYPos[i]] == 'D')
+            if (deadEndXPos[i] > idealValue)
+            {
+                startLoc = i;
+                idealValue = deadEndXPos[i];
+            }
+            if (deadEndXPos[i] < finalValue)
+            {
+                endLoc = i;
+                finalValue = deadEndXPos[i];
+            }
+        }
+        switch (_currentPathCode)
+        {
+            case "rupture":
+                startRoomChar = "*R/0";
+                break;
+            case "contaminate":
+                startRoomChar = "*C/0";
+                break;
+            case "siphon":
+                startRoomChar = "*S/0";
+                break;
+        }
+        roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = startRoomChar;
+        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = "*B/" + Random.Range(0, numBossRooms);
+        for (int i = 0; i < deadEndXPos.Count; i++)
+        {
+            /*
+            if (roomArray[deadEndXPos[i], deadEndYPos[i]] == "D")
             {
                 roomArray[deadEndXPos[i], deadEndYPos[i]] = 'S';
-            }
+            }*/
         }
     }
 
@@ -169,12 +211,12 @@ public class MapGenerator : MonoBehaviour
         bool changed = false;
         int targetX = -1;
         int targetY = -1;
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < roomSizes[_currentTier-1]; i++)
         {
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < roomSizes[_currentTier-1]; j++)
             {
                 //print("checking at (" + i + "," + j + ")");
-                if (!changed && roomArray[i, j] == 'W')
+                if (!changed && roomArray[i, j] == "W")
                 {
                     //print("Found a W at (" + i + "," + j + ")");
                     changed = true;
@@ -185,12 +227,12 @@ public class MapGenerator : MonoBehaviour
         }
         if (changed && targetX != -1 && targetY != -1)
         {
-            ExpandRoom(targetX, targetY);
+            ExpandRoom(targetX, targetY, _currentTier);
         }
-        FinalizeMap(changed);
+        FinalizeMap(changed, _currentTier);
     }
 
-    public void ExpandRoom(int targetX, int targetY)
+    public void ExpandRoom(int targetX, int targetY, int tempNum)
     {
         //ShowMapOnScreen();
         List<string> possibleConnections = new List<string>();
@@ -206,36 +248,36 @@ public class MapGenerator : MonoBehaviour
         {
             switch (roomArray[targetX - 1, targetY])
             {    
-                case 'W':
+                case "W":
                     numWaiting++;
                     break;
-                case 'X':
+                case "X":
                     numInvalid++;
                     break;
-                case 'O':
+                case "O":
                     numEmpty++;
                     possibleConnections.Add("a");
                     break;
-                case 'D':
+                case "*D":
                     numDone++;
                     break;
             }
         }
-        if (targetX < 14)
+        if (targetX < roomSizes[tempNum-1]-1)
         {
             switch (roomArray[targetX + 1, targetY])
             {
-                case 'W':
+                case "W":
                     numWaiting++;
                     break;
-                case 'X':
+                case "X":
                     numInvalid++;
                     break;
-                case 'O':
+                case "O":
                     numEmpty++;;
                     possibleConnections.Add("b");
                     break;
-                case 'D':
+                case "*D":
                     numDone++;
                     break;
             }
@@ -244,36 +286,36 @@ public class MapGenerator : MonoBehaviour
         {
             switch (roomArray[targetX, targetY - 1])
             {
-                case 'W':
+                case "W":
                     numWaiting++;
                     break;
-                case 'X':
+                case "X":
                     numInvalid++;
                     break;
-                case 'O':
+                case "O":
                     numEmpty++;;
                     possibleConnections.Add("c");
                     break;
-                case 'D':
+                case "*D":
                     numDone++;
                     break;
             }
         }
-        if (targetY < 14)
+        if (targetY < roomSizes[tempNum-1]-1)
         {
             switch (roomArray[targetX, targetY + 1])
             {
-                case 'W':
+                case "W":
                     numWaiting++;
                     break;
-                case 'X':
+                case "X":
                     numInvalid++;
                     break;
-                case 'O':
+                case "O":
                     numEmpty++;;
                     possibleConnections.Add("d");
                     break;
-                case 'D':
+                case "*D":
                     numDone++;
                     break;
             }
@@ -284,23 +326,23 @@ public class MapGenerator : MonoBehaviour
                   //numWaiting + " Waiting");
         
 
-        if (minArray[targetX, targetY] < (numWaiting + numDone))
+        if (allTierLimits[tempNum][targetX, targetY, 0] < (numWaiting + numDone))
         {
             minConnections = (numWaiting + numDone);
         }
         else
         {
-            minConnections = minArray[targetX, targetY];
+            minConnections = allTierLimits[tempNum][targetX, targetY, 0];
         }
         //print("The minimum number of connections is " + minConnections);
 
-        if (maxArray[targetX, targetY] > (4 - numInvalid))
+        if (allTierLimits[tempNum][targetX, targetY, 1] > (4 - numInvalid))
         {
             maxConnections = (4 - numInvalid);
         }
         else
         {
-            maxConnections = maxArray[targetX, targetY];
+            maxConnections = allTierLimits[tempNum][targetX, targetY, 1];
         }
         //print("The maximum number of connections is " + maxConnections);
         
@@ -341,19 +383,6 @@ public class MapGenerator : MonoBehaviour
         {
             deadEndXPos.Add(targetX);
             deadEndYPos.Add(targetY);
-            string xList = "";
-            string yList = "";
-            for (int i = 0; i < deadEndXPos.Count; i++)
-            {
-                xList += deadEndXPos[i] + ", ";
-            }
-
-            for (int i = 0; i < deadEndYPos.Count; i++)
-            {
-                yList += deadEndYPos[i] + ", ";
-            }
-            //print(xList);
-            //print(yList);
         }
         var numToConnect = numConnections - (numWaiting + numDone);
         if (numToConnect > numEmpty)
@@ -369,45 +398,45 @@ public class MapGenerator : MonoBehaviour
                 switch (possibleConnections[selector])
                 {
                     case "a":
-                        roomArray[targetX - 1, targetY] = 'W';
+                        roomArray[targetX - 1, targetY] = "W";
                         possibleConnections.Remove("a");
                         break;
                     case "b":
-                        roomArray[targetX + 1, targetY] = 'W';
+                        roomArray[targetX + 1, targetY] = "W";
                         possibleConnections.Remove("b");
                         break;
                     case "c":
-                        roomArray[targetX, targetY - 1] = 'W';
+                        roomArray[targetX, targetY - 1] = "W";
                         possibleConnections.Remove("c");
                         break;
                     case "d":
-                        roomArray[targetX, targetY + 1] = 'W';
+                        roomArray[targetX, targetY + 1] = "W";
                         possibleConnections.Remove("d");
                         break;
                     }
             }
         }
 
-        if (targetX > 0 && roomArray[targetX - 1, targetY] == 'O')
+        if (targetX > 0 && roomArray[targetX - 1, targetY] == "O")
         {
-            roomArray[targetX - 1, targetY] = 'X';
+            roomArray[targetX - 1, targetY] = "X";
         }
-        if (targetX < 14 && roomArray[targetX + 1, targetY] == 'O')
+        if (targetX < roomSizes[tempNum-1]-1 && roomArray[targetX + 1, targetY] == "O")
         {
-            roomArray[targetX + 1, targetY] = 'X';
+            roomArray[targetX + 1, targetY] = "X";
         }
-        if (targetY > 0 && roomArray[targetX, targetY - 1] == 'O')
+        if (targetY > 0 && roomArray[targetX, targetY - 1] == "O")
         {
-            roomArray[targetX, targetY - 1] = 'X';
+            roomArray[targetX, targetY - 1] = "X";
         }
-        if (targetY < 14 && roomArray[targetX, targetY + 1] == 'O')
+        if (targetY < roomSizes[tempNum-1]-1 && roomArray[targetX, targetY + 1] == "O")
         {
-            roomArray[targetX, targetY + 1] = 'X';
+            roomArray[targetX, targetY + 1] = "X";
         }
-        roomArray[targetX, targetY] = 'D';
+        roomArray[targetX, targetY] = "*D/" + Random.Range(0, numDifferentRooms);
     }
     
-    public void FinalizeMap(bool tempChanged)
+    public void FinalizeMap(bool tempChanged, int tempNum)
     {
         if (tempChanged)
         {
@@ -416,13 +445,13 @@ public class MapGenerator : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < roomSizes[tempNum-1]; i++)
             {
-                for (int j = 0; j < 15; j++)
+                for (int j = 0; j < roomSizes[tempNum-1]; j++)
                 {
-                    if (roomArray[i, j] == 'O')
+                    if (roomArray[i, j] == "O")
                     {
-                        roomArray[i, j] = 'X';
+                        roomArray[i, j] = "X";
                     }
                 }
             }
@@ -434,11 +463,11 @@ public class MapGenerator : MonoBehaviour
     public int CountRooms()
     {
         int counted = 0;
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < roomSizes[_currentTier-1]; i++)
         {
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < roomSizes[_currentTier-1]; j++)
             {
-                if (roomArray[i,j] == 'D')
+                if (roomArray[i,j].Contains("*D/"))
                 {
                     counted++;
                     allRoomsXPos.Add(i);
@@ -470,28 +499,75 @@ public class MapGenerator : MonoBehaviour
 
     public void ResetMap() //prepares the room array for a new generation
     {
-        roomArray = new [,]
+        switch (_currentTier)
         {
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','W','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-            {'O','O','O','O','O','O','O','O','O','O','O','O','O','O','O'},
-        };
-        xMin = 14;
+            case 1:
+                roomArray = new[,]
+                {
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "W", "O", "O"},
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O"}
+                };
+                xMin = 4;
+                yMax = 4;
+                break;
+            case 2:
+                roomArray = new[,]
+                {
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "W", "O", "O"},
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O"}
+                };
+                xMin = 4;
+                yMin = 4;
+                break;
+            case 3:
+                roomArray = new[,]
+                {
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "W", "O", "O"},
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O"}
+                };
+                xMin = 4;
+                yMin = 4;
+                break;
+            case 4:
+                roomArray = new[,]
+                {
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "W", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"}
+                };
+                xMin = 6;
+                yMin = 6;
+                break;
+            case 5:
+                roomArray = new[,]
+                {
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "W", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"}
+                };
+                xMin = 6;
+                yMin = 6;
+                break;
+        }
         xMax = 0;
-        yMin = 14;
-        yMax = 0;
+        yMin = 0;
         allRoomsXPos.Clear();
         allRoomsYPos.Clear();
         deadEndXPos.Clear();
@@ -503,9 +579,9 @@ public class MapGenerator : MonoBehaviour
     public void ShowMap()
     {
         string willPrint = "";
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < roomSizes[_currentTier-1]; i++)
         {
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < roomSizes[_currentTier-1]; j++)
             {
                 willPrint += roomArray[i, j] + " ";
             }
@@ -550,5 +626,236 @@ public class MapGenerator : MonoBehaviour
         }
         return minEnd && maxEnd;
     }
+
+    public void GeneratePath()
+    {
+        bool pathReady = false;
+        while (!pathReady)
+        {
+            pathReady = true;
+            IteratePath();
+            pathReady = CheckPath();
+        }
+    }
     
+    public void IteratePath()
+    {
+        ClearPaths();
+        List<int> validPaths = new List<int> {0, 1, 2, 3, 4};
+        List<int> currentPaths = new List<int>();
+        int tierNum = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                path[i, j] = "O";
+            }
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            int selection = Random.Range(0, validPaths.Count);
+            currentPaths.Add(validPaths[selection]);
+            validPaths.RemoveAt(selection);
+        }
+        BuildPaths(tierNum, currentPaths, path);
+
+        for (int i = 3; i > 0; i--)
+        {
+            int maxPaths = Random.Range(3, 5);
+            validPaths = FindValidPaths(currentPaths);
+            if (validPaths.Count < maxPaths)
+            {
+                maxPaths = validPaths.Count;
+            }
+            currentPaths = FindRequiredPaths(currentPaths, validPaths);
+            if (currentPaths.Count < maxPaths)
+            {
+                for (int j = 0; j < maxPaths - currentPaths.Count; j++)
+                {
+                    int selection = Random.Range(0, validPaths.Count);
+                    currentPaths.Add(validPaths[selection]);
+                    validPaths.RemoveAt(selection);
+                }
+            }
+            tierNum++;
+            BuildPaths(tierNum, validPaths, path);
+        }
+    }
+
+    public void ClearPaths()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                path[i, j] = "O";
+            }
+        }
+    }
+
+    public List<int> FindValidPaths(List<int> currentTier)
+    {
+        List<int> toReturn = new List<int>();
+        if (currentTier.Contains(0))
+        {
+            toReturn.Add(0);
+            toReturn.Add(1);
+        }
+        if (currentTier.Contains(1))
+        {
+            toReturn.Add(0);
+            toReturn.Add(1);
+            toReturn.Add(2);
+        }
+        if (currentTier.Contains(2))
+        {
+            toReturn.Add(1);
+            toReturn.Add(2);
+            toReturn.Add(3);
+        }
+        if (currentTier.Contains(3))
+        {
+            toReturn.Add(2);
+            toReturn.Add(3);
+            toReturn.Add(4);
+        }
+        if (currentTier.Contains(4))
+        {
+            toReturn.Add(3);
+            toReturn.Add(4);
+        }
+        return toReturn;
+    }
+
+    public List<int> FindRequiredPaths(List<int> targetCurrent, List<int> targetValid)
+    {
+        List<int> toReturn = new List<int>();
+        
+        if (targetCurrent.Contains(0) && targetCurrent.Contains(1) && targetCurrent.Contains(2))
+        {
+            toReturn.Add(1);
+            targetValid.Remove(1);
+        }
+        else if (targetCurrent.Contains(0) && targetCurrent.Contains(1))
+        {
+            toReturn.Add(0);
+            targetValid.Remove(0);
+        }
+        
+        if (targetCurrent.Contains(1) && targetCurrent.Contains(2) && targetCurrent.Contains(3))
+        {
+            toReturn.Add(2);
+            targetValid.Remove(2);
+        }
+        
+        if (targetCurrent.Contains(2) && targetCurrent.Contains(3) && targetCurrent.Contains(4))
+        {
+            toReturn.Add(3);
+            targetValid.Remove(3);
+        }
+        else if (targetCurrent.Contains(3) && targetCurrent.Contains(4))
+        {
+            toReturn.Add(4);
+            targetValid.Remove(4);
+        }
+        return toReturn;
+    }
+
+    public void BuildPaths(int currentTierNum, List<int> currentTier, string[,] targetPath)
+    {
+        print("it happens here");
+        foreach (var temp in currentTier)
+        {
+            targetPath[temp, currentTierNum] = "*D";
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            if (targetPath[i, currentTierNum] == "O")
+            {
+                targetPath[i, currentTierNum] = "X";
+            }
+        }
+    }
+
+    public bool CheckPath()
+    {
+        bool valid = true;
+        for (int i = 4; i > 0; i--)
+        {
+            if (path[i, 0] == "X" && path[i, 1] == "X" && path[i, 2] == "X" && path[i, 3] == "X" && path[i, 4] == "X")
+            {
+                valid = false;
+            }
+            if (path[i, 0].Contains("*D/"))
+            {
+                if (path[i - 1, 0] == "X" && path[i - 1, 1] == "X")
+                {
+                    valid = false;
+                }
+            }
+            if (path[i, 1].Contains("*D/"))
+            {
+                if (path[i - 1, 0] == "X" && path[i - 1, 1] == "X" && path[i - 1, 2] == "X")
+                {
+                    valid = false;
+                }
+            }
+            if (path[i, 2].Contains("*D/"))
+            {
+                if (path[i - 1, 1] == "X" && path[i - 1, 2] == "X" && path[i - 1, 3] == "X")
+                {
+                    valid = false;
+                }
+            }
+            if (path[i, 3].Contains("*D/"))
+            {
+                if (path[i - 1, 2] == "X" && path[i - 1, 3] == "X" && path[i - 1, 4] == "X")
+                {
+                    valid = false;
+                }
+            }
+            if (path[i, 4].Contains("*D/"))
+            {
+                if (path[i - 1, 3] == "X" && path[i - 1, 4] == "X")
+                {
+                    valid = false;
+                }
+            }
+        }
+        return valid;
+    }
+
+    public void ShowPath()
+    {
+        string willPrint = "";
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                willPrint += path[i, j].ToString() + " ";
+                //print(path[i,j]);
+            }
+
+            willPrint += "\n";
+        }
+        print(willPrint);
+    }
+
+    public void GenerateMapFromPath(int tierLevel, string pathCode)
+    {
+        SetTier(tierLevel);
+        SetPathCode(pathCode);
+        GenerateMap();
+    }
+
+    public int GetCurrentTier()
+    {
+        return _currentTier;
+    }
+
+    public string GetCurrentPathCode()
+    {
+        return _currentPathCode;
+    }
+
 }

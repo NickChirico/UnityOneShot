@@ -28,7 +28,7 @@ public abstract class Seraph : MonoBehaviour
 
     private Vector2 targetPos;
 
-    public abstract void StartEffect(ShootableEntity entity, Vector2 hitPoint);
+    public abstract void StartEffect(Entity entity, Vector2 hitPoint);
     public abstract void DoEffect();
     public abstract void EndEffect();
 

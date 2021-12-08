@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5447640758910180123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5447640758910180117}
+  - component: {fileID: 5447640758910180122}
+  m_Layer: 0
+  m_Name: BlunderbussObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5447640758910180117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5447640758910180123}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.819331, y: -0.51427495, z: -0.90115243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5447640758910180122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5447640758910180123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8956eb16111953949a04dbc3b448ec86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isValidWeapon: 1
+  weaponName: Blunderbuss
+  postureDamage: 7
+  shotDamage: 5
+  ammoCapacity: 2
+  currentAmmo: 0
+  range: 2.5
+  reloadDuration: 1.5
+  knockbackForce: 8
+  doRecoil: 1
+  recoilForce: 12
+  recoilDuration: 0.2
+  delayBetweenShots: 0.35
+  doRechamber: 1
+  rechamberDuration: 0.25
+  doCone: 1
+  coneSpread: 8
+  coneAngle: 30
+  shotSounds:
+  - {fileID: 8300000, guid: 82afdadec6748d344bc4fd3a4b860c54, type: 3}
+  - {fileID: 8300000, guid: 5854c4b133a84a0489c4b1df7a519675, type: 3}
+  - {fileID: 8300000, guid: 71e3519ff5cd2bf4da8d4c3c7952671c, type: 3}
+  reload_Sound: {fileID: 8300000, guid: 6145ae29eede3fc4b8b3df8a4ea505fa, type: 3}
+  ShotTrail_prefab: {fileID: 998725183318589660, guid: 87ec6fd5e0fbc2a49be0ef76b08be982,
+    type: 3}
+  ImpactBurst_prefab: {fileID: 4459188246670153662, guid: d1d531c7e9a2cc245816d9bd6c0d067a,
+    type: 3}
+  shotVFX_duration: 0.1
