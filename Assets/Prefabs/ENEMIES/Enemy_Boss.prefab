@@ -423,7 +423,7 @@ MonoBehaviour:
   attackRange: 5
   attackDuration: 2
   attackDelay: 0.5
-  attackLungeForce: 5000
+  attackLungeForce: 10
   canAttack: 1
   invulnTime: 0
   knockbackForce: 800

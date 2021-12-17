@@ -883,7 +883,7 @@ MonoBehaviour:
   currentHealth: 0
   postureMax: 10
   posture: 0
-  postureDecayRate: 3
+  postureDecayRate: 2
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
