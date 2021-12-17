@@ -160,35 +160,21 @@ public class MapLoader : MonoBehaviour
         Transform targetSpawn = myPlayer.transform;
         int targetX = currentXLoc;
         int targetY = currentYLoc;
-        int roomNum = 0;
-        loadedRoom.enabled = false;
-        int.TryParse(ComplexMap[targetX, targetY].Split('/')[1], out roomNum);
-        if (ComplexMap[targetX, targetY].Contains("B"))
-        {
-            for (int i = 0; i < bossRooms.Length; i++)
-            {
-                if (roomNum == i)
-                {
-                    loadedRoom = bossRooms[i];
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < allRooms.Length; i++)
-            {
-                if (roomNum == i)
-                {
-                    loadedRoom = allRooms[i];
-                }
-            }
-        }
-        
-        loadedRoom.enabled = true;
         switch (targetDirection)
         {
             case "north":
                 currentXLoc -= 1;
+                loadedRoom.enabled = false;
+                for (int i = 0; i < allRooms.Length; i++)
+                {
+                    if (ComplexMap[targetX, targetY].Split('/')[1] == i.ToString())
+                    {
+                        loadedRoom = allRooms[i];
+                    }
+                }
+                loadedRoom.enabled = true;
+                //change which room is loaded based on the path code, if it's a boss room, do the boss version
+                //turn the old room off, turn the new one on
                 loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
                 targetSpawn = loadedRoom.southSpawn;
                 break;
