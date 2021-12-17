@@ -21,7 +21,6 @@ public abstract class Enemy : Entity
     public Rigidbody2D rb;
     public LineRenderer lineRend;
     public bool EnableLineRend;
-
     public EnemySpawner mySpawner;
     //ShootableEntity entity;
 
@@ -66,7 +65,6 @@ public abstract class Enemy : Entity
         mySpawner = GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>();
         //entity = this.GetComponent<ShootableEntity>();
         playerLoc = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-
         if (EnableLineRend)
         {
             lineRend.gameObject.SetActive(true);
@@ -187,19 +185,28 @@ public abstract class Enemy : Entity
     public override void Die()
     {
         int dropNumber = Random.Range(0, 99);
-        if (dropNumber > 39 && dropNumber <= 59)
+        //print(dropNumber);
+        if (dropNumber > 54 && dropNumber <= 69)
         {
-            Instantiate(rupturePickup, transform);
+            //print("should spawn rupture");
+            //mySeraphController.SpawnSeraph(0);
+            Instantiate(rupturePickup, transform.position, Quaternion.identity);
+
         }
-        else if (dropNumber > 59 && dropNumber <= 79)
+        else if (dropNumber > 69 && dropNumber <= 84)
         {
-            Instantiate(contaminatePickup, transform);
+            //print("should spawn contaminate");
+            //mySeraphController.SpawnSeraph(1);
+            Instantiate(contaminatePickup, transform.position, Quaternion.identity);
         }
-        else if (dropNumber > 79 && dropNumber <= 99)
+        else if (dropNumber > 84 && dropNumber <= 99)
         {
-            Instantiate(siphonPickup, transform);
+            //print("should spawn siphon");
+            //mySeraphController.SpawnSeraph(2);
+            Instantiate(siphonPickup, transform.position, Quaternion.identity);
         }
         mySpawner.allEnemies.Remove(gameObject);
+        mySpawner.CheckEnemiesAlive();
         base.Die();
     }
 

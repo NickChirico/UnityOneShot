@@ -82,7 +82,6 @@ public class SeraphController : MonoBehaviour
                 case 2:
                     newSeraph.SetGenome(Seraph_UI.Genome.Contaminate);
                     break;
-
                 default:
                     newSeraph.SetGenome(Seraph_UI.Genome.None);
                     break;

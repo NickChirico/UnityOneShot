@@ -77,4 +77,9 @@ public class Player : Entity
         //currentHealth = maxHealth;
         //ui.UpdateHealth(currentHealth, maxHealth);
     }
+
+    public UI_Manager GetUIManager()
+    {
+        return ui;
+    }
 }

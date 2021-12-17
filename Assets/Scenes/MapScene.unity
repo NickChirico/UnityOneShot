@@ -542,7 +542,7 @@ RectTransform:
   m_GameObject: {fileID: 438112948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8830856, y: 0.8830856, z: 0.8830856}
   m_Children:
   - {fileID: 365121652}
   - {fileID: 1862861853}
@@ -552,10 +552,10 @@ RectTransform:
   m_Father: {fileID: 824561383}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -578.2426, y: -209.2893}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -3.3303, y: 0}
+  m_SizeDelta: {x: 275.7574, y: 324.7107}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &438112950
 MonoBehaviour:
@@ -576,9 +576,9 @@ MonoBehaviour:
   pathNameText: {fileID: 365121653}
   pathInfoText: {fileID: 1862861854}
   pathSymbol: {fileID: 248969064}
-  ruptureSymbol: {fileID: 21300000, guid: eb362ce57d4d5c34785268ff560756bf, type: 3}
-  siphonSymbol: {fileID: 21300000, guid: 1047e6989a8f6c34289e4df2e2d1da60, type: 3}
-  contaminateSymbol: {fileID: 21300000, guid: b735bd73c3df77d48b4bf939f3a5e70b, type: 3}
+  ruptureSymbol: {fileID: 21300000, guid: 33d5c28ba588a5d44978410c704bca0d, type: 3}
+  siphonSymbol: {fileID: 21300000, guid: 128f40e563a8b374a873a319e6d0cc70, type: 3}
+  contaminateSymbol: {fileID: 21300000, guid: 61b9511a3a9433a44942b645c879b418, type: 3}
   goldSymbol: {fileID: 21300000, guid: a2df1216d33a7ae46915da46cb248b54, type: 3}
   shopSymbol: {fileID: 21300000, guid: 6733afaf9fb4c5f46b08f07d0a06f290, type: 3}
   healingSymbol: {fileID: 21300000, guid: 5078a2c632dce624990055d8e37f8397, type: 3}
@@ -725,7 +725,7 @@ RectTransform:
   m_GameObject: {fileID: 462247552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8830856, y: 0.8830856, z: 0.8830856}
   m_Children:
   - {fileID: 1369476007}
   - {fileID: 1295797125}
@@ -735,10 +735,10 @@ RectTransform:
   m_Father: {fileID: 824561383}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -254.62, y: 0}
-  m_SizeDelta: {x: -578.2426, y: -209.2893}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 137.9, y: 0}
+  m_SizeDelta: {x: 275.7574, y: 324.7107}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &462247554
 MonoBehaviour:
@@ -797,9 +797,9 @@ MonoBehaviour:
   pathNameText: {fileID: 1369476008}
   pathInfoText: {fileID: 1295797126}
   pathSymbol: {fileID: 451642531}
-  ruptureSymbol: {fileID: 21300000, guid: eb362ce57d4d5c34785268ff560756bf, type: 3}
-  siphonSymbol: {fileID: 21300000, guid: 1047e6989a8f6c34289e4df2e2d1da60, type: 3}
-  contaminateSymbol: {fileID: 21300000, guid: b735bd73c3df77d48b4bf939f3a5e70b, type: 3}
+  ruptureSymbol: {fileID: 21300000, guid: 33d5c28ba588a5d44978410c704bca0d, type: 3}
+  siphonSymbol: {fileID: 21300000, guid: 128f40e563a8b374a873a319e6d0cc70, type: 3}
+  contaminateSymbol: {fileID: 21300000, guid: 61b9511a3a9433a44942b645c879b418, type: 3}
   goldSymbol: {fileID: 21300000, guid: a2df1216d33a7ae46915da46cb248b54, type: 3}
   shopSymbol: {fileID: 21300000, guid: 6733afaf9fb4c5f46b08f07d0a06f290, type: 3}
   healingSymbol: {fileID: 21300000, guid: 5078a2c632dce624990055d8e37f8397, type: 3}
@@ -932,7 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1183,8 +1183,8 @@ MonoBehaviour:
   xMax: 0
   yMin: 0
   yMax: 0
-  bossXLoc: 0
-  bossYLoc: 0
+  numDifferentRooms: 1
+  numBossRooms: 1
   deadEndXPos: 
   deadEndYPos: 
   allRoomsXPos: 
@@ -1254,7 +1254,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   currentOption: 0
-  layerNum: 0
+  layerNum: 1
   choosingPath: 1
   navigateLeft:
     m_Name: Navigate Left
@@ -1337,7 +1337,7 @@ MonoBehaviour:
       m_Action: Select Option
       m_Flags: 0
   layerText: {fileID: 0}
-  myMapGen: {fileID: 0}
+  myMapGen: {fileID: 1076768872}
   newPaths: []
   previousPath: 
   uiMap:
@@ -1764,10 +1764,10 @@ RectTransform:
   m_Father: {fileID: 824561383}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -296, y: 225}
-  m_SizeDelta: {x: 160, y: 34.3987}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 131, y: -42}
+  m_SizeDelta: {x: 160, y: 34.398712}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1578527207
 MonoBehaviour:
@@ -1839,7 +1839,7 @@ RectTransform:
   m_GameObject: {fileID: 1787217974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8830856, y: 0.8830856, z: 0.8830856}
   m_Children:
   - {fileID: 1891957609}
   - {fileID: 314110212}
@@ -1849,10 +1849,10 @@ RectTransform:
   m_Father: {fileID: 824561383}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 254, y: 0}
-  m_SizeDelta: {x: -578.2426, y: -209.2893}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -145.7, y: 0}
+  m_SizeDelta: {x: 275.7574, y: 324.7107}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1787217976
 MonoBehaviour:
@@ -1873,9 +1873,9 @@ MonoBehaviour:
   pathNameText: {fileID: 1891957610}
   pathInfoText: {fileID: 314110213}
   pathSymbol: {fileID: 75872792}
-  ruptureSymbol: {fileID: 21300000, guid: eb362ce57d4d5c34785268ff560756bf, type: 3}
-  siphonSymbol: {fileID: 21300000, guid: 1047e6989a8f6c34289e4df2e2d1da60, type: 3}
-  contaminateSymbol: {fileID: 21300000, guid: b735bd73c3df77d48b4bf939f3a5e70b, type: 3}
+  ruptureSymbol: {fileID: 21300000, guid: 33d5c28ba588a5d44978410c704bca0d, type: 3}
+  siphonSymbol: {fileID: 21300000, guid: 128f40e563a8b374a873a319e6d0cc70, type: 3}
+  contaminateSymbol: {fileID: 21300000, guid: 61b9511a3a9433a44942b645c879b418, type: 3}
   goldSymbol: {fileID: 21300000, guid: a2df1216d33a7ae46915da46cb248b54, type: 3}
   shopSymbol: {fileID: 21300000, guid: 6733afaf9fb4c5f46b08f07d0a06f290, type: 3}
   healingSymbol: {fileID: 21300000, guid: 5078a2c632dce624990055d8e37f8397, type: 3}

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public GameObject rangedPrefab, meleePrefab;
-
+    public MapLoader myLoader;
+    public GameObject rupturePrefab, contaminatePrefab, siphonPrefab;
+    public Transform pickupSpawnLoc;
     public DoorManager northDoor, eastDoor, southDoor, westDoor;
-
+    public Transform northSpawn, eastSpawn, southSpawn, westSpawn;
     public SpawnArrangement[] spawnOptions;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,24 @@ public class Room : MonoBehaviour
 
     public void LoadAllDoors(int tempX, int tempY)
     {
+        if (myLoader.ComplexMap[tempX, tempY].Contains("*R"))
+        {
+            print("rupture room");
+            Instantiate(rupturePrefab, pickupSpawnLoc.position, Quaternion.identity);
+            myLoader.ComplexMap[tempX, tempY] = "R";
+        }
+        if (myLoader.ComplexMap[tempX, tempY].Contains("*C"))
+        {
+            print("contaminate room");
+            Instantiate(contaminatePrefab, pickupSpawnLoc.position, Quaternion.identity);
+            myLoader.ComplexMap[tempX, tempY] = "C";
+        }
+        if (myLoader.ComplexMap[tempX, tempY].Contains("*S"))
+        {
+            print("siphon room");
+            Instantiate(siphonPrefab, pickupSpawnLoc.position, Quaternion.identity);
+            myLoader.ComplexMap[tempX, tempY] = "S";
+        }
         northDoor.LoadNewDoor(tempX - 1, tempY);
         eastDoor.LoadNewDoor(tempX, tempY + 1);
         southDoor.LoadNewDoor(tempX + 1, tempY);
