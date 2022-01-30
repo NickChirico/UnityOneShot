@@ -16659,6 +16659,8 @@ MonoBehaviour:
   rupturePickup: {fileID: 0}
   contaminatePickup: {fileID: 0}
   siphonPickup: {fileID: 0}
+  seraphPickup: {fileID: 0}
+  weaponPickup: {fileID: 0}
   playerSpotted: 0
   idleDuration: 3
   alertDuration: 0.25

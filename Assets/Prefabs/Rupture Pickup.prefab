@@ -109,9 +109,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 403632358609029537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18b2a7a69524eda45bf87466fd52987a, type: 3}
+  m_Script: {fileID: 11500000, guid: 37750e5bbed03a64ca598b9952b4051a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   seraphType: 0
   myController: {fileID: 0}
   used: 0
+  pickupAble: 0
+  pickupImage: {fileID: 0}
+  seraphCode: 
+  seraphType: 0
+  myController: {fileID: 0}

@@ -30,7 +30,7 @@ public abstract class Enemy : Entity
     public int damageAttack;
     public float postureColl, postureAtk;
     public float visionRange;
-    public GameObject rupturePickup, contaminatePickup, siphonPickup;
+    public GameObject rupturePickup, contaminatePickup, siphonPickup, seraphPickup, weaponPickup;
     [HideInInspector] public bool playerSpotted;
 
     [Header("Idle")]
@@ -228,24 +228,24 @@ public abstract class Enemy : Entity
             GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
             GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
         }
+        var position = transform.position;
         if (itemDropNumberNumber > 54 && itemDropNumberNumber <= 69)
         {
             //print("should spawn rupture");
             //mySeraphController.SpawnSeraph(0);
-            Instantiate(rupturePickup, transform.position, Quaternion.identity);
-
+            Instantiate(seraphPickup, position, Quaternion.identity).GetComponent<SeraphPickup>().CreatePickup(0);
         }
         else if (itemDropNumberNumber > 69 && itemDropNumberNumber <= 84)
         {
             //print("should spawn contaminate");
             //mySeraphController.SpawnSeraph(1);
-            Instantiate(contaminatePickup, transform.position, Quaternion.identity);
+            Instantiate(seraphPickup, position, Quaternion.identity).GetComponent<SeraphPickup>().CreatePickup(1);
         }
         else if (itemDropNumberNumber > 84 && itemDropNumberNumber <= 99)
         {
             //print("should spawn siphon");
             //mySeraphController.SpawnSeraph(2);
-            Instantiate(siphonPickup, transform.position, Quaternion.identity);
+            Instantiate(seraphPickup, position, Quaternion.identity).GetComponent<SeraphPickup>().CreatePickup(2);
         }
         mySpawner.allEnemies.Remove(gameObject);
         mySpawner.CheckEnemiesAlive();
