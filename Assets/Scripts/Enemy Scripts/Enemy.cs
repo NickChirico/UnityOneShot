@@ -184,22 +184,64 @@ public abstract class Enemy : Entity
 
     public override void Die()
     {
-        int dropNumber = Random.Range(0, 99);
+        int materialDropNumber = Random.Range(0, 100);
+        int itemDropNumberNumber = Random.Range(0, 100);
         //print(dropNumber);
-        if (dropNumber > 54 && dropNumber <= 69)
+        if (materialDropNumber > 39 && materialDropNumber <= 69)
+        {
+            int materialToInclude = Random.Range(0, 3);
+            switch (materialToInclude)
+            {
+                case 0:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
+                    break;
+                case 1:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
+                    break;
+                case 2:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
+                    break;
+            }
+        }
+        else if (materialDropNumber > 69 && materialDropNumber <= 89)
+        {
+            int materialToLeaveOut = Random.Range(0, 3);
+            switch (materialToLeaveOut)
+            {
+                case 0:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
+                    break;
+                case 1:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
+                    break;
+                case 2:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
+                    break;
+            }
+        }
+        else if(materialDropNumber > 89 && materialDropNumber <= 99)
+        {
+            GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
+            GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
+            GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
+        }
+        if (itemDropNumberNumber > 54 && itemDropNumberNumber <= 69)
         {
             //print("should spawn rupture");
             //mySeraphController.SpawnSeraph(0);
             Instantiate(rupturePickup, transform.position, Quaternion.identity);
 
         }
-        else if (dropNumber > 69 && dropNumber <= 84)
+        else if (itemDropNumberNumber > 69 && itemDropNumberNumber <= 84)
         {
             //print("should spawn contaminate");
             //mySeraphController.SpawnSeraph(1);
             Instantiate(contaminatePickup, transform.position, Quaternion.identity);
         }
-        else if (dropNumber > 84 && dropNumber <= 99)
+        else if (itemDropNumberNumber > 84 && itemDropNumberNumber <= 99)
         {
             //print("should spawn siphon");
             //mySeraphController.SpawnSeraph(2);

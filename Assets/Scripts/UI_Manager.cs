@@ -71,6 +71,7 @@ public class UI_Manager : MonoBehaviour
     public GameObject ammoSubPanel;
     public GameObject ammoSubPanel_alt;
     public Image healthbar;
+    public TextMeshProUGUI chitinAmount, bloodAmount, brainAmount;
 
     [Header("UI Elements")]
     public Button firstSelected;
