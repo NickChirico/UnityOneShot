@@ -73,6 +73,20 @@ public class UI_Manager : MonoBehaviour
     public Image healthbar;
     public TextMeshProUGUI chitinAmount, bloodAmount, brainAmount;
 
+    [Header("Weapon Pickup Panel")] public GameObject weaponPickupPanel;
+    public TextMeshProUGUI mainWeaponLabel;
+    public Image mainWeaponImage;
+    public TextMeshProUGUI mainWeaponDescription;
+    public TextMeshProUGUI altWeaponLabel;
+    public Image altWeaponImage;
+    public TextMeshProUGUI altWeaponDescription;
+    public TextMeshProUGUI newWeaponLabel;
+    public Image newWeaponImage;
+    public TextMeshProUGUI newWeaponDescription;
+    public Button exitButton;
+    public Button swapMainWeaponButton;
+    public Button swapAltWeaponButton;
+
     [Header("UI Elements")]
     public Button firstSelected;
     public Color EButton_NormalColor;
@@ -183,13 +197,15 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
-    private void SetInitialEquipment()
+    /*
+     private void SetInitialEquipment()
     {
         SetWeapon(Equipment.currentWeapon.ToString());
         SetGun(Equipment.currentGun.ToString());
         SetBullet(Equipment.currentBullet.ToString());
         SetAltFire(Equipment.currentAltFire.ToString());
     }
+    */
 
     public void ToggleEquipmentPanel()
     {
@@ -229,6 +245,25 @@ public class UI_Manager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(ResumeButton.gameObject);
             TogglePlayerControl(false);
+        }
+    }
+
+
+    public void ToggleWeaponPickupPanel()
+    {
+        if (weaponPickupPanel.activeSelf)
+        {
+            weaponPickupPanel.SetActive(false);
+            TogglePlayerControl(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(ResumeButton.gameObject);
+        }
+        else
+        {
+            weaponPickupPanel.SetActive(true);
+            TogglePlayerControl(false);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(swapMainWeaponButton.gameObject);
         }
     }
 
