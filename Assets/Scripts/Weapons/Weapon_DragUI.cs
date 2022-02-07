@@ -24,8 +24,7 @@ public class Weapon_DragUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     }
     void Start()
     {
-        if (Slot != null)
-            this.transform.position = Slot.transform.position;
+       // GoToSpot();
     }
 
     void Update()
@@ -47,12 +46,16 @@ public class Weapon_DragUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     {
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1;
-        this.transform.position = Slot.transform.position;
+        myRect.position = Slot.GetPosition();
+        //this.transform.position = Slot.transform.position;
     }
 
     public void GoToSpot()
     {
-        if (Slot != null)
-            this.transform.position = Slot.transform.position;
+        this.transform.position = Slot.transform.position;
+
+        //if (Slot != null)
+          //  myRect.position = Slot.GetPosition();
+            //this.transform.position = Slot.transform.position;
     }
 }

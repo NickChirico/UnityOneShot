@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4132644651413726361
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4132644651413726363}
+  - component: {fileID: 4132644651413726360}
+  m_Layer: 0
+  m_Name: RifleObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4132644651413726363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4132644651413726361}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.819331, y: -0.51427495, z: -0.90115243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4132644651413726360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4132644651413726361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e0b42dde2597fe4dbcf336cd9317113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isValidWeapon: 1
+  isPlayerWeapon: 0
+  weaponName: Rifle
+  postureDamage: 14
+  shotDamage: 14
+  ammoCapacity: 4
+  currentAmmo: 0
+  range: 4.5
+  reloadDuration: 1.75
+  knockbackForce: 8
+  doRecoil: 0
+  recoilForce: 0
+  recoilDuration: 0
+  delayBetweenShots: 0.5
+  doRechamber: 1
+  rechamberDuration: 0.5
+  doCone: 0
+  coneSpread: 0
+  coneAngle: 0
+  shotSounds:
+  - {fileID: 8300000, guid: 26911a83d6a92554e9fd7da1814e1f7e, type: 3}
+  - {fileID: 8300000, guid: 54f793159d6ac0346b8c0d578d61b4df, type: 3}
+  - {fileID: 8300000, guid: 4557b5f4d9d17b940bef7fb277761412, type: 3}
+  reload_Sound: {fileID: 8300000, guid: 9fd46ebf8b63e124182e9e08f21f1c6c, type: 3}
+  ShotTrail_prefab: {fileID: 998725183318589660, guid: 60e4168ed312640489c8221df7236823,
+    type: 3}
+  ImpactBurst_prefab: {fileID: 2525939174598934099, guid: 8a2645ae9f5420343bec8b6c41903285,
+    type: 3}
+  shotVFX_duration: 0.1

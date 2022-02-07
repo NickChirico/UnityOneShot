@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
     SeraphController seraphControl;
+    public Image seraphIcon;
+    public Sprite ruptureSprite, contaminateSprite, siphonSprite;
 
     private Canvas canvas;
     private CanvasGroup canvasGroup;
@@ -34,7 +36,7 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
         seraphControl = SeraphController.GetSeraphController;
         myRect = this.GetComponent<RectTransform>();
         image = this.GetComponent<Image>();
-        canvas = FindObjectOfType<Canvas>();
+        canvas = FindObjectOfType<MainCanvas>().GetCanvas();
         canvasGroup = this.GetComponent<CanvasGroup>();
 
         //mySeraph = Instantiate(mySeraphPrefab, seraphControl.seraphParent).GetComponent<Seraph>();
@@ -65,14 +67,17 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
         {
             case Genome.Rupture:
                 image.color = seraphColors[0];
+                seraphIcon.sprite = ruptureSprite;
                 mySeraph = Instantiate(SeraphPrefabs[0], seraphControl.seraphParent).GetComponent<Seraph>();
                 break;
             case Genome.Siphon:
                 image.color = seraphColors[1];
+                seraphIcon.sprite = siphonSprite;
                 mySeraph = Instantiate(SeraphPrefabs[1], seraphControl.seraphParent).GetComponent<Seraph>();
                 break;
             case Genome.Contaminate:
                 image.color = seraphColors[2];
+                seraphIcon.sprite = contaminateSprite;
                 mySeraph = Instantiate(SeraphPrefabs[2], seraphControl.seraphParent).GetComponent<Seraph>();
                 break;
             case Genome.Surge:

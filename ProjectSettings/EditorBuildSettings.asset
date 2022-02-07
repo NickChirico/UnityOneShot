@@ -6,15 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MapScene.unity
+    guid: 5134b8f84e2a5c24f90a84a1242ca6b0
+  - enabled: 1
+    path: Assets/Scenes/SingleRoomIso.unity
+    guid: b1fe0487f98fc344aa82bd8fda5b91cc
+  - enabled: 0
+    path: Assets/Scenes/SingleRoomFlat.unity
+    guid: 4d547515b8dd5294ba27b1a3291901e3
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 0
     path: Assets/Scenes/ConnectedFlat.unity
     guid: a87f2ce3d7dff4645bea4c84916e9724
-  - enabled: 1
-    path: Assets/Scenes/SingleRoomFlat.unity
-    guid: 4d547515b8dd5294ba27b1a3291901e3
   - enabled: 0
     path: Assets/Scenes/TestNav.unity
     guid: e51141b85ac67144bbd1a0841bd04b2b
+  - enabled: 0
+    path: Assets/Scenes/DisplayScene.unity
+    guid: 58cb7f1a4d8c2fe4fbafe77aac1af6f3
   m_configObjects: {}

@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : Entity
 {
+    [Header("ENEMY")]
+
     [SerializeField] public string enemyName;
-    [SerializeField] private int maxHealth;
 
     private Transform playerLoc;
     private EnemyStateManager SM;
 
-    public SpriteRenderer sp;
-    public Rigidbody2D rb;
 
     //[Header("Information")]
     private Vector2 rayOrigin;
@@ -18,16 +17,22 @@ public abstract class Enemy : MonoBehaviour
     //public Ray2D rayToPlayer;
 
     [Header("Components")]
+    public SpriteRenderer sp;
+    public Rigidbody2D rb;
     public LineRenderer lineRend;
     public bool EnableLineRend;
-    ShootableEntity entity;
+    public EnemySpawner mySpawner;
+    //ShootableEntity entity;
 
 
     [Header("Variables")]
     public int damageCollision;
     public int damageAttack;
+    public float postureColl, postureAtk;
     public float visionRange;
-    public bool playerSpotted;
+    public GameObject rupturePickup, contaminatePickup, siphonPickup, seraphPickup, weaponPickup;
+    [HideInInspector] public bool playerSpotted;
+
     [Header("Idle")]
     public float idleDuration;
     [Header("Alert")]
@@ -57,9 +62,9 @@ public abstract class Enemy : MonoBehaviour
         //sp = this.GetComponentInChildren<SpriteRenderer>();
         rb = this.GetComponent<Rigidbody2D>();
         SM = this.GetComponent<EnemyStateManager>();
-        entity = this.GetComponent<ShootableEntity>();
+        mySpawner = GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>();
+        //entity = this.GetComponent<ShootableEntity>();
         playerLoc = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-
         if (EnableLineRend)
         {
             lineRend.gameObject.SetActive(true);
@@ -67,25 +72,18 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    private void Start()
+    public override void Start()
     {
-        
-        entity.SetValues(maxHealth, invulnTime);
-
-        Introduction();
-    }
-
-    private void Introduction()
-    {
-        //Debug.Log(enemyName + ", " + playerLoc);
+        base.Start();
+        SetUp();
     }
 
     // UPDATE
-    private void Update()
+    public override void Update()
     {
+        base.Update();
 
         UpdateInformation();
-
     }
 
     public void CheckCollisionPlayer()
@@ -104,6 +102,11 @@ public abstract class Enemy : MonoBehaviour
     }
 
     // GETTERS/SETTERS
+
+    public Vector2 GetRayOrigin()
+    {
+        return rayOrigin;
+    }
     public Vector2 GetDirection()
     {
         return direction;
@@ -160,12 +163,101 @@ public abstract class Enemy : MonoBehaviour
     {
         Vector2 knockBack = ((-1 * direction) * force);
         rb.velocity = Vector2.zero;
-        rb.AddForce(knockBack);
+        rb.angularVelocity = 0;
+        rb.AddForce(knockBack, ForceMode2D.Impulse);
     }
 
     // ********************
     // * Override Methods *
     // ********************
+
+    public override bool TakeDamage(int damageAmount, Vector2 damageSpot, float knockForce, float postureDamage)
+    {
+        bool b = base.TakeDamage(damageAmount, damageSpot, knockForce, postureDamage);
+        if (guardBroken)
+        {
+            GotKnocked();
+            Knockback(knockForce);
+        }
+        return b;
+    }
+
+    public override void Die()
+    {
+        int materialDropNumber = Random.Range(0, 100);
+        int itemDropNumberNumber = Random.Range(0, 100);
+        //print(dropNumber);
+        if (materialDropNumber > 39 && materialDropNumber <= 69)
+        {
+            int materialToInclude = Random.Range(0, 3);
+            switch (materialToInclude)
+            {
+                case 0:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
+                    break;
+                case 1:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
+                    break;
+                case 2:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
+                    break;
+            }
+        }
+        else if (materialDropNumber > 69 && materialDropNumber <= 89)
+        {
+            int materialToLeaveOut = Random.Range(0, 3);
+            switch (materialToLeaveOut)
+            {
+                case 0:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
+                    break;
+                case 1:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
+                    break;
+                case 2:
+                    GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
+                    GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
+                    break;
+            }
+        }
+        else if(materialDropNumber > 89 && materialDropNumber <= 99)
+        {
+            GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
+            GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
+            GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
+        }
+        var position = transform.position;
+        if (itemDropNumberNumber > 54 && itemDropNumberNumber <= 69)
+        {
+            //print("should spawn rupture");
+            //mySeraphController.SpawnSeraph(0);
+            Instantiate(seraphPickup, position, Quaternion.identity).GetComponent<SeraphPickup>().CreatePickup(0);
+        }
+        else if (itemDropNumberNumber > 69 && itemDropNumberNumber <= 84)
+        {
+            //print("should spawn contaminate");
+            //mySeraphController.SpawnSeraph(1);
+            Instantiate(seraphPickup, position, Quaternion.identity).GetComponent<SeraphPickup>().CreatePickup(1);
+        }
+        else if (itemDropNumberNumber > 84 && itemDropNumberNumber <= 99)
+        {
+            //print("should spawn siphon");
+            //mySeraphController.SpawnSeraph(2);
+            Instantiate(seraphPickup, position, Quaternion.identity).GetComponent<SeraphPickup>().CreatePickup(2);
+        }
+        mySpawner.allEnemies.Remove(gameObject);
+        mySpawner.CheckEnemiesAlive();
+        base.Die();
+    }
+
+    public override void GuardBreak()
+    {
+        base.GuardBreak();
+
+    }
+
     public abstract void SetUp();
 
     public virtual void Patrol(Vector2 dest)
@@ -212,7 +304,7 @@ public abstract class Enemy : MonoBehaviour
     {
         // ATTACK LOGIC base
         canAttack = false;
-        rb.AddForce(dir * attackLungeForce);
+        rb.AddForce(dir * attackLungeForce, ForceMode2D.Impulse);
 
     }
 
@@ -223,6 +315,9 @@ public abstract class Enemy : MonoBehaviour
 
     }
 
+    public virtual void Aim(Vector2 dir)
+    { }
+
     private void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.CompareTag("Player"))
@@ -231,9 +326,9 @@ public abstract class Enemy : MonoBehaviour
             if (player.CanBeDamaged() && SM.GetCurrentState() != SM.Knocked) // PLayer can be damaged and enemy is not in "Knocked"
             {
                 if (SM.GetCurrentState() == SM.Attack)
-                    player.TakeDamage(entity, damageAttack + Random.Range(0, 4));
+                    player.TakeDamage(this, damageAttack + Random.Range(0, 4), postureAtk);
                 else
-                    player.TakeDamage(entity, damageCollision);
+                    player.TakeDamage(this, damageCollision, postureColl);
 
             }
         }

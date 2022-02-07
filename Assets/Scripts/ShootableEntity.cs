@@ -140,6 +140,7 @@ public class ShootableEntity : MonoBehaviour
 
     public void ResetHealth()
     {
+        isContaminated = false;
         currentHealth = health;
     }
 
