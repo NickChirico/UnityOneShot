@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &727455521984608518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 958782283507611116}
+  - component: {fileID: 8664596692292141824}
+  m_Layer: 0
+  m_Name: Pistol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &958782283507611116
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727455521984608518}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.819331, y: -0.51427495, z: -0.90115243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8664596692292141824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727455521984608518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f2be1c416e782348bc25b7b92949896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isValidWeapon: 1
+  isPlayerWeapon: 1
+  isMainWeapon: 0
+  weaponName: Pistol
+  postureDamage: 0
+  shotDamage: 6
+  ammoCapacity: 8
+  currentAmmo: 0
+  range: 4
+  reloadDuration: 1.25
+  knockbackForce: 4
+  doRecoil: 0
+  recoilForce: 0
+  recoilDuration: 0
+  delayBetweenShots: 0.25
+  doRechamber: 0
+  rechamberDuration: 0
+  doCone: 0
+  coneSpread: 0
+  coneAngle: 0
+  shotSounds:
+  - {fileID: 8300000, guid: a0f3949af04534c4fb3e57fabd588087, type: 3}
+  reload_Sound: {fileID: 8300000, guid: d3c87f5768735524b9ae916fab361e15, type: 3}
+  ShotTrail_prefab: {fileID: 4895484642774608296, guid: 3b09048e5397e7c4694603b6654870c7,
+    type: 3}
+  ImpactBurst_prefab: {fileID: 2525939174598934099, guid: 8a2645ae9f5420343bec8b6c41903285,
+    type: 3}
+  shotVFX_duration: 0.1
