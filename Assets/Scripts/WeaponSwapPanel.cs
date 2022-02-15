@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class WeaponSwapPanel : MonoBehaviour
 {
-    public Weapon unequippedWeapon;
+    //public MasterDictionary masterDictionary;
+    //public Weapon unequippedWeapon;
 
     public int unequippedCode, mainCode, altCode;
 
@@ -16,6 +18,8 @@ public class WeaponSwapPanel : MonoBehaviour
     public TextMeshProUGUI unequippedName, unequippedDescription, mainName, mainDescription, altName, altDescription;
 
     public Sprite meleeSprite, rangedSprite;
+
+    public PlayerController myPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +56,8 @@ public class WeaponSwapPanel : MonoBehaviour
     public void EditWeapon(Image imageToChange, TextMeshProUGUI nameToChange, TextMeshProUGUI descToChange, int weaponCode)
     {
         imageToChange.sprite = weaponCode >= 0 ? meleeSprite : rangedSprite;
+        nameToChange.text = myPlayer.myMasterDictionary.SimpleWeaponDictionary[weaponCode].weaponName;
+        descToChange.text = myPlayer.myMasterDictionary.SimpleWeaponDictionary[weaponCode].weaponDescription;
         switch (weaponCode)
         {
             case -5: //pistol
