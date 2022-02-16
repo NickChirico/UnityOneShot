@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentPickup : Pickup
+public class Flask : MonoBehaviour
 {
-    public int equipmentType;
+    public Sprite flaskSprite;
+    
+    public string flaskName, flaskDescription;
 
-    public string equipmentCode;
+    public int healAmount, maxSwigs, healSpeed;
+    
+    public int modHealAmount, modMaxSwigs, modHealSpeed;
     // Start is called before the first frame update
     void Start()
     {
