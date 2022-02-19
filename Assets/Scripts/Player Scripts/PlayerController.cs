@@ -100,6 +100,7 @@ public class PlayerController : MonoBehaviour
 
     public void FireWeapon(Weapon weap)
     {
+        print("firing");
         if (weap != null)
         {
             weap.Fire(rayOrigin, direction);
