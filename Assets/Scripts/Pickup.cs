@@ -2,23 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Pickup : MonoBehaviour
+public abstract class Pickup : MonoBehaviour
 {
-    public PlayerInputActions pickUpAction;
+    public PlayerInputActions PickUpAction;
 
-    public int seraphType;
+    public bool used, pickupAble;
 
-    public SeraphController myController;
 
-    public bool used;
     // Start is called before the first frame update
     void Start()
     {
-        myController = GameObject.Find("SeraphController").GetComponent<SeraphController>();
-        pickUpAction = new PlayerInputActions();
-        pickUpAction.Player.Enable();
+        PickUpAction = new PlayerInputActions();
+        PickUpAction.Player.Enable();
         used = false;
+        pickupAble = false;
     }
 
     // Update is called once per frame
@@ -27,13 +26,32 @@ public class Pickup : MonoBehaviour
         
     }
 
+    public void CreatePickup(int pickupCode)
+    {
+        ChoosePickupImage(pickupCode);
+        GetComponent<SpriteRenderer>().enabled = true;
+        GetComponent<BoxCollider2D>().enabled = true;
+    }
+
     public void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player") && !used)
+        if (other.gameObject.CompareTag("Player") && !used && pickupAble)
         {
-            used = true;
-            myController.SpawnSeraph(seraphType);
-            Destroy(gameObject);
+            OnPickup();
         }
+        if (other.gameObject.CompareTag("Activator") && !pickupAble)
+        {
+            pickupAble = true;
+        }
+    }
+
+    public virtual void ChoosePickupImage(int pickupCode)
+    {
+        
+    }
+
+    public virtual void OnPickup()
+    {
+        
     }
 }

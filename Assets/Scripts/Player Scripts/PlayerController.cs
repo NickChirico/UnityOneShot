@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public MasterDictionary myMasterDictionary;
     public static PlayerController _Control;
     public static PlayerController GetPlayerController { get { return _Control; } }
 
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
     Rifle rifle;
     Repeater repeater;
     Blunderbuss blunderbuss;
+    null_ranged pistol;
 
     Knife knife;
     Saber saber;
@@ -98,6 +100,7 @@ public class PlayerController : MonoBehaviour
 
     public void FireWeapon(Weapon weap)
     {
+        print("firing");
         if (weap != null)
         {
             weap.Fire(rayOrigin, direction);
@@ -266,9 +269,8 @@ public class PlayerController : MonoBehaviour
 
     // ~~~~~ WEAPON SWITCHING ~~~~~
     // ~~~~~ WEAPON SWITCHING ~~~~~
-    private bool doChange_Main;
-    private bool doChange_Alt;
 
+    /*
     public void SelectEquipment(int i)
     {
         if (i == 0)
@@ -291,8 +293,9 @@ public class PlayerController : MonoBehaviour
             uiControl.ToggleWeapButton_ReadySelect(true, false);
         }
     }
+    */
 
-    public void SelectWeapon(string weap)
+    public void SelectWeapon(string weap, bool changeMain)
     {
         Weapon newWeapon;
 
@@ -322,8 +325,8 @@ public class PlayerController : MonoBehaviour
             case "Mortar":
                 newWeapon = mortar;
                 break;
-            case "Mark":
-                newWeapon = mark;
+            case "Pistol":
+                newWeapon = pistol;
                 break;
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             default:
@@ -333,21 +336,19 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (doChange_Main)
+        if (changeMain)
         {
             mainWeapon = newWeapon;
             mainWeapon.Equip(true);
             UpdateWeapon();
             uiControl.UpdateWeapon_uiPanel(newWeapon, true);
-            doChange_Main = false;
         }
-        else if (doChange_Alt)
+        else
         {
             altWeapon = newWeapon;
             altWeapon.Equip(false);
             UpdateWeapon();
             uiControl.UpdateWeapon_uiPanel(newWeapon, false);
-            doChange_Alt = false;
         }
     }
 

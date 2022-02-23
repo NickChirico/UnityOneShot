@@ -97,6 +97,10 @@ public class SeraphController : MonoBehaviour
     {
         if(BagSeraphs.Count < bagCapacity)
             BagSeraphs.Add(S);
+        else
+        {
+            //HERE: Activate the popup
+        }
 
         foreach (AugmentSlot slot in bagSlots)
         {

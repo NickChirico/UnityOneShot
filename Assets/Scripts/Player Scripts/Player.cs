@@ -18,6 +18,8 @@ public class Player : Entity
     private bool canBeDamaged = true;
     private Vector2 hitPoint;
 
+    public int chitinNum, bloodNum, brainNum;
+
     private bool nimble = false;
 
     private void Awake()
@@ -72,10 +74,59 @@ public class Player : Entity
         Physics2D.IgnoreLayerCollision(3, 6, b);// 3 = player, 6 = hittableEntity
     }
 
+    public void ChangeChitinNum(bool isIncrease, int changeAmount)
+    {
+        if (isIncrease)
+        {
+            chitinNum += changeAmount;
+        }
+        else
+        {
+            chitinNum -= changeAmount;
+        }
+        ui.chitinAmount.text = chitinNum.ToString();
+    }
+    
+    public void ChangeBloodNum(bool isIncrease, int changeAmount)
+    {
+        if (isIncrease)
+        {
+            bloodNum += changeAmount;
+        }
+        else
+        {
+            bloodNum -= changeAmount;
+        }
+        ui.bloodAmount.text = bloodNum.ToString();
+    }
+    
+    public void ChangeBrainNum(bool isIncrease, int changeAmount)
+    {
+        if (isIncrease)
+        {
+            brainNum += changeAmount;
+        }
+        else
+        {
+            brainNum -= changeAmount;
+        }
+        ui.brainAmount.text = brainNum.ToString();
+    }
+
     public void RestoreFullHealth()
     {
         //currentHealth = maxHealth;
         //ui.UpdateHealth(currentHealth, maxHealth);
+    }
+
+    public void LoadIntoLevel()
+    {
+        
+    }
+
+    public void DrinkFlask()
+    {
+        
     }
 
     public UI_Manager GetUIManager()

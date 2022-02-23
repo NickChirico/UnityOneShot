@@ -67,6 +67,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void FinishRoom()
     {
+        GetComponent<BoxCollider2D>().enabled = true;
         print("finished");
         roomComplete = true;
         myMapLoader.ComplexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = myMapLoader.ComplexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc].TrimStart('*');
