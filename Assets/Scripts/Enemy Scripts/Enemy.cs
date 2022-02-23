@@ -62,7 +62,12 @@ public abstract class Enemy : Entity
         //sp = this.GetComponentInChildren<SpriteRenderer>();
         rb = this.GetComponent<Rigidbody2D>();
         SM = this.GetComponent<EnemyStateManager>();
-        mySpawner = GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>();
+        try
+        {
+            mySpawner = GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>();
+        }
+        catch
+        { mySpawner = null; }
         //entity = this.GetComponent<ShootableEntity>();
         playerLoc = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         if (EnableLineRend)
@@ -88,7 +93,7 @@ public abstract class Enemy : Entity
 
     public void CheckCollisionPlayer()
     {
-        
+
     }
 
     public void UpdateInformation()
@@ -205,8 +210,11 @@ public abstract class Enemy : Entity
             //mySeraphController.SpawnSeraph(2);
             Instantiate(siphonPickup, transform.position, Quaternion.identity);
         }
-        mySpawner.allEnemies.Remove(gameObject);
-        mySpawner.CheckEnemiesAlive();
+        if (mySpawner != null)
+        {
+            mySpawner.allEnemies.Remove(gameObject);
+            mySpawner.CheckEnemiesAlive();
+        }
         base.Die();
     }
 
@@ -232,7 +240,7 @@ public abstract class Enemy : Entity
     public virtual Vector2 GetPatrolPoint()
     {
         // Get random positon to patrol to nearby
-        Vector2 randomDir = new Vector2(Random.value, Random.value).normalized;
+        Vector2 randomDir = Random.insideUnitCircle.normalized;
         float randomDistance = Random.Range(patrolRange * 0.25f, patrolRange);
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, randomDir, randomDistance);
         if (hit.collider != null)
@@ -256,6 +264,15 @@ public abstract class Enemy : Entity
         float moveH = direction.x * chaseSpeed;
         float moveV = direction.y * chaseSpeed;
         rb.velocity = new Vector2(moveH, moveV);
+    }
+
+    public virtual void SetChaseAnim(bool b)
+    {
+        Debug.Log("No Chase Animation for " + enemyName);
+    }
+    public virtual void SetAttackAnim(bool b)
+    {
+        Debug.Log("No Attack Animation for " + enemyName);
     }
 
     public virtual void Attack(Vector2 dir)
