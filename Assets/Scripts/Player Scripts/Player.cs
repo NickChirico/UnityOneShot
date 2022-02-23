@@ -119,6 +119,11 @@ public class Player : Entity
         //ui.UpdateHealth(currentHealth, maxHealth);
     }
 
+    public void LoadIntoLevel()
+    {
+        
+    }
+
     public void DrinkFlask()
     {
         
