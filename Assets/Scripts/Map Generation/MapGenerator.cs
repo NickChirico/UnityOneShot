@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
+
 //MAKE IT MAKE SURE THAT THE START AND END ARE DEAD ENDS, KEEP TRACK OF THE LOWEST AND HIGHEST X AND Y VALUES
 public class MapGenerator : MonoBehaviour
 {
@@ -103,7 +106,16 @@ public class MapGenerator : MonoBehaviour
     };
 
     public string[,] roomArray = new string[1,1];
-    public string[,] path = new string[5, 5];
+
+    public string[,] path = new string[,]
+    {
+        {"X", "X", "X", "X", "X"},
+        {"X", "X", "X", "X", "X"},
+        {"X", "X", "X", "X", "X"},
+        {"X", "X", "X", "X", "X"},
+        {"X", "X", "X", "X", "X"},
+        {"X", "X", "X", "X", "X"}
+    };
     //public string[,] demoMap = new string[1, 1];
     private int _currentTier;
     private string _currentPathCode;
@@ -629,6 +641,45 @@ public class MapGenerator : MonoBehaviour
 
     public void GeneratePath()
     {
+        string[] pathCodeArray = new string[6];
+        int initialPath = Random.Range(0, 10);
+        switch (initialPath)
+        {
+            case 0:
+                pathCodeArray[0] = "abc";
+                break;
+            case 1:
+                pathCodeArray[0] = "abd";
+                break;
+            case 2:
+                pathCodeArray[0] = "abe";
+                break;
+            case 3:
+                pathCodeArray[0] = "acd";
+                break;
+            case 4:
+                pathCodeArray[0] = "ace";
+                break;
+            case 5:
+                pathCodeArray[0] = "ade";
+                break;
+            case 6:
+                pathCodeArray[0] = "bcd";
+                break;
+            case 7:
+                pathCodeArray[0] = "bce";
+                break;
+            case 8:
+                pathCodeArray[0] = "bde";
+                break;
+            case 9:
+                pathCodeArray[0] = "cde";
+                break;
+        }
+        for (int i = 1; i < 6; i++)
+        {
+            pathCodeArray[i] = GetValidNextPath(pathCodeArray[i - 1]);
+        }
         bool pathReady = false;
         while (!pathReady)
         {
@@ -636,6 +687,882 @@ public class MapGenerator : MonoBehaviour
             IteratePath();
             pathReady = CheckPath();
         }
+    }
+
+    public string GetValidNextPath(string lastPath)
+    {
+        int selection;
+        switch (lastPath)
+        {
+            case "ab":
+                return "abc";
+            case "ac":
+                selection = Random.Range(0, 5);
+                switch (selection)
+                {
+                    case 0:
+                        return "abc";
+                    case 1:
+                        return "abd";
+                    case 2:
+                        return "acd";
+                    case 3:
+                        return "bcd";
+                    case 4:
+                        return "abcd";
+                    default:
+                        return "abc";
+                }
+            case "ad":
+                selection = Random.Range(0, 14);
+                switch (selection)
+                {
+                    case 0:
+                        return "abc";
+                    case 1:
+                        return "abd";
+                    case 2:
+                        return "abe";
+                    case 3:
+                        return "acd";
+                    case 4:
+                        return "ace";
+                    case 5:
+                        return "ade";
+                    case 6:
+                        return "bcd";
+                    case 7:
+                        return "bce";
+                    case 8:
+                        return "bde";
+                    case 9:
+                        return "abcd";
+                    case 10:
+                        return "abce";
+                    case 11:
+                        return "abde";
+                    case 12:
+                        return "acde";
+                    case 13:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "ae":
+                selection = Random.Range(0, 5);
+                switch (selection)
+                {
+                    case 0:
+                        return "abd";
+                    case 1:
+                        return "abe";
+                    case 2:
+                        return "ade";
+                    case 3:
+                        return "bde";
+                    case 4:
+                        return "abde";
+                    default:
+                        return "abde";
+                }
+            case "bc":
+                selection = Random.Range(0, 5);
+                switch (selection)
+                {
+                    case 0:
+                        return "abc";
+                    case 1:
+                        return "abd";
+                    case 2:
+                        return "acd";
+                    case 3:
+                        return "bcd";
+                    case 4:
+                        return "abcd";
+                    default:
+                        return "acd";
+                }
+            case "bd":
+                selection = Random.Range(0, 15);
+                switch (selection)
+                {
+                    case 0:
+                        return "abc";
+                    case 1:
+                        return "abd";
+                    case 2:
+                        return "abe";
+                    case 3:
+                        return "acd";
+                    case 4:
+                        return "ace";
+                    case 5:
+                        return "ade";
+                    case 6:
+                        return "bcd";
+                    case 7:
+                        return "bce";
+                    case 8:
+                        return "bde";
+                    case 9:
+                        return "cde";
+                    case 10:
+                        return "abcd";
+                    case 11:
+                        return "abce";
+                    case 12:
+                        return "abde";
+                    case 13:
+                        return "acde";
+                    case 14:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "be":
+                selection = Random.Range(0, 14);
+                switch (selection)
+                {
+                    case 0:
+                        return "cde";
+                    case 1:
+                        return "abd";
+                    case 2:
+                        return "abe";
+                    case 3:
+                        return "acd";
+                    case 4:
+                        return "ace";
+                    case 5:
+                        return "ade";
+                    case 6:
+                        return "bcd";
+                    case 7:
+                        return "bce";
+                    case 8:
+                        return "bde";
+                    case 9:
+                        return "abcd";
+                    case 10:
+                        return "abce";
+                    case 11:
+                        return "abde";
+                    case 12:
+                        return "acde";
+                    case 13:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "cd":
+                selection = Random.Range(0, 5);
+                switch (selection)
+                {
+                    case 0:
+                        return "bcd";
+                    case 1:
+                        return "bce";
+                    case 2:
+                        return "bde";
+                    case 3:
+                        return "cde";
+                    case 4:
+                        return "bcde";
+                    default:
+                        return "bcde";
+                }
+            case "ce":
+                selection = Random.Range(0, 5);
+                switch (selection)
+                {
+                    case 0:
+                        return "bcd";
+                    case 1:
+                        return "bce";
+                    case 2:
+                        return "bde";
+                    case 3:
+                        return "cde";
+                    case 4:
+                        return "bcde";
+                    default:
+                        return "bcde";
+                }
+            case "de":
+                return "cde";
+            case "abc":
+                selection = Random.Range(0, 9);
+                switch (selection)
+                {
+                    case 0:
+                        return "ab";
+                    case 1:
+                        return "ac";
+                    case 2:
+                        return "ad";
+                    case 3:
+                        return "bc";
+                    case 4:
+                        return "cd";
+                    case 5:
+                        return "abd";
+                    case 6:
+                        return "acd";
+                    case 7:
+                        return "bcd";
+                    case 8:
+                        return "abcd";
+                    default:
+                        return "abcd";
+                }
+            case "abd":
+                selection = Random.Range(0, 19);
+                switch (selection)
+                {
+                    case 0:
+                        return "ac";
+                    case 1:
+                        return "ad";
+                    case 2:
+                        return "ae";
+                    case 3:
+                        return "bc";
+                    case 4:
+                        return "bd";
+                    case 5:
+                        return "be";
+                    case 6:
+                        return "abc";
+                    case 7:
+                        return "abe";
+                    case 8:
+                        return "acd";
+                    case 9:
+                        return "ace";
+                    case 10:
+                        return "ade";
+                    case 11:
+                        return "bcd";
+                    case 12:
+                        return "bce";
+                    case 13:
+                        return "bde";
+                    case 14:
+                        return "abcd";
+                    case 15:
+                        return "abce";
+                    case 16:
+                        return "abde";
+                    case 17:
+                        return "acde";
+                    case 18:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "abe":
+                selection = Random.Range(0, 16);
+                switch (selection)
+                {
+                    case 0:
+                        return "ad";
+                    case 1:
+                        return "ae";
+                    case 2:
+                        return "bd";
+                    case 3:
+                        return "be";
+                    case 4:
+                        return "abd";
+                    case 5:
+                        return "acd";
+                    case 6:
+                        return "ace";
+                    case 7:
+                        return "ade";
+                    case 8:
+                        return "bcd";
+                    case 9:
+                        return "bce";
+                    case 10:
+                        return "bde";
+                    case 11:
+                        return "abcd";
+                    case 12:
+                        return "abce";
+                    case 13:
+                        return "abde";
+                    case 14:
+                        return "acde";
+                    case 15:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "acd":
+                selection = Random.Range(0, 18);
+                switch (selection)
+                {
+                    case 0:
+                        return "ac";
+                    case 1:
+                        return "ad";
+                    case 2:
+                        return "bc";
+                    case 3:
+                        return "bd";
+                    case 4:
+                        return "be";
+                    case 5:
+                        return "abc";
+                    case 6:
+                        return "abd";
+                    case 7:
+                        return "abe";
+                    case 8:
+                        return "ace";
+                    case 9:
+                        return "ade";
+                    case 10:
+                        return "bcd";
+                    case 11:
+                        return "bce";
+                    case 12:
+                        return "bde";
+                    case 13:
+                        return "abcd";
+                    case 14:
+                        return "abce";
+                    case 15:
+                        return "abde";
+                    case 16:
+                        return "acde";
+                    case 17:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "ace":
+                selection = Random.Range(0, 16);
+                switch (selection)
+                {
+                    case 0:
+                        return "ad";
+                    case 1:
+                        return "ae";
+                    case 2:
+                        return "bd";
+                    case 3:
+                        return "be";
+                    case 4:
+                        return "abd";
+                    case 5:
+                        return "abe";
+                    case 6:
+                        return "acd";
+                    case 7:
+                        return "ade";
+                    case 8:
+                        return "bcd";
+                    case 9:
+                        return "bce";
+                    case 10:
+                        return "bde";
+                    case 11:
+                        return "abcd";
+                    case 12:
+                        return "abce";
+                    case 13:
+                        return "abde";
+                    case 14:
+                        return "acde";
+                    case 15:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "ade":
+                selection = Random.Range(0, 16);
+                switch (selection)
+                {
+                    case 0:
+                        return "ad";
+                    case 1:
+                        return "ae";
+                    case 2:
+                        return "bd";
+                    case 3:
+                        return "be";
+                    case 4:
+                        return "abd";
+                    case 5:
+                        return "abe";
+                    case 6:
+                        return "acd";
+                    case 7:
+                        return "ace";
+                    case 8:
+                        return "bcd";
+                    case 9:
+                        return "bce";
+                    case 10:
+                        return "bde";
+                    case 11:
+                        return "abcd";
+                    case 12:
+                        return "abce";
+                    case 13:
+                        return "abde";
+                    case 14:
+                        return "acde";
+                    case 15:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "bcd":
+                selection = Random.Range(0, 21);
+                switch (selection)
+                {
+                    case 0:
+                        return "ac";
+                    case 1:
+                        return "ad";
+                    case 2:
+                        return "bc";
+                    case 3:
+                        return "bd";
+                    case 4:
+                        return "be";
+                    case 5:
+                        return "cd";
+                    case 6:
+                        return "ce";
+                    case 7:
+                        return "abc";
+                    case 8:
+                        return "abd";
+                    case 9:
+                        return "abe";
+                    case 10:
+                        return "acd";
+                    case 11:
+                        return "ace";
+                    case 12:
+                        return "ade";
+                    case 13:
+                        return "bce";
+                    case 14:
+                        return "bde";
+                    case 15:
+                        return "cde";
+                    case 16:
+                        return "abcd";
+                    case 17:
+                        return "abce";
+                    case 18:
+                        return "abde";
+                    case 19:
+                        return "acde";
+                    case 20:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "bce":
+                selection = Random.Range(0, 18);
+                switch (selection)
+                {
+                    case 0:
+                        return "ad";
+                    case 1:
+                        return "bd";
+                    case 2:
+                        return "be";
+                    case 3:
+                        return "cd";
+                    case 4:
+                        return "ce";
+                    case 5:
+                        return "abd";
+                    case 6:
+                        return "abe";
+                    case 7:
+                        return "acd";
+                    case 8:
+                        return "ace";
+                    case 9:
+                        return "ade";
+                    case 10:
+                        return "bcd";
+                    case 11:
+                        return "bde";
+                    case 12:
+                        return "cde";
+                    case 13:
+                        return "abcd";
+                    case 14:
+                        return "abce";
+                    case 15:
+                        return "abde";
+                    case 16:
+                        return "acde";
+                    case 17:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "bde":
+                selection = Random.Range(0, 19);
+                switch (selection)
+                {
+                    case 0:
+                        return "ad";
+                    case 1:
+                        return "ae";
+                    case 2:
+                        return "bd";
+                    case 3:
+                        return "be";
+                    case 4:
+                        return "cd";
+                    case 5:
+                        return "ce";
+                    case 6:
+                        return "abd";
+                    case 7:
+                        return "abe";
+                    case 8:
+                        return "acd";
+                    case 9:
+                        return "ace";
+                    case 10:
+                        return "ade";
+                    case 11:
+                        return "bcd";
+                    case 12:
+                        return "bce";
+                    case 13:
+                        return "cde";
+                    case 14:
+                        return "abcd";
+                    case 15:
+                        return "abce";
+                    case 16:
+                        return "abde";
+                    case 17:
+                        return "acde";
+                    case 18:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "cde":
+                selection = Random.Range(0, 25);
+                switch (selection)
+                {
+                    case 0:
+                        return "bd";
+                    case 1:
+                        return "be";
+                    case 2:
+                        return "cd";
+                    case 3:
+                        return "ce";
+                    case 4:
+                        return "de";
+                    case 5:
+                        return "bcd";
+                    case 6:
+                        return "bce";
+                    case 7:
+                        return "bde";
+                    case 8:
+                        return "bcde";
+                    default:
+                        return "bcde";
+                }
+            case "abcd":
+                selection = Random.Range(0, 14);
+                switch (selection)
+                {
+                    case 0:
+                        return "ac";
+                    case 1:
+                        return "ad";
+                    case 2:
+                        return "bc";
+                    case 3:
+                        return "bd";
+                    case 4:
+                        return "be";
+                    case 5:
+                        return "abc";
+                    case 6:
+                        return "abd";
+                    case 7:
+                        return "abe";
+                    case 8:
+                        return "acd";
+                    case 9:
+                        return "ace";
+                    case 10:
+                        return "ade";
+                    case 11:
+                        return "bcd";
+                    case 12:
+                        return "bce";
+                    case 13:
+                        return "bde";
+                    default:
+                        return "ace";
+                }
+            case "abce": //No ab, ac, ae, bc, cd, ce, de, abc, cde (11)
+                selection = Random.Range(0, 25);
+                switch (selection)
+                {
+                    case 0:
+                        return "ab";
+                    case 1:
+                        return "ac";
+                    case 2:
+                        return "ad";
+                    case 3:
+                        return "ae";
+                    case 4:
+                        return "bc";
+                    case 5:
+                        return "bd";
+                    case 6:
+                        return "be";
+                    case 7:
+                        return "cd";
+                    case 8:
+                        return "ce";
+                    case 9:
+                        return "de";
+                    case 10:
+                        return "abc";
+                    case 11:
+                        return "abd";
+                    case 12:
+                        return "abe";
+                    case 13:
+                        return "acd";
+                    case 14:
+                        return "ace";
+                    case 15:
+                        return "ade";
+                    case 16:
+                        return "bcd";
+                    case 17:
+                        return "bce";
+                    case 18:
+                        return "bde";
+                    case 19:
+                        return "cde";
+                    case 20:
+                        return "abcd";
+                    case 21:
+                        return "abce";
+                    case 22:
+                        return "abde";
+                    case 23:
+                        return "acde";
+                    case 24:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "abde": //No ab, ac, bc, cd, ce, de, abc, cde (12)
+                selection = Random.Range(0, 25);
+                switch (selection)
+                {
+                    case 0:
+                        return "ab";
+                    case 1:
+                        return "ac";
+                    case 2:
+                        return "ad";
+                    case 3:
+                        return "ae";
+                    case 4:
+                        return "bc";
+                    case 5:
+                        return "bd";
+                    case 6:
+                        return "be";
+                    case 7:
+                        return "cd";
+                    case 8:
+                        return "ce";
+                    case 9:
+                        return "de";
+                    case 10:
+                        return "abc";
+                    case 11:
+                        return "abd";
+                    case 12:
+                        return "abe";
+                    case 13:
+                        return "acd";
+                    case 14:
+                        return "ace";
+                    case 15:
+                        return "ade";
+                    case 16:
+                        return "bcd";
+                    case 17:
+                        return "bce";
+                    case 18:
+                        return "bde";
+                    case 19:
+                        return "cde";
+                    case 20:
+                        return "abcd";
+                    case 21:
+                        return "abce";
+                    case 22:
+                        return "abde";
+                    case 23:
+                        return "acde";
+                    case 24:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "acde": //No ab, ac, ae, bc, cd, ce, de, abc, cde (11)
+                selection = Random.Range(0, 25);
+                switch (selection)
+                {
+                    case 0:
+                        return "ab";
+                    case 1:
+                        return "ac";
+                    case 2:
+                        return "ad";
+                    case 3:
+                        return "ae";
+                    case 4:
+                        return "bc";
+                    case 5:
+                        return "bd";
+                    case 6:
+                        return "be";
+                    case 7:
+                        return "cd";
+                    case 8:
+                        return "ce";
+                    case 9:
+                        return "de";
+                    case 10:
+                        return "abc";
+                    case 11:
+                        return "abd";
+                    case 12:
+                        return "abe";
+                    case 13:
+                        return "acd";
+                    case 14:
+                        return "ace";
+                    case 15:
+                        return "ade";
+                    case 16:
+                        return "bcd";
+                    case 17:
+                        return "bce";
+                    case 18:
+                        return "bde";
+                    case 19:
+                        return "cde";
+                    case 20:
+                        return "abcd";
+                    case 21:
+                        return "abce";
+                    case 22:
+                        return "abde";
+                    case 23:
+                        return "acde";
+                    case 24:
+                        return "bcde";
+                    default:
+                        return "abde";
+                }
+            case "bcde":
+                selection = Random.Range(0, 14);
+                switch (selection)
+                {
+                    case 0:
+                        return "ad";
+                    case 1:
+                        return "bd";
+                    case 2:
+                        return "be";
+                    case 3:
+                        return "cd";
+                    case 4:
+                        return "ce";
+                    case 5:
+                        return "abd";
+                    case 6:
+                        return "abe";
+                    case 7:
+                        return "acd";
+                    case 8:
+                        return "ace";
+                    case 9:
+                        return "ade";
+                    case 10:
+                        return "bcd";
+                    case 11:
+                        return "bce";
+                    case 12:
+                        return "bde";
+                    case 13:
+                        return "cde";
+                    default:
+                        return "bcd";
+                }
+            default:
+                return "abcde";
+        }
+    }
+
+    public string[,] GeneratePathFromPathCodes(string[] myPathCodes)
+    {
+        string[,] pathToReturn = new string[,]
+        {
+            {"X", "X", "X", "X", "X"},
+            {"X", "X", "X", "X", "X"},
+            {"X", "X", "X", "X", "X"},
+            {"X", "X", "X", "X", "X"},
+            {"X", "X", "X", "X", "X"},
+            {"X", "X", "X", "X", "X"}
+        };
+        for (int i = 0; i < 6; i++)
+        {
+            if (myPathCodes[i].Contains("a"))
+            {
+                pathToReturn[i, 0] = "O";
+            }
+            if (myPathCodes[i].Contains("b"))
+            {
+                pathToReturn[i, 1] = "O";
+            }
+            if (myPathCodes[i].Contains("c"))
+            {
+                pathToReturn[i, 2] = "O";
+            }
+            if (myPathCodes[i].Contains("d"))
+            {
+                pathToReturn[i, 3] = "O";
+            }
+            if (myPathCodes[i].Contains("e"))
+            {
+                pathToReturn[i, 4] = "O";
+            }
+        }
+        return pathToReturn;
     }
     
     public void IteratePath()

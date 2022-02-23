@@ -4,10 +4,13 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    public int simpleWeaponCode;
+    public string complexWeaponCode;
     public bool isValidWeapon;
     public bool isPlayerWeapon;
     public bool isMainWeapon;
     public string weaponName;
+    public string weaponDescription;
     public float postureDamage;
 
     private Seraph_UI[] seraphs;

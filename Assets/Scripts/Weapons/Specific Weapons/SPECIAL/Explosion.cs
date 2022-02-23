@@ -25,7 +25,7 @@ public class Explosion : MonoBehaviour
             {
                 if (hit.CompareTag("Terrain"))
                 { }
-                else if (hit.CompareTag("Enemy"))
+                else if (hit.CompareTag("Enemy") || hit.CompareTag("Player"))
                 {
                     Entity entity = hit.GetComponent<Entity>();
                     if (entity != null)
