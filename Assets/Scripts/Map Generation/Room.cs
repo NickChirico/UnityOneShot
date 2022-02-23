@@ -9,6 +9,7 @@ public class Room : MonoBehaviour
     public Transform pickupSpawnLoc;
     public DoorManager northDoor, eastDoor, southDoor, westDoor;
     public Transform northSpawn, eastSpawn, southSpawn, westSpawn;
+    public string roomTag;
     public SpawnArrangement[] spawnOptions;
     
     // Start is called before the first frame update
