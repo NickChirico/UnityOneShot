@@ -123,10 +123,13 @@ public class MapGenerator : MonoBehaviour
     public List<int> deadEndXPos, deadEndYPos, allRoomsXPos, allRoomsYPos;
     public MapLoader myLoader;
     public Text screenText;
+
+    public bool pathGenerated;
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        pathGenerated = false;
         allTierLimits = new[] {tier1Limits, tier2Limits, tier3Limits, tier4Limits, tier5Limits};
         ResetMap();
         GeneratePath();

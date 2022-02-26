@@ -49,6 +49,8 @@ public class MapLoader : MonoBehaviour
     public Player myPlayer;
     public Unlockable[] allUnlockables;
     public GameObject entranceRoom;
+
+    public RoomCollections grasslands, desert, mountain, dirt, currentCollection;
     //woodsRoom, churchRoom, marketRoom, academyRoom;
 
     void Awake()

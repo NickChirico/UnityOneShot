@@ -11,7 +11,8 @@ using Random = UnityEngine.Random;
 public class PathManager : MonoBehaviour
 {
 
-    public Player myPlayer;
+    
+    public PlayerLoader myPlayer;
 
     public PathOption[] allOptions;
 
@@ -43,7 +44,7 @@ public class PathManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        layerNum = 1;
+        layerNum = myPlayer.currentPathLevel;
         //previousPaths = new[] {"healing", "shop", "mystery"};
         //LoadPathScene();
     }
@@ -92,7 +93,7 @@ public class PathManager : MonoBehaviour
         }
     }
 
-    private void SelectOptionOnstarted(InputAction.CallbackContext obj)
+    private void SelectOptionOnStarted(InputAction.CallbackContext obj)
     {
         print("funny");
         //throw new System.NotImplementedException();

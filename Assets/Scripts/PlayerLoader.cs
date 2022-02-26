@@ -9,7 +9,7 @@ public class PlayerLoader : MonoBehaviour
     public Armor armor;
     public Boots boots;
     public Flask flask;
-    public int currentHealth, currentChitin, currentBlood, currentBrains, currentFlashCharges, currentEssence;
+    public int currentHealth, currentChitin, currentBlood, currentBrains, currentFlashCharges, currentEssence, currentPathLevel; //currentPathLevel gets added after finishing level
     public GameObject playerPrefab;
     void Awake()
     {
