@@ -14,7 +14,7 @@ public class PathManager : MonoBehaviour
     
     public PlayerLoader myPlayer;
 
-    public PathOption[] allOptions;
+    public PathOption[] allOptions, tier1Options, tier2Options, tier3Options, tier4Options, tier5Options, tier6Options;
 
     public int currentOption, layerNum;
 
@@ -173,5 +173,18 @@ public class PathManager : MonoBehaviour
 
         string[] demoOptions = {"rupture", "contaminate", "siphon"};
         return demoOptions;
+    }
+
+    public void GeneratePathMapOnScreen(string[,] inputArray)
+    {
+        PathOption[][] allPathOptions = 
+            {tier6Options, tier5Options, tier4Options, tier3Options, tier2Options, tier1Options};
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                
+            }
+        }
     }
 }

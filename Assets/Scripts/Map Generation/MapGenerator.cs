@@ -1441,7 +1441,7 @@ public class MapGenerator : MonoBehaviour
 
     public string[,] GeneratePathFromPathCodes(string[] myPathCodes)
     {
-        string[,] pathToReturn = new string[,]
+        string[,] pathToReturn =
         {
             {"X", "X", "X", "X", "X"},
             {"X", "X", "X", "X", "X"},
@@ -1471,6 +1471,47 @@ public class MapGenerator : MonoBehaviour
             if (myPathCodes[i].Contains("e"))
             {
                 pathToReturn[i, 4] = "O";
+            }
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                if (pathToReturn[i, j] != "X")
+                {
+                    int biomeSelection = Random.Range(1, 4);
+                    int factionSelection = Random.Range(0, 6);
+                    if (i == 5)
+                    {
+                        pathToReturn[i,j] = biomeSelection.ToString();
+                    }
+                    else
+                    {
+                        pathToReturn[i,j] = "*" + biomeSelection;
+                    }
+                    switch (factionSelection)
+                    {
+                        case 0:
+                            pathToReturn[i, j] += "a";
+                            break;
+                        case 1:
+                            pathToReturn[i, j] += "A";
+                            break;
+                        case 2:
+                            pathToReturn[i, j] += "c";
+                            break;
+                        case 3:
+                            pathToReturn[i, j] += "C";
+                            break;
+                        case 4:
+                            pathToReturn[i, j] += "g";
+                            break;
+                        case 5:
+                            pathToReturn[i, j] += "G";
+                            break;
+                    }
+                }
             }
         }
         return pathToReturn;
