@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     public SpriteRenderer sp;
 
@@ -10,18 +10,15 @@ public class Player : MonoBehaviour
     private UI_Manager ui;
     private SeraphController seraphControl;
 
-
-    public PopUpDamageText damageText;
-
-
-    public int maxHealth;
+    [Header("PLAYER")]
     public float invulnDuration;
     public float invulnBuffer;
     public float knockedForce;
 
-    private int currentHealth;
     private bool canBeDamaged = true;
     private Vector2 hitPoint;
+
+    public int chitinNum, bloodNum, brainNum;
 
     private bool nimble = false;
 
@@ -29,31 +26,31 @@ public class Player : MonoBehaviour
     {
         SM = this.GetComponent<PlayerStateManager>();
     }
-    void Start()
+    public override void Start()
     {
+        base.Start();
         ui = UI_Manager.GetUIManager;
         seraphControl = SeraphController.GetSeraphController;
-
-        currentHealth = maxHealth;
     }
 
-    void Update()
+    //void Update()
+    //{
+    //}
+
+    public override void TakeDamage(Entity attacker, int damageAmount, float posture)
     {
-    }
-
-    public void TakeDamage(ShootableEntity entity, int damage)
-    {
-        seraphControl.ActivateArmorSeraphs(entity, this.transform.position);
-
-        currentHealth -= damage;
-        ui.UpdateHealth(currentHealth, maxHealth);
-
-        Vector2 hitpoint = new Vector2(this.transform.position.x, this.transform.position.y + 0.35f);
-        PopUpDamageText T = Instantiate(damageText, hitpoint, Quaternion.identity);
-        T.SendMessage("SetTextRun", damage);
-
+        base.TakeDamage(attacker, damageAmount, posture);
+        seraphControl.ActivateArmorSeraphs(attacker, this.transform.position);
+        ui.UpdateHealth(currentHealth, MaxHealth);
         SM.ChangeState(SM.Damaged);
         StartCoroutine(FlashRed());
+    }
+
+    public override bool TakeDamage(int damageAmount, Vector2 damageSpot, float knockForce, float postureDamage)
+    {
+        SM.ChangeState(SM.Damaged);
+        StartCoroutine(FlashRed());
+        return base.TakeDamage(damageAmount, damageSpot, knockForce, postureDamage);
     }
 
     public bool CanBeDamaged()
@@ -75,5 +72,68 @@ public class Player : MonoBehaviour
     {
         nimble = b;
         Physics2D.IgnoreLayerCollision(3, 6, b);// 3 = player, 6 = hittableEntity
+    }
+
+    public void ChangeChitinNum(bool isIncrease, int changeAmount)
+    {
+        if (isIncrease)
+        {
+            chitinNum += changeAmount;
+        }
+        else
+        {
+            chitinNum -= changeAmount;
+        }
+        if (ui.chitinAmount != null)
+            ui.chitinAmount.text = chitinNum.ToString();
+    }
+    
+    public void ChangeBloodNum(bool isIncrease, int changeAmount)
+    {
+        if (isIncrease)
+        {
+            bloodNum += changeAmount;
+        }
+        else
+        {
+            bloodNum -= changeAmount;
+        }
+        if (ui.bloodAmount != null)
+            ui.bloodAmount.text = bloodNum.ToString();
+    }
+    
+    public void ChangeBrainNum(bool isIncrease, int changeAmount)
+    {
+        if (isIncrease)
+        {
+            brainNum += changeAmount;
+        }
+        else
+        {
+            brainNum -= changeAmount;
+        }
+        if (ui.brainAmount != null)
+            ui.brainAmount.text = brainNum.ToString();
+    }
+
+    public void RestoreFullHealth()
+    {
+        //currentHealth = maxHealth;
+        //ui.UpdateHealth(currentHealth, maxHealth);
+    }
+
+    public void LoadIntoLevel()
+    {
+        
+    }
+
+    public void DrinkFlask()
+    {
+        
+    }
+
+    public UI_Manager GetUIManager()
+    {
+        return ui;
     }
 }

@@ -82,7 +82,6 @@ public class SeraphController : MonoBehaviour
                 case 2:
                     newSeraph.SetGenome(Seraph_UI.Genome.Contaminate);
                     break;
-
                 default:
                     newSeraph.SetGenome(Seraph_UI.Genome.None);
                     break;
@@ -98,6 +97,10 @@ public class SeraphController : MonoBehaviour
     {
         if(BagSeraphs.Count < bagCapacity)
             BagSeraphs.Add(S);
+        else
+        {
+            //HERE: Activate the popup
+        }
 
         foreach (AugmentSlot slot in bagSlots)
         {
@@ -134,6 +137,11 @@ public class SeraphController : MonoBehaviour
         {
             if (slot.HasSeraph())
                 ArmorSeraphs.Add(slot.mySeraph_ui);
+        }
+        foreach (AugmentSlot slot in bootsSlots)
+        {
+            if (slot.HasSeraph())
+                BootsSeraphs.Add(slot.mySeraph_ui);
         }
 
         foreach (AugmentSlot slot in bagSlots)
@@ -204,28 +212,28 @@ public class SeraphController : MonoBehaviour
 
 
     #region Activation Functions 
-    public void ActivateMainWeaponSeraphs(ShootableEntity entity, Vector2 pos)
+    public void ActivateMainWeaponSeraphs(Entity entity, Vector2 pos)
     {
         foreach (Seraph_UI S in MainWeapSeraphs)
         {
             S.mySeraph.StartEffect(entity, pos);
         }
     }
-    public void ActivateSpecWeaponSeraphs(ShootableEntity entity, Vector2 pos)
+    public void ActivateSpecWeaponSeraphs(Entity entity, Vector2 pos)
     {
         foreach (Seraph_UI S in AltWeapSeraphs)
         {
             S.mySeraph.StartEffect(entity, pos);
         }
     }
-    public void ActivateArmorSeraphs(ShootableEntity entity, Vector2 pos)
+    public void ActivateArmorSeraphs(Entity entity, Vector2 pos)
     {
         foreach (Seraph_UI S in ArmorSeraphs)
         {
             S.mySeraph.StartEffect(entity, pos);
         }
     }
-    public void ActivateBootsSeraphs(ShootableEntity entity, Vector2 pos)
+    public void ActivateBootsSeraphs(Entity entity, Vector2 pos)
     {
         foreach (Seraph_UI S in BootsSeraphs)
         {

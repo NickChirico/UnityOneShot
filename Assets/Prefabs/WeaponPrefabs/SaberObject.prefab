@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6128647752333188044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6128647752333188046}
+  - component: {fileID: 6128647752333188045}
+  m_Layer: 0
+  m_Name: SaberObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6128647752333188046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6128647752333188044}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.819331, y: -0.51427495, z: -0.90115243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6128647752333188045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6128647752333188044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb78ba0f59c14e442a63cb4438e5fc46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleWeaponCode: 0
+  complexWeaponCode: 
+  isValidWeapon: 1
+  isPlayerWeapon: 1
+  isMainWeapon: 0
+  weaponName: Saber
+  weaponDescription: 
+  postureDamage: 6
+  intervalCount: 3
+  damageArr: 06000000070000000a000000
+  knockForceArr:
+  - 3
+  - 3
+  - 7
+  attackDurArr:
+  - 0.175
+  - 0.175
+  - 0.25
+  swingRangeArr:
+  - 0.55
+  - 0.55
+  - 0.7
+  attackRadiusArr:
+  - 0.55
+  - 0.55
+  - 0.7
+  thrustForceArr:
+  - 4
+  - 4
+  - 12
+  thrustDurArr:
+  - 0.15
+  - 0.15
+  - 0.15
+  preDelayArr:
+  - 0.05
+  - 0.05
+  - 0.075
+  recoverTime: 0.3
+  comboCooldown: 0.5
+  collisionInterval: 0.3
+  swingSounds: []
+  tempAttackDisplay: {fileID: 0}
+  hittableEntity:
+    serializedVersion: 2
+    m_Bits: 64
+  currentInterval: 0
+  canAttack: 1

@@ -20,11 +20,11 @@ public class Markshot : Projectile
             { }
             else if (coll.gameObject.CompareTag("Enemy"))
             {
-                ShootableEntity entity = coll.gameObject.GetComponent<ShootableEntity>();
+                Entity entity = coll.gameObject.GetComponent<Entity>();
                 if (entity != null)
                 {
                     Vector2 hitPoint = new Vector2(entity.transform.position.x, entity.transform.position.y + 0.15f);
-                    entity.TakeDamage(impactDamage, hitPoint, 0);
+                    entity.TakeDamage(impactDamage, hitPoint, 0, 0);
                     entity.Mark(markDuration);
                 }
             }

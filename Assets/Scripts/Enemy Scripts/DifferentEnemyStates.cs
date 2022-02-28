@@ -79,6 +79,7 @@ public class EnemyState_Alert : EnemyState
 
                 case 2:
                     SM.ChangeState(SM.Chase);
+                    thisEnemy.SetChaseAnim(true);
                     break;
 
                 default:
@@ -87,10 +88,10 @@ public class EnemyState_Alert : EnemyState
             }
         }
     }
-
+    
     private int DetermineAction()
     {
-        if (thisEnemy.IsInAttackRange())
+        if (thisEnemy.IsInAttackRange() && thisEnemy.canAttack)
             return 1; // ATTACK
         else if (thisEnemy.IsInLineOfSight())
             return 2; // CHASE
@@ -101,7 +102,7 @@ public class EnemyState_Alert : EnemyState
     public override void Enter()
     {
         base.Enter();
-        thisEnemy.sp.color = Color.yellow;
+        thisEnemy.sp.color = Color.white;
 
         action = DetermineAction();
     }
@@ -149,7 +150,7 @@ public class EnemyState_Chase : EnemyState
     public override void Enter()
     {
         base.Enter();
-        thisEnemy.sp.color = Color.green;
+        //thisEnemy.sp.color = Color.green;
     }
 
     public override void Exit()
@@ -195,7 +196,7 @@ public class EnemyState_Patrol : EnemyState
         base.Enter();
         Duration = Random.Range(thisEnemy.idleDuration*0.5f, thisEnemy.idleDuration*1.5f);
 
-        thisEnemy.sp.color = Color.cyan;
+        //thisEnemy.sp.color = Color.cyan;
 
         dest = thisEnemy.GetPatrolPoint();
         //Debug.Log(dest);
@@ -230,7 +231,7 @@ public class EnemyState_Attack : EnemyState
                 // should be an animation event, so we dont need this
             }
             else
-            {
+            { 
                 if(thisEnemy.canAttack)
                     thisEnemy.Attack(attackDir);    
             }
@@ -249,12 +250,14 @@ public class EnemyState_Attack : EnemyState
         delay = thisEnemy.attackDelay;
         attackDir = thisEnemy.GetDirection();
         thisEnemy.sp.color = Color.red;
+
+        thisEnemy.Aim(attackDir);
     }
 
     public override void Exit()
     {
         base.Exit();
-        thisEnemy.canAttack = true;
+        //thisEnemy.canAttack = true;
     }
 
     public EnemyState_Attack(EnemyStateManager myManager, Enemy thisEnemy, string myName, float myDur) :
@@ -288,7 +291,7 @@ public class EnemyState_Dodge : EnemyState
     public override void Enter()
     {
         base.Enter();
-        thisEnemy.sp.color = Color.blue;
+        //thisEnemy.sp.color = Color.blue;
     }
 
     public override void Exit()
@@ -322,7 +325,7 @@ public class EnemyState_Knocked : EnemyState
     public override void Enter()
     {
         base.Enter();
-        thisEnemy.sp.color = Color.black;
+        //thisEnemy.sp.color = Color.black;
     }
 
     public override void Exit()

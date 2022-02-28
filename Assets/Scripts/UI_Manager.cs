@@ -24,6 +24,8 @@ public class UI_Manager : MonoBehaviour
     EquipmentManager Equipment;
     PauseController pause;
 
+    PlayerController playerControl;
+
     [Header("Active UI")]
     //public Image manaBar;
 
@@ -63,9 +65,27 @@ public class UI_Manager : MonoBehaviour
     [Header("In-Game HUD")]
     public GameObject weaponPanel;
     public TextMeshProUGUI currentWeaponLabel;
+    public TextMeshProUGUI currentWeaponLabel_alt;
     public TextMeshProUGUI ammoLabel;
+    public TextMeshProUGUI ammoLabel_alt;
     public GameObject ammoSubPanel;
+    public GameObject ammoSubPanel_alt;
     public Image healthbar;
+    public TextMeshProUGUI chitinAmount, bloodAmount, brainAmount;
+
+    [Header("Weapon Pickup Panel")] public GameObject weaponPickupPanel;
+    public TextMeshProUGUI mainWeaponLabel;
+    public Image mainWeaponImage;
+    public TextMeshProUGUI mainWeaponDescription;
+    public TextMeshProUGUI altWeaponLabel;
+    public Image altWeaponImage;
+    public TextMeshProUGUI altWeaponDescription;
+    public TextMeshProUGUI newWeaponLabel;
+    public Image newWeaponImage;
+    public TextMeshProUGUI newWeaponDescription;
+    public Button exitButton;
+    public Button swapMainWeaponButton;
+    public Button swapAltWeaponButton;
 
     [Header("UI Elements")]
     public Button firstSelected;
@@ -102,18 +122,21 @@ public class UI_Manager : MonoBehaviour
         Equipment = EquipmentManager.GetEquipManager;
         pause = PauseController.GetPauseController;
 
+        playerControl = PlayerController.GetPlayerController;
+
         weapButtons = new Button[] { SelectWeap_Melee, SelectWeap_Ranged };
         gunButtons = new Button[] { SelectGun_Basic, SelectGun_Charge, SelectGun_Inverse };
         bulletButtons = new Button[] { SelectBullet_Basic, SelectBullet_Pierce, SelectBullet_Impact };
         altButtons = new Button[] { SelectAlt_Shotgun, SelectAlt_Burst, SelectAlt_Flamethrower };
 
-        EquipmentPanel.SetActive(false);
+        //EquipmentPanel.SetActive(false);
         TogglePlayerControl(false);
-        ToggleControlDisplay(shot.usingMouse); 
+        ToggleControlDisplay(playerControl.usingMouse); 
 
-        ToggleEquipmentPanel(); // Sets to ENABLE on start
-        SwitchCurrentMenu(1); // 1:Weap , 2:Serap , 3:Options
-        SetInitialEquipment();
+        if(!EquipmentPanel.activeSelf)
+            ToggleEquipmentPanel(); // Sets to ENABLE on start
+        //SwitchCurrentMenu(1); // 1:Weap , 2:Serap , 3:Options
+        //SetInitialEquipment();
 
         EventSystem.current.SetSelectedGameObject(firstSelected.gameObject);
     }
@@ -174,19 +197,22 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
-    private void SetInitialEquipment()
+    /*
+     private void SetInitialEquipment()
     {
         SetWeapon(Equipment.currentWeapon.ToString());
         SetGun(Equipment.currentGun.ToString());
         SetBullet(Equipment.currentBullet.ToString());
         SetAltFire(Equipment.currentAltFire.ToString());
     }
+    */
 
     public void ToggleEquipmentPanel()
     {
         if (EquipmentPanel.activeSelf)
         {
             seraphs.UpdateSeraphLists();
+            playerControl.UpdateSeraphs();
 
             Time.timeScale = 1;
             EquipmentPanel.SetActive(false);
@@ -200,7 +226,7 @@ public class UI_Manager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(firstSelected.gameObject);
             TogglePlayerControl(false);
             ButtonEffect_equipment();
-            SwitchCurrentMenu(1);
+            //SwitchCurrentMenu(1);
         }
     }
 
@@ -219,6 +245,25 @@ public class UI_Manager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(ResumeButton.gameObject);
             TogglePlayerControl(false);
+        }
+    }
+
+
+    public void ToggleWeaponPickupPanel()
+    {
+        if (weaponPickupPanel.activeSelf)
+        {
+            weaponPickupPanel.SetActive(false);
+            TogglePlayerControl(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(ResumeButton.gameObject);
+        }
+        else
+        {
+            weaponPickupPanel.SetActive(true);
+            TogglePlayerControl(false);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(swapMainWeaponButton.gameObject);
         }
     }
 
@@ -318,7 +363,7 @@ public class UI_Manager : MonoBehaviour
             default:
                 break;
         }
-        ButtonEffect_equipment();
+        //ButtonEffect_equipment();
     }
     public void SetGun(string gun)
     {
@@ -339,7 +384,7 @@ public class UI_Manager : MonoBehaviour
                 currentGunButton = SelectGun_Inverse;
                 break;
         }
-        ButtonEffect_equipment();
+        //ButtonEffect_equipment();
     }
 
     public void SetBullet(string bullet)
@@ -393,17 +438,15 @@ public class UI_Manager : MonoBehaviour
 
     public void ToggleControlType()
     {
-        melee.usingMouse = !melee.usingMouse;
-        shot.usingMouse = !shot.usingMouse;
-        alt.usingMouse = !alt.usingMouse;
-        ToggleControlDisplay(melee.usingMouse);
+        playerControl.usingMouse = !playerControl.usingMouse;
+        ToggleControlDisplay(playerControl.usingMouse);
     }
     private void ToggleControlDisplay(bool on)
     {
         if (on)
-            controlDisplay.text = "Selected: MOUSE";
+            controlDisplay.text = "Control: MOUSE";
         else
-            controlDisplay.text = "Selected: CONTROLLER";
+            controlDisplay.text = "Control: CONTROLLER";
     }
     public void RestartScene()
     {
@@ -431,7 +474,7 @@ public class UI_Manager : MonoBehaviour
                 WeaponsPanel.SetActive(true);
                 SeraphimPanel.SetActive(false);
                 OptionsPanel.SetActive(false);
-                weapons.GoToSpots();
+                //weapons.GoToSpots();
                 
                 break;
             case 2: // go to Seraphim panel
@@ -458,13 +501,71 @@ public class UI_Manager : MonoBehaviour
         currentSpecialTMP.text = spec;
     }
 
+    [Space(10)]
+    public TextMeshProUGUI mainWeapLabel;
+    public TextMeshProUGUI altWeapLabel;
+    public void UpdateWeapon_uiPanel(Weapon weap, bool isMain)
+    {
+        if (isMain)
+        {
+            mainWeapLabel.text = weap.weaponName;
+            ToggleWeapButton_ReadySelect(true, false);
+        }
+        else
+        {
+            altWeapLabel.text = weap.weaponName;
+            ToggleWeapButton_ReadySelect(false, false);
+        }
+
+
+    }
+    public Image swapMain_image;
+    public Image swapAlt_image;
+    public Color weaponButton_normalColor;
+    public Color weaponButton_selectColor;
+    public void ToggleWeapButton_ReadySelect(bool isMain, bool isReady)
+    {
+        if (isReady)
+        {
+            if (isMain)
+            {
+                swapMain_image.color = weaponButton_selectColor;
+                mainWeapLabel.color = weaponButton_selectColor;
+            }
+            else
+            {
+                swapAlt_image.color = weaponButton_selectColor;
+                altWeapLabel.color = weaponButton_selectColor;
+            }
+        }
+        else
+        {
+            if (isMain)
+            {
+                swapMain_image.color = weaponButton_normalColor;
+                mainWeapLabel.color = weaponButton_normalColor;
+            }
+            else
+            {
+                swapAlt_image.color = weaponButton_normalColor;
+                altWeapLabel.color = weaponButton_normalColor;
+            }
+        }
+    }
+
 
     // ~~~~~~ In-Game HUD UI ~~~~~~~~~
 
-    public void UpdateCurrentWeaponLabel(string name, bool melee)
+    public void UpdateWeaponHUD_Main(string name, bool melee)
     {
         currentWeaponLabel.text = name;
         ammoSubPanel.SetActive(!melee);
+    }
+
+    public void UpdateWeaponHUD_Alt(string name, bool melee)
+    {
+        currentWeaponLabel_alt.text = name;
+        ammoSubPanel_alt.SetActive(!melee);
     }
 
     public void UpdateCurrentSpecialLabel(string name)
@@ -472,13 +573,24 @@ public class UI_Manager : MonoBehaviour
         // CREATE A HUD FOR SPECIAL
     }
 
-    public void UpdateAmmo(int cur, int max)
+    public void UpdateAmmo(int cur, int max, bool mainWeap)
     {
-        ammoLabel.text = "" + cur + "/" + max;
-        if (cur <= (float)max*0.2f)
-            ammoLabel.color = ammoLabelColor_Low;
-        else if(cur == max)
-            ammoLabel.color = ammoLabelColor_Normal;
+        if (mainWeap)
+        {
+            ammoLabel.text = "" + cur + "/" + max;
+            if (cur <= (float)max * 0.2f)
+                ammoLabel.color = ammoLabelColor_Low;
+            else if (cur == max)
+                ammoLabel.color = ammoLabelColor_Normal;
+        }
+        else
+        {
+            ammoLabel_alt.text = "" + cur + "/" + max;
+            if (cur <= (float)max * 0.2f)
+                ammoLabel_alt.color = ammoLabelColor_Low;
+            else if (cur == max)
+                ammoLabel_alt.color = ammoLabelColor_Normal;
+        }
     }
 
     public void UpdateHealth(int curr, int max)
