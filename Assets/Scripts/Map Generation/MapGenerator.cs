@@ -1484,7 +1484,7 @@ public class MapGenerator : MonoBehaviour
                     int factionSelection = Random.Range(0, 6);
                     if (i == 5)
                     {
-                        pathToReturn[i,j] = biomeSelection.ToString();
+                        pathToReturn[i,j] = "?" + biomeSelection;
                     }
                     else
                     {

@@ -7,13 +7,16 @@ public class PathOption : MonoBehaviour
 {
     public bool selected, valid;
     public Image highlightImage, pathSymbol, grayOverlay;
-    public string pathCode;
+    private string _pathCode, _pathInformation, _areaInformation;
     public Color desertColor, grasslandsColor, volcanoColor;
     public Sprite churchSymbol, guildSymbol, academySymbol;
     
     // Start is called before the first frame update
     void Start()
     {
+        _pathInformation = "";
+        _areaInformation = "";
+        
         //GameObject.Find("Path Manager").GetComponent<PathManager>().allOptions[pathNum] = this;
     }
 
@@ -32,8 +35,38 @@ public class PathOption : MonoBehaviour
     public void SetPath(string tempCode)
     {
         
-        pathCode = tempCode;
+        _pathCode = tempCode;
         
+    }
+
+    public void SetPathCode(string inputCode)
+    {
+        _pathCode = inputCode;
+    }
+
+    public string GetPathCode()
+    {
+        return _pathCode;
+    }
+    
+    public void SetPathInfo(string inputInfo)
+    {
+        _pathInformation = inputInfo;
+    }
+
+    public string GetPathInfo()
+    {
+        return _pathInformation;
+    }
+    
+    public void SetAreaInfo(string inputInfo)
+    {
+        _areaInformation = inputInfo;
+    }
+
+    public string GetAreaInfo()
+    {
+        return _areaInformation;
     }
 
 }

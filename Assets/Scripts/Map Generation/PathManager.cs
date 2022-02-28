@@ -82,10 +82,10 @@ public class PathManager : MonoBehaviour
             if (navActions.UI.Select.triggered)
             {
                 print("here ya go");
-                previousPath = allOptions[currentOption].pathCode;
+                previousPath = allOptions[currentOption].GetPathCode();
                 print("funny");
                 //myMapGen.GenerateMap("North");
-                myMapGen.GenerateMapFromPath(layerNum, allOptions[currentOption].pathCode);
+                myMapGen.GenerateMapFromPath(layerNum, allOptions[currentOption].GetPathCode());
                 //myMapGen.ShowMap();
                 SceneManager.LoadScene("SingleRoomIso");
                 choosingPath = false;
@@ -183,7 +183,60 @@ public class PathManager : MonoBehaviour
         {
             for (int j = 0; j < 5; j++)
             {
-                
+                MakePathOptionVisible(allPathOptions[i][j], inputArray[i,j]);
+            }
+        }
+    }
+
+    public void MakePathOptionVisible(PathOption inputOption, string inputCode)
+    {
+        inputOption.SetPathCode(inputCode);
+        if (inputOption.GetPathCode() == "X")
+        {
+            inputOption.gameObject.SetActive(false);
+        }
+        else
+        {
+            int biomeSelection = inputOption.GetPathCode().ToCharArray()[2];
+            char factionSelection = inputOption.GetPathCode().ToCharArray()[1];
+            char initialChar = inputOption.GetPathCode().ToCharArray()[0];
+            if (initialChar == '*')
+            {
+                inputOption.grayOverlay.enabled = true;
+            }
+            else
+            {
+                inputOption.grayOverlay.enabled = true;
+            }
+
+            switch (biomeSelection)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+
+            switch (factionSelection)
+            {
+                case 'a':
+                    break;
+                case 'A':
+                    break;
+                case 'c':
+                    break;
+                case 'C':
+                    break;
+                case 'g':
+                    break;
+                case 'G':
+                    break;
+                default:
+                    break;
             }
         }
     }
