@@ -79,6 +79,7 @@ public class EnemyState_Alert : EnemyState
 
                 case 2:
                     SM.ChangeState(SM.Chase);
+                    thisEnemy.SetChaseAnim(true);
                     break;
 
                 default:
@@ -101,7 +102,7 @@ public class EnemyState_Alert : EnemyState
     public override void Enter()
     {
         base.Enter();
-        thisEnemy.sp.color = Color.yellow;
+        //thisEnemy.sp.color = Color.yellow;
 
         action = DetermineAction();
     }
@@ -149,7 +150,7 @@ public class EnemyState_Chase : EnemyState
     public override void Enter()
     {
         base.Enter();
-        thisEnemy.sp.color = Color.green;
+        //thisEnemy.sp.color = Color.green;
     }
 
     public override void Exit()
@@ -195,7 +196,7 @@ public class EnemyState_Patrol : EnemyState
         base.Enter();
         Duration = Random.Range(thisEnemy.idleDuration*0.5f, thisEnemy.idleDuration*1.5f);
 
-        thisEnemy.sp.color = Color.cyan;
+        //thisEnemy.sp.color = Color.cyan;
 
         dest = thisEnemy.GetPatrolPoint();
         //Debug.Log(dest);
@@ -290,7 +291,7 @@ public class EnemyState_Dodge : EnemyState
     public override void Enter()
     {
         base.Enter();
-        thisEnemy.sp.color = Color.blue;
+        //thisEnemy.sp.color = Color.blue;
     }
 
     public override void Exit()
@@ -324,7 +325,7 @@ public class EnemyState_Knocked : EnemyState
     public override void Enter()
     {
         base.Enter();
-        thisEnemy.sp.color = Color.black;
+        //thisEnemy.sp.color = Color.black;
     }
 
     public override void Exit()

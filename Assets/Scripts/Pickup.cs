@@ -30,7 +30,7 @@ public abstract class Pickup : MonoBehaviour
     {
         ChoosePickupImage(pickupCode);
         GetComponent<SpriteRenderer>().enabled = true;
-        GetComponent<BoxCollider2D>().enabled = true;
+        GetComponent<CircleCollider2D>().enabled = true;
     }
 
     public void OnTriggerStay2D(Collider2D other)

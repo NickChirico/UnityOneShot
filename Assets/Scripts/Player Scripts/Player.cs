@@ -84,7 +84,8 @@ public class Player : Entity
         {
             chitinNum -= changeAmount;
         }
-        ui.chitinAmount.text = chitinNum.ToString();
+        if (ui.chitinAmount != null)
+            ui.chitinAmount.text = chitinNum.ToString();
     }
     
     public void ChangeBloodNum(bool isIncrease, int changeAmount)
@@ -97,7 +98,8 @@ public class Player : Entity
         {
             bloodNum -= changeAmount;
         }
-        ui.bloodAmount.text = bloodNum.ToString();
+        if (ui.bloodAmount != null)
+            ui.bloodAmount.text = bloodNum.ToString();
     }
     
     public void ChangeBrainNum(bool isIncrease, int changeAmount)
@@ -110,7 +112,8 @@ public class Player : Entity
         {
             brainNum -= changeAmount;
         }
-        ui.brainAmount.text = brainNum.ToString();
+        if (ui.brainAmount != null)
+            ui.brainAmount.text = brainNum.ToString();
     }
 
     public void RestoreFullHealth()
