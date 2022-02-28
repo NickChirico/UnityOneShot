@@ -88,10 +88,10 @@ public class EnemyState_Alert : EnemyState
             }
         }
     }
-
+    
     private int DetermineAction()
     {
-        if (thisEnemy.IsInAttackRange())
+        if (thisEnemy.IsInAttackRange() && thisEnemy.canAttack)
             return 1; // ATTACK
         else if (thisEnemy.IsInLineOfSight())
             return 2; // CHASE
@@ -102,7 +102,7 @@ public class EnemyState_Alert : EnemyState
     public override void Enter()
     {
         base.Enter();
-        //thisEnemy.sp.color = Color.yellow;
+        thisEnemy.sp.color = Color.white;
 
         action = DetermineAction();
     }
@@ -257,7 +257,7 @@ public class EnemyState_Attack : EnemyState
     public override void Exit()
     {
         base.Exit();
-        thisEnemy.canAttack = true;
+        //thisEnemy.canAttack = true;
     }
 
     public EnemyState_Attack(EnemyStateManager myManager, Enemy thisEnemy, string myName, float myDur) :

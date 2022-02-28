@@ -381,7 +381,10 @@ public class MeleeWeapon : Weapon
 
         if (dur != 0 && force != 0)
         {
-            moveControl.Thrust(direction, force, dur);
+            if (isPlayerWeapon)
+            {
+                moveControl.Thrust(direction, force, dur);
+            }
         }
 
         // Play sound based on attack interval
@@ -390,6 +393,7 @@ public class MeleeWeapon : Weapon
 
     public void Attack(int interval)
     {
+        Debug.Log("ATTACK");
         // TEMP DISPLAY STUFF
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.red;
         Collider2D[] hitEnemies;
@@ -414,6 +418,14 @@ public class MeleeWeapon : Weapon
                         ApplyAttack(entity, hit.transform.position, damageToPass);
                     }
                 }
+                else if (hit.CompareTag("Player") && !isPlayerWeapon)
+                {
+                    Entity player = hit.GetComponent<Player>();
+                    if (player != null)
+                    {
+                        ApplyAttack(player, hit.transform.position, damageToPass);
+                    }
+                }
             }
         }
 
@@ -430,7 +442,11 @@ public class MeleeWeapon : Weapon
         entityHit.TakeDamage(damageToDeal, hitPoint, knockForceArr[currentInterval], postureDamage);
 
         // SERAPH
-        ActivateSeraphs(entityHit, hitPoint);
+        if (isPlayerWeapon)
+        {
+            // APPLY SERAPH EFFECTS
+            ActivateSeraphs(entityHit, hitPoint);
+        }
     }
 
     public void Recover()
@@ -451,12 +467,12 @@ public class MeleeWeapon : Weapon
         tempAttackDisplay.transform.localScale = Vector3.one * 0.25f;
 
         canAttack = false;
-        StartCoroutine(AttackCooldown());
+        StartCoroutine(AttackCooldown(comboCooldown));
     }
 
-    IEnumerator AttackCooldown()
+    IEnumerator AttackCooldown(float cd)
     {
-        yield return new WaitForSeconds(comboCooldown);
+        yield return new WaitForSeconds(cd);
         canAttack = true;
     }
 

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class Enemy : Entity
 {
@@ -51,6 +53,7 @@ public abstract class Enemy : Entity
     public float attackDelay;
     public float attackLungeForce;
     public bool canAttack;
+    public float attackCooldown = 1.5f;
     [Header("Knocked")]
     public float invulnTime;
     public float knockbackForce;
@@ -117,6 +120,10 @@ public abstract class Enemy : Entity
     public Vector2 GetRayOrigin()
     {
         return rayOrigin;
+    }
+    public Vector2 GetRayOrigin(float bonusHeight)
+    {
+        return new Vector2(rayOrigin.x, rayOrigin.y + bonusHeight);
     }
     public Vector2 GetDirection()
     {
@@ -233,7 +240,7 @@ public abstract class Enemy : Entity
                     break;
             }
         }
-        else if(materialDropNumber > 89 && materialDropNumber <= 99)
+        else if (materialDropNumber > 89 && materialDropNumber <= 99)
         {
             GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
             GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
@@ -328,8 +335,21 @@ public abstract class Enemy : Entity
         // ATTACK LOGIC base
         canAttack = false;
         rb.AddForce(dir * attackLungeForce, ForceMode2D.Impulse);
+        ResetAttack(attackCooldown);
 
     }
+
+    public virtual void ResetAttack(float delay)
+    {
+        StartCoroutine(AttackCooldown(delay));
+    }
+
+    IEnumerator AttackCooldown(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        canAttack = true;
+    }
+
 
     public virtual void Dodge()
     {

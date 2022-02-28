@@ -185,8 +185,6 @@ public class Entity : MonoBehaviour
     }
 
 
-
-
     //   ~~~~~~~~~ Seraph Afflications ~~~~~~~~~~
     public void Mark(float dur)
     {

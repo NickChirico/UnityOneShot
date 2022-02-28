@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Duelist : Enemy
 {
+    [Header("DUELIST")]
+    public MeleeWeapon knife;
+    public float height;
+
     public override void SetUp()
     {
-        throw new System.NotImplementedException();
+
     }
 
 
@@ -14,17 +18,71 @@ public class Duelist : Enemy
     {
         canAttack = false;
 
-        switch (Random.Range(0, 3))
+        switch (Random.Range(0, 4))
         {
             case 1:
-                Debug.Log("CASE 1");
+                StartCoroutine(ComboAttack());
                 break;
             case 2:
-                Debug.Log("CASE 2");
+                StartCoroutine(LungeAttack());
                 break;
             default:
-                Debug.Log("CASE default");
+                StartCoroutine(QuickAttack());
                 break;
         }
+    }
+
+    private IEnumerator QuickAttack()
+    {
+        knife.Fire(GetRayOrigin(height), GetDirection());
+        knife.PrepAttack(0);
+        yield return new WaitForSeconds(attackDelay);
+        Thrust(attackLungeForce);
+        knife.Attack(0);
+        yield return new WaitForSeconds(attackDuration);
+        knife.SetIndicator(false);
+        ResetAttack(attackCooldown);
+    }
+
+    private IEnumerator ComboAttack()
+    {
+        knife.Fire(GetRayOrigin(height), GetDirection());
+        knife.PrepAttack(0);
+        yield return new WaitForSeconds(attackDelay);
+        Thrust(attackLungeForce);
+        knife.Attack(0);
+
+        yield return new WaitForSeconds(0.15f);
+        knife.Fire(GetRayOrigin(height), GetDirection());
+        knife.PrepAttack(2);
+        yield return new WaitForSeconds(attackDelay);
+        Thrust(attackLungeForce);
+        knife.Attack(2);
+
+        yield return new WaitForSeconds(0.15f);
+        knife.Fire(GetRayOrigin(height), GetDirection());
+        knife.PrepAttack(3);
+        yield return new WaitForSeconds(attackDelay);
+        Thrust(attackLungeForce);
+        knife.Attack(3);
+
+        yield return new WaitForSeconds(attackDuration);
+        knife.SetIndicator(false);
+        ResetAttack(attackCooldown + 0.5f);
+    }
+
+    private IEnumerator LungeAttack()
+    {
+        knife.Fire(GetRayOrigin(height), GetDirection());
+        knife.PrepAttack(0);
+        yield return new WaitForSeconds(attackDuration);
+        Thrust(attackLungeForce * 4);
+        knife.SetIndicator(false);
+        ResetAttack(attackCooldown - 0.5f);
+    }
+
+    private void Thrust(float force)
+    {
+        rb.AddForce(GetDirection() * force, ForceMode2D.Impulse);
     }
 }
