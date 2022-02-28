@@ -277,7 +277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5645802313161577591
 Transform:
   m_ObjectHideFlags: 0
@@ -377,6 +377,8 @@ MonoBehaviour:
     type: 3}
   siphonPickup: {fileID: 320607767360861005, guid: cf570d270e993a64ca7ce71fbee2f4f5,
     type: 3}
+  seraphPickup: {fileID: 0}
+  weaponPickup: {fileID: 0}
   playerSpotted: 0
   idleDuration: 2
   alertDuration: 0.5
@@ -389,7 +391,7 @@ MonoBehaviour:
   attackRange: 1.5
   attackDuration: 1.5
   attackDelay: 0.25
-  attackLungeForce: 12
+  attackLungeForce: 10
   canAttack: 1
   invulnTime: 0.2
   knockbackForce: 10

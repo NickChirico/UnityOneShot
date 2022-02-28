@@ -582,9 +582,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0115b28791dffe5469fc70047bc986ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 30
+  MaxHealth: 24
   currentHealth: 0
-  postureMax: 30
+  postureMax: 14
   posture: 0
   postureDecayRate: 1.5
   guardBreakDuration: 0
@@ -613,6 +613,9 @@ MonoBehaviour:
     type: 3}
   siphonPickup: {fileID: 320607767360861005, guid: cf570d270e993a64ca7ce71fbee2f4f5,
     type: 3}
+  seraphPickup: {fileID: 403632358609029537, guid: 15a1369f717d6664ebd4a0be28103bc0,
+    type: 3}
+  weaponPickup: {fileID: 0}
   playerSpotted: 0
   idleDuration: 1
   alertDuration: 0.5
@@ -628,7 +631,7 @@ MonoBehaviour:
   attackLungeForce: 0
   canAttack: 1
   invulnTime: 0
-  knockbackForce: 0
+  knockbackForce: 5
   blastDamage: 20
   blastPostureDamage: 20
   blastRadius: 0.75

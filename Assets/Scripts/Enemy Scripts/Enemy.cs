@@ -102,6 +102,12 @@ public abstract class Enemy : Entity
         direction = (playerLoc.position - this.transform.position).normalized;
         distanceToPlayer = Vector2.Distance(playerLoc.position, this.transform.position);
 
+        if (direction.x > 0)
+            sp.flipX = false;
+        else
+            sp.flipX = true;
+
+
         lineRend.SetPosition(0, rayOrigin);
         lineRend.SetPosition(1, rayOrigin + direction * visionRange);
     }
