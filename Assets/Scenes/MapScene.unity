@@ -325,10 +325,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1389488140}
   pathSymbol: {fileID: 591074158}
   grayOverlay: {fileID: 41461576}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -462,10 +462,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1535223146}
   pathSymbol: {fileID: 619670079}
   grayOverlay: {fileID: 1672670755}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -599,10 +599,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1460862418}
   pathSymbol: {fileID: 330823558}
   grayOverlay: {fileID: 1315741161}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -661,10 +661,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1544425169}
   pathSymbol: {fileID: 1574476127}
   grayOverlay: {fileID: 444487642}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -723,10 +723,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1171839565}
   pathSymbol: {fileID: 1947753362}
   grayOverlay: {fileID: 868290091}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -785,10 +785,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1936077657}
   pathSymbol: {fileID: 987649276}
   grayOverlay: {fileID: 230374466}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -1072,10 +1072,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 631907589}
   pathSymbol: {fileID: 1518811329}
   grayOverlay: {fileID: 1087008095}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -2083,14 +2083,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &400669024
-AudioListener:
+--- !u!114 &400669024
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 400669023}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
+  ListenerNumber: -1
 --- !u!20 &400669025
 Camera:
   m_ObjectHideFlags: 0
@@ -2200,10 +2206,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1942059297}
   pathSymbol: {fileID: 1338767118}
   grayOverlay: {fileID: 1792353846}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -2266,10 +2272,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 0}
   pathSymbol: {fileID: 248969064}
   grayOverlay: {fileID: 0}
-  pathCode: 
   desertColor: {r: 0, g: 0, b: 0, a: 0}
   grasslandsColor: {r: 0, g: 0, b: 0, a: 0}
   volcanoColor: {r: 0, g: 0, b: 0, a: 0}
@@ -2441,10 +2447,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 261021830}
   pathSymbol: {fileID: 1521618767}
   grayOverlay: {fileID: 752571381}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -2695,10 +2701,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 0}
   pathSymbol: {fileID: 451642531}
   grayOverlay: {fileID: 0}
-  pathCode: 
   desertColor: {r: 0, g: 0, b: 0, a: 0}
   grasslandsColor: {r: 0, g: 0, b: 0, a: 0}
   volcanoColor: {r: 0, g: 0, b: 0, a: 0}
@@ -2907,10 +2913,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 25189142}
   pathSymbol: {fileID: 1324046839}
   grayOverlay: {fileID: 1761545176}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -2969,10 +2975,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1749128869}
   pathSymbol: {fileID: 1684413594}
   grayOverlay: {fileID: 648264947}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -3031,10 +3037,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 2059568022}
   pathSymbol: {fileID: 1995544986}
   grayOverlay: {fileID: 799047308}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -3697,10 +3703,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1574294227}
   pathSymbol: {fileID: 2045478329}
   grayOverlay: {fileID: 1805124285}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -4234,10 +4240,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1292636541}
   pathSymbol: {fileID: 658905970}
   grayOverlay: {fileID: 2016587528}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -4460,10 +4466,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 692688473}
   pathSymbol: {fileID: 492841831}
   grayOverlay: {fileID: 1273713544}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -4822,10 +4828,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 715285149}
   pathSymbol: {fileID: 680649941}
   grayOverlay: {fileID: 884320960}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -5109,10 +5115,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 396749610}
   pathSymbol: {fileID: 351262543}
   grayOverlay: {fileID: 220783242}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -5171,10 +5177,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1396419727}
   pathSymbol: {fileID: 1200010030}
   grayOverlay: {fileID: 626201853}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -5592,10 +5598,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 461693393}
   pathSymbol: {fileID: 1868419299}
   grayOverlay: {fileID: 1612523288}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -5729,10 +5735,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 618681211}
   pathSymbol: {fileID: 934366651}
   grayOverlay: {fileID: 308227592}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -5866,10 +5872,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1728448614}
   pathSymbol: {fileID: 278721497}
   grayOverlay: {fileID: 1034921215}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -6003,10 +6009,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1310358852}
   pathSymbol: {fileID: 1417795218}
   grayOverlay: {fileID: 1101640624}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -6819,10 +6825,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1530732098}
   pathSymbol: {fileID: 1328658103}
   grayOverlay: {fileID: 284349190}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -7740,10 +7746,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1577143154}
   pathSymbol: {fileID: 966534691}
   grayOverlay: {fileID: 1603638849}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -7877,10 +7883,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 923227319}
   pathSymbol: {fileID: 1287533092}
   grayOverlay: {fileID: 400288988}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -7939,10 +7945,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1079954325}
   pathSymbol: {fileID: 1958398472}
   grayOverlay: {fileID: 1121635941}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -8451,10 +8457,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1234387207}
   pathSymbol: {fileID: 1777934537}
   grayOverlay: {fileID: 493673017}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -9117,10 +9123,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1247892454}
   pathSymbol: {fileID: 343862506}
   grayOverlay: {fileID: 117321336}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -9558,10 +9564,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 0}
   pathSymbol: {fileID: 75872792}
   grayOverlay: {fileID: 0}
-  pathCode: 
   desertColor: {r: 0, g: 0, b: 0, a: 0}
   grasslandsColor: {r: 0, g: 0, b: 0, a: 0}
   volcanoColor: {r: 0, g: 0, b: 0, a: 0}
@@ -10341,10 +10347,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 215924477}
   pathSymbol: {fileID: 1294254400}
   grayOverlay: {fileID: 1817683472}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
@@ -10932,10 +10938,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  valid: 0
   highlightImage: {fileID: 1718890851}
   pathSymbol: {fileID: 266349303}
   grayOverlay: {fileID: 1318829258}
-  pathCode: 
   desertColor: {r: 0.3584906, g: 0.17550531, b: 0, a: 0}
   grasslandsColor: {r: 0.06889609, g: 0.4056604, b: 0, a: 0}
   volcanoColor: {r: 0.6415094, g: 0.11960227, b: 0.08775366, a: 0}
