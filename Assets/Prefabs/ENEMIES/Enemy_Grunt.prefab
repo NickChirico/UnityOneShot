@@ -357,6 +357,8 @@ MonoBehaviour:
   markedIndicator: {fileID: 6055360675647800459}
   contaminateParticles_prefab: {fileID: 154266614780650862, guid: 6acfc02aa966a5f41936cf287ba4b044,
     type: 3}
+  stormParticles_prefab: {fileID: 5630597837917196486, guid: 41ec81e70c21c9c4b96e446a06e755c6,
+    type: 3}
   healthBar: {fileID: 1022257399202112316}
   postureBar: {fileID: 1792470790924726445}
   guardBroken: 0

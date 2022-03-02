@@ -16,6 +16,7 @@ public class Entity : MonoBehaviour
     public PopUpDamageText damageText;
     public GameObject markedIndicator;
     public GameObject contaminateParticles_prefab;
+    public GameObject stormParticles_prefab;
 
     [Space(5)]
     public HealthBar healthBar;
@@ -68,6 +69,8 @@ public class Entity : MonoBehaviour
         if (isContaminated) // CONTAMINATE -- variables and methods at bottom of class
             UpdateContaminate();
 
+        if (isCharged) // LIGHTNING SURGE -- seraph vars and methods at bottom
+            UpdateLightning();
         //
         UpdatePosture();
         UpdateHealth();
@@ -200,14 +203,14 @@ public class Entity : MonoBehaviour
             markedIndicator.SetActive(b);
     }
 
-    [Header("AFFLICTIONS")]
+    [Header("CONTAMINATE")]
     bool isContaminated;
     int contaminateDamage;
     float contaminateDuration;
     float contaminateInterval;
     float contaminateTimer;
     float contaminateTimer_D;
-    GameObject particles;
+    GameObject contam_particles;
 
     public void Contaminate(int damage, float duration, float interval)
     {
@@ -218,8 +221,8 @@ public class Entity : MonoBehaviour
         contaminateInterval = interval;
         if (contaminateParticles_prefab != null)
         {
-            if (particles == null)
-                particles = Instantiate(contaminateParticles_prefab, this.transform);
+            if (contam_particles == null)
+                contam_particles = Instantiate(contaminateParticles_prefab, this.transform);
         }
     }
 
@@ -243,8 +246,60 @@ public class Entity : MonoBehaviour
         {
             isContaminated = false;
 
-            if (particles != null)
-                Destroy(particles);
+            if (contam_particles != null)
+                Destroy(contam_particles);
         }
+    }
+
+    [Header("LIGHTNING SURGE")]
+    bool isCharged;
+    float lightningTimer;
+    float lightningDuration;
+    int lightningDamage;
+    float lightningKnockForce;
+    float lightningPostureDamage;
+    GameObject storm_particles;
+    GameObject bolt_object;
+
+    public void StormStrike(float dur, int boltDamage, GameObject boltObject)
+    {
+        lightningTimer = dur;
+        lightningDamage = boltDamage;
+        bolt_object = boltObject;
+        isCharged = true;
+
+        if (stormParticles_prefab != null)
+        {
+            if (storm_particles == null)
+                storm_particles = Instantiate(stormParticles_prefab, this.transform);
+        }
+    }
+    public bool IsCharged()
+    { return isCharged; }
+
+    private void UpdateLightning()
+    {
+        if (lightningTimer > 0)
+        {
+            lightningTimer -= Time.deltaTime;
+        }
+        else
+        {
+            TakeDamage(lightningDamage, this.transform.position, lightningKnockForce, lightningPostureDamage);
+            isCharged = false;
+
+            if (bolt_object != null)
+            {
+                Instantiate(bolt_object, this.transform.position, Quaternion.identity);
+            }
+
+            if (storm_particles != null)
+                Destroy(storm_particles);
+        }
+    }
+
+    public void AccelerateLightning(float amount)
+    {
+        lightningTimer -= amount;
     }
 }

@@ -176,7 +176,7 @@ MonoBehaviour:
   - {fileID: 5001664139991484655, guid: 57cd72fdb1aa27a4b9603c123df547a7, type: 3}
   - {fileID: 5001664139991484655, guid: 3a5629b0ec9d2e44592e46a6d2dc16a4, type: 3}
   - {fileID: 5001664139991484655, guid: e321f07156281c842becf27521605e4c, type: 3}
-  - {fileID: 0}
+  - {fileID: 2506849827344306906, guid: 2c9e342bfa62db846b3db3953ea27ace, type: 3}
   - {fileID: 0}
   seraphColors:
   - {r: 0.7529412, g: 0.16470589, b: 0.16862746, a: 1}

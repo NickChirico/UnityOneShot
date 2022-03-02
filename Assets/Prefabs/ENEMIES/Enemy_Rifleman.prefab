@@ -890,6 +890,8 @@ MonoBehaviour:
   markedIndicator: {fileID: 2378157358557018362}
   contaminateParticles_prefab: {fileID: 154266614780650862, guid: 6acfc02aa966a5f41936cf287ba4b044,
     type: 3}
+  stormParticles_prefab: {fileID: 5630597837917196486, guid: 41ec81e70c21c9c4b96e446a06e755c6,
+    type: 3}
   healthBar: {fileID: 8874297191563927373}
   postureBar: {fileID: 7919647396408724700}
   guardBroken: 0
@@ -910,6 +912,8 @@ MonoBehaviour:
     type: 3}
   siphonPickup: {fileID: 320607767360861005, guid: cf570d270e993a64ca7ce71fbee2f4f5,
     type: 3}
+  seraphPickup: {fileID: 0}
+  weaponPickup: {fileID: 0}
   playerSpotted: 0
   idleDuration: 2
   alertDuration: 0.5
@@ -924,6 +928,7 @@ MonoBehaviour:
   attackDelay: 0.5
   attackLungeForce: 0
   canAttack: 1
+  attackCooldown: 1.5
   invulnTime: 0.2
   knockbackForce: 0
   enemyWeapon: {fileID: 4132644651413726360, guid: 6aaa37d5cf54dc446820bc813f715f26,
