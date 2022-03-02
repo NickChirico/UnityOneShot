@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PathOption : MonoBehaviour
 {
     public bool selected, valid;
-    public Image highlightImage, pathSymbol, grayOverlay;
+    public Image highlightImage, pathSymbol, grayOverlay, areaBackground;
     private string _pathCode, _pathInformation, _areaInformation;
     public Color desertColor, grasslandsColor, volcanoColor;
     public Sprite churchSymbol, guildSymbol, academySymbol;

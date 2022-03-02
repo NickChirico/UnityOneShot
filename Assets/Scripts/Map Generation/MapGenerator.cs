@@ -123,6 +123,7 @@ public class MapGenerator : MonoBehaviour
     public List<int> deadEndXPos, deadEndYPos, allRoomsXPos, allRoomsYPos;
     public MapLoader myLoader;
     public Text screenText;
+    public PathManager myPathManager;
 
     public bool pathGenerated;
     // Start is called before the first frame update
@@ -134,6 +135,8 @@ public class MapGenerator : MonoBehaviour
         ResetMap();
         GeneratePath();
         ShowPath();
+        myPathManager.GeneratePathMapOnScreen(path);
+        myPathManager.InitialOptions();
         //myLoader.complexMap = GenerateMapFromPath(1, "test");
     }
 
@@ -1036,40 +1039,38 @@ public class MapGenerator : MonoBehaviour
                         return "abde";
                 }
             case "ace":
-                selection = Random.Range(0, 16);
+                selection = Random.Range(0, 15);
                 switch (selection)
                 {
                     case 0:
                         return "ad";
                     case 1:
-                        return "ae";
-                    case 2:
                         return "bd";
-                    case 3:
+                    case 2:
                         return "be";
-                    case 4:
+                    case 3:
                         return "abd";
-                    case 5:
+                    case 4:
                         return "abe";
-                    case 6:
+                    case 5:
                         return "acd";
-                    case 7:
+                    case 6:
                         return "ade";
-                    case 8:
+                    case 7:
                         return "bcd";
-                    case 9:
+                    case 8:
                         return "bce";
-                    case 10:
+                    case 9:
                         return "bde";
-                    case 11:
+                    case 10:
                         return "abcd";
-                    case 12:
+                    case 11:
                         return "abce";
-                    case 13:
+                    case 12:
                         return "abde";
-                    case 14:
+                    case 13:
                         return "acde";
-                    case 15:
+                    case 14:
                         return "bcde";
                     default:
                         return "abde";
