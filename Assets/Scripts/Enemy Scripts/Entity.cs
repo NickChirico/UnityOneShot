@@ -144,6 +144,7 @@ public class Entity : MonoBehaviour
         //gameObject.SetActive(false);
         //if (mySpawner != null)
         //    mySpawner.CheckEnemiesAlive();
+
         if(this.tag != "Player")
             Destroy(this.gameObject);
     }
@@ -276,7 +277,6 @@ public class Entity : MonoBehaviour
     }
     public bool IsCharged()
     { return isCharged; }
-
     private void UpdateLightning()
     {
         if (lightningTimer > 0)
@@ -285,19 +285,22 @@ public class Entity : MonoBehaviour
         }
         else
         {
-            TakeDamage(lightningDamage, this.transform.position, lightningKnockForce, lightningPostureDamage);
-            isCharged = false;
-
-            if (bolt_object != null)
-            {
-                Instantiate(bolt_object, this.transform.position, Quaternion.identity);
-            }
-
-            if (storm_particles != null)
-                Destroy(storm_particles);
+            FireLightning();
         }
     }
+    private void FireLightning()
+    {
+        TakeDamage(lightningDamage, this.transform.position, lightningKnockForce, lightningPostureDamage);
+        isCharged = false;
 
+        if (bolt_object != null)
+        {
+            Instantiate(bolt_object, this.transform.position, Quaternion.identity);
+        }
+
+        if (storm_particles != null)
+            Destroy(storm_particles);
+    }
     public void AccelerateLightning(float amount)
     {
         lightningTimer -= amount;
