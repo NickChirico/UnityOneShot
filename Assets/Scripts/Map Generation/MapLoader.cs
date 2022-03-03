@@ -10,7 +10,7 @@ public class MapLoader : MonoBehaviour
     public Room[] allRooms, bossRooms;
     public EnemySpawner mySpawner;
     public char[,] operatingMap;
-    public string[,] ComplexMap;
+    public string[,] ComplexMap, pickupMap;
     public char[,] woodsMap, churchMap, marketMap, academyMap;
     public char[,] startMap =
     {

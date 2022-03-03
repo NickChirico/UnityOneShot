@@ -13,6 +13,7 @@ public class DoorLoader : MonoBehaviour
     void Start()
     {
         portal = false;
+        myMapLoader = GameObject.Find("Map Manager").GetComponent<MapLoader>();
     }
 
     public void OnTriggerEnter2D(Collider2D other)
