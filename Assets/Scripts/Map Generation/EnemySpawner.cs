@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject meleePrefab, rangedPrefab, bossPrefab;
+    public GameObject meleePrefab, rangedPrefab, bossPrefab, duelistPrefab, banelingPrefab;
     public bool roomComplete;
     public int numToSpawn;
     public MapLoader myMapLoader;
@@ -41,6 +41,14 @@ public class EnemySpawner : MonoBehaviour
                 {
                     allEnemies.Add(Instantiate(bossPrefab, toSpawn.spawnOptions[0].spawnLocationsArray[i]));
                 }
+                else if (toSpawn.spawnOptions[0].enemyTypeArray[i] == 'X')
+                {
+                    allEnemies.Add(Instantiate(banelingPrefab, toSpawn.spawnOptions[0].spawnLocationsArray[i]));
+                }
+                else if (toSpawn.spawnOptions[0].enemyTypeArray[i] == 'D')
+                {
+                    allEnemies.Add(Instantiate(duelistPrefab, toSpawn.spawnOptions[0].spawnLocationsArray[i]));
+                }
             }
         }
         else
@@ -59,6 +67,14 @@ public class EnemySpawner : MonoBehaviour
                 else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'B')
                 {
                     allEnemies.Add(Instantiate(bossPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+                }
+                else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'X')
+                {
+                    allEnemies.Add(Instantiate(banelingPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+                }
+                else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'D')
+                {
+                    allEnemies.Add(Instantiate(duelistPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
                 }
             }
         }
