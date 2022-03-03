@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c68e63f954a4a45836a8f2217dbb7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healAmount: 12
+  healAmount: 10
   speed: 4.5
   myColor: {r: 0.42939925, g: 1, b: 0.37169808, a: 1}
 --- !u!96 &6942797452527294332

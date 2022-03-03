@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6128647752333188044}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.819331, y: -0.51427495, z: -0.90115243}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -43,15 +43,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb78ba0f59c14e442a63cb4438e5fc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  simpleWeaponCode: 0
+  complexWeaponCode: 
   isValidWeapon: 1
+  isPlayerWeapon: 1
+  isMainWeapon: 0
   weaponName: Saber
+  weaponDescription: 
   postureDamage: 6
   intervalCount: 3
   damageArr: 06000000070000000a000000
   knockForceArr:
-  - 6
-  - 6
-  - 14
+  - 3
+  - 3
+  - 7
   attackDurArr:
   - 0.175
   - 0.175

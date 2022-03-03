@@ -23,7 +23,7 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
     public AugmentSlot Slot { get => mySlot; set => mySlot = value; }
 
 
-    public enum Genome { None, Rupture, Siphon, Contaminate, Surge, Hex, Calcify }
+    public enum Genome { None, Rupture, Siphon, Contaminate, Surge, Hex, Calcify, Storm }
     [Space(10)]
     public Genome seraphType;
 
@@ -80,10 +80,15 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
                 seraphIcon.sprite = contaminateSprite;
                 mySeraph = Instantiate(SeraphPrefabs[2], seraphControl.seraphParent).GetComponent<Seraph>();
                 break;
-            case Genome.Surge:
+            case Genome.Storm:
                 image.color = seraphColors[3];
                 mySeraph = Instantiate(SeraphPrefabs[3], seraphControl.seraphParent).GetComponent<Seraph>();
                 break;
+            case Genome.Surge:
+                image.color = seraphColors[4];
+                mySeraph = Instantiate(SeraphPrefabs[4], seraphControl.seraphParent).GetComponent<Seraph>();
+                break;
+
 
             default:
                 break;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RangedEnemy : Enemy
 {
-    [Header("GRUNT")]
+    [Header("RIFLEMAN")]
     public Weapon enemyWeapon;
     private RangedWeapon myRifle;
     public LineRenderer aimLine;

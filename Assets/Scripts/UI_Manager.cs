@@ -135,6 +135,7 @@ public class UI_Manager : MonoBehaviour
 
         if(!EquipmentPanel.activeSelf)
             ToggleEquipmentPanel(); // Sets to ENABLE on start
+
         //SwitchCurrentMenu(1); // 1:Weap , 2:Serap , 3:Options
         //SetInitialEquipment();
 

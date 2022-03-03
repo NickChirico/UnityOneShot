@@ -277,7 +277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5645802313161577591
 Transform:
   m_ObjectHideFlags: 0
@@ -348,7 +348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 60
   currentHealth: 0
-  postureMax: 16
+  postureMax: 12
   posture: 0
   postureDecayRate: 1.5
   guardBreakDuration: 0
@@ -356,6 +356,8 @@ MonoBehaviour:
     type: 3}
   markedIndicator: {fileID: 6055360675647800459}
   contaminateParticles_prefab: {fileID: 154266614780650862, guid: 6acfc02aa966a5f41936cf287ba4b044,
+    type: 3}
+  stormParticles_prefab: {fileID: 5630597837917196486, guid: 41ec81e70c21c9c4b96e446a06e755c6,
     type: 3}
   healthBar: {fileID: 1022257399202112316}
   postureBar: {fileID: 1792470790924726445}
@@ -377,7 +379,8 @@ MonoBehaviour:
     type: 3}
   siphonPickup: {fileID: 320607767360861005, guid: cf570d270e993a64ca7ce71fbee2f4f5,
     type: 3}
-  seraphPickup: {fileID: 0}
+  seraphPickup: {fileID: 320607767360861005, guid: cf570d270e993a64ca7ce71fbee2f4f5,
+    type: 3}
   weaponPickup: {fileID: 0}
   playerSpotted: 0
   idleDuration: 2
@@ -393,6 +396,7 @@ MonoBehaviour:
   attackDelay: 0.25
   attackLungeForce: 10
   canAttack: 1
+  attackCooldown: 1.5
   invulnTime: 0.2
   knockbackForce: 10
   gruntSpeed: 0
