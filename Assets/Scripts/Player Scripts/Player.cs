@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player : Entity
 {
+    public PlayerController myController;
+    public TextMeshProUGUI interactLabel;
     public SpriteRenderer sp;
+    private bool _canInteract = false;
+    private InteractableObject _interactTarget = null;
 
     private PlayerStateManager SM;
     private UI_Manager ui;
@@ -18,9 +23,15 @@ public class Player : Entity
     private bool canBeDamaged = true;
     private Vector2 hitPoint;
 
+    public List<Seraph> bagSeraphim, mainWeaponSeraphim, altWeaponSeraphim, armorSeraphim, bootsSeraphim, flaskSeraphim;
+
     public int chitinNum, bloodNum, brainNum;
 
     private bool nimble = false;
+    //private Weapon _myMainWeapon, _myAltWeapon;
+    private Armor _myArmor;
+    private Boots _myBoots;
+    private Flask _myFlask;
 
     private void Awake()
     {
@@ -122,9 +133,14 @@ public class Player : Entity
         //ui.UpdateHealth(currentHealth, maxHealth);
     }
 
-    public void LoadIntoLevel()
+    public void LoadIntoLevel(PlayerLoader loader)
     {
-        
+        SetAllEquipment(loader.mainWeapon, loader.altWeapon, loader.armor, loader.boots, loader.flask);
+        UpdateStatsToMatchEquipment();
+        currentHealth = loader.currentHealth <= MaxHealth ? loader.currentHealth : MaxHealth;
+        ChangeChitinNum(true, loader.currentChitin);
+        ChangeBrainNum(true, loader.currentBrains);
+        ChangeBloodNum(true, loader.currentBlood);
     }
 
     public void DrinkFlask()
@@ -132,8 +148,39 @@ public class Player : Entity
         
     }
 
+    public void SetInteract(bool canInteract, InteractableObject targetObject)
+    {
+        switch (canInteract)
+        {
+            case true:
+                _canInteract = true;
+                interactLabel.enabled = true;
+                _interactTarget = targetObject;
+                break;
+            case false:
+                _canInteract = false;
+                interactLabel.enabled = false;
+                _interactTarget = null;
+                break;
+        }
+    }
+
     public UI_Manager GetUIManager()
     {
         return ui;
+    }
+
+    public void SetAllEquipment(Weapon mainWeap, Weapon altWeap, Armor armor, Boots boots, Flask flask)
+    {
+        myController.SelectWeapon(mainWeap, true);
+        myController.SelectWeapon(altWeap, false);
+        _myArmor = armor;
+        _myBoots = boots;
+        _myFlask = flask;
+    }
+
+    public void UpdateStatsToMatchEquipment()
+    {
+        
     }
 }

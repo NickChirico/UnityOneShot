@@ -7554,6 +7554,9 @@ MonoBehaviour:
   myLoader: {fileID: 0}
   screenText: {fileID: 0}
   myPathManager: {fileID: 1291321851}
+  grasslandsRoomsAndArrangements: 0200000002000000
+  desertRoomsAndArrangements: 0200000002000000
+  volcanoRoomsAndArrangements: 0200000002000000
   pathGenerated: 0
 --- !u!4 &1076768873
 Transform:

@@ -352,6 +352,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void SelectWeapon(Weapon weap, bool changeMain)
+    {
+        if (changeMain)
+        {
+            mainWeapon = weap;
+            mainWeapon.Equip(true);
+            UpdateWeapon();
+            uiControl.UpdateWeapon_uiPanel(weap, true);
+        }
+        else
+        {
+            altWeapon = weap;
+            altWeapon.Equip(true);
+            UpdateWeapon();
+            uiControl.UpdateWeapon_uiPanel(weap, false);
+        }
+    }
+
     void UpdateWeapon()
     {
         bool isMelee = false;

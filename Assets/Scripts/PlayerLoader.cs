@@ -9,7 +9,7 @@ public class PlayerLoader : MonoBehaviour
     public Armor armor;
     public Boots boots;
     public Flask flask;
-    public int currentHealth, currentChitin, currentBlood, currentBrains, currentFlashCharges, currentEssence, currentPathLevel; //currentPathLevel gets added after finishing level
+    public int currentHealth, currentChitin, currentBlood, currentBrains, currentFlaskCharges, currentEssence, currentPathLevel; //currentPathLevel gets added after finishing level
     public GameObject playerPrefab;
     void Awake()
     {
@@ -29,6 +29,8 @@ public class PlayerLoader : MonoBehaviour
 
     public void LoadIntoRoom(Vector3 playerSpawnPos)
     {
-        Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity).GetComponent<Player>().LoadIntoLevel();
+        Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity).GetComponent<Player>().LoadIntoLevel(this);
+        Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity).GetComponent<Player>().SetAllEquipment(mainWeapon, altWeapon, armor, boots, flask);
+        //set everything in the player
     }
 }

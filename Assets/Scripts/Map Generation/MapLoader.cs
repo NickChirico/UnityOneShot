@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class MapLoader : MonoBehaviour
 {
+    public CameraController myCam;
     public GameObject rupturePickup, contaminatePickup, siphonPickup;
+    public PlayerLoader playerLoader;
     public Room loadedRoom;
     public Room[] allRooms, bossRooms;
     public EnemySpawner mySpawner;
@@ -85,6 +87,8 @@ public class MapLoader : MonoBehaviour
         currentXLoc = testStartX;
         currentYLoc = testStartY;
         loadedRoom.LoadAllDoors(currentXLoc, currentYLoc);
+        playerLoader.LoadIntoRoom(loadedRoom.southSpawn.position);
+        myCam.SetTarget();
         /*
         loadedRoom.northDoor.LoadNewDoor(currentXLoc - 1, currentYLoc);
         loadedRoom.eastDoor.LoadNewDoor(currentXLoc, currentYLoc + 1);
@@ -225,7 +229,7 @@ public class MapLoader : MonoBehaviour
         {
             for (int j = 0; j < myMap.roomSizes[myMap.GetCurrentTier()]; j++)
             {
-                if (tempMap[i, j].Contains("*H") || tempMap[i, j].Contains("*R") || tempMap[i, j].Contains("*C") || tempMap[i, j].Contains("*S"))
+                if (tempMap[i, j].Contains("E"))
                 {
                     tempX = i;
                     tempY = j;

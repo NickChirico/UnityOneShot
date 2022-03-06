@@ -65,7 +65,7 @@ public class MapGenerator : MonoBehaviour
         new int[] {7,19}
     };
 
-    public int[] roomSizes = new[] {5, 5, 7, 7, 7};
+    public int[] roomSizes = new[] {5, 5, 7, 7, 7, 9};
     
     public int[,] maxArray = new[,]
     {
@@ -125,6 +125,10 @@ public class MapGenerator : MonoBehaviour
     public Text screenText;
     public PathManager myPathManager;
 
+    public int[] grasslandsRoomsAndArrangements, desertRoomsAndArrangements, volcanoRoomsAndArrangements;
+
+    public int[][] roomsOfEachType;
+
     public bool pathGenerated;
     // Start is called before the first frame update
     void Start()
@@ -132,6 +136,8 @@ public class MapGenerator : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         pathGenerated = false;
         allTierLimits = new[] {tier1Limits, tier2Limits, tier3Limits, tier4Limits, tier5Limits};
+        roomsOfEachType = new[]
+            {grasslandsRoomsAndArrangements, desertRoomsAndArrangements, volcanoRoomsAndArrangements};
         ResetMap();
         GeneratePath();
         ShowPath();
@@ -160,11 +166,12 @@ public class MapGenerator : MonoBehaviour
         //direction determines if we start on the top, bottom, left, or right of the map, and where the final boss is
         bool stillGenerating = true; //allows us to remake a map if it isn't satisfactory
         //ShowMap();
+        Debug.Log("Beginning Generation");
         while (stillGenerating)
         {
             ResetMap();
             IterateMap();
-            if (numDoneRooms >= tierRoomNumbers[_currentTier-1][0] && numDoneRooms <= tierRoomNumbers[_currentTier-1][1] && numDeadEnds > 2 && CheckOrientation("North"))
+            if (numDoneRooms >= tierRoomNumbers[_currentTier][0] && numDoneRooms <= tierRoomNumbers[_currentTier][1] && numDeadEnds > 2 && CheckOrientation("North"))
             {
                 stillGenerating = false;
             }
@@ -176,13 +183,14 @@ public class MapGenerator : MonoBehaviour
 
     public void OrientMap()
     {
-        string startRoomChar = "H";
+        string biomeChar = "H";
         int idealValue;
         int finalValue;
+        int whichBiome = int.Parse(_currentPathCode.ToCharArray()[1].ToString());
         int startLoc = 0;
         int endLoc = 0;
         idealValue = 0;
-        finalValue = roomSizes[_currentTier-1]-1;
+        finalValue = roomSizes[_currentTier]; //changed from roomSizes[_currentTier]-1
         for (int i = 0; i < deadEndXPos.Count; i++)
         {
             if (deadEndXPos[i] > idealValue)
@@ -196,20 +204,30 @@ public class MapGenerator : MonoBehaviour
                 finalValue = deadEndXPos[i];
             }
         }
-        switch (_currentPathCode)
+        switch (whichBiome)
         {
-            case "rupture":
-                startRoomChar = "*R/0";
+            case 1:
+                biomeChar = "G";
                 break;
-            case "contaminate":
-                startRoomChar = "*C/0";
+            case 2:
+                biomeChar = "D";
                 break;
-            case "siphon":
-                startRoomChar = "*S/0";
+            case 3:
+                biomeChar = "V";
                 break;
         }
-        roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = startRoomChar;
-        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = "*B/" + Random.Range(0, numBossRooms);
+        roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = "!.E." + biomeChar + "." + Random.Range(1, roomsOfEachType[whichBiome-1].Length);
+        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = "*.B." + biomeChar + ".0";
+        for (int i = 0; i < roomSizes[_currentTier]; i++)
+        {
+            for (int j = 0; j < roomSizes[_currentTier]; j++)
+            {
+                if (roomArray[i, j] == "*D/") //when there are noncombat rooms, add those in HERE
+                {
+                    roomArray[i,j] = "*.C." + biomeChar + "." + Random.Range(1, roomsOfEachType[whichBiome-1].Length);
+                }
+            }
+        }
         for (int i = 0; i < deadEndXPos.Count; i++)
         {
             /*
@@ -225,10 +243,13 @@ public class MapGenerator : MonoBehaviour
         bool changed = false;
         int targetX = -1;
         int targetY = -1;
-        for (int i = 0; i < roomSizes[_currentTier-1]; i++)
+        Debug.Log(_currentTier);
+        Debug.Log(roomSizes[_currentTier]);
+        for (int i = 0; i < roomSizes[_currentTier]; i++)
         {
-            for (int j = 0; j < roomSizes[_currentTier-1]; j++)
+            for (int j = 0; j < roomSizes[_currentTier]; j++)
             {
+                
                 //print("checking at (" + i + "," + j + ")");
                 if (!changed && roomArray[i, j] == "W")
                 {
@@ -277,7 +298,7 @@ public class MapGenerator : MonoBehaviour
                     break;
             }
         }
-        if (targetX < roomSizes[tempNum-1]-1)
+        if (targetX < roomSizes[tempNum]-1)
         {
             switch (roomArray[targetX + 1, targetY])
             {
@@ -315,7 +336,7 @@ public class MapGenerator : MonoBehaviour
                     break;
             }
         }
-        if (targetY < roomSizes[tempNum-1]-1)
+        if (targetY < roomSizes[tempNum]-1)
         {
             switch (roomArray[targetX, targetY + 1])
             {
@@ -435,7 +456,7 @@ public class MapGenerator : MonoBehaviour
         {
             roomArray[targetX - 1, targetY] = "X";
         }
-        if (targetX < roomSizes[tempNum-1]-1 && roomArray[targetX + 1, targetY] == "O")
+        if (targetX < roomSizes[tempNum]-1 && roomArray[targetX + 1, targetY] == "O")
         {
             roomArray[targetX + 1, targetY] = "X";
         }
@@ -443,11 +464,12 @@ public class MapGenerator : MonoBehaviour
         {
             roomArray[targetX, targetY - 1] = "X";
         }
-        if (targetY < roomSizes[tempNum-1]-1 && roomArray[targetX, targetY + 1] == "O")
+        if (targetY < roomSizes[tempNum]-1 && roomArray[targetX, targetY + 1] == "O")
         {
             roomArray[targetX, targetY + 1] = "X";
         }
-        roomArray[targetX, targetY] = "*D/" + Random.Range(0, numDifferentRooms);
+
+        roomArray[targetX, targetY] = "*D/" + Random.Range(1, roomsOfEachType[int.Parse(_currentPathCode.ToCharArray()[1].ToString()) - 1].Length);
     }
     
     public void FinalizeMap(bool tempChanged, int tempNum)
@@ -459,9 +481,9 @@ public class MapGenerator : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < roomSizes[tempNum-1]; i++)
+            for (int i = 0; i < roomSizes[tempNum]; i++)
             {
-                for (int j = 0; j < roomSizes[tempNum-1]; j++)
+                for (int j = 0; j < roomSizes[tempNum]; j++)
                 {
                     if (roomArray[i, j] == "O")
                     {
@@ -477,9 +499,9 @@ public class MapGenerator : MonoBehaviour
     public int CountRooms()
     {
         int counted = 0;
-        for (int i = 0; i < roomSizes[_currentTier-1]; i++)
+        for (int i = 0; i < roomSizes[_currentTier]; i++)
         {
-            for (int j = 0; j < roomSizes[_currentTier-1]; j++)
+            for (int j = 0; j < roomSizes[_currentTier]; j++)
             {
                 if (roomArray[i,j].Contains("*D/"))
                 {
@@ -515,7 +537,7 @@ public class MapGenerator : MonoBehaviour
     {
         switch (_currentTier)
         {
-            case 1:
+            case 0:
                 roomArray = new[,]
                 {
                     {"O", "O", "O", "O", "O"},
@@ -526,6 +548,18 @@ public class MapGenerator : MonoBehaviour
                 };
                 xMin = 4;
                 yMax = 4;
+                break;
+            case 1:
+                roomArray = new[,]
+                {
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "W", "O", "O"},
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O"}
+                };
+                xMin = 4;
+                yMin = 4;
                 break;
             case 2:
                 roomArray = new[,]
@@ -542,14 +576,16 @@ public class MapGenerator : MonoBehaviour
             case 3:
                 roomArray = new[,]
                 {
-                    {"O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O"},
-                    {"O", "O", "W", "O", "O"},
-                    {"O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O"}
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "W", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"}
                 };
-                xMin = 4;
-                yMin = 4;
+                xMin = 6;
+                yMin = 6;
                 break;
             case 4:
                 roomArray = new[,]
@@ -568,16 +604,18 @@ public class MapGenerator : MonoBehaviour
             case 5:
                 roomArray = new[,]
                 {
-                    {"O", "O", "O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "W", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O", "O", "O"}
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"}
                 };
-                xMin = 6;
-                yMin = 6;
+                xMin = 8;
+                yMin = 8;
                 break;
         }
         xMax = 0;
@@ -593,9 +631,9 @@ public class MapGenerator : MonoBehaviour
     public void ShowMap()
     {
         string willPrint = "";
-        for (int i = 0; i < roomSizes[_currentTier-1]; i++)
+        for (int i = 0; i < roomSizes[_currentTier]; i++)
         {
-            for (int j = 0; j < roomSizes[_currentTier-1]; j++)
+            for (int j = 0; j < roomSizes[_currentTier]; j++)
             {
                 willPrint += roomArray[i, j] + " ";
             }

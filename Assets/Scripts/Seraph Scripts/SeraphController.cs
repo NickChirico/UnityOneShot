@@ -26,11 +26,11 @@ public class SeraphController : MonoBehaviour
 
     public int bagCapacity;
     public List<Seraph_UI> BagSeraphs;
-
     public List<Seraph_UI> MainWeapSeraphs;
     public List<Seraph_UI> AltWeapSeraphs;
     public List<Seraph_UI> ArmorSeraphs;
     public List<Seraph_UI> BootsSeraphs;
+    public List<Seraph_UI> FlaskSeraphs;
 
     public Seraph_UI UI_Seraph_Prefab;
 

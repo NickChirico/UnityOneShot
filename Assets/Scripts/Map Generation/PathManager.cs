@@ -119,11 +119,9 @@ public class PathManager : MonoBehaviour
 
             if (navActions.UI.Select.triggered)
             {
-                print("here ya go");
-                previousPath = allOptions[currentOption].GetPathCode();
-                print("funny");
+                //previousPath = allOptions[currentOption].GetPathCode();
                 //myMapGen.GenerateMap("North");
-                myMapGen.GenerateMapFromPath(5 - layerNum, allOptions[currentOption].GetPathCode());
+                myMapGen.GenerateMapFromPath(layerNum, allPathOptions[5-layerNum][currentOption].GetPathCode());
                 //myMapGen.ShowMap();
                 SceneManager.LoadScene("SingleRoomIso");
                 choosingPath = false;
@@ -144,34 +142,34 @@ public class PathManager : MonoBehaviour
 
     public void InitialOptions()
     {
-        Debug.Log(allPathOptions[5 - layerNum][0].valid.ToString());
+        //Debug.Log(allPathOptions[5 - layerNum][0].valid.ToString());
         if (allPathOptions[5 - layerNum][0].valid)
         {
-            Debug.Log("initial option is 0");
+            //Debug.Log("initial option is 0");
             currentOption = 0;
             UpdateOptions();
         }
         else if (allPathOptions[5 - layerNum][1].valid)
         {
-            Debug.Log("initial option is 1");
+            //Debug.Log("initial option is 1");
             currentOption = 1;
             UpdateOptions();
         }
         else if (allPathOptions[5 - layerNum][2].valid)
         {
-            Debug.Log("initial option is 2");
+            //Debug.Log("initial option is 2");
             currentOption = 2;
             UpdateOptions();
         }
         else if (allPathOptions[5 - layerNum][3].valid)
         {
-            Debug.Log("initial option is 3");
+            //Debug.Log("initial option is 3");
             currentOption = 3;
             UpdateOptions();
         }
         else if (allPathOptions[5 - layerNum][4].valid)
         {
-            Debug.Log("initial option is 4");
+            //Debug.Log("initial option is 4");
             currentOption = 4;
             UpdateOptions();
         }
@@ -179,8 +177,7 @@ public class PathManager : MonoBehaviour
 
     public void UpdateOptions()
     {
-        print("updating options");
-
+        //print("updating options");
         for (int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 5; j++)
@@ -235,7 +232,7 @@ public class PathManager : MonoBehaviour
         }
         else
         {
-            pathOptions.Remove(previousPath);
+            //pathOptions.Remove(previousPath);
         }
         int currentSelection;
         for (int i = 0; i < options.Length; i++)
@@ -286,7 +283,7 @@ public class PathManager : MonoBehaviour
                 inputOption.grayOverlay.enabled = false;
                 if (initialChar == '?')
                 {
-                    Debug.Log("question mark here");
+                    //Debug.Log("question mark here");
                     inputOption.valid = true;
                 }
             }
