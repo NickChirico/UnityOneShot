@@ -5,14 +5,14 @@ using TMPro;
 
 public class StateManagerDisplay : MonoBehaviour
 {
-    TextMeshPro display;
+    TextMeshProUGUI display;
     public bool isEnemy;
     EnemyStateManager enemyManager;
     PlayerStateManager playerManager;
 
     void Start()
     {
-        display = this.GetComponent<TextMeshPro>();
+        display = this.GetComponent<TextMeshProUGUI>();
         if(isEnemy)
             enemyManager = GetComponentInParent<EnemyStateManager>();
         else

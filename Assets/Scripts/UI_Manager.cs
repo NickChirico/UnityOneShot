@@ -130,12 +130,13 @@ public class UI_Manager : MonoBehaviour
         altButtons = new Button[] { SelectAlt_Shotgun, SelectAlt_Burst, SelectAlt_Flamethrower };
 
         //EquipmentPanel.SetActive(false);
+        /*
         TogglePlayerControl(false);
         ToggleControlDisplay(playerControl.usingMouse); 
 
         if(!EquipmentPanel.activeSelf)
             ToggleEquipmentPanel(); // Sets to ENABLE on start
-
+            */
         //SwitchCurrentMenu(1); // 1:Weap , 2:Serap , 3:Options
         //SetInitialEquipment();
 
@@ -291,7 +292,7 @@ public class UI_Manager : MonoBehaviour
         //move.enabled = check;
         //shot.enabled = check;
         //alt.enabled = check;
-        SM.ActivePlayer(check);
+        //SM.ActivePlayer(check);
     }
 
     private void HighlightActiveEquipment()
@@ -557,16 +558,16 @@ public class UI_Manager : MonoBehaviour
 
     // ~~~~~~ In-Game HUD UI ~~~~~~~~~
 
-    public void UpdateWeaponHUD_Main(string name, bool melee)
+    public void UpdateWeaponHUD_Main(string name)
     {
         currentWeaponLabel.text = name;
-        ammoSubPanel.SetActive(!melee);
+        //ammoSubPanel.SetActive(!melee);
     }
 
-    public void UpdateWeaponHUD_Alt(string name, bool melee)
+    public void UpdateWeaponHUD_Alt(string name)
     {
         currentWeaponLabel_alt.text = name;
-        ammoSubPanel_alt.SetActive(!melee);
+        //ammoSubPanel_alt.SetActive(!melee);
     }
 
     public void UpdateCurrentSpecialLabel(string name)

@@ -26,6 +26,11 @@ public abstract class Weapon : MonoBehaviour
         isMainWeapon = isMain;
     }
 
+    public virtual void Reload()
+    {
+        
+    }
+
     public void SetSeraphs(List<Seraph_UI> list)
     {
         seraphs = list.ToArray();
@@ -49,9 +54,9 @@ public class RangedWeapon : Weapon
     public int shotDamage;
     public int ammoCapacity;
     public int currentAmmo;
-    public float range;
     public float reloadDuration;
     public float knockbackForce;
+    public float range;
     [Space(10)]
     public bool doRecoil;
     public float recoilForce, recoilDuration;
@@ -81,6 +86,10 @@ public class RangedWeapon : Weapon
     public override void Equip(bool b)
     {
         base.Equip(b);
+        uiControl = UI_Manager.GetUIManager;
+        moveControl = MovementController.GetMoveController;
+        playerControl = PlayerController.GetPlayerController;
+        audioManager = AudioManager.GetAudioManager;
         uiControl.UpdateAmmo(currentAmmo, ammoCapacity, isMainWeapon);
     }
 
@@ -255,8 +264,9 @@ public class RangedWeapon : Weapon
         uiControl.UpdateAmmo(currentAmmo, ammoCapacity, isMainWeapon);
     }
 
-    public void Reload()
+    public override void Reload()
     {
+        base.Reload();
         currentAmmo = ammoCapacity;
         uiControl.UpdateAmmo(currentAmmo, ammoCapacity, isMainWeapon);
         SetHasShot(true);
@@ -515,6 +525,10 @@ public class SpecialWeapon : Weapon
     public override void Equip(bool b)
     {
         base.Equip(b);
+        uiControl = UI_Manager.GetUIManager;
+        moveControl = MovementController.GetMoveController;
+        playerControl = PlayerController.GetPlayerController;
+        audioManager = AudioManager.GetAudioManager;
         uiControl.UpdateAmmo(currentAmmo, sp_Capacity, isMainWeapon);
     }
 

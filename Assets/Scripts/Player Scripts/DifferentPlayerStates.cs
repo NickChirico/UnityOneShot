@@ -17,6 +17,7 @@ public class PlayerState_Ready : PlayerState
 {
     public override void DoState()
     {
+        Debug.Log("ahahaha");
         // READY : read inputs
         float firePressed = InputAction.Player.Fire.ReadValue<float>(); // ~~~~~~~ InputAction ~~~ WORKS ~~~~~
         float reloadPressed = InputAction.Player.Reload.ReadValue<float>();
@@ -25,6 +26,7 @@ public class PlayerState_Ready : PlayerState
 
         if (firePressed > 0)
         {
+            Debug.Log("firing");
             GoToMainWeapon();
         }
         if (specPressed > 0)
@@ -33,9 +35,9 @@ public class PlayerState_Ready : PlayerState
         }
         if (reloadPressed > 0)
         {
-            if(playerControl.rangedWeap1.currentAmmo < playerControl.rangedWeap1.ammoCapacity ||
-                playerControl.rangedWeap2.currentAmmo < playerControl.rangedWeap2.ammoCapacity)
-            SM.ChangeState(SM.FullReload);
+            if(playerControl.mainWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.mainWeapon.GetComponent<RangedWeapon>().ammoCapacity ||
+                playerControl.altWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.altWeapon.GetComponent<RangedWeapon>().ammoCapacity)
+                SM.ChangeState(SM.FullReload);
         }
         if (dashPressed > 0 && Move.CanDash())
         {
@@ -794,7 +796,7 @@ public class PlayerState_MeleeRecover : PlayerState
         {
             weapon.ResetAttackSequence();
 
-            if (!playerControl.rangedWeap1.HasShot())
+            if (!playerControl.mainWeapon.GetComponent<RangedWeapon>().HasShot())
             {
                 SM.ChangeState(SM.RechamberMain);
             }
@@ -860,7 +862,7 @@ public class PlayerState_Dash : PlayerState
                 SM.BackToReady();
             else
                 SM.ChangeState(SM.Reloading);*/
-            if (!playerControl.rangedWeap1.HasShot())
+            if (!playerControl.mainWeapon.GetComponent<RangedWeapon>().HasShot())
             {
                 SM.ChangeState(SM.RechamberMain);
             }
@@ -874,8 +876,8 @@ public class PlayerState_Dash : PlayerState
         base.Enter();
         Move.Dash();
 
-        playerControl.meleeWeap1.ResetAttackSequence();
-        playerControl.meleeWeap2.ResetAttackSequence();
+        playerControl.mainWeapon.GetComponent<MeleeWeapon>().ResetAttackSequence();
+        playerControl.altWeapon.GetComponent<MeleeWeapon>().ResetAttackSequence();
     }
 
     public override void Exit()
@@ -897,7 +899,7 @@ public class PlayerState_Damaged : PlayerState
 
         if (timer > Duration)
         {
-            if (!playerControl.rangedWeap1.HasShot())
+            if (!playerControl.mainWeapon.GetComponent<RangedWeapon>().HasShot())
             {
                 SM.ChangeState(SM.RechamberMain);
             }
@@ -912,8 +914,8 @@ public class PlayerState_Damaged : PlayerState
         Vector2 knockDir = new Vector2(Random.Range(-360, 360), Random.Range(-360, 360)).normalized;
         Move.Recoil(false, knockDir, player.knockedForce, player.invulnDuration);
 
-        playerControl.meleeWeap1.ResetAttackSequence();
-        playerControl.meleeWeap2.ResetAttackSequence();
+        playerControl.mainWeapon.GetComponent<MeleeWeapon>().ResetAttackSequence();
+        playerControl.altWeapon.GetComponent<MeleeWeapon>().ResetAttackSequence();
     }
 
     public override void Exit()

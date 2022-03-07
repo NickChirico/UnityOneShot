@@ -122,11 +122,11 @@ public abstract class PlayerState
                 SM.ChangeState(SM.ShootMain);
                 break;
             case WeaponManager.WeaponType.Melee:
-                if (playerControl.meleeWeap1.CanAttack())
+                if (playerControl.mainWeapon.GetComponent<MeleeWeapon>().canAttack)
                     SM.ChangeState(SM.AttackMain);
                 break;
             case WeaponManager.WeaponType.Special:
-                if (playerControl.specWeap1.CanSpecial())
+                if (playerControl.mainWeapon.GetComponent<SpecialWeapon>().CanSpecial())
                     SM.ChangeState(SM.SpecMain);
                 break;
         }
@@ -140,11 +140,11 @@ public abstract class PlayerState
                 SM.ChangeState(SM.ShootAlt);
                 break;
             case WeaponManager.WeaponType.Melee:
-                if (playerControl.meleeWeap2.CanAttack())
+                if (playerControl.altWeapon.GetComponent<MeleeWeapon>().canAttack)
                     SM.ChangeState(SM.AttackAlt);
                 break;
             case WeaponManager.WeaponType.Special:
-                if (playerControl.specWeap2.CanSpecial())
+                if (playerControl.altWeapon.GetComponent<SpecialWeapon>().CanSpecial())
                     SM.ChangeState(SM.SpecAlt);
                 break;
         }

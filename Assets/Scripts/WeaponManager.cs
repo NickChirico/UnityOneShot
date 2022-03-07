@@ -106,7 +106,7 @@ public class WeaponManager : MonoBehaviour
         else if (currentM != null)
             weapName = currentM.weaponName;
         //
-        UIControl.UpdateWeaponHUD_Main(weapName, IsMelee());
+        UIControl.UpdateWeaponHUD_Main(weapName);
     }
 
     public void UpdateSpecial()

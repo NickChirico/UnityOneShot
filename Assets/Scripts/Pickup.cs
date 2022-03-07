@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Pickup : MonoBehaviour
+public abstract class Pickup : InteractableObject
 {
     public PlayerInputActions PickUpAction;
 

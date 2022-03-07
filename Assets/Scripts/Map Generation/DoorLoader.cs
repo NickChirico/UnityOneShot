@@ -13,6 +13,7 @@ public class DoorLoader : MonoBehaviour
     void Start()
     {
         portal = false;
+        myMapLoader = GameObject.Find("Map Manager").GetComponent<MapLoader>();
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -33,7 +34,7 @@ public class DoorLoader : MonoBehaviour
         if (other.CompareTag("Player") && !traveled)
         {
             traveled = true;
-            myMapLoader.LoadRoom(direction);
+            myMapLoader.Travel(direction);
         }
     }
 

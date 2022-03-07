@@ -13,11 +13,13 @@ public class PathPanel : MonoBehaviour
     void Start()
     {
         myManager = GameObject.Find("Path Manager").GetComponent<PathManager>();
+        /*
         myManager.allOptions[0] = leftPath;
         myManager.allOptions[1] = middlePath;
         myManager.allOptions[2] = rightPath;
         myLayerText.text = "Layer: " + myManager.layerNum;
         myManager.Initiate();
+        */
         
     }
 
