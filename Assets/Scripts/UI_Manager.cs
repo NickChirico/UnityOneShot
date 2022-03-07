@@ -292,7 +292,7 @@ public class UI_Manager : MonoBehaviour
         //move.enabled = check;
         //shot.enabled = check;
         //alt.enabled = check;
-        SM.ActivePlayer(check);
+        //SM.ActivePlayer(check);
     }
 
     private void HighlightActiveEquipment()

@@ -46,7 +46,7 @@ public class PlayerStateManager : MonoBehaviour
 
     public PlayerState FullReload;
 
-    bool isActive;
+    bool isActive = true;
 
     void Start()
     {
@@ -108,6 +108,7 @@ public class PlayerStateManager : MonoBehaviour
 
     public void ChangeState(PlayerState newState)
     {
+        print("changing state");
         if (currentState != null)
             currentState.Exit();
         currentState = newState;

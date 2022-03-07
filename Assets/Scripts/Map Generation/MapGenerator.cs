@@ -466,7 +466,7 @@ public class MapGenerator : MonoBehaviour
             roomArray[targetX, targetY + 1] = "X";
         }
 
-        roomArray[targetX, targetY] = "*D/" + Random.Range(1, roomsOfEachType[int.Parse(_currentPathCode.ToCharArray()[1].ToString()) - 1].Length);
+        roomArray[targetX, targetY] = "*D/";
     }
     
     public void FinalizeMap(bool tempChanged, int tempNum)

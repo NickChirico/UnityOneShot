@@ -84,24 +84,6 @@ public class PlayerController : MonoBehaviour
     {
         seraphControl = SeraphController.GetSeraphController;
         uiControl = GameObject.Find("*** UI Manager").GetComponent<UI_Manager>();
-        print("There should be a UI Controller here");
-        if (uiControl == null)
-        {
-            print("fuck, there isn't");
-        }
-        else
-        {
-            print("hell yeah, there is!");
-        }
-
-        if (seraphControl == null)
-        {
-            print("oh shit, there isn't a seraph controller");
-        }
-        else
-        {
-            print("there's a seraph controller!");
-        }
         //UpdateWeapon();
     }
 

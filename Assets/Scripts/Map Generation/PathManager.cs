@@ -56,10 +56,6 @@ public class PathManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            LoadPathScene();
-        }
         //selectOption.started += SelectOptionOnstarted;
         if (choosingPath)
         {

@@ -17,6 +17,7 @@ public class PlayerState_Ready : PlayerState
 {
     public override void DoState()
     {
+        Debug.Log("ahahaha");
         // READY : read inputs
         float firePressed = InputAction.Player.Fire.ReadValue<float>(); // ~~~~~~~ InputAction ~~~ WORKS ~~~~~
         float reloadPressed = InputAction.Player.Reload.ReadValue<float>();
@@ -25,6 +26,7 @@ public class PlayerState_Ready : PlayerState
 
         if (firePressed > 0)
         {
+            Debug.Log("firing");
             GoToMainWeapon();
         }
         if (specPressed > 0)
@@ -35,7 +37,7 @@ public class PlayerState_Ready : PlayerState
         {
             if(playerControl.mainWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.mainWeapon.GetComponent<RangedWeapon>().ammoCapacity ||
                 playerControl.altWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.altWeapon.GetComponent<RangedWeapon>().ammoCapacity)
-            SM.ChangeState(SM.FullReload);
+                SM.ChangeState(SM.FullReload);
         }
         if (dashPressed > 0 && Move.CanDash())
         {
