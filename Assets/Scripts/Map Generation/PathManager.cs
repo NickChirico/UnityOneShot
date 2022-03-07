@@ -93,13 +93,13 @@ public class PathManager : MonoBehaviour
                 //print("right, " + currentOption);
                 if (currentOption == 0 && allPathOptions[5 - layerNum][1].valid)
                 {
-                    Debug.Log("1 is  valid");
+                    //Debug.Log("1 is  valid");
                     currentOption = 1;
                     UpdateOptions();
                 }
                 else if (currentOption < 2 && allPathOptions[5 - layerNum][2].valid)
                 {
-                    Debug.Log("2 is valid");
+                    //Debug.Log("2 is valid");
                     currentOption = 2;
                     UpdateOptions();
                 }
@@ -122,9 +122,10 @@ public class PathManager : MonoBehaviour
                 //previousPath = allOptions[currentOption].GetPathCode();
                 //myMapGen.GenerateMap("North");
                 myMapGen.GenerateMapFromPath(layerNum, allPathOptions[5-layerNum][currentOption].GetPathCode());
+                myMapGen.UpdatePath(5 - layerNum, currentOption);
                 //myMapGen.ShowMap();
                 SceneManager.LoadScene("SingleRoomIso");
-                choosingPath = false;
+                choosingPath = false; //HERE set to true again when we load back in!
             }
         }
     }

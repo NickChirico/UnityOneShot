@@ -27,10 +27,9 @@ public class PlayerLoader : MonoBehaviour
         
     }
 
-    public void LoadIntoRoom(Vector3 playerSpawnPos)
+    public Player LoadIntoRoom(Vector3 playerSpawnPos)
     {
-        Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity).GetComponent<Player>().LoadIntoLevel(this);
-        Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity).GetComponent<Player>().SetAllEquipment(mainWeapon, altWeapon, armor, boots, flask);
+        return Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity).GetComponent<Player>().LoadIntoLevel(this);
         //set everything in the player
     }
 }

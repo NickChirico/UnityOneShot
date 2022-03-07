@@ -166,7 +166,6 @@ public class MapGenerator : MonoBehaviour
         //direction determines if we start on the top, bottom, left, or right of the map, and where the final boss is
         bool stillGenerating = true; //allows us to remake a map if it isn't satisfactory
         //ShowMap();
-        Debug.Log("Beginning Generation");
         while (stillGenerating)
         {
             ResetMap();
@@ -217,7 +216,7 @@ public class MapGenerator : MonoBehaviour
                 break;
         }
         roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = "!.E." + biomeChar + "." + Random.Range(1, roomsOfEachType[whichBiome-1].Length);
-        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = "*.B." + biomeChar + ".0";
+        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = "*.B." + biomeChar + ".0"; //HERE make the 0th room the boss room with a special exit and an altar
         for (int i = 0; i < roomSizes[_currentTier]; i++)
         {
             for (int j = 0; j < roomSizes[_currentTier]; j++)
@@ -243,8 +242,6 @@ public class MapGenerator : MonoBehaviour
         bool changed = false;
         int targetX = -1;
         int targetY = -1;
-        Debug.Log(_currentTier);
-        Debug.Log(roomSizes[_currentTier]);
         for (int i = 0; i < roomSizes[_currentTier]; i++)
         {
             for (int j = 0; j < roomSizes[_currentTier]; j++)
@@ -1609,6 +1606,40 @@ public class MapGenerator : MonoBehaviour
                 path[i, j] = "O";
             }
         }
+    }
+
+    public void UpdatePath(int targetTier, int pathSelection)
+    {
+        path[targetTier, pathSelection].Replace('?', '!');
+        for (int i = 0; i < 5; i++)
+        {
+            if (path[targetTier, i].Contains("?"))
+            {
+                path[targetTier, i].Replace('?', '*');
+            }
+        }
+        if (targetTier > 0)
+        {
+            if (path[targetTier - 1, pathSelection].Contains("*"))
+            {
+                path[targetTier - 1, pathSelection].Replace('*', '?');
+            }
+            if (pathSelection > 0)
+            {
+                if (path[targetTier - 1, pathSelection - 1].Contains("*"))
+                {
+                    path[targetTier - 1, pathSelection - 1].Replace('*', '?');
+                }     
+            }
+            if (pathSelection < 4)
+            {
+                if (path[targetTier - 1, pathSelection + 1].Contains("*"))
+                {
+                    path[targetTier - 1, pathSelection + 1].Replace('*', '?');
+                }
+            }
+        }
+        
     }
 
     public List<int> FindValidPaths(List<int> currentTier)

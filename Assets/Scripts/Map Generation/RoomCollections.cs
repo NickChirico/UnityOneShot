@@ -25,11 +25,17 @@ public class RoomCollections : MonoBehaviour
         }
     }
 
-    public void ActivateRoom(int whichRoom)
+    public Room ActivateRoom(int whichRoom)
     {
         if (whichRoom < myRooms.Length)
         {
             myRooms[whichRoom].gameObject.SetActive(true);
+            return myRooms[whichRoom];
+        }
+        else
+        {
+            print("Can't load room");
+            return null;
         }
     }
 }

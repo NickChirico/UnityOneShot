@@ -40,7 +40,6 @@ public class Player : Entity
     public override void Start()
     {
         base.Start();
-        ui = UI_Manager.GetUIManager;
         seraphControl = SeraphController.GetSeraphController;
     }
 
@@ -95,8 +94,15 @@ public class Player : Entity
         {
             chitinNum -= changeAmount;
         }
+
         if (ui.chitinAmount != null)
             ui.chitinAmount.text = chitinNum.ToString();
+    }
+    
+    public void ChangeChitinNum(int setAmount)
+    {
+        chitinNum = setAmount;
+        ui.chitinAmount.text = chitinNum.ToString();
     }
     
     public void ChangeBloodNum(bool isIncrease, int changeAmount)
@@ -112,6 +118,12 @@ public class Player : Entity
         if (ui.bloodAmount != null)
             ui.bloodAmount.text = bloodNum.ToString();
     }
+
+    public void ChangeBloodNum(int setAmount)
+    {
+        bloodNum = setAmount;
+        ui.bloodAmount.text = bloodNum.ToString();
+    }
     
     public void ChangeBrainNum(bool isIncrease, int changeAmount)
     {
@@ -126,6 +138,12 @@ public class Player : Entity
         if (ui.brainAmount != null)
             ui.brainAmount.text = brainNum.ToString();
     }
+    
+    public void ChangeBrainNum(int setAmount)
+    {
+        brainNum = setAmount;
+        ui.brainAmount.text = brainNum.ToString();
+    }
 
     public void RestoreFullHealth()
     {
@@ -133,14 +151,17 @@ public class Player : Entity
         //ui.UpdateHealth(currentHealth, maxHealth);
     }
 
-    public void LoadIntoLevel(PlayerLoader loader)
+    public Player LoadIntoLevel(PlayerLoader loader)
     {
+        ui = UI_Manager.GetUIManager;
+        seraphControl = SeraphController.GetSeraphController;
         SetAllEquipment(loader.mainWeapon, loader.altWeapon, loader.armor, loader.boots, loader.flask);
         UpdateStatsToMatchEquipment();
         currentHealth = loader.currentHealth <= MaxHealth ? loader.currentHealth : MaxHealth;
-        ChangeChitinNum(true, loader.currentChitin);
-        ChangeBrainNum(true, loader.currentBrains);
-        ChangeBloodNum(true, loader.currentBlood);
+        ChangeChitinNum(loader.currentChitin);
+        ChangeBrainNum(loader.currentBrains);
+        ChangeBloodNum(loader.currentBlood);
+        return this;
     }
 
     public void DrinkFlask()

@@ -15,12 +15,14 @@ public class PlayerController : MonoBehaviour
     //public Weapon altWeapon; // "set Weapon" script
     [Space(10)]
 
-    public RangedWeapon rangedWeap1;
+    /*
+    public RangedWeapon mainWeapon;
     public MeleeWeapon meleeWeap1;
     public SpecialWeapon specWeap1;
-    public RangedWeapon rangedWeap2;
+    public RangedWeapon altWeapon;
     public MeleeWeapon meleeWeap2;
     public SpecialWeapon specWeap2;
+    */
 
     private PlayerInputActions playerInputActions;
     private UI_Manager uiControl;
@@ -81,8 +83,26 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         seraphControl = SeraphController.GetSeraphController;
-        uiControl = UI_Manager.GetUIManager;
-        UpdateWeapon();
+        uiControl = GameObject.Find("*** UI Manager").GetComponent<UI_Manager>();
+        print("There should be a UI Controller here");
+        if (uiControl == null)
+        {
+            print("fuck, there isn't");
+        }
+        else
+        {
+            print("hell yeah, there is!");
+        }
+
+        if (seraphControl == null)
+        {
+            print("oh shit, there isn't a seraph controller");
+        }
+        else
+        {
+            print("there's a seraph controller!");
+        }
+        //UpdateWeapon();
     }
 
     // Update is called once per frame
@@ -94,7 +114,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-
+            
         }
     }
 
@@ -109,10 +129,10 @@ public class PlayerController : MonoBehaviour
 
     public void ReloadBothWeapons()
     {
-        if (rangedWeap1 != nullRanged)
-            rangedWeap1.Reload();
-        if (rangedWeap2 != nullRanged)
-            rangedWeap2.Reload();
+        if (mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged)
+            mainWeapon.Reload();
+        if (altWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged)
+            altWeapon.Reload();
     }
 
     private Vector2 UpdateDirection(bool mouse)
@@ -162,31 +182,31 @@ public class PlayerController : MonoBehaviour
 
             AimLine.SetPosition(0, rayOrigin);
 
-            if (rangedWeap1.isValidWeapon)
+            if (mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged && mainWeapon.isValidWeapon)
             {
-                if (rangedWeap2.isValidWeapon)
+                if (mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged && mainWeapon.isValidWeapon)
                 {
-                    if (rangedWeap1.range > rangedWeap2.range)
+                    if (mainWeapon.GetComponent<RangedWeapon>().range > altWeapon.GetComponent<RangedWeapon>().range)
                     {
-                        indicatorRange = rangedWeap1.range;
-                        segmentRange = rangedWeap2.range;
+                        indicatorRange = mainWeapon.GetComponent<RangedWeapon>().range;
+                        segmentRange = altWeapon.GetComponent<RangedWeapon>().range;
                     }
                     else
                     {
-                        indicatorRange = rangedWeap2.range;
-                        segmentRange = rangedWeap1.range;
+                        indicatorRange = altWeapon.GetComponent<RangedWeapon>().range;
+                        segmentRange = mainWeapon.GetComponent<RangedWeapon>().range;
                     }
                 }
                 else
                 {
-                    indicatorRange = rangedWeap1.range;
-                    segmentRange = rangedWeap1.range;
+                    indicatorRange = mainWeapon.GetComponent<RangedWeapon>().range;
+                    segmentRange = mainWeapon.GetComponent<RangedWeapon>().range;
                 }
             }
-            else if (rangedWeap2.isValidWeapon)
+            else if (altWeapon.isValidWeapon)
             {
-                indicatorRange = rangedWeap2.range;
-                segmentRange = rangedWeap2.range;
+                indicatorRange = altWeapon.GetComponent<RangedWeapon>().range;
+                segmentRange = altWeapon.GetComponent<RangedWeapon>().range;
             }
             else
             {
@@ -262,8 +282,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            AimLine.startColor = Color.yellow;
-            AimLine.endColor = Color.yellow;
+            AimLine.startColor = Color.blue;
+            AimLine.endColor = Color.blue;
         }
     }
 
@@ -359,67 +379,23 @@ public class PlayerController : MonoBehaviour
             mainWeapon = weap;
             mainWeapon.Equip(true);
             UpdateWeapon();
-            uiControl.UpdateWeapon_uiPanel(weap, true);
+            //uiControl.UpdateWeapon_uiPanel(weap, true);
         }
         else
         {
             altWeapon = weap;
             altWeapon.Equip(true);
             UpdateWeapon();
-            uiControl.UpdateWeapon_uiPanel(weap, false);
+            //uiControl.UpdateWeapon_uiPanel(weap, false);
         }
     }
 
     void UpdateWeapon()
     {
-        bool isMelee = false;
-        // main
-        if (mainWeapon is RangedWeapon)
-        {
-            rangedWeap1 = (RangedWeapon)mainWeapon;
-            meleeWeap1 = nullMelee;
-            specWeap1 = nullSpec;
-        }
-        else if (mainWeapon is MeleeWeapon)
-        {
-            meleeWeap1 = (MeleeWeapon)mainWeapon;
-            rangedWeap1 = nullRanged;
-            specWeap1 = nullSpec;
-            isMelee = true;
-        }
-        else if (mainWeapon is SpecialWeapon)
-        {
-            specWeap1 = (SpecialWeapon)mainWeapon;
-            rangedWeap1 = nullRanged;
-            meleeWeap1 = nullMelee;
-        }
-        uiControl.UpdateWeaponHUD_Main(mainWeapon.weaponName, isMelee);
-
+        //uiControl.UpdateWeaponHUD_Main(mainWeapon.weaponName);
         // alt
-
-        if (altWeapon is RangedWeapon)
-        {
-            rangedWeap2 = (RangedWeapon)altWeapon;
-            meleeWeap2 = nullMelee;
-            specWeap2 = nullSpec;
-            isMelee = false;
-        }
-        else if (altWeapon is MeleeWeapon)
-        {
-            meleeWeap2 = (MeleeWeapon)altWeapon;
-            rangedWeap2 = nullRanged;
-            specWeap2 = nullSpec;
-            isMelee = true;
-        }
-        else if (altWeapon is SpecialWeapon)
-        {
-            specWeap2 = (SpecialWeapon)altWeapon;
-            meleeWeap2 = nullMelee;
-            rangedWeap2 = nullRanged;
-        }
-        uiControl.UpdateWeaponHUD_Alt(altWeapon.weaponName, isMelee);
+        //uiControl.UpdateWeaponHUD_Alt(altWeapon.weaponName);
         // distinguish ammo for both? main and alt
-
     }
 
     public void UpdateSeraphs() // called in UI manager when window closed

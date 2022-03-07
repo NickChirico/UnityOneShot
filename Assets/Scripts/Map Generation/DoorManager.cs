@@ -38,14 +38,14 @@ public class DoorManager : Unlockable
         {
             unlocked.SetActive(false);
             door.SetActive(true);
-            print("neighbor at " + targetX + ", " + targetY);
+            //print("neighbor at " + targetX + ", " + targetY);
             locked.SetActive(true);
             lockSymbol.SetActive(true);
             myLoader.enabled = true;
             myLoader.traveled = false;
             deadEnd.SetActive(false);
             checkSymbol.SetActive(!myMapLoader.ComplexMap[targetX, targetY].StartsWith("*"));
-            if (!myMapLoader.ComplexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc].StartsWith("*")) //if we cleared out this room, unlock this door
+            if (!myMapLoader.ComplexMap[myMapLoader.currentRank, myMapLoader.currentFile].StartsWith("*")) //if we cleared out this room, unlock this door
             {
                 Unlock();
             }

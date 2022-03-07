@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     public float orthoSizeMin, orthoSizeMax, zoomRate, zoomSpeed;
     public float currentCamSize;
 
-    private Transform target;
+    public Transform target;
     [SerializeField] private float smoothSpeed;
     [SerializeField] private float minX, maxX, minY, maxY;
 
@@ -45,8 +45,8 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public void SetTarget()
+    public void SetTarget(Transform targetTransform)
     {
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        target = targetTransform;
     }
 }

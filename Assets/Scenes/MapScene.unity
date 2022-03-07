@@ -1129,6 +1129,71 @@ MonoBehaviour:
   churchSymbol: {fileID: 21300000, guid: 223f72c80fa368443a681111ec2ffb35, type: 3}
   guildSymbol: {fileID: 21300000, guid: bf8f741a187307042a90ad3ef36dce31, type: 3}
   academySymbol: {fileID: 21300000, guid: b26a6bb65dc052346a3991cb05e6668c, type: 3}
+--- !u!1 &233064556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 233064558}
+  - component: {fileID: 233064557}
+  m_Layer: 0
+  m_Name: Player Loader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &233064557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233064556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78784487413205245a4e7779c68fac75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baggedSeraphim: []
+  mainSeraphim: []
+  altSeraphim: []
+  armorSeraphim: []
+  bootsSeraphim: []
+  flaskSeraphim: []
+  mainWeapon: {fileID: 4132644651413726360, guid: 6aaa37d5cf54dc446820bc813f715f26,
+    type: 3}
+  altWeapon: {fileID: 8664596692292141824, guid: b8718da1b79450c4794e150e15697bde,
+    type: 3}
+  armor: {fileID: 2476518601765223274, guid: 36e55640d1bcafb468ea3f2e77e4665a, type: 3}
+  boots: {fileID: 5234922991400671764, guid: e2848e2d664772341bf03c3f88d84f67, type: 3}
+  flask: {fileID: 1752754748491361946, guid: 99010c987e8c83f4ebd56a24f796e5ba, type: 3}
+  currentHealth: 10
+  currentChitin: 0
+  currentBlood: 0
+  currentBrains: 0
+  currentFlaskCharges: 0
+  currentEssence: 0
+  currentPathLevel: 0
+  playerPrefab: {fileID: 6600408298937354225, guid: 11f06e8b8ddafc849a2ea799fa9ae774,
+    type: 3}
+--- !u!4 &233064558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233064556}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &240526655
 GameObject:
   m_ObjectHideFlags: 0
@@ -2528,7 +2593,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &405317071
 GameObject:
@@ -5379,7 +5444,7 @@ RectTransform:
   m_Children:
   - {fileID: 824561383}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5987,7 +6052,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &863185040
 GameObject:
@@ -7570,7 +7635,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1087008093
 GameObject:
@@ -8808,7 +8873,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1291321851
 MonoBehaviour:
