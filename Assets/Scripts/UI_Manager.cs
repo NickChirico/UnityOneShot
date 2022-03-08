@@ -130,10 +130,9 @@ public class UI_Manager : MonoBehaviour
         altButtons = new Button[] { SelectAlt_Shotgun, SelectAlt_Burst, SelectAlt_Flamethrower };
 
         //EquipmentPanel.SetActive(false);
-        /*
-        TogglePlayerControl(false);
+        TogglePlayerControl(true);
         ToggleControlDisplay(playerControl.usingMouse); 
-
+        /*
         if(!EquipmentPanel.activeSelf)
             ToggleEquipmentPanel(); // Sets to ENABLE on start
             */
@@ -288,11 +287,11 @@ public class UI_Manager : MonoBehaviour
     }
 
     private void TogglePlayerControl(bool check)
-    {
-        //move.enabled = check;
-        //shot.enabled = check;
-        //alt.enabled = check;
-        //SM.ActivePlayer(check);
+    { 
+        move.enabled = check;
+        shot.enabled = check;
+        alt.enabled = check;
+        SM.ActivePlayer(check);
     }
 
     private void HighlightActiveEquipment()

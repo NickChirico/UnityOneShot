@@ -21,9 +21,6 @@ public class StateManagerDisplay : MonoBehaviour
 
     void Update()
     {
-        if (isEnemy)
-            display.text = enemyManager.GetStateName();
-        else
-            display.text = playerManager.GetStateName();
+        
     }
 }

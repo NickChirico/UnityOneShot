@@ -96,6 +96,29 @@ public class SeraphController : MonoBehaviour
         }
     }
 
+    public void SpawnSeraph(string inputCode)
+    {
+        if (BagSeraphs.Count < bagCapacity)
+        {
+            Seraph_UI newSeraph = Instantiate(UI_Seraph_Prefab, parentPanel);
+            switch (inputCode)
+            {
+                case "rupture":
+                    newSeraph.SetGenome(Seraph_UI.Genome.Rupture);
+                    break;
+                case "siphon":
+                    newSeraph.SetGenome(Seraph_UI.Genome.Siphon);
+                    break;
+                case "contaminate":
+                    newSeraph.SetGenome(Seraph_UI.Genome.Contaminate);
+                    break;
+                default:
+                    newSeraph.SetGenome(Seraph_UI.Genome.None);
+                    break;
+            }
+        }
+    }
+
     public void AddSeraphToBag(Seraph_UI S)
     {
         if(BagSeraphs.Count < bagCapacity)

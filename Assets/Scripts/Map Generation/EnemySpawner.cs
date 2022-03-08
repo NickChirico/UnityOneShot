@@ -63,10 +63,10 @@ public class EnemySpawner : MonoBehaviour
             myMapLoader.allUnlockables[i].Unlock();
         }
 
-        myMapLoader.northDoor.Unlock();
-        myMapLoader.eastDoor.Unlock();
-        myMapLoader.southDoor.Unlock();
-        myMapLoader.westDoor.Unlock();
+        myMapLoader.loadedRoom.northDoor.Unlock();
+        myMapLoader.loadedRoom.eastDoor.Unlock();
+        myMapLoader.loadedRoom.southDoor.Unlock();
+        myMapLoader.loadedRoom.westDoor.Unlock();
     }
 
     public void CheckEnemiesAlive()

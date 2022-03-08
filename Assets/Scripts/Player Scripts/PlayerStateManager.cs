@@ -108,7 +108,7 @@ public class PlayerStateManager : MonoBehaviour
 
     public void ChangeState(PlayerState newState)
     {
-        print("changing state");
+        //print("changing state");
         if (currentState != null)
             currentState.Exit();
         currentState = newState;

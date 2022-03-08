@@ -10,6 +10,8 @@ public class Room : MonoBehaviour
     public string roomTag;
     public SpawnArrangement[] spawnOptions;
     public Transform[] allPickupSpawnLocs;
+    public List<Pickup> allPickups;
+    public List<string> savedPickups;
     
     // Start is called before the first frame update
     void Start()
@@ -49,5 +51,23 @@ public class Room : MonoBehaviour
         eastDoor.LoadNewDoor(tempX, tempY + 1);
         southDoor.LoadNewDoor(tempX + 1, tempY);
         westDoor.LoadNewDoor(tempX, tempY - 1); 
+    }
+
+    public void AddPickup(Pickup pickupToAdd, string codeToAdd)
+    {
+        
+    }
+
+    public void RemovePickup(int whichOne)
+    {
+        for (int i = 1; i < 5; i++)
+        {
+            if (i > whichOne)
+            {
+                allPickups[i].numInRoom -= 1;
+            }
+        }
+        allPickups.RemoveAt(whichOne);
+        savedPickups.RemoveAt(whichOne);
     }
 }

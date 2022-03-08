@@ -6,11 +6,11 @@ using UnityEngine;
 public class Player : Entity
 {
     public PlayerController myController;
-    public TextMeshProUGUI interactLabel;
+    public TextMeshPro interactLabel;
     public SpriteRenderer sp;
     private bool _canInteract = false;
     private InteractableObject _interactTarget = null;
-
+    public MasterDictionary myMasterDictionary;
     private PlayerStateManager SM;
     private UI_Manager ui;
     private SeraphController seraphControl;
@@ -36,11 +36,12 @@ public class Player : Entity
     private void Awake()
     {
         SM = this.GetComponent<PlayerStateManager>();
+        seraphControl = SeraphController.GetSeraphController;
+        myMasterDictionary = GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>();
     }
     public override void Start()
     {
         base.Start();
-        seraphControl = SeraphController.GetSeraphController;
     }
 
     //void Update()
@@ -155,7 +156,7 @@ public class Player : Entity
     {
         ui = UI_Manager.GetUIManager;
         seraphControl = SeraphController.GetSeraphController;
-        SetAllEquipment(loader.mainWeapon, loader.altWeapon, loader.armor, loader.boots, loader.flask);
+        SetAllEquipment(loader.mainWeaponCode, loader.altWeaponCode, loader.armorCode, loader.bootsCode, loader.flaskCode);
         UpdateStatsToMatchEquipment();
         currentHealth = loader.currentHealth <= MaxHealth ? loader.currentHealth : MaxHealth;
         ChangeChitinNum(loader.currentChitin);
@@ -175,15 +176,28 @@ public class Player : Entity
         {
             case true:
                 _canInteract = true;
-                interactLabel.enabled = true;
+                interactLabel.gameObject.SetActive(true);
                 _interactTarget = targetObject;
                 break;
             case false:
                 _canInteract = false;
-                interactLabel.enabled = false;
+                interactLabel.gameObject.SetActive(false);
                 _interactTarget = null;
                 break;
         }
+    }
+
+    public void InteractWith()
+    {
+        if (_interactTarget != null)
+        {
+            _interactTarget.GetComponent<InteractableObject>().Interact();
+        }
+    }
+
+    public bool GetInteractStatus()
+    {
+        return _canInteract;
     }
 
     public UI_Manager GetUIManager()
@@ -191,13 +205,14 @@ public class Player : Entity
         return ui;
     }
 
-    public void SetAllEquipment(Weapon mainWeap, Weapon altWeap, Armor armor, Boots boots, Flask flask)
+    public void SetAllEquipment(string mainWeap, string altWeap, string armor, string boots, string flask)
     {
         myController.SelectWeapon(mainWeap, true);
         myController.SelectWeapon(altWeap, false);
-        _myArmor = armor;
-        _myBoots = boots;
-        _myFlask = flask;
+        myMasterDictionary.ArmorDictionary.TryGetValue(armor, out _myArmor);
+        myMasterDictionary.BootsDictionary.TryGetValue(armor, out _myBoots);
+        myMasterDictionary.FlaskDictionary.TryGetValue(armor, out _myFlask);
+        myController.UpdateSeraphs();
     }
 
     public void UpdateStatsToMatchEquipment()

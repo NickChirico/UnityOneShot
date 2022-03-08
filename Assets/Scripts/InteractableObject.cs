@@ -5,7 +5,14 @@ using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public bool interactable;
+
+    void Awake()
+    {
+        interactable = false;
+    }
+    
+    
     void Start()
     {
         
@@ -23,12 +30,20 @@ public abstract class InteractableObject : MonoBehaviour
         {
             col.GetComponent<Player>().SetInteract(true, this);
         }
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     public void OnTriggerExit2D(Collider2D other)
     {
-        other.GetComponent<Player>().SetInteract(false, this);
-        throw new NotImplementedException();
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.GetComponent<Player>().SetInteract(false, this);
+        }
+        //throw new NotImplementedException();
+    }
+
+    public virtual void Interact()
+    {
+        print("interacting now");
     }
 }

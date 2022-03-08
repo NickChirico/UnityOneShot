@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerLoader : MonoBehaviour
 {
     public List<Seraph> baggedSeraphim, mainSeraphim, altSeraphim, armorSeraphim, bootsSeraphim, flaskSeraphim;
+    public string mainWeaponCode, altWeaponCode, armorCode, bootsCode, flaskCode;
     public Weapon mainWeapon, altWeapon;
     public Armor armor;
     public Boots boots;
