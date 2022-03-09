@@ -85,6 +85,8 @@ public class PlayerController : MonoBehaviour
         seraphControl = SeraphController.GetSeraphController;
         uiControl = GameObject.Find("*** UI Manager").GetComponent<UI_Manager>();
         //UpdateWeapon();
+
+        StartCoroutine(OnStart_UpdateSeraphs());
     }
 
     // Update is called once per frame
@@ -153,7 +155,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 GetOrigin() { return rayOrigin; }
     public Vector2 GetDirection() { return direction; }
 
-    void UpdateAimLine(bool enabled, Vector2 direction)
+    void UpdateAimLine(bool enabled, Vector2 dir)
     {
         float indicatorRange;
         float segmentRange;
@@ -162,11 +164,12 @@ public class PlayerController : MonoBehaviour
             if (!AimLine.enabled)
                 AimLine.enabled = true;
 
+            
             AimLine.SetPosition(0, rayOrigin);
 
             if (mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged && mainWeapon.isValidWeapon)
             {
-                if (mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged && mainWeapon.isValidWeapon)
+                if (altWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged && altWeapon.isValidWeapon)
                 {
                     if (mainWeapon.GetComponent<RangedWeapon>().range > altWeapon.GetComponent<RangedWeapon>().range)
                     {
@@ -185,6 +188,7 @@ public class PlayerController : MonoBehaviour
                     segmentRange = mainWeapon.GetComponent<RangedWeapon>().range;
                 }
             }
+
             else if (altWeapon.isValidWeapon)
             {
                 indicatorRange = altWeapon.GetComponent<RangedWeapon>().range;
@@ -196,8 +200,9 @@ public class PlayerController : MonoBehaviour
                 segmentRange = 2f;
             }
 
-            AimLine.SetPosition(1, rayOrigin + (direction * segmentRange));
-            AimLine.SetPosition(2, rayOrigin + (direction * indicatorRange));
+            AimLine.SetPosition(1, rayOrigin + (dir * segmentRange));
+            AimLine.SetPosition(2, rayOrigin + (dir * indicatorRange));
+           
         }
         else
         {
@@ -384,5 +389,11 @@ public class PlayerController : MonoBehaviour
     {
         mainWeapon.SetSeraphs(seraphControl.MainWeapSeraphs);
         altWeapon.SetSeraphs(seraphControl.AltWeapSeraphs);
+    }
+
+    IEnumerator OnStart_UpdateSeraphs()
+    {
+        yield return new WaitForSeconds(0.1f);
+        UpdateSeraphs();
     }
 }

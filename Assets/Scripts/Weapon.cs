@@ -147,7 +147,10 @@ public class RangedWeapon : Weapon
         //
         LoseAmmo();
         //
+        Debug.Log("Active? " + gameObject.activeInHierarchy);
+
         StartCoroutine(ShotEffect());
+
     }
 
     private RaycastHit2D[] FindHitsFromRays(Ray2D[] rays)
@@ -166,7 +169,7 @@ public class RangedWeapon : Weapon
         int i = 0;
         foreach (RaycastHit2D hit in hits)
         {
-            LineRenderer line = Instantiate(ShotTrail_prefab, this.transform);
+            LineRenderer line = Instantiate(ShotTrail_prefab, moveControl.transform);
             line.SetPosition(0, rayOrigin);
 
             if (hit.collider != null)
@@ -317,7 +320,6 @@ public class RangedWeapon : Weapon
     }
 }
 #endregion
-
 
 #region Melee Weapon
 public class MeleeWeapon : Weapon

@@ -17,7 +17,7 @@ public class PlayerState_Ready : PlayerState
 {
     public override void DoState()
     {
-        Debug.Log("ahahaha");
+        //Debug.Log("ahahaha");
         // READY : read inputs
         float firePressed = InputAction.Player.Fire.ReadValue<float>(); // ~~~~~~~ InputAction ~~~ WORKS ~~~~~
         float reloadPressed = InputAction.Player.Reload.ReadValue<float>();
@@ -26,7 +26,7 @@ public class PlayerState_Ready : PlayerState
 
         if (firePressed > 0)
         {
-            Debug.Log("firing");
+            //Debug.Log("firing");
             GoToMainWeapon();
         }
         if (specPressed > 0)
@@ -643,7 +643,7 @@ public class PlayerState_Reloading : PlayerState
         {
             weapon.Reload();
         }
-        playerControl.ToggleAimLineColor(false);
+        //playerControl.ToggleAimLineColor(false);
         //Shot.UpdateAmmoUI();
     }
 

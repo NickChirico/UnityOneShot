@@ -101,7 +101,7 @@ public class ProtoPlayer : MonoBehaviour
         if (canShoot)
         {
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction, range);
-            ToggleAimLineColor(true);
+            //ToggleAimLineColor(true);
 
             if (hit.collider != null)
             {
@@ -129,7 +129,7 @@ public class ProtoPlayer : MonoBehaviour
         if (!canShoot)
         {
             canShoot = true;
-            ToggleAimLineColor(false);
+            //ToggleAimLineColor(false);
         }
     }
     public void Augment(WeaponOrb.OrbType orbType)
