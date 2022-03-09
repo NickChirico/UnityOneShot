@@ -22,6 +22,11 @@ public class SeraphPickup : Pickup
         
     }
 
+    public override void ChoosePickupImage(string pickupCode)
+    {
+        base.ChoosePickupImage(pickupCode);
+    }
+
     public override void OnPickup()
     {
         myController.SpawnSeraph(seraphCode);

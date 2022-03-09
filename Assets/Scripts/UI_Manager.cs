@@ -108,13 +108,29 @@ public class UI_Manager : MonoBehaviour
         _uiControl = this;
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
+        move = MovementController.GetMoveController;
+        if (move == null)
+        {
+            print("Move controller not found");
+        }
+        shot = ShotController.GetShotControl;
+        if (shot == null)
+        {
+            print("Shot controller not found");
+        }
+        alt = AltShotController.GetAltControl;
+        if (alt == null)
+        {
+            print("Alt Shot controller not found");
+        }
+        melee = MeleeController.GetMeleeControl;
+        if (melee == null)
+        {
+            print("Melee controller not found");
+        }
     }
     private void Start()
     {
-        move = MovementController.GetMoveController;
-        shot = ShotController.GetShotControl;
-        alt = AltShotController.GetAltControl;
-        melee = MeleeController.GetMeleeControl;
         SM = FindObjectOfType<PlayerStateManager>();
         seraphs = SeraphController.GetSeraphController;
         weapons = WeaponManager.GetWeaponManager;
@@ -288,9 +304,9 @@ public class UI_Manager : MonoBehaviour
 
     private void TogglePlayerControl(bool check)
     { 
-        move.enabled = check;
-        shot.enabled = check;
-        alt.enabled = check;
+        //move.enabled = check;
+        //shot.enabled = check;
+        //alt.enabled = check;
         SM.ActivePlayer(check);
     }
 

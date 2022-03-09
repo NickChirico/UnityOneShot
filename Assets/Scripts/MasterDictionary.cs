@@ -49,6 +49,7 @@ public class MasterDictionary : MonoBehaviour
         ArmorDictionary = new Dictionary<string, Armor>();
         BootsDictionary = new Dictionary<string, Boots>();
         FlaskDictionary = new Dictionary<string, Flask>();
+        SpriteDictionary = new Dictionary<string, Sprite>();
         if (simpleWeaponKeys.Count == weapons.Count)
         {
             for (int i = 0; i < simpleWeaponKeys.Count; i++)
@@ -75,6 +76,14 @@ public class MasterDictionary : MonoBehaviour
             for (int i = 0; i < simpleBootsKeys.Count; i++)
             {
                 BootsDictionary.Add(simpleBootsKeys[i], boots[i]);
+            }
+        }
+
+        if (spriteKeys.Count == sprites.Count)
+        {
+            for (int i = 0; i < simpleBootsKeys.Count; i++)
+            {
+                SpriteDictionary.Add(spriteKeys[i], sprites[i]);
             }
         }
     }

@@ -54,9 +54,9 @@ public abstract class Pickup : InteractableObject
 
     public virtual void ChoosePickupImage(string pickupCode)
     {
-        var sprite = GetComponent<SpriteRenderer>().sprite;
-        GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>()
-            .SpriteDictionary.TryGetValue(pickupCode, out sprite);
+        Sprite sprite;
+        GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>().SpriteDictionary.TryGetValue(pickupCode, out sprite);
+        GetComponent<SpriteRenderer>().sprite = sprite;
     }
 
     public virtual void OnPickup()
