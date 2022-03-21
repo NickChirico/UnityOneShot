@@ -28,7 +28,7 @@ public abstract class Pickup : InteractableObject
         
     }
 
-    public Pickup CreatePickup(string pickupCode, int inputNumInRoom)
+    public virtual Pickup CreatePickup(string pickupCode, int inputNumInRoom)
     {
         ChoosePickupImage(pickupCode);
         numInRoom = inputNumInRoom;

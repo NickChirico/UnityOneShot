@@ -22,6 +22,15 @@ public class SeraphPickup : Pickup
         
     }
 
+    public override Pickup CreatePickup(string pickupCode, int inputNumInRoom)
+    {
+        ChoosePickupImage(pickupCode);
+        numInRoom = inputNumInRoom;
+        GetComponent<SpriteRenderer>().enabled = true;
+        GetComponent<CircleCollider2D>().enabled = true;
+        return this;
+    }
+
     public override void ChoosePickupImage(string pickupCode)
     {
         base.ChoosePickupImage(pickupCode);
