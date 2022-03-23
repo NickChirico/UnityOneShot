@@ -12,7 +12,6 @@ public class DoorLoader : MonoBehaviour
 
     void Start()
     {
-        portal = false;
         myMapLoader = GameObject.Find("Map Manager").GetComponent<MapLoader>();
     }
 
@@ -34,14 +33,18 @@ public class DoorLoader : MonoBehaviour
         if (other.CompareTag("Player") && !traveled)
         {
             traveled = true;
-            myMapLoader.Travel(direction);
+            
+            if (portal)
+            {
+                myMapLoader.CompleteArea();
+            }
+            else
+            {
+                myMapLoader.Travel(direction);
+            }
+            
         }
     }
 
-    public void SetPortal(MapLoader.Area portalDestination)
-    {
-        portal = true;
-        destination = portalDestination;
-    }
 }
  

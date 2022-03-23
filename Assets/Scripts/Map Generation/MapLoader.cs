@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapLoader : MonoBehaviour
 {
@@ -37,16 +38,7 @@ public class MapLoader : MonoBehaviour
         Test
     }
     public Area currentArea;
-    public int woodsStartX,
-        woodsStartY,
-        churchStartX,
-        churchStartY,
-        marketStartX,
-        marketStartY,
-        academyStartX,
-        academyStartY,
-        testStartX,
-        testStartY;
+    public int testStartX, testStartY;
     public DoorManager northDoor, eastDoor, southDoor, westDoor;
     public Player myPlayer;
     public Unlockable[] allUnlockables;
@@ -66,9 +58,9 @@ public class MapLoader : MonoBehaviour
         //currentRank = 7;
         //currentFile = 7;
         //myMap = GameObject.Find("Map Generator").GetComponent<MapGenerator>();
-        currentArea = Area.Test;
+        //currentArea = Area.Test;
         ComplexMap = myMap.roomArray;
-        AssignStartPositions(ComplexMap, Area.Test);
+        AssignStartPositions(ComplexMap);
         for (int i = 0; i < myMap.roomSizes[myMap.GetCurrentTier()]; i++)
         {
             for (int j = 0; j < myMap.roomSizes[myMap.GetCurrentTier()]; j++)
@@ -144,7 +136,7 @@ public class MapLoader : MonoBehaviour
                     ComplexMap[currentRank, currentFile].Replace('!', '?');
                     currentRank -= 1;
                     LoadRoom(ComplexMap[currentRank, currentFile]);
-                    loadedRoom.LoadAllDoors(currentRank, currentFile);
+                    //loadedRoom.LoadAllDoors(currentRank, currentFile);
                     targetSpawn = loadedRoom.southSpawn;
                 }
                 break;
@@ -155,7 +147,7 @@ public class MapLoader : MonoBehaviour
                     ComplexMap[currentRank, currentFile].Replace('!', '?');
                     currentFile += 1;
                     LoadRoom(ComplexMap[currentRank, currentFile]);
-                    loadedRoom.LoadAllDoors(currentRank, currentFile);
+                    //loadedRoom.LoadAllDoors(currentRank, currentFile);
                     targetSpawn = loadedRoom.westSpawn;
                 }
                 break;
@@ -166,7 +158,7 @@ public class MapLoader : MonoBehaviour
                     ComplexMap[currentRank, currentFile].Replace('!', '?');
                     currentRank += 1;
                     LoadRoom(ComplexMap[currentRank, currentFile]);
-                    loadedRoom.LoadAllDoors(currentRank, currentFile);
+                    //loadedRoom.LoadAllDoors(currentRank, currentFile);
                     targetSpawn = loadedRoom.northSpawn;
                 }
                 break;
@@ -177,13 +169,20 @@ public class MapLoader : MonoBehaviour
                     ComplexMap[currentRank, currentFile].Replace('!', '?');
                     currentFile -= 1;
                     LoadRoom(ComplexMap[currentRank, currentFile]);
-                    loadedRoom.LoadAllDoors(currentRank, currentFile);
+                    //loadedRoom.LoadAllDoors(currentRank, currentFile);
                     targetSpawn = loadedRoom.eastSpawn;
                 }
                 break;
         }
         myPlayer.gameObject.transform.position = targetSpawn.position;
     }
+
+    public void CompleteArea()
+    {
+        GameObject.Find("Player Loader").GetComponent<PlayerLoader>().currentPathLevel += 1;
+        GameObject.Find("Path Manager").GetComponent<PathManager>().EnterMapScene();
+    }
+    
     public void LoadRoom(string loadingRoomCode)
     {
         grasslands.SetAllInactive();
@@ -205,20 +204,21 @@ public class MapLoader : MonoBehaviour
                 print("invalid biome type");
                 break;
         }
-        if (roomAttributes[0] == "*")
+        loadedRoom.LoadAllDoors(currentRank, currentFile);
+        if (roomAttributes[0] == "*") //* = unvisited, ? = visited, ! = currently here
         {
             mySpawner.SpawnEnemies(loadedRoom);
             ComplexMap[currentRank, currentFile].Replace('*', '!');
         }
         if (roomAttributes[0] == "?")
         {
-            ComplexMap[currentRank, currentFile].Replace('*', '!');
+            ComplexMap[currentRank, currentFile].Replace('?', '!');
         }
-        //Spawn in all the pickups that are here
+        //Spawn in all the pickups that are here, HERE
     }
 
 
-    public void AssignStartPositions(string[,] tempMap, Area whichArea)
+    public void AssignStartPositions(string[,] tempMap)
     {
         int tempX = 0;
         int tempY = 0;

@@ -132,6 +132,13 @@ public class PathManager : MonoBehaviour
         //throw new System.NotImplementedException();
     }
 
+    public void EnterMapScene()
+    {
+        layerNum = myPlayer.currentPathLevel;
+        SceneManager.LoadScene("MapScene");
+        choosingPath = true;
+    }
+
     public void LoadLevel()
     {
         

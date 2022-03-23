@@ -5,19 +5,21 @@ using UnityEngine.Serialization;
 
 public class MasterDictionary : MonoBehaviour
 {
-    public readonly Dictionary<int, Weapon> SimpleWeaponDictionary;
+    public Dictionary<string, Weapon> WeaponDictionary;
     
-    public readonly Dictionary<int, Armor> SimpleArmorDictionary;
+    public Dictionary<string, Armor> ArmorDictionary;
     
-    public readonly Dictionary<int, Flask> SimpleFlaskDictionary;
+    public Dictionary<string, Flask> FlaskDictionary;
     
-    public readonly Dictionary<int, Boots> SimpleBootsDictionary;
+    public Dictionary<string, Boots> BootsDictionary;
 
-    public Dictionary<string, Weapon> ComplexWeaponDictionary;
+    public Dictionary<string, Sprite> SpriteDictionary;
+
+    //public Dictionary<string, Weapon> ComplexWeaponDictionary;
 
     public Dictionary<string, StatusEffect> ComplexStatusDictionary;
 
-    public List<int> simpleWeaponKeys, simpleArmorKeys, simpleFlaskKeys, simpleBootsKeys;
+    public List<string> simpleWeaponKeys, simpleArmorKeys, simpleFlaskKeys, simpleBootsKeys, spriteKeys;
 
     //public List<string> complexWeaponKeys;
 
@@ -29,43 +31,59 @@ public class MasterDictionary : MonoBehaviour
     
     public List<Boots> boots;
 
-    public MasterDictionary(Dictionary<int, Weapon> simpleWeaponDictionary, Dictionary<int, Armor> simpleArmorDictionary, Dictionary<int, Flask> simpleFlaskDictionary, Dictionary<int, Boots> simpleBootsDictionary)
+    public List<Sprite> sprites;
+
+    public MasterDictionary(Dictionary<string, Weapon> tempWeaponDictionary, Dictionary<string, Armor> tempArmorDictionary, Dictionary<string, Flask> tempFlaskDictionary, Dictionary<string, Boots> tempBootsDictionary)
     {
-        SimpleArmorDictionary = simpleArmorDictionary;
-        SimpleFlaskDictionary = simpleFlaskDictionary;
-        SimpleBootsDictionary = simpleBootsDictionary;
-        SimpleWeaponDictionary = simpleWeaponDictionary;
+        FlaskDictionary = tempFlaskDictionary;
+        BootsDictionary = tempBootsDictionary;
+        ArmorDictionary = tempArmorDictionary;
+        WeaponDictionary = tempWeaponDictionary;
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        //print("Master dictionary is awake");
+        WeaponDictionary = new Dictionary<string, Weapon>();
+        ArmorDictionary = new Dictionary<string, Armor>();
+        BootsDictionary = new Dictionary<string, Boots>();
+        FlaskDictionary = new Dictionary<string, Flask>();
+        SpriteDictionary = new Dictionary<string, Sprite>();
         if (simpleWeaponKeys.Count == weapons.Count)
         {
             for (int i = 0; i < simpleWeaponKeys.Count; i++)
             {
-                SimpleWeaponDictionary.Add(simpleWeaponKeys[i], weapons[i]);
+                WeaponDictionary.Add(simpleWeaponKeys[i], weapons[i]);
             }
         }
         if (simpleArmorKeys.Count == armors.Count)
         {
             for (int i = 0; i < simpleArmorKeys.Count; i++)
             {
-                SimpleArmorDictionary.Add(simpleArmorKeys[i], armors[i]);
+                ArmorDictionary.Add(simpleArmorKeys[i], armors[i]);
             }
         }
         if (simpleFlaskKeys.Count == flasks.Count)
         {
             for (int i = 0; i < simpleFlaskKeys.Count; i++)
             {
-                SimpleFlaskDictionary.Add(simpleFlaskKeys[i], flasks[i]);
+                FlaskDictionary.Add(simpleFlaskKeys[i], flasks[i]);
             }
         }
         if (simpleBootsKeys.Count == boots.Count)
         {
             for (int i = 0; i < simpleBootsKeys.Count; i++)
             {
-                SimpleBootsDictionary.Add(simpleBootsKeys[i], boots[i]);
+                BootsDictionary.Add(simpleBootsKeys[i], boots[i]);
+            }
+        }
+
+        if (spriteKeys.Count == sprites.Count)
+        {
+            for (int i = 0; i < simpleBootsKeys.Count; i++)
+            {
+                SpriteDictionary.Add(spriteKeys[i], sprites[i]);
             }
         }
     }

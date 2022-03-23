@@ -37,6 +37,15 @@ public abstract class Weapon : MonoBehaviour
     }
     public void ActivateSeraphs(Entity entity, Vector2 pos)
     {
+        if (entity == null)
+        {
+            print("entity is missing");
+        }
+
+        if (seraphs == null)
+        {
+            print("seraph UI stuff missing");
+        }
         if (seraphs.Length > 0)
         {
             foreach (Seraph_UI S in seraphs)
@@ -367,6 +376,7 @@ public class MeleeWeapon : Weapon
 
     public override void Fire(Vector2 origin, Vector2 dir)
     {
+        SetMeleeIndicator();
         direction = dir;
         float swingRange = swingRangeArr[currentInterval];
         attackPoint = origin + (dir * swingRange);
@@ -375,13 +385,14 @@ public class MeleeWeapon : Weapon
     }
     public void SetIndicator(bool b)
     {
+        SetMeleeIndicator();
         tempAttackDisplay.GetComponent<SpriteRenderer>().enabled = b;
     }
 
     public void PrepAttack(int interval)
     {
+        SetMeleeIndicator();
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.yellow;
-
         float rad = attackRadiusArr[interval];
         tempAttackDisplay.transform.localScale = Vector3.one * rad * 1.25f;
     }
@@ -403,8 +414,27 @@ public class MeleeWeapon : Weapon
         audioManager.PlayMeleeSound(interval);
     }
 
+    public void SetMeleeIndicator()
+    {
+        print("making sure the melee indicator is attached");
+        if (tempAttackDisplay == null)
+        {
+            print("The melee indicator was null");
+            tempAttackDisplay = GameObject.Find("Melee_indicator");
+            if (tempAttackDisplay == null)
+            {
+                print("And it still is because melee indicator was not found");
+            }
+            else
+            {
+                print("but not anymore!");
+            }
+        }
+    }
+
     public void Attack(int interval)
     {
+        SetMeleeIndicator();
         Debug.Log("ATTACK");
         // TEMP DISPLAY STUFF
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.red;
@@ -463,6 +493,7 @@ public class MeleeWeapon : Weapon
 
     public void Recover()
     {
+        SetMeleeIndicator();
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.green;
         tempAttackDisplay.transform.localScale = Vector3.one * 0.25f;
         if (currentInterval < intervalCount - 1)
@@ -473,6 +504,7 @@ public class MeleeWeapon : Weapon
 
     public void ResetAttackSequence()
     {
+        SetMeleeIndicator();
         //Debug.Log("ATTACK COOLDOWN");
         currentInterval = 0;
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.black;

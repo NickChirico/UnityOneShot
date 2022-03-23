@@ -16,7 +16,7 @@ public abstract class PlayerState
 
     protected PlayerInputActions InputAction;
 
-    protected bool isMainWeap;
+    protected bool isMainWeap; //this confuses me a little bit
     protected string Name;
     protected float Duration;
     protected float PrepDuration;

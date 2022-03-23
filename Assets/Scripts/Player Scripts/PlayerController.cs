@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     private float ThetaScale = 0.01f;
     private int circleSize;
     private float Theta;
+    public Player myPlayer;
 
     [Space(20)]
     Rifle rifle;
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour
         bat = FindObjectOfType<Bat>();
         mortar = FindObjectOfType<sp_Mortar>();
         mark = FindObjectOfType<sp_Mark>();
-
+        myPlayer = gameObject.GetComponent<Player>();
         nullRanged = FindObjectOfType<null_ranged>();
         nullMelee = FindObjectOfType<null_melee>();
         nullSpec = FindObjectOfType<null_special>();
@@ -78,12 +79,25 @@ public class PlayerController : MonoBehaviour
 
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
+        myMasterDictionary = GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>();
+        foreach (var temp in myMasterDictionary.weapons)
+        {
+            print("this is happening");
+            if (temp.GetWeaponType() == WeaponManager.WeaponType.Melee)
+            {
+                print("and now this is happening");
+                temp.gameObject.GetComponent<MeleeWeapon>().tempAttackDisplay = GameObject.Find("Melee Indicator");
+            }
+        }
+        uiControl = GameObject.Find("*** UI Manager").GetComponent<UI_Manager>();
+        seraphControl = SeraphController.GetSeraphController;
     }
 
     void Start()
     {
-        seraphControl = SeraphController.GetSeraphController;
-        uiControl = GameObject.Find("*** UI Manager").GetComponent<UI_Manager>();
+        
+        
+        
         //UpdateWeapon();
 
         StartCoroutine(OnStart_UpdateSeraphs());
@@ -96,9 +110,10 @@ public class PlayerController : MonoBehaviour
         rayOrigin = UpdateRayOrigin();
         UpdateAimLine(true, direction);
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (playerInputActions.Player.Interact.triggered && myPlayer.GetInteractStatus())
         {
-            
+            print("interaction is happening");
+            myPlayer.InteractWith();
         }
     }
 
@@ -304,76 +319,44 @@ public class PlayerController : MonoBehaviour
 
     public void SelectWeapon(string weap, bool changeMain)
     {
-        Weapon newWeapon;
-
-        switch (weap)
+        //print("I hope master dictionary is awake for this");
+        if (myMasterDictionary == null)
         {
-            case "Rifle":
-                newWeapon = rifle;
-                break;
-            case "Repeater":
-                newWeapon = repeater;
-                break;
-            case "Blunderbuss":
-                newWeapon = blunderbuss;
-                break;
-            case "Knife":
-                newWeapon = knife;
-                break;
-            case "Saber":
-                newWeapon = saber;
-                break;
-            case "Hammer":
-                newWeapon = hammer;
-                break;
-            case "Bat":
-                newWeapon = bat;
-                break;
-            case "Mortar":
-                newWeapon = mortar;
-                break;
-            case "Pistol":
-                newWeapon = pistol;
-                break;
-            // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            default:
-                Debug.Log("weapon not implemented");
-                newWeapon = nullRanged;
-                break;
-
+            print("master dictionary is missing");
         }
-
-        if (changeMain)
+        if (weap == null)
         {
-            mainWeapon = newWeapon;
-            mainWeapon.Equip(true);
-            UpdateWeapon();
-            uiControl.UpdateWeapon_uiPanel(newWeapon, true);
+            print("weapon string is null");
+        }
+        if (myMasterDictionary.WeaponDictionary == null)
+        {
+            print("weapon dictionary is null");
+        }
+        myMasterDictionary.WeaponDictionary.TryGetValue(weap, out var newWeapon);
+        if (uiControl == null)
+        {
+            print("ui control is missing");
+        }
+        if (newWeapon != null)
+        {
+            if (changeMain)
+            {
+                mainWeapon = newWeapon;
+                mainWeapon.Equip(true);
+                UpdateWeapon();
+                uiControl.UpdateWeapon_uiPanel(newWeapon, true);
+            }
+            else
+            {
+                altWeapon = newWeapon;
+                altWeapon.Equip(false);
+                UpdateWeapon();
+                uiControl.UpdateWeapon_uiPanel(newWeapon, false);
+            }
         }
         else
         {
-            altWeapon = newWeapon;
-            altWeapon.Equip(false);
-            UpdateWeapon();
-            uiControl.UpdateWeapon_uiPanel(newWeapon, false);
-        }
-    }
-
-    public void SelectWeapon(Weapon weap, bool changeMain)
-    {
-        if (changeMain)
-        {
-            mainWeapon = weap;
-            mainWeapon.Equip(true);
-            UpdateWeapon();
-            //uiControl.UpdateWeapon_uiPanel(weap, true);
-        }
-        else
-        {
-            altWeapon = weap;
-            altWeapon.Equip(true);
-            UpdateWeapon();
-            //uiControl.UpdateWeapon_uiPanel(weap, false);
+            print("Weapon is null!");
         }
     }
 

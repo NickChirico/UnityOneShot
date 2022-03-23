@@ -78,6 +78,7 @@ public abstract class Enemy : Entity
             lineRend.gameObject.SetActive(true);
             lineRend.enabled = true;
         }
+        seraphPickup = GameObject.Find("Seraph Pickup Prefab");
     }
 
     public override void Start()
@@ -202,68 +203,78 @@ public abstract class Enemy : Entity
 
     public override void Die()
     {
-        int materialDropNumber = Random.Range(0, 100);
-        int itemDropNumberNumber = Random.Range(0, 100);
-        //print(dropNumber);
-        if (materialDropNumber > 39 && materialDropNumber <= 69)
+        if (mySpawner.myMapLoader.loadedRoom.allPickups.Count < 5)
         {
-            int materialToInclude = Random.Range(0, 3);
-            switch (materialToInclude)
+            int materialDropNumber = Random.Range(0, 100);
+            int itemDropNumberNumber = Random.Range(0, 100);
+            //print(dropNumber);
+            if (materialDropNumber > 39 && materialDropNumber <= 69)
             {
-                case 0:
-                    GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
-                    break;
-                case 1:
-                    GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
-                    break;
-                case 2:
-                    GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
-                    break;
+                int materialToInclude = Random.Range(0, 3);
+                switch (materialToInclude)
+                {
+                    case 0:
+                        GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeChitinNum(true, 1);
+                        break;
+                    case 1:
+                        GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeBloodNum(true, 1);
+                        break;
+                    case 2:
+                        GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeBrainNum(true, 1);
+                        break;
+                }
             }
-        }
-        else if (materialDropNumber > 69 && materialDropNumber <= 89)
-        {
-            int materialToLeaveOut = Random.Range(0, 3);
-            switch (materialToLeaveOut)
+            else if (materialDropNumber > 69 && materialDropNumber <= 89)
             {
-                case 0:
-                    GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
-                    GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
-                    break;
-                case 1:
-                    GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
-                    GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
-                    break;
-                case 2:
-                    GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
-                    GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
-                    break;
+                int materialToLeaveOut = Random.Range(0, 3);
+                switch (materialToLeaveOut)
+                {
+                    case 0:
+                        GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeBloodNum(true, 1);
+                        GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeBrainNum(true, 1);
+                        break;
+                    case 1:
+                        GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeChitinNum(true, 1);
+                        GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeBrainNum(true, 1);
+                        break;
+                    case 2:
+                        GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeChitinNum(true, 1);
+                        GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeBloodNum(true, 1);
+                        break;
+                }
             }
-        }
-        else if (materialDropNumber > 89 && materialDropNumber <= 99)
-        {
-            GameObject.Find("Player").GetComponent<Player>().ChangeChitinNum(true, 1);
-            GameObject.Find("Player").GetComponent<Player>().ChangeBloodNum(true, 1);
-            GameObject.Find("Player").GetComponent<Player>().ChangeBrainNum(true, 1);
-        }
-        var position = transform.position;
-        if (itemDropNumberNumber > 54 && itemDropNumberNumber <= 69)
-        {
-            //print("should spawn rupture");
-            //mySeraphController.SpawnSeraph(0);
-            Instantiate(seraphPickup, position, Quaternion.identity).GetComponent<SeraphPickup>().CreatePickup(0);
-        }
-        else if (itemDropNumberNumber > 69 && itemDropNumberNumber <= 84)
-        {
-            //print("should spawn contaminate");
-            //mySeraphController.SpawnSeraph(1);
-            Instantiate(seraphPickup, position, Quaternion.identity).GetComponent<SeraphPickup>().CreatePickup(1);
-        }
-        else if (itemDropNumberNumber > 84 && itemDropNumberNumber <= 99)
-        {
-            //print("should spawn siphon");
-            //mySeraphController.SpawnSeraph(2);
-            Instantiate(seraphPickup, position, Quaternion.identity).GetComponent<SeraphPickup>().CreatePickup(2);
+            else if (materialDropNumber > 89 && materialDropNumber <= 99)
+            {
+                GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeChitinNum(true, 1);
+                GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeBloodNum(true, 1);
+                GameObject.Find("PLAYER(Clone)").GetComponent<Player>().ChangeBrainNum(true, 1);
+            }
+            var position = transform.position;
+            string dropCode = "";
+            if (itemDropNumberNumber > 54 && itemDropNumberNumber <= 69)
+            {
+                //print("should spawn rupture");
+                //mySeraphController.SpawnSeraph(0);
+                dropCode = "rupture";
+                mySpawner.myMapLoader.loadedRoom.AddPickup(Instantiate(seraphPickup, position, Quaternion.identity).
+                    GetComponent<SeraphPickup>().CreatePickup(dropCode, mySpawner.myMapLoader.loadedRoom.allPickups.Count), dropCode);
+            }
+            else if (itemDropNumberNumber > 69 && itemDropNumberNumber <= 84)
+            {
+                //print("should spawn contaminate");
+                //mySeraphController.SpawnSeraph(1);
+                dropCode = "rupture";
+                mySpawner.myMapLoader.loadedRoom.AddPickup(Instantiate(seraphPickup, position, Quaternion.identity).
+                    GetComponent<SeraphPickup>().CreatePickup(dropCode, mySpawner.myMapLoader.loadedRoom.allPickups.Count), dropCode);
+            }
+            else if (itemDropNumberNumber > 84 && itemDropNumberNumber <= 99)
+            {
+                //print("should spawn siphon");
+                //mySeraphController.SpawnSeraph(2);
+                dropCode = "rupture";
+                mySpawner.myMapLoader.loadedRoom.AddPickup(Instantiate(seraphPickup, position, Quaternion.identity).
+                    GetComponent<SeraphPickup>().CreatePickup(dropCode, mySpawner.myMapLoader.loadedRoom.allPickups.Count), dropCode);
+            }
         }
         if (mySpawner != null)
         {
