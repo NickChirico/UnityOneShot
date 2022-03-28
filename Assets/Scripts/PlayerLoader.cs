@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class PlayerLoader : MonoBehaviour
     public Flask flask;
     public int currentHealth, currentChitin, currentBlood, currentBrains, currentFlaskCharges, currentEssence, currentPathLevel; //currentPathLevel gets added after finishing level
     public GameObject playerPrefab;
+    public bool playerLoaded;
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -30,7 +32,16 @@ public class PlayerLoader : MonoBehaviour
 
     public Player LoadIntoRoom(Vector3 playerSpawnPos)
     {
-        return Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity).GetComponent<Player>().LoadIntoLevel(this);
+        if (playerLoaded)
+        {
+            throw new Exception();
+            return null;
+        }
+        else
+        {
+            playerLoaded = true;
+            return Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity).GetComponent<Player>().LoadIntoLevel(this);
+        }
         //set everything in the player
     }
 }

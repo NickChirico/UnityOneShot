@@ -414,18 +414,18 @@ public class MeleeWeapon : Weapon
 
     public void SetMeleeIndicator()
     {
-        print("making sure the melee indicator is attached");
+        //print("making sure the melee indicator is attached");
         if (tempAttackDisplay == null)
         {
-            print("The melee indicator was null");
+            //print("The melee indicator was null");
             tempAttackDisplay = GameObject.Find("Melee_indicator");
             if (tempAttackDisplay == null)
             {
-                print("And it still is because melee indicator was not found");
+                //print("And it still is because melee indicator was not found");
             }
             else
             {
-                print("but not anymore!");
+                //print("but not anymore!");
             }
         }
     }

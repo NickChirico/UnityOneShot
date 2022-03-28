@@ -117,7 +117,6 @@ public class MapGenerator : MonoBehaviour
         {"X", "X", "X", "X", "X"},
         {"X", "X", "X", "X", "X"}
     };
-
     public string[,] pregenPath = new string[,]
     {
         {"*3a", "X", "*2C", "X", "*1G"},
@@ -1698,36 +1697,40 @@ public class MapGenerator : MonoBehaviour
 
     public void UpdatePath(int targetTier, int pathSelection)
     {
+        print("Target tier is " + targetTier);
+        print("Updating Path");
+        ShowPath();
         path[targetTier, pathSelection].Replace('?', '!');
         for (int i = 0; i < 5; i++)
         {
             if (path[targetTier, i].Contains("?"))
             {
-                path[targetTier, i].Replace('?', '*');
+                print("Question Mark Here!");
+                path[targetTier, i] = path[targetTier, i].Replace('?', '*');
             }
         }
         if (targetTier > 0)
         {
             if (path[targetTier - 1, pathSelection].Contains("*"))
             {
-                path[targetTier - 1, pathSelection].Replace('*', '?');
+                path[targetTier - 1, pathSelection] = path[targetTier - 1, pathSelection].Replace('*', '?');
             }
             if (pathSelection > 0)
             {
                 if (path[targetTier - 1, pathSelection - 1].Contains("*"))
                 {
-                    path[targetTier - 1, pathSelection - 1].Replace('*', '?');
+                    path[targetTier - 1, pathSelection - 1] = path[targetTier - 1, pathSelection - 1].Replace('*', '?');
                 }     
             }
             if (pathSelection < 4)
             {
                 if (path[targetTier - 1, pathSelection + 1].Contains("*"))
                 {
-                    path[targetTier - 1, pathSelection + 1].Replace('*', '?');
+                    path[targetTier - 1, pathSelection + 1] = path[targetTier - 1, pathSelection + 1].Replace('*', '?');
                 }
             }
         }
-        
+        ShowPath();
     }
 
     public List<int> FindValidPaths(List<int> currentTier)
@@ -1921,7 +1924,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int j = 0; j < mapSize; j++)
             {
-                print(i + ", " + j);
+                //print(i + ", " + j);
                 mapToUpdate[i, j] = mapToUpdate[i, j].Replace('H', biomeCode);
             }
         }

@@ -601,7 +601,7 @@ MonoBehaviour:
   patrolDuration: 2
   patrolSpeed: 0.25
   chaseDuration: 4
-  chaseSpeed: 0.75
+  chaseSpeed: 3
   attackDamage: 0
   attackRange: 2.5
   attackDuration: 1.5
