@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     {
         cam = this.GetComponent<Camera>();
         currentCamSize = cam.orthographicSize;
-        
+        cam.backgroundColor = GameObject.Find("Path Manager").GetComponent<PathManager>().myBackgroundColor;
     }
 
     private void LateUpdate()

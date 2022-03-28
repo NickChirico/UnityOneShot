@@ -32,6 +32,7 @@ public class PathManager : MonoBehaviour
 
     public string[] newPaths;
     public string previousPath;
+    public Color myBackgroundColor;
 
     //public InputAction menuNav;
 
@@ -114,6 +115,7 @@ public class PathManager : MonoBehaviour
 
             if (navActions.UI.Select.triggered)
             {
+                myBackgroundColor = allPathOptions[5 - layerNum][currentOption].areaBackground.color;
                 if (usingPremade)
                 {
                     myMapGen.UpdatePregenMap(myMapGen.allPregens[layerNum], allPathOptions[5-layerNum][currentOption].GetPathCode());
@@ -128,6 +130,7 @@ public class PathManager : MonoBehaviour
                     
                 }
                 myMapGen.UpdatePath(5 - layerNum, currentOption);
+                myMapGen.ShowMap();
                 SceneManager.LoadScene("SingleRoomIso");
                 choosingPath = false; //HERE set to true again when we load back in!
             }

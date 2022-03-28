@@ -24,6 +24,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemies(Room toSpawn, int spawnSelection)
     {
+        print(spawnSelection);
         for (int i = 0; i < toSpawn.spawnOptions[spawnSelection].spawnLocationsArray.Length; i++)
         {
             if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'M')
