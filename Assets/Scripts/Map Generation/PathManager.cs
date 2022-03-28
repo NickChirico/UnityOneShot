@@ -10,15 +10,15 @@ using Random = UnityEngine.Random;
 
 public class PathManager : MonoBehaviour
 {
+    public PathCollection myPathCollection;
 
-    
     public PlayerLoader myPlayer;
 
     public PathOption[] allOptions, tier1Options, tier2Options, tier3Options, tier4Options, tier5Options, tier6Options;
 
     public int currentOption, layerNum;
 
-    public bool choosingPath;
+    public bool choosingPath, usingPremade;
 
     public PlayerInputActions navActions;
 
@@ -32,6 +32,7 @@ public class PathManager : MonoBehaviour
 
     public string[] newPaths;
     public string previousPath;
+    public Color myBackgroundColor;
 
     //public InputAction menuNav;
 
@@ -41,7 +42,6 @@ public class PathManager : MonoBehaviour
     {
         navActions = new PlayerInputActions();
         navActions.UI.Enable();
-        allPathOptions =  new []{tier6Options, tier5Options, tier4Options, tier3Options, tier2Options, tier1Options};
     }
 
     void Start()
@@ -115,11 +115,22 @@ public class PathManager : MonoBehaviour
 
             if (navActions.UI.Select.triggered)
             {
-                //previousPath = allOptions[currentOption].GetPathCode();
-                //myMapGen.GenerateMap("North");
-                myMapGen.GenerateMapFromPath(layerNum, allPathOptions[5-layerNum][currentOption].GetPathCode());
+                myBackgroundColor = allPathOptions[5 - layerNum][currentOption].areaBackground.color;
+                if (usingPremade)
+                {
+                    myMapGen.UpdatePregenMap(myMapGen.allPregens[layerNum], allPathOptions[5-layerNum][currentOption].GetPathCode());
+                    myMapGen.roomArray = myMapGen.allPregens[layerNum];
+                }
+                else
+                {
+                    //previousPath = allOptions[currentOption].GetPathCode();
+                    //myMapGen.GenerateMap("North");
+                    myMapGen.GenerateMapFromPath(layerNum, allPathOptions[5-layerNum][currentOption].GetPathCode());
+                    //myMapGen.ShowMap();
+                    
+                }
                 myMapGen.UpdatePath(5 - layerNum, currentOption);
-                //myMapGen.ShowMap();
+                myMapGen.ShowMap();
                 SceneManager.LoadScene("SingleRoomIso");
                 choosingPath = false; //HERE set to true again when we load back in!
             }
@@ -136,6 +147,7 @@ public class PathManager : MonoBehaviour
     {
         layerNum = myPlayer.currentPathLevel;
         SceneManager.LoadScene("MapScene");
+        print("Loaded into scene now");
         choosingPath = true;
     }
 
@@ -146,6 +158,8 @@ public class PathManager : MonoBehaviour
 
     public void InitialOptions()
     {
+        print("choosing initial options");
+        print(layerNum);
         //Debug.Log(allPathOptions[5 - layerNum][0].valid.ToString());
         if (allPathOptions[5 - layerNum][0].valid)
         {
@@ -253,6 +267,17 @@ public class PathManager : MonoBehaviour
         return demoOptions;
     }
 
+    public void GetPathOptions()
+    {
+        tier1Options = myPathCollection.tier1Options;
+        tier2Options = myPathCollection.tier2Options;
+        tier3Options = myPathCollection.tier3Options;
+        tier4Options = myPathCollection.tier4Options;
+        tier5Options = myPathCollection.tier5Options;
+        tier6Options = myPathCollection.tier6Options;
+        allPathOptions =  new []{tier6Options, tier5Options, tier4Options, tier3Options, tier2Options, tier1Options};
+    }
+    
     public void GeneratePathMapOnScreen(string[,] inputArray)
     {
         for (int i = 0; i < 6; i++)

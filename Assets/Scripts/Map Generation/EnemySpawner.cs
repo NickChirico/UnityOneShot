@@ -22,9 +22,9 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
-    public void SpawnEnemies(Room toSpawn)
+    public void SpawnEnemies(Room toSpawn, int spawnSelection)
     {
-        int spawnSelection = Random.Range(0, toSpawn.spawnOptions.Length);
+        print(spawnSelection);
         for (int i = 0; i < toSpawn.spawnOptions[spawnSelection].spawnLocationsArray.Length; i++)
         {
             if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'M')

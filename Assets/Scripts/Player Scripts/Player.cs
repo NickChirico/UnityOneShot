@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : Entity
 {
@@ -56,6 +57,10 @@ public class Player : Entity
         ui.UpdateHealth(currentHealth, MaxHealth);
         SM.ChangeState(SM.Damaged);
         StartCoroutine(FlashRed());
+        if (currentHealth <= 0)
+        {
+            SceneManager.LoadScene("DeathScreen");
+        }
     }
 
     public override bool TakeDamage(int damageAmount, Vector2 damageSpot, float knockForce, float postureDamage)
