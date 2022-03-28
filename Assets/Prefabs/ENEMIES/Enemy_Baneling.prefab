@@ -510,7 +510,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7673803558728606651}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.41, y: -0.87, z: 11.558317}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6562620361547531471}
@@ -584,9 +584,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 24
   currentHealth: 0
-  postureMax: 14
+  postureMax: 20
   posture: 0
-  postureDecayRate: 1.5
+  postureRechargeRate: 1.5
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}

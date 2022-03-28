@@ -79,14 +79,18 @@ public class PlayerController : MonoBehaviour
 
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
-        myMasterDictionary = GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>();
-        foreach (var temp in myMasterDictionary.weapons)
+        try { myMasterDictionary = GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>(); }
+        catch { myMasterDictionary = null; }
+        if (myMasterDictionary != null)
         {
-            print("this is happening");
-            if (temp.GetWeaponType() == WeaponManager.WeaponType.Melee)
+            foreach (var temp in myMasterDictionary.weapons)
             {
-                print("and now this is happening");
-                temp.gameObject.GetComponent<MeleeWeapon>().tempAttackDisplay = GameObject.Find("Melee Indicator");
+                print("this is happening");
+                if (temp.GetWeaponType() == WeaponManager.WeaponType.Melee)
+                {
+                    print("and now this is happening");
+                    temp.gameObject.GetComponent<MeleeWeapon>().tempAttackDisplay = GameObject.Find("Melee Indicator");
+                }
             }
         }
         uiControl = GameObject.Find("*** UI Manager").GetComponent<UI_Manager>();
@@ -99,6 +103,8 @@ public class PlayerController : MonoBehaviour
         
         
         //UpdateWeapon();
+
+        StartCoroutine(OnStart_UpdateSeraphs());
     }
 
     // Update is called once per frame
@@ -168,7 +174,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 GetOrigin() { return rayOrigin; }
     public Vector2 GetDirection() { return direction; }
 
-    void UpdateAimLine(bool enabled, Vector2 direction)
+    void UpdateAimLine(bool enabled, Vector2 dir)
     {
         float indicatorRange;
         float segmentRange;
@@ -177,6 +183,7 @@ public class PlayerController : MonoBehaviour
             if (!AimLine.enabled)
                 AimLine.enabled = true;
 
+            
             AimLine.SetPosition(0, rayOrigin);
 
             if (mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged && mainWeapon.isValidWeapon)
@@ -200,6 +207,7 @@ public class PlayerController : MonoBehaviour
                     segmentRange = mainWeapon.GetComponent<RangedWeapon>().range;
                 }
             }
+
             else if (altWeapon.isValidWeapon)
             {
                 indicatorRange = altWeapon.GetComponent<RangedWeapon>().range;
@@ -211,8 +219,9 @@ public class PlayerController : MonoBehaviour
                 segmentRange = 2f;
             }
 
-            AimLine.SetPosition(1, rayOrigin + (direction * segmentRange));
-            AimLine.SetPosition(2, rayOrigin + (direction * indicatorRange));
+            AimLine.SetPosition(1, rayOrigin + (dir * segmentRange));
+            AimLine.SetPosition(2, rayOrigin + (dir * indicatorRange));
+           
         }
         else
         {
@@ -367,5 +376,11 @@ public class PlayerController : MonoBehaviour
     {
         mainWeapon.SetSeraphs(seraphControl.MainWeapSeraphs);
         altWeapon.SetSeraphs(seraphControl.AltWeapSeraphs);
+    }
+
+    IEnumerator OnStart_UpdateSeraphs()
+    {
+        yield return new WaitForSeconds(0.1f);
+        UpdateSeraphs();
     }
 }

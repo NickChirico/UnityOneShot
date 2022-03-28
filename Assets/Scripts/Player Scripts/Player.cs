@@ -38,7 +38,8 @@ public class Player : Entity
     {
         SM = this.GetComponent<PlayerStateManager>();
         seraphControl = SeraphController.GetSeraphController;
-        myMasterDictionary = GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>();
+        try { myMasterDictionary = GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>(); }
+        catch { myMasterDictionary = null; }
     }
     public override void Start()
     {
@@ -214,9 +215,12 @@ public class Player : Entity
     {
         myController.SelectWeapon(mainWeap, true);
         myController.SelectWeapon(altWeap, false);
-        myMasterDictionary.ArmorDictionary.TryGetValue(armor, out _myArmor);
-        myMasterDictionary.BootsDictionary.TryGetValue(armor, out _myBoots);
-        myMasterDictionary.FlaskDictionary.TryGetValue(armor, out _myFlask);
+        if (myMasterDictionary != null)
+        {
+            myMasterDictionary.ArmorDictionary.TryGetValue(armor, out _myArmor);
+            myMasterDictionary.BootsDictionary.TryGetValue(armor, out _myBoots);
+            myMasterDictionary.FlaskDictionary.TryGetValue(armor, out _myFlask);
+        }
         myController.UpdateSeraphs();
     }
 
