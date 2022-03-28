@@ -137,6 +137,11 @@ public class PathManager : MonoBehaviour
         }
     }
 
+    public void UpdateNextPath(int layer, int whichOption)
+    {
+        
+    }
+
     private void SelectOptionOnStarted(InputAction.CallbackContext obj)
     {
         print("funny");
@@ -145,6 +150,7 @@ public class PathManager : MonoBehaviour
 
     public void EnterMapScene()
     {
+        myPlayer.playerLoaded = false;
         layerNum = myPlayer.currentPathLevel;
         SceneManager.LoadScene("MapScene");
         print("Loaded into scene now");

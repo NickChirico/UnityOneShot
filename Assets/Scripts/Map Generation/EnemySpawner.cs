@@ -62,7 +62,7 @@ public class EnemySpawner : MonoBehaviour
         {
             myMapLoader.allUnlockables[i].Unlock();
         }
-
+        print("Unlocking Now");
         myMapLoader.loadedRoom.northDoor.Unlock();
         myMapLoader.loadedRoom.eastDoor.Unlock();
         myMapLoader.loadedRoom.southDoor.Unlock();
