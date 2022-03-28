@@ -20,7 +20,6 @@ public class DoorManager : Unlockable
 
     public void LoadNewDoor(int targetX, int targetY)
     {
-        myLoader.portal = false;
         unlocked.SetActive(false);
         if (myLoader.portal)
         {

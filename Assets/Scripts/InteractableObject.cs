@@ -28,7 +28,7 @@ public abstract class InteractableObject : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            col.GetComponent<Player>().SetInteract(true, this);
+            //col.GetComponent<Player>().SetInteract(true, this);
         }
         //throw new NotImplementedException();
     }
@@ -37,7 +37,7 @@ public abstract class InteractableObject : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<Player>().SetInteract(false, this);
+            //other.GetComponent<Player>().SetInteract(false, this);
         }
         //throw new NotImplementedException();
     }

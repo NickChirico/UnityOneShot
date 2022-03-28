@@ -129,10 +129,10 @@ public class MapGenerator : MonoBehaviour
     public string[,] pregenMap1 = new string[,]
     {
         {"X", "X", "*.B.H.0.0", "X", "X"},
-        {"X", "X", "*.C.H.1.1", "*.C.H.3.4", "X"},
+        {"X", "X", "*.C.H.1.3", "*.C.H.3.4", "X"},
         {"X", "*.C.H.2.1", "*.C.H.3.3", "*.C.H.1.4", "X"},
-        {"X", "*.C.H.1.1", "*.C.H.2.1", "X", "X"},
-        {"X", "!.E.H.0.0", "X", "X", "X"}
+        {"X", "*.C.H.1.1", "*.C.H.2.2", "X", "X"},
+        {"X", "!.E.H.1.0", "X", "X", "X"}
     };
     public string[,] pregenMap2 = new string[,]
     {
@@ -140,7 +140,7 @@ public class MapGenerator : MonoBehaviour
         {"X", "*.C.H.3.4", "*.C.H.1.4", "*.C.H.2.4", "*.C.H.1.1"},
         {"X", "X", "*.C.H.3.0", "*.C.H.2.1", "X"},
         {"X", "*.C.H.2.3", "*.C.H.1.0", "*.C.H.3.1", "*.C.H.2.0"},
-        {"X", "X", "!.E.H.0.0", "X", "X"}
+        {"X", "X", "!.E.H.1.0", "X", "X"}
     };
     public string[,] pregenMap3 = new string[,]
     {
@@ -150,7 +150,7 @@ public class MapGenerator : MonoBehaviour
         {"X", "X", "X", "*.C.H.2.3", "*.C.H.3.1", "X", "X"},
         {"X", "X", "X", "*.C.H.1.3", "*.C.H.1.0", "X", "X"},
         {"X", "X", "*.C.H.2.1", "*.C.H.3.0", "*.C.H.1.4", "X", "X"},
-        {"X", "X", "X", "!.E.H.0.0", "X", "X", "X"}
+        {"X", "X", "X", "!.E.H.1.0", "X", "X", "X"}
     };
     public string[,] pregenMap4 = new string[,]
     {
@@ -160,7 +160,7 @@ public class MapGenerator : MonoBehaviour
         {"X", "X", "*.C.H.2.3", "*.C.H.3.1", "*.C.H.2.4", "X", "X"},
         {"X", "X", "X", "*.C.H.1.1", "*.C.H.1.0", "X", "X"},
         {"X", "X", "X", "X", "*.C.H.2.0", "*.C.H.3.0", "X"},
-        {"X", "X", "X", "X", "X", "!.E.H.0.0", "X"}
+        {"X", "X", "X", "X", "X", "!.E.H.1.0", "X"}
     };
     public string[,] pregenMap5 = new string[,]
     {
@@ -172,7 +172,7 @@ public class MapGenerator : MonoBehaviour
         {"*.C.H.1.2", "*.C.H.2.4", "X", "*.C.H.3.3", "*.C.H.3.1", "*.C.H.1.1", "X", "X", "X"},
         {"X", "*.C.H.3.0", "*.C.H.2.1", "*.C.H.1.0", "*.C.H.2.2", "X", "X", "X", "X"},
         {"X", "X", "*.C.H.1.3", "X", "X", "X", "X", "X", "X"},
-        {"X", "X", "!.E.H.0.0", "X", "X", "X", "X", "X", "X"}
+        {"X", "X", "!.E.H.1.0", "X", "X", "X", "X", "X", "X"}
     };
     public string[,] pregenMap6 = new string[,]
     {
@@ -184,7 +184,7 @@ public class MapGenerator : MonoBehaviour
         {"X", "X", "X", "X", "X", "*.C.H.1.2", "*.C.H.3.3", "X", "X"},
         {"X", "X", "*.C.H.2.1", "*.C.H.3.1", "*.C.H.1.0", "*.C.H.2.2", "X", "X", "X"},
         {"X", "X", "X", "*.C.H.1.1", "*.C.H.3.2", "*.C.H.2.0", "X", "X", "X"},
-        {"X", "X", "X", "X", "!.E.H.0.0", "X", "X", "X", "X"}
+        {"X", "X", "X", "X", "!.E.H.1.0", "X", "X", "X", "X"}
     };
     //public string[,] demoMap = new string[1, 1];
     public string[][,] allPregens;
