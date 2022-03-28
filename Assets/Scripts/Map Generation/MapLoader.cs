@@ -207,7 +207,8 @@ public class MapLoader : MonoBehaviour
         loadedRoom.LoadAllDoors(currentRank, currentFile);
         if (roomAttributes[0] == "*") //* = unvisited, ? = visited, ! = currently here
         {
-            mySpawner.SpawnEnemies(loadedRoom);
+            int spawnChoice = int.Parse(ComplexMap[currentRank, currentFile].Split('.')[4]);
+            mySpawner.SpawnEnemies(loadedRoom, spawnChoice);
             ComplexMap[currentRank, currentFile].Replace('*', '!');
         }
         if (roomAttributes[0] == "?")

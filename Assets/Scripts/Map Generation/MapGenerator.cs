@@ -61,8 +61,9 @@ public class MapGenerator : MonoBehaviour
         new int[] {3,11},
         new int[] {4,13},
         new int[] {5,15},
-        new int[] {6,17},
-        new int[] {7,19}
+        new int[] {6,19},
+        new int[] {10,25},
+        new int[] {12, 30}
     };
 
     public int[] roomSizes = new[] {5, 5, 7, 7, 7, 9};
@@ -116,7 +117,78 @@ public class MapGenerator : MonoBehaviour
         {"X", "X", "X", "X", "X"},
         {"X", "X", "X", "X", "X"}
     };
+
+    public string[,] pregenPath = new string[,]
+    {
+        {"*3a", "X", "*2C", "X", "*1G"},
+        {"X", "*1A", "X", "*3g", "*1c"},
+        {"*3C", "*1g", "*1a", "X", "*2G"},
+        {"*1c", "X", "X", "*3A", "X"},
+        {"X", "*2g", "*3C", "*1a", "X"},
+        {"?1c", "?2A", "X", "?3G", "X"}
+    };
+    public string[,] pregenMap1 = new string[,]
+    {
+        {"X", "X", "*.B.H.0.0", "X", "X"},
+        {"X", "X", "*.C.H.1.1", "*.C.H.3.4", "X"},
+        {"X", "*.C.H.2.1", "*.C.H.3.3", "*.C.H.1.4", "X"},
+        {"X", "*.C.H.1.1", "*.C.H.2.1", "X", "X"},
+        {"X", "!.E.H.0.0", "X", "X", "X"}
+    };
+    public string[,] pregenMap2 = new string[,]
+    {
+        {"X", "X", "X", "*.B.H.0.0", "X"},
+        {"X", "*.C.H.3.4", "*.C.H.1.4", "*.C.H.2.4", "*.C.H.1.1"},
+        {"X", "X", "*.C.H.3.0", "*.C.H.2.1", "X"},
+        {"X", "*.C.H.2.3", "*.C.H.1.0", "*.C.H.3.1", "*.C.H.2.0"},
+        {"X", "X", "!.E.H.0.0", "X", "X"}
+    };
+    public string[,] pregenMap3 = new string[,]
+    {
+        {"X", "X", "X", "X", "*.B.H.0.0", "X", "X"},
+        {"X", "X", "X", "X", "*.C.H.3.4", "*.C.H.1.1", "X"},
+        {"X", "X", "X", "X", "*.C.H.2.4", "*.C.H.1.3", "X"},
+        {"X", "X", "X", "*.C.H.2.3", "*.C.H.3.1", "X", "X"},
+        {"X", "X", "X", "*.C.H.1.3", "*.C.H.1.0", "X", "X"},
+        {"X", "X", "*.C.H.2.1", "*.C.H.3.0", "*.C.H.1.4", "X", "X"},
+        {"X", "X", "X", "!.E.H.0.0", "X", "X", "X"}
+    };
+    public string[,] pregenMap4 = new string[,]
+    {
+        {"X", "*.B.H.0.0", "X", "X", "X", "X", "X"},
+        {"*.C.H.3.4", "*.C.H.1.4", "*.C.H.3.3", "X", "X", "X", "X"},
+        {"X", "*.C.H.1.2", "*.C.H.2.2", "*.C.H.3.2", "X", "X", "X"},
+        {"X", "X", "*.C.H.2.3", "*.C.H.3.1", "*.C.H.2.4", "X", "X"},
+        {"X", "X", "X", "*.C.H.1.1", "*.C.H.1.0", "X", "X"},
+        {"X", "X", "X", "X", "*.C.H.2.0", "*.C.H.3.0", "X"},
+        {"X", "X", "X", "X", "X", "!.E.H.0.0", "X"}
+    };
+    public string[,] pregenMap5 = new string[,]
+    {
+        {"X", "X", "X", "X", "X", "*.B.H.0.0", "X", "X", "X"},
+        {"X", "X", "X", "X", "*.C.H.2.0", "*.C.H.3.1", "*.C.H.1.3", "X", "X"},
+        {"X", "X", "X", "*.C.H.3.0", "*.C.H.1.0", "*.C.H.2.4", "X", "X", "X"},
+        {"X", "X", "*.C.H.1.4", "*.C.H.3.4", "*.C.H.2.1", "*.C.H.3.3", "X", "X", "X"},
+        {"X", "X", "X", "X", "*.C.H.2.3", "*.C.H.3.2", "X", "X", "X"},
+        {"*.C.H.1.2", "*.C.H.2.4", "X", "*.C.H.3.3", "*.C.H.3.1", "*.C.H.1.1", "X", "X", "X"},
+        {"X", "*.C.H.3.0", "*.C.H.2.1", "*.C.H.1.0", "*.C.H.2.2", "X", "X", "X", "X"},
+        {"X", "X", "*.C.H.1.3", "X", "X", "X", "X", "X", "X"},
+        {"X", "X", "!.E.H.0.0", "X", "X", "X", "X", "X", "X"}
+    };
+    public string[,] pregenMap6 = new string[,]
+    {
+        {"X", "X", "X", "X", "*.B.H.0.0", "X", "X", "X", "X"},
+        {"X", "X", "X", "X", "*.C.H.2.0", "*.C.H.1.0", "*.C.H.3.1", "X", "X"},
+        {"X", "X", "X", "*.C.H.3.4", "*.C.H.2.2", "X", "*.C.H.3.2", "X", "X"},
+        {"X", "X", "X", "*.C.H.1.3", "*.C.H.3.0", "*.C.H.2.0", "*.C.H.2.1", "*.C.H.1.4", "*.C.H.2.4"},
+        {"X", "X", "*.C.H.1.4", "*.C.H.1.1", "*.C.H.2.3", "*.C.H.3.4", "X", "X", "X"},
+        {"X", "X", "X", "X", "X", "*.C.H.1.2", "*.C.H.3.3", "X", "X"},
+        {"X", "X", "*.C.H.2.1", "*.C.H.3.1", "*.C.H.1.0", "*.C.H.2.2", "X", "X", "X"},
+        {"X", "X", "X", "*.C.H.1.1", "*.C.H.3.2", "*.C.H.2.0", "X", "X", "X"},
+        {"X", "X", "X", "X", "!.E.H.0.0", "X", "X", "X", "X"}
+    };
     //public string[,] demoMap = new string[1, 1];
+    public string[][,] allPregens;
     private int _currentTier;
     private string _currentPathCode;
     public int numDoneRooms, numDeadEnds, xMin, xMax, yMin, yMax, numDifferentRooms, numBossRooms;
@@ -127,28 +199,37 @@ public class MapGenerator : MonoBehaviour
 
     public int[] grasslandsRoomsAndArrangements, desertRoomsAndArrangements, volcanoRoomsAndArrangements;
 
-    public int[][] roomsOfEachType;
+    public int[][] RoomsOfEachType;
+    
+    
 
-    public bool pathGenerated;
+    public bool pathGenerated, usingPremade;
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
         pathGenerated = false;
+        allPregens = new string[][,] {pregenMap1, pregenMap2, pregenMap3, pregenMap4, pregenMap5, pregenMap6};
         allTierLimits = new[] {tier1Limits, tier2Limits, tier3Limits, tier4Limits, tier5Limits};
-        roomsOfEachType = new[]
+        RoomsOfEachType = new[]
             {grasslandsRoomsAndArrangements, desertRoomsAndArrangements, volcanoRoomsAndArrangements};
         ResetMap();
-        GeneratePath();
-        ShowPath();
-        myPathManager.GeneratePathMapOnScreen(path);
-        myPathManager.InitialOptions();
-        //myLoader.complexMap = GenerateMapFromPath(1, "test");
     }
+    
+    
 
     void Update()
     {
         
+    }
+
+    public void LoadMapScene()
+    {
+        GeneratePath();
+        ShowPath();
+        myPathManager.EnterMapScene();
+        //myPathManager.GeneratePathMapOnScreen(path);
+        //myPathManager.InitialOptions();
     }
 
     public void SetTier(int input)
@@ -215,15 +296,15 @@ public class MapGenerator : MonoBehaviour
                 biomeChar = "V";
                 break;
         }
-        roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = "!.E." + biomeChar + "." + Random.Range(1, roomsOfEachType[whichBiome-1].Length);
-        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = "*.B." + biomeChar + ".0"; //HERE make the 0th room the boss room with a special exit and an altar
+        roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = "!.E." + biomeChar + "." + Random.Range(1, RoomsOfEachType[whichBiome-1].Length) + ".0";
+        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = "*.B." + biomeChar + ".0.0"; //HERE make the 0th room the boss room with a special exit and an altar
         for (int i = 0; i < roomSizes[_currentTier]; i++)
         {
             for (int j = 0; j < roomSizes[_currentTier]; j++)
             {
                 if (roomArray[i, j] == "*D/") //when there are noncombat rooms, add those in HERE
                 {
-                    roomArray[i,j] = "*.C." + biomeChar + "." + Random.Range(1, roomsOfEachType[whichBiome-1].Length);
+                    roomArray[i,j] = "*.C." + biomeChar + "." + Random.Range(1, RoomsOfEachType[whichBiome-1].Length) + "." + Random.Range(0, 5);
                 }
             }
         }
@@ -678,46 +759,53 @@ public class MapGenerator : MonoBehaviour
 
     public void GeneratePath()
     {
-        string[] pathCodeArray = new string[6];
-        int initialPath = Random.Range(0, 10);
-        switch (initialPath)
+        if (usingPremade)
         {
-            case 0:
-                pathCodeArray[5] = "abc";
-                break;
-            case 1:
-                pathCodeArray[5] = "abd";
-                break;
-            case 2:
-                pathCodeArray[5] = "abe";
-                break;
-            case 3:
-                pathCodeArray[5] = "acd";
-                break;
-            case 4:
-                pathCodeArray[5] = "ace";
-                break;
-            case 5:
-                pathCodeArray[5] = "ade";
-                break;
-            case 6:
-                pathCodeArray[5] = "bcd";
-                break;
-            case 7:
-                pathCodeArray[5] = "bce";
-                break;
-            case 8:
-                pathCodeArray[5] = "bde";
-                break;
-            case 9:
-                pathCodeArray[5] = "cde";
-                break;
+            path = pregenPath;
         }
-        for (int i = 4; i > -1; i--)
+        else
         {
-            pathCodeArray[i] = GetValidNextPath(pathCodeArray[i + 1]);
+            string[] pathCodeArray = new string[6];
+            int initialPath = Random.Range(0, 10);
+            switch (initialPath)
+            {
+                case 0:
+                    pathCodeArray[5] = "abc";
+                    break;
+                case 1:
+                    pathCodeArray[5] = "abd";
+                    break;
+                case 2:
+                    pathCodeArray[5] = "abe";
+                    break;
+                case 3:
+                    pathCodeArray[5] = "acd";
+                    break;
+                case 4:
+                    pathCodeArray[5] = "ace";
+                    break;
+                case 5:
+                    pathCodeArray[5] = "ade";
+                    break;
+                case 6:
+                    pathCodeArray[5] = "bcd";
+                    break;
+                case 7:
+                    pathCodeArray[5] = "bce";
+                    break;
+                case 8:
+                    pathCodeArray[5] = "bde";
+                    break;
+                case 9:
+                    pathCodeArray[5] = "cde";
+                    break;
+            }
+            for (int i = 4; i > -1; i--)
+            {
+                pathCodeArray[i] = GetValidNextPath(pathCodeArray[i + 1]);
+            }
+            path = GeneratePathFromPathCodes(pathCodeArray); 
         }
-        path = GeneratePathFromPathCodes(pathCodeArray);
     }
 
     public string GetValidNextPath(string lastPath)
@@ -1516,7 +1604,7 @@ public class MapGenerator : MonoBehaviour
             {
                 if (pathToReturn[i, j] != "X")
                 {
-                    int biomeSelection = Random.Range(1, 4);
+                    int biomeSelection = Random.Range(1, 4); //1 is grasslands, 2 is desert, 3 is volcano
                     int factionSelection = Random.Range(0, 6);
                     if (i == 5)
                     {
@@ -1796,6 +1884,47 @@ public class MapGenerator : MonoBehaviour
         SetTier(tierLevel);
         SetPathCode(pathCode);
         GenerateMap();
+    }
+
+    public void UpdatePregenMap(string[,] mapToUpdate, string pathCode)
+    {
+        char biomeCode = 'G';
+        if (pathCode.Contains("1"))
+        {
+            print("biome code is G");
+            biomeCode = 'G';
+        }
+        else if (pathCode.Contains("2"))
+        {
+            print("biome code is D");
+            biomeCode = 'D';
+        }
+        else if (pathCode.Contains("3"))
+        {
+            print("biome code is V");
+            biomeCode = 'V';
+        }
+        int mapSize = 0;
+        if (myPathManager.myPlayer.currentPathLevel == 0 || myPathManager.myPlayer.currentPathLevel == 1)
+        {
+            mapSize = 5;
+        }
+        else if (myPathManager.myPlayer.currentPathLevel == 2 || myPathManager.myPlayer.currentPathLevel == 3)
+        {
+            mapSize = 7;
+        }
+        else if (myPathManager.myPlayer.currentPathLevel == 4 || myPathManager.myPlayer.currentPathLevel == 5)
+        {
+            mapSize = 9;
+        }
+        for (int i = 0; i < mapSize; i++)
+        {
+            for (int j = 0; j < mapSize; j++)
+            {
+                print(i + ", " + j);
+                mapToUpdate[i, j] = mapToUpdate[i, j].Replace('H', biomeCode);
+            }
+        }
     }
 
     public int GetCurrentTier()
