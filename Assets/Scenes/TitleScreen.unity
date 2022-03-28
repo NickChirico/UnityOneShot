@@ -292,8 +292,8 @@ MonoBehaviour:
   armorSeraphim: []
   bootsSeraphim: []
   flaskSeraphim: []
-  mainWeaponCode: rifle
-  altWeaponCode: saber
+  mainWeaponCode: repeater
+  altWeaponCode: mortar
   armorCode: basic armor
   bootsCode: basic boots
   flaskCode: basic flask
@@ -313,6 +313,7 @@ MonoBehaviour:
   currentPathLevel: 0
   playerPrefab: {fileID: 6600408298937354225, guid: 11f06e8b8ddafc849a2ea799fa9ae774,
     type: 3}
+  playerLoaded: 0
 --- !u!4 &233064558
 Transform:
   m_ObjectHideFlags: 0

@@ -584,7 +584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 24
   currentHealth: 0
-  postureMax: 14
+  postureMax: 20
   posture: 0
   postureRechargeRate: 1.5
   guardBreakDuration: 0
@@ -625,7 +625,7 @@ MonoBehaviour:
   patrolDuration: 0.85
   patrolSpeed: 0.45
   chaseDuration: 10
-  chaseSpeed: 20
+  chaseSpeed: 1.8
   attackDamage: 0
   attackRange: 0.65
   attackDuration: 1

@@ -561,9 +561,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 200
   currentHealth: 0
-  postureMax: 1000
+  postureMax: 36
   posture: 0
-  postureRechargeRate: 0
+  postureRechargeRate: 3
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}

@@ -881,7 +881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 40
   currentHealth: 0
-  postureMax: 14
+  postureMax: 16
   posture: 0
   postureRechargeRate: 2
   guardBreakDuration: 0
