@@ -79,14 +79,18 @@ public class PlayerController : MonoBehaviour
 
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
-        myMasterDictionary = GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>();
-        foreach (var temp in myMasterDictionary.weapons)
+        try { myMasterDictionary = GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>(); }
+        catch { myMasterDictionary = null; }
+        if (myMasterDictionary != null)
         {
-            print("this is happening");
-            if (temp.GetWeaponType() == WeaponManager.WeaponType.Melee)
+            foreach (var temp in myMasterDictionary.weapons)
             {
-                print("and now this is happening");
-                temp.gameObject.GetComponent<MeleeWeapon>().tempAttackDisplay = GameObject.Find("Melee Indicator");
+                print("this is happening");
+                if (temp.GetWeaponType() == WeaponManager.WeaponType.Melee)
+                {
+                    print("and now this is happening");
+                    temp.gameObject.GetComponent<MeleeWeapon>().tempAttackDisplay = GameObject.Find("Melee Indicator");
+                }
             }
         }
         uiControl = GameObject.Find("*** UI Manager").GetComponent<UI_Manager>();
