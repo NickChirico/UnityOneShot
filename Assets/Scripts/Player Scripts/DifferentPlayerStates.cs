@@ -34,9 +34,12 @@ public class PlayerState_Ready : PlayerState
         }
         if (reloadPressed > 0)
         {
-            if(playerControl.mainWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.mainWeapon.GetComponent<RangedWeapon>().ammoCapacity ||
+            Debug.Log("go to full reload");
+            if (playerControl.mainWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.mainWeapon.GetComponent<RangedWeapon>().ammoCapacity ||
                 playerControl.altWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.altWeapon.GetComponent<RangedWeapon>().ammoCapacity)
+            {
                 SM.ChangeState(SM.FullReload);
+            }
         }
         if (dashPressed > 0 && Move.CanDash())
         {

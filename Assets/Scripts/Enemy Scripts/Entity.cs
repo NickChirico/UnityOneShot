@@ -11,7 +11,7 @@ public class Entity : MonoBehaviour
 
     public float postureMax;
     public float posture;
-    [Range(0.1f, 5)] public float postureDecayRate;
+    [Range(1f, 6f)] public float postureRechargeRate;
     public float guardBreakDuration;
     public PopUpDamageText damageText;
     public GameObject markedIndicator;
@@ -161,9 +161,10 @@ public class Entity : MonoBehaviour
             if (posture > 0)
             {
                 if (posture > postureMax)
-                { posture = postureMax + 2; }
+                { posture = postureMax; }
 
-                posture = Mathf.Lerp(posture, 0, Time.deltaTime / postureDecayRate);
+                //posture = Mathf.Lerp(posture, 0, Time.deltaTime / postureDecayRate);
+                posture -= postureRechargeRate * 0.01f;
 
                 if (posture < postureMax / 2)
                 {

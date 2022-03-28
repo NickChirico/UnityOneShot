@@ -1164,14 +1164,14 @@ MonoBehaviour:
   armorSeraphim: []
   bootsSeraphim: []
   flaskSeraphim: []
-  mainWeaponCode: pistol
+  mainWeaponCode: rifle
   altWeaponCode: saber
   armorCode: basic armor
   bootsCode: basic boots
   flaskCode: basic flask
-  mainWeapon: {fileID: 6128647752333188045, guid: 8e17b0cf5d6e71b4c8be62f0268fbe67,
+  mainWeapon: {fileID: 4132644651413726360, guid: 6aaa37d5cf54dc446820bc813f715f26,
     type: 3}
-  altWeapon: {fileID: 8659807924567091602, guid: 4833856aac8ff8343bdfecf98f788ba3,
+  altWeapon: {fileID: 6128647752333188045, guid: 8e17b0cf5d6e71b4c8be62f0268fbe67,
     type: 3}
   armor: {fileID: 2476518601765223274, guid: 36e55640d1bcafb468ea3f2e77e4665a, type: 3}
   boots: {fileID: 5234922991400671764, guid: e2848e2d664772341bf03c3f88d84f67, type: 3}

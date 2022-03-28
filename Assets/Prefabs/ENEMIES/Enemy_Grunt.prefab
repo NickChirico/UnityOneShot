@@ -348,9 +348,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 60
   currentHealth: 0
-  postureMax: 12
+  postureMax: 16
   posture: 0
-  postureDecayRate: 1.5
+  postureRechargeRate: 1
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
@@ -394,7 +394,7 @@ MonoBehaviour:
   attackRange: 1.5
   attackDuration: 1.5
   attackDelay: 0.25
-  attackLungeForce: 10
+  attackLungeForce: 7
   canAttack: 1
   attackCooldown: 1.5
   invulnTime: 0.2

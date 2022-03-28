@@ -8,7 +8,6 @@ public class RangedEnemy : Enemy
     public Weapon enemyWeapon;
     private RangedWeapon myRifle;
     public LineRenderer aimLine;
-
     public override void SetUp()
     {
         if (enemyWeapon != null)
@@ -32,8 +31,15 @@ public class RangedEnemy : Enemy
     {
         //base.Attack(dir);
         canAttack = false;
+        StartCoroutine(AttackCooldown());
 
         myRifle.Fire(this.transform.position, attackDir);
         aimLine.enabled = false;
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
     }
 }

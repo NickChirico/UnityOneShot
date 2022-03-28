@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 5ff3c8b50af1b914a97e16aca3018091, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8679245, g: 0.49516585, b: 0.3234247, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -500,7 +500,7 @@ Transform:
   m_GameObject: {fileID: 7320017029194801049}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.8195, y: 2.8195, z: 2.8195}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 6122682637910522093}
   - {fileID: 7320017028439319161}
@@ -544,8 +544,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04, y: 0.31}
-  m_Size: {x: 0.45, y: 0.79}
+  m_Offset: {x: 0.06, y: 0.31}
+  m_Size: {x: 0.3800885, y: 0.79}
   m_Direction: 0
 --- !u!114 &7320017029194801052
 MonoBehaviour:
@@ -559,11 +559,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3eff752a48d8064eaa44c88208a6c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 200
+  MaxHealth: 160
   currentHealth: 0
-  postureMax: 1000
+  postureMax: 36
   posture: 0
-  postureDecayRate: 4
+  postureRechargeRate: 3.1
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
@@ -595,18 +595,18 @@ MonoBehaviour:
   seraphPickup: {fileID: 0}
   weaponPickup: {fileID: 0}
   playerSpotted: 0
-  idleDuration: 2
-  alertDuration: 0.5
+  idleDuration: 1
+  alertDuration: 0.85
   patrolRange: 2
   patrolDuration: 2
   patrolSpeed: 0.25
-  chaseDuration: 4
-  chaseSpeed: 0.75
+  chaseDuration: 2
+  chaseSpeed: 1.5
   attackDamage: 0
-  attackRange: 2.5
+  attackRange: 2
   attackDuration: 1.5
   attackDelay: 0.5
-  attackLungeForce: 17
+  attackLungeForce: 12
   canAttack: 1
   attackCooldown: 1.5
   invulnTime: 0.2
