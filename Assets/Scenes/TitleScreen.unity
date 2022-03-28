@@ -293,7 +293,7 @@ MonoBehaviour:
   bootsSeraphim: []
   flaskSeraphim: []
   mainWeaponCode: repeater
-  altWeaponCode: mortar
+  altWeaponCode: saber
   armorCode: basic armor
   bootsCode: basic boots
   flaskCode: basic flask

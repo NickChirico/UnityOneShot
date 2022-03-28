@@ -635,6 +635,9 @@ MonoBehaviour:
   attackCooldown: 1.5
   invulnTime: 0
   knockbackForce: 5
+  SERAPH_DROP: {fileID: 5627784362461883367, guid: 1969b742d64e22b4285b10f1c2c66ef8,
+    type: 3}
+  DROP_CHANCE: 0.5
   blastDamage: 20
   blastPostureDamage: 20
   blastRadius: 0.75

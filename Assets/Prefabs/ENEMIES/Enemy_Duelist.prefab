@@ -1085,7 +1085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 100
   currentHealth: 0
-  postureMax: 22
+  postureMax: 20
   posture: 0
   postureRechargeRate: 2.5
   guardBreakDuration: 0
@@ -1127,7 +1127,7 @@ MonoBehaviour:
   patrolDuration: 2
   patrolSpeed: 0.6
   chaseDuration: 24
-  chaseSpeed: 2
+  chaseSpeed: 1.35
   attackDamage: 24
   attackRange: 1.5
   attackDuration: 0.55
@@ -1137,8 +1137,14 @@ MonoBehaviour:
   attackCooldown: 0.75
   invulnTime: 0.2
   knockbackForce: 8
+  SERAPH_DROP: {fileID: 5627784362461883367, guid: f77b655dc7ea0954d8e51a1b0c6ac32e,
+    type: 3}
+  DROP_CHANCE: 0.6
   knife: {fileID: 3075264334211088375}
   height: 0.25
+  SeraphDrop: {fileID: 5627784362461883367, guid: 1969b742d64e22b4285b10f1c2c66ef8,
+    type: 3}
+  dropChance: 1
 --- !u!114 &8194989536356328619
 MonoBehaviour:
   m_ObjectHideFlags: 0

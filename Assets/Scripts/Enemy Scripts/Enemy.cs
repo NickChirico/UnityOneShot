@@ -201,8 +201,18 @@ public abstract class Enemy : Entity
         return b;
     }
 
+    public GameObject SERAPH_DROP;
+    [Range(0f, 1f)] public float DROP_CHANCE;
     public override void Die()
     {
+        if (SERAPH_DROP != null)
+        {
+            if (Random.Range(0f, 1f) < DROP_CHANCE)
+            {
+                Instantiate(SERAPH_DROP, this.transform.position, Quaternion.identity);
+            }
+        }
+
         if (mySpawner != null)
         {
             if (mySpawner.myMapLoader.loadedRoom.allPickups.Count < 5)

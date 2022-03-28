@@ -114,7 +114,7 @@ MonoBehaviour:
   currentHealth: 0
   postureMax: 0
   posture: 0
-  postureDecayRate: 0
+  postureRechargeRate: 0
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: 427564367acaca6428fb198a67f226e7,
     type: 3}
@@ -155,7 +155,7 @@ MonoBehaviour:
   currentSpecial: 0
   currentMoveType: 0
   RightClickToMoveDEACT: 0
-  baseMoveSpeed: 2.35
+  baseMoveSpeed: 2.25
   maxMoveSpeed: 8
   slowMoveSpeed_alt: 0.5
   currentMoveSpeed: 1
