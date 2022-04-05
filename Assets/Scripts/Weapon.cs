@@ -54,6 +54,9 @@ public abstract class Weapon : MonoBehaviour
             }
         }
     }
+
+    public virtual bool IsRanged()
+    { return false; }
 }
 
 #region Ranged Weapon
@@ -326,6 +329,10 @@ public class RangedWeapon : Weapon
         float y2 = x * sin + y * cos;
 
         return new Vector2(x2, y2);
+    }
+    public override bool IsRanged()
+    {
+        return true;
     }
 }
 #endregion

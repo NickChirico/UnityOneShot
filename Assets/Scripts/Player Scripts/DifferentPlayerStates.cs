@@ -20,26 +20,30 @@ public class PlayerState_Ready : PlayerState
         // READY : read inputs
         float firePressed = InputAction.Player.Fire.ReadValue<float>(); // ~~~~~~~ InputAction ~~~ WORKS ~~~~~
         float reloadPressed = InputAction.Player.Reload.ReadValue<float>();
-        float specPressed = InputAction.Player.Fire2.ReadValue<float>();
+        float fire2Pressed = InputAction.Player.Fire2.ReadValue<float>();
         float dashPressed = InputAction.Player.Dash.ReadValue<float>();
 
         if (firePressed > 0)
         {
-            Debug.Log("firing");
-            GoToMainWeapon();
+            if(playerControl.CanSwapWeapon)
+            { playerControl.SwapMain(); }
+            else
+            { GoToMainWeapon(); }
         }
-        if (specPressed > 0)
+        if (fire2Pressed > 0)
         {
-            GoToAltWeapon();
+            if (playerControl.CanSwapWeapon)
+            { playerControl.SwapAlt(); }
+            else
+            { GoToAltWeapon(); }
         }
         if (reloadPressed > 0)
         {
             Debug.Log("go to full reload");
-            if (playerControl.mainWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.mainWeapon.GetComponent<RangedWeapon>().ammoCapacity ||
-                playerControl.altWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.altWeapon.GetComponent<RangedWeapon>().ammoCapacity)
-            {
-                SM.ChangeState(SM.FullReload);
-            }
+            if (playerControl.mainWeapon.IsRanged() && playerControl.mainWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.mainWeapon.GetComponent<RangedWeapon>().ammoCapacity)
+            { SM.ChangeState(SM.FullReload); }
+            else if(playerControl.altWeapon.IsRanged() && playerControl.altWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.altWeapon.GetComponent<RangedWeapon>().ammoCapacity)
+            { SM.ChangeState(SM.FullReload); }
         }
         if (dashPressed > 0 && Move.CanDash())
         {
@@ -798,7 +802,7 @@ public class PlayerState_MeleeRecover : PlayerState
         {
             weapon.ResetAttackSequence();
 
-            if (!playerControl.mainWeapon.GetComponent<RangedWeapon>().HasShot())
+            if (playerControl.mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged && playerControl.mainWeapon.GetComponent<RangedWeapon>().HasShot())
             {
                 SM.ChangeState(SM.RechamberMain);
             }

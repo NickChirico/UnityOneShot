@@ -883,7 +883,7 @@ MonoBehaviour:
   currentHealth: 0
   postureMax: 16
   posture: 0
-  postureRechargeRate: 2
+  postureRechargeRate: 1.5
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
@@ -934,6 +934,8 @@ MonoBehaviour:
   SERAPH_DROP: {fileID: 5627784362461883367, guid: e6f732f571dbaf74abdb4c4f6cbacd01,
     type: 3}
   DROP_CHANCE: 0.75
+  WEAPON_DROP: {fileID: 409388795005942077, guid: b4e8e48ec8b4fa640abdf304083ad628,
+    type: 3}
   enemyWeapon: {fileID: 4132644651413726360, guid: 6aaa37d5cf54dc446820bc813f715f26,
     type: 3}
   aimLine: {fileID: 8626469286467265796}

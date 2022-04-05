@@ -1087,7 +1087,7 @@ MonoBehaviour:
   currentHealth: 0
   postureMax: 20
   posture: 0
-  postureRechargeRate: 2.5
+  postureRechargeRate: 2
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
@@ -1140,6 +1140,8 @@ MonoBehaviour:
   SERAPH_DROP: {fileID: 5627784362461883367, guid: f77b655dc7ea0954d8e51a1b0c6ac32e,
     type: 3}
   DROP_CHANCE: 0.6
+  WEAPON_DROP: {fileID: 409388795005942077, guid: 4b2d66d9bf0d06c4c80cd42ad00fd31d,
+    type: 3}
   knife: {fileID: 3075264334211088375}
   height: 0.25
   SeraphDrop: {fileID: 5627784362461883367, guid: 1969b742d64e22b4285b10f1c2c66ef8,

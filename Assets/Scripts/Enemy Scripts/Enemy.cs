@@ -203,6 +203,7 @@ public abstract class Enemy : Entity
 
     public GameObject SERAPH_DROP;
     [Range(0f, 1f)] public float DROP_CHANCE;
+    public GameObject WEAPON_DROP;
     public override void Die()
     {
         if (SERAPH_DROP != null)
@@ -212,6 +213,13 @@ public abstract class Enemy : Entity
                 Instantiate(SERAPH_DROP, this.transform.position, Quaternion.identity);
             }
         }
+        // ~~~~~~~~~~~~~~~~~~~~~~ CURRENTLY EQUIPPED
+        if (WEAPON_DROP != null )//&& PlayerController.GetPlayerController.EquippedWeapons.) // && player weapon not currently equipped
+        {
+            Vector3 offset = new Vector2(Random.Range(0, 0.3f), Random.Range(0, 0.3f));
+            Instantiate(WEAPON_DROP, this.transform.position + offset, Quaternion.identity);
+        }
+
 
         if (mySpawner != null)
         {
