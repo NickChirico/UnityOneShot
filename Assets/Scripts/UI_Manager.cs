@@ -147,7 +147,7 @@ public class UI_Manager : MonoBehaviour
 
         //EquipmentPanel.SetActive(false);
         TogglePlayerControl(true);
-        ToggleControlDisplay(playerControl.usingMouse); 
+        ToggleControlDisplay(playerControl.usingMouse);
         /*
         if(!EquipmentPanel.activeSelf)
             ToggleEquipmentPanel(); // Sets to ENABLE on start
@@ -302,12 +302,22 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
-    private void TogglePlayerControl(bool check)
-    { 
+    public void TogglePlayerControl(bool check)
+    {
         //move.enabled = check;
         //shot.enabled = check;
         //alt.enabled = check;
         SM.ActivePlayer(check);
+    }
+
+    [Header("DEATH SCREEN")]
+    public GameObject DeathScreen_Panel;
+    public void EnableDeathScreen()
+    {
+        if (DeathScreen_Panel != null)
+        {
+            DeathScreen_Panel.SetActive(true);
+        }
     }
 
     private void HighlightActiveEquipment()
@@ -469,6 +479,11 @@ public class UI_Manager : MonoBehaviour
     {
         TogglePausePanel();
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("TitleScreen");
     }
 
     public void LoadScene(int i)

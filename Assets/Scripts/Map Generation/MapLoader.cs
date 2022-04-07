@@ -216,6 +216,11 @@ public class MapLoader : MonoBehaviour
             ComplexMap[currentRank, currentFile].Replace('?', '!');
         }
         //Spawn in all the pickups that are here, HERE
+
+        // DESTROY WEAPON DROPS UPON ENTERING NEW ROOM
+        WeaponDrop[] drops = FindObjectsOfType<WeaponDrop>();
+        foreach (WeaponDrop weapDrop in drops)
+            Destroy(weapDrop.gameObject);
     }
 
 

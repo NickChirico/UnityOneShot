@@ -46,7 +46,7 @@ public abstract class Weapon : MonoBehaviour
         {
             print("seraph UI stuff missing");
         }
-        if (seraphs.Length > 0)
+        else if (seraphs.Length >= 1)
         {
             foreach (Seraph_UI S in seraphs)
             {

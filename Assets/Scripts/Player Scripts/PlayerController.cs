@@ -439,6 +439,7 @@ public class PlayerController : MonoBehaviour
     {
         if (inspectedWeapDrop != null)
         {
+            DropCurrentWeapon(true);
             SelectWeapon(weapDropName, true);
             Destroy(inspectedWeapDrop);
         }
@@ -447,8 +448,53 @@ public class PlayerController : MonoBehaviour
     {
         if (inspectedWeapDrop != null)
         {
+            DropCurrentWeapon(false);
             SelectWeapon(weapDropName, false);
             Destroy(inspectedWeapDrop);
+        }
+    }
+
+    [Header("Weapon Drop Prefabs")]
+    public GameObject RIFLE_DROP;
+    public GameObject REPEATER_DROP;
+    public GameObject SHOTGUN_DROP;
+    public GameObject KNIFE_DROP;
+    public GameObject SABER_DROP;
+    public GameObject MORTAR_DROP;
+
+    public void DropCurrentWeapon(bool isMain)
+    {
+        string weaponToDrop;
+
+        if (isMain)
+            weaponToDrop = mainWeapon.weaponName;
+        else
+            weaponToDrop = altWeapon.weaponName;
+
+        Vector3 offset = new Vector2(Random.Range(0, 0.3f), Random.Range(0, 0.3f));
+        switch (weaponToDrop)
+        {
+            case "Rifle":
+                Instantiate(RIFLE_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            case "Repeater":
+                Instantiate(REPEATER_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            case "Blunderbuss":
+                Instantiate(SHOTGUN_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            case "Knife":
+                Instantiate(KNIFE_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            case "Saber":
+                Instantiate(SABER_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            case "Mortar":
+                Instantiate(MORTAR_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            default:
+                Debug.Log("No Weapon Dropped ???");
+                break;
         }
     }
 }

@@ -9,6 +9,8 @@ TagManager:
   - PlayerHitbox
   - Activator
   - weaponDrop
+  - UI
+  - bag
   layers:
   - Default
   - TransparentFX

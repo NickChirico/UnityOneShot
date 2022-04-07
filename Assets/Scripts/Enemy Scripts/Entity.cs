@@ -130,7 +130,11 @@ public class Entity : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            if (canDie)
+            {
+                canDie = false;
+                Die();
+            }
             return true;
         }
         else
@@ -139,6 +143,7 @@ public class Entity : MonoBehaviour
         }
     }
 
+    bool canDie = true;
     public virtual void Die()
     {
         //gameObject.SetActive(false);
@@ -166,7 +171,7 @@ public class Entity : MonoBehaviour
                 //posture = Mathf.Lerp(posture, 0, Time.deltaTime / postureDecayRate);
                 posture -= postureRechargeRate * 0.01f;
 
-                if (posture < postureMax / 2)
+                if (posture < postureMax / 4)
                 {
                     if (guardBroken)
                     {

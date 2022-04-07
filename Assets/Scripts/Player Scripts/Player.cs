@@ -57,17 +57,34 @@ public class Player : Entity
         ui.UpdateHealth(currentHealth, MaxHealth);
         SM.ChangeState(SM.Damaged);
         StartCoroutine(FlashRed());
-        if (currentHealth <= 0)
+        /*if (currentHealth <= 0)
         {
             SceneManager.LoadScene("DeathScreen");
-        }
+        }*/
     }
 
     public override bool TakeDamage(int damageAmount, Vector2 damageSpot, float knockForce, float postureDamage)
     {
+        bool b = base.TakeDamage(damageAmount, damageSpot, knockForce, postureDamage);
         SM.ChangeState(SM.Damaged);
         StartCoroutine(FlashRed());
-        return base.TakeDamage(damageAmount, damageSpot, knockForce, postureDamage);
+        ui.UpdateHealth(currentHealth, MaxHealth);
+        return b;
+    }
+
+    public override void Die()
+    {
+        sp.color = Color.red;
+        canBeDamaged = false;
+        ui.TogglePlayerControl(true);
+        MovementController.GetMoveController.SetMoveType(MovementController.Movement.Hold);
+        StartCoroutine(DeathScreen());
+    }
+
+    IEnumerator DeathScreen()
+    {
+        yield return new WaitForSeconds(1f);
+        ui.EnableDeathScreen();
     }
 
     public bool CanBeDamaged()

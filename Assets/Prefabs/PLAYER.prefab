@@ -188,6 +188,19 @@ MonoBehaviour:
   circleEnabled: 1
   myPlayer: {fileID: 0}
   EquippedWeapons: []
+  CanSwapWeapon: 0
+  RIFLE_DROP: {fileID: 409388795005942077, guid: b4e8e48ec8b4fa640abdf304083ad628,
+    type: 3}
+  REPEATER_DROP: {fileID: 409388795005942077, guid: f8510d86e99744c45bb1402e2b97a0a8,
+    type: 3}
+  SHOTGUN_DROP: {fileID: 409388795005942077, guid: c8515215c0a209643aacaa4f67434b3a,
+    type: 3}
+  KNIFE_DROP: {fileID: 409388795005942077, guid: 4b2d66d9bf0d06c4c80cd42ad00fd31d,
+    type: 3}
+  SABER_DROP: {fileID: 409388795005942077, guid: 1ed8715331391ad46aba892b5380b8a2,
+    type: 3}
+  MORTAR_DROP: {fileID: 409388795005942077, guid: c547432ed440d844d92a6c74b88ae614,
+    type: 3}
 --- !u!114 &6600408298937354188
 MonoBehaviour:
   m_ObjectHideFlags: 0

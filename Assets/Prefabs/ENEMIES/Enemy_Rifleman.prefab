@@ -454,7 +454,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.337}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3234226638064892110
@@ -852,8 +852,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.05, y: 0.43}
-  m_Size: {x: 0.45, y: 0.76}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.4, y: 0.76}
   m_Direction: 0
 --- !u!114 &4274466616857454616
 MonoBehaviour:
@@ -905,7 +905,7 @@ MonoBehaviour:
   damageAttack: 0
   postureColl: 0
   postureAtk: 0
-  visionRange: 5
+  visionRange: 6
   rupturePickup: {fileID: 403632358609029537, guid: 15a1369f717d6664ebd4a0be28103bc0,
     type: 3}
   contaminatePickup: {fileID: 6066597285942191914, guid: 9960b7266f24d6346bbbc76553b2f027,
@@ -923,7 +923,7 @@ MonoBehaviour:
   chaseDuration: 3
   chaseSpeed: 0.65
   attackDamage: 0
-  attackRange: 3
+  attackRange: 4.5
   attackDuration: 1
   attackDelay: 0.5
   attackLungeForce: 0
@@ -931,7 +931,7 @@ MonoBehaviour:
   attackCooldown: 1.5
   invulnTime: 0.2
   knockbackForce: 0
-  SERAPH_DROP: {fileID: 5627784362461883367, guid: e6f732f571dbaf74abdb4c4f6cbacd01,
+  SERAPH_DROP: {fileID: 5627784362461883367, guid: 583094a07e8da064d9116d7cf18f4ce1,
     type: 3}
   DROP_CHANCE: 0.75
   WEAPON_DROP: {fileID: 409388795005942077, guid: b4e8e48ec8b4fa640abdf304083ad628,
@@ -939,6 +939,7 @@ MonoBehaviour:
   enemyWeapon: {fileID: 4132644651413726360, guid: 6aaa37d5cf54dc446820bc813f715f26,
     type: 3}
   aimLine: {fileID: 8626469286467265796}
+  shootOffset: {x: 0, y: 0}
 --- !u!1 &4733986359453154834
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,7 +965,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4733986359453154834}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.023, y: 0.46, z: 0}
+  m_LocalPosition: {x: 0.023, y: 0.04, z: 0}
   m_LocalScale: {x: 1, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 4274466616857454598}
@@ -1231,8 +1232,8 @@ LineRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 11
   m_Positions:
-  - {x: 0, y: 0.25, z: 0}
-  - {x: 2, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1

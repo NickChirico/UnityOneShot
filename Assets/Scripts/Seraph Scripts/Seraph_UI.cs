@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
     SeraphController seraphControl;
     public Image seraphIcon;
+    public Image backdrop;
     public Sprite ruptureSprite, contaminateSprite, siphonSprite;
 
     private Canvas canvas;
@@ -15,7 +17,6 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
 
     public AugmentSlot mySlot;
     private RectTransform myRect;
-    private Image image;
 
     //public GameObject mySeraphPrefab;
     public Seraph mySeraph;
@@ -30,16 +31,22 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
     public GameObject[] SeraphPrefabs;
     public Color[] seraphColors;
 
+    [Header("Tooltip")]
+    public Image Tooltip_box;
+    public TextMeshProUGUI tooltip_title;
+    public TextMeshProUGUI tooltip_description;
+
     private void Awake()
     {
 
         seraphControl = SeraphController.GetSeraphController;
         myRect = this.GetComponent<RectTransform>();
-        image = this.GetComponent<Image>();
         canvas = FindObjectOfType<MainCanvas>().GetCanvas();
         canvasGroup = this.GetComponent<CanvasGroup>();
 
         //mySeraph = Instantiate(mySeraphPrefab, seraphControl.seraphParent).GetComponent<Seraph>();
+
+        Tooltip_box.gameObject.SetActive(false);
     }
     private void OnEnable()
     {
@@ -66,26 +73,34 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
         switch (seraphType)
         {
             case Genome.Rupture:
-                image.color = seraphColors[0];
+                backdrop.color = seraphColors[0];
                 seraphIcon.sprite = ruptureSprite;
                 mySeraph = Instantiate(SeraphPrefabs[0], seraphControl.seraphParent).GetComponent<Seraph>();
+                tooltip_title.text = "Rupture Seraph";
+                tooltip_description.text = "Creates an Explosion damaging and knocking back enemies.";
                 break;
             case Genome.Siphon:
-                image.color = seraphColors[1];
+                backdrop.color = seraphColors[1];
                 seraphIcon.sprite = siphonSprite;
                 mySeraph = Instantiate(SeraphPrefabs[1], seraphControl.seraphParent).GetComponent<Seraph>();
+                tooltip_title.text = "Siphon Seraph";
+                tooltip_description.text = "Heal for a portion of the damage dealt or received.";
                 break;
             case Genome.Contaminate:
-                image.color = seraphColors[2];
+                backdrop.color = seraphColors[2];
                 seraphIcon.sprite = contaminateSprite;
                 mySeraph = Instantiate(SeraphPrefabs[2], seraphControl.seraphParent).GetComponent<Seraph>();
+                tooltip_title.text = "Contamination Seraph";
+                tooltip_description.text = "Infect targets with a gradual poison effect.";
                 break;
             case Genome.Storm:
-                image.color = seraphColors[3];
+                backdrop.color = seraphColors[3];
                 mySeraph = Instantiate(SeraphPrefabs[3], seraphControl.seraphParent).GetComponent<Seraph>();
+                tooltip_title.text = "Storm Seraph";
+                tooltip_description.text = "Channel a powerful Lightning Strike.";
                 break;
             case Genome.Surge:
-                image.color = seraphColors[4];
+                backdrop.color = seraphColors[4];
                 mySeraph = Instantiate(SeraphPrefabs[4], seraphControl.seraphParent).GetComponent<Seraph>();
                 break;
 
@@ -111,6 +126,17 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1;
         this.transform.position = Slot.transform.position;
+    }
+
+    private void OnMouseOver()
+    {
+        Tooltip_box.gameObject.SetActive(true);
+    }
+
+    private void OnMouseExit()
+    {
+        Tooltip_box.gameObject.SetActive(false);
+
     }
 
     public void OnPointerDown(PointerEventData eventData)

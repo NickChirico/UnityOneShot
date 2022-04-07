@@ -43,16 +43,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0b42dde2597fe4dbcf336cd9317113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  simpleWeaponCode: 0
+  complexWeaponCode: 
   isValidWeapon: 1
   isPlayerWeapon: 0
+  isMainWeapon: 0
   weaponName: Rifle
+  weaponDescription: 
   postureDamage: 14
   shotDamage: 14
-  ammoCapacity: 4
+  ammoCapacity: 8
   currentAmmo: 0
-  range: 4.5
   reloadDuration: 1.75
   knockbackForce: 8
+  range: 4.5
   doRecoil: 0
   recoilForce: 0
   recoilDuration: 0

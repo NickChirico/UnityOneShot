@@ -868,7 +868,7 @@ public class PlayerState_Dash : PlayerState
                 SM.BackToReady();
             else
                 SM.ChangeState(SM.Reloading);*/
-            if (!playerControl.mainWeapon.GetComponent<RangedWeapon>().HasShot())
+            if (playerControl.mainWeapon.IsRanged() && !playerControl.mainWeapon.GetComponent<RangedWeapon>().HasShot())
             {
                 SM.ChangeState(SM.RechamberMain);
             }
