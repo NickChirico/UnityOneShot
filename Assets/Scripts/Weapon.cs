@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    public Sprite weaponSprite;
     public int simpleWeaponCode;
     public string complexWeaponCode;
     public bool isValidWeapon;
@@ -102,7 +103,7 @@ public class RangedWeapon : Weapon
         moveControl = MovementController.GetMoveController;
         playerControl = PlayerController.GetPlayerController;
         audioManager = AudioManager.GetAudioManager;
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity, isMainWeapon);
+        uiControl.UpdateAmmo(ammoCapacity, ammoCapacity, IsRanged());
     }
 
     Ray2D[] rays;

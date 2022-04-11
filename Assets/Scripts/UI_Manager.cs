@@ -64,10 +64,12 @@ public class UI_Manager : MonoBehaviour
 
     [Header("In-Game HUD")]
     public GameObject weaponPanel;
-    public TextMeshProUGUI currentWeaponLabel;
-    public TextMeshProUGUI currentWeaponLabel_alt;
-    public TextMeshProUGUI ammoLabel;
-    public TextMeshProUGUI ammoLabel_alt;
+    public TextMeshProUGUI main_weap_Label;
+    public TextMeshProUGUI alt_weap_Label;
+    public Image main_weap_Image;
+    public Image alt_weap_Image;
+    public TextMeshProUGUI main_ammo_Label;
+    public TextMeshProUGUI alt_ammo_Label;
     public GameObject ammoSubPanel;
     public GameObject ammoSubPanel_alt;
     public Image healthbar;
@@ -525,12 +527,12 @@ public class UI_Manager : MonoBehaviour
 
     public void UpdateCurrentWeaponPanelTMP(string weap)
     {
-        currentWeaponTMP.text = weap;
+        mainWeapLabel.text = weap;
     }
 
     public void UpdateCurrentSpecialPanelTMP(string spec)
     {
-        currentSpecialTMP.text = spec;
+        altWeapLabel.text = spec;
     }
 
     [Space(10)]
@@ -588,17 +590,38 @@ public class UI_Manager : MonoBehaviour
 
     // ~~~~~~ In-Game HUD UI ~~~~~~~~~
 
-    public void UpdateWeaponHUD_Main(string name)
+    public void UpdateWeaponHUD_Main(Weapon mainWeap)
     {
-        currentWeaponLabel.text = name;
-        //ammoSubPanel.SetActive(!melee);
-    }
+        main_weap_Label.text = mainWeap.weaponName;
 
-    public void UpdateWeaponHUD_Alt(string name)
-    {
-        currentWeaponLabel_alt.text = name;
-        //ammoSubPanel_alt.SetActive(!melee);
+        if(mainWeap.weaponSprite != null)
+            main_weap_Image.sprite = mainWeap.weaponSprite;
+        
+        if (mainWeap.IsRanged())
+        {
+            main_ammo_Label.gameObject.SetActive(true);
+        }
+        else
+            main_ammo_Label.gameObject.SetActive(false);
     }
+    //ammoSubPanel.SetActive(!melee);
+
+
+    public void UpdateWeaponHUD_Alt(Weapon altWeap)
+    {
+        alt_weap_Label.text = altWeap.weaponName;
+
+        if (altWeap.weaponSprite != null)
+            alt_weap_Image.sprite = altWeap.weaponSprite;
+
+        if (altWeap.IsRanged())
+        {
+            alt_ammo_Label.gameObject.SetActive(true);
+        }
+        else
+            alt_ammo_Label.gameObject.SetActive(false);
+    //ammoSubPanel_alt.SetActive(!melee);
+}
 
     public void UpdateCurrentSpecialLabel(string name)
     {
@@ -609,19 +632,25 @@ public class UI_Manager : MonoBehaviour
     {
         if (mainWeap)
         {
-            ammoLabel.text = "" + cur + "/" + max;
-            if (cur <= (float)max * 0.2f)
-                ammoLabel.color = ammoLabelColor_Low;
-            else if (cur == max)
-                ammoLabel.color = ammoLabelColor_Normal;
+            if (main_ammo_Label.gameObject.activeSelf)
+            {
+                main_ammo_Label.text = "" + cur + "/" + max;
+                if (cur <= (float)max * 0.25f)
+                    main_ammo_Label.color = ammoLabelColor_Low;
+                else if (cur == max)
+                    main_ammo_Label.color = ammoLabelColor_Normal;
+            }
         }
         else
         {
-            ammoLabel_alt.text = "" + cur + "/" + max;
-            if (cur <= (float)max * 0.2f)
-                ammoLabel_alt.color = ammoLabelColor_Low;
-            else if (cur == max)
-                ammoLabel_alt.color = ammoLabelColor_Normal;
+            if (alt_ammo_Label.gameObject.activeSelf)
+            {
+                alt_ammo_Label.text = "" + cur + "/" + max;
+                if (cur <= (float)max * 0.25f)
+                    alt_ammo_Label.color = ammoLabelColor_Low;
+                else if (cur == max)
+                    alt_ammo_Label.color = ammoLabelColor_Normal;
+            }
         }
     }
 

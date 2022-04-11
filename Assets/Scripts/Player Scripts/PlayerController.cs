@@ -102,7 +102,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         EquippedWeapons = new string[2] { mainWeapon.weaponName, altWeapon.weaponName };
-
+        UpdateWeapon(true);
+        UpdateWeapon(false);
 
         //UpdateWeapon();
         DetermineAimLine();
@@ -369,18 +370,19 @@ public class PlayerController : MonoBehaviour
             {
                 mainWeapon = newWeapon;
                 mainWeapon.Equip(true);
-                UpdateWeapon();
                 //EquippedWeapons[0] = mainWeapon.weaponName;
-                uiControl.UpdateWeapon_uiPanel(mainWeapon, true);
+                //uiControl.UpdateWeapon_uiPanel(mainWeapon, true);
             }
             else
             {
                 altWeapon = newWeapon;
                 altWeapon.Equip(false);
-                UpdateWeapon();
                 //EquippedWeapons[1] = altWeapon.weaponName;
-                uiControl.UpdateWeapon_uiPanel(altWeapon, false);
+                //uiControl.UpdateWeapon_uiPanel(altWeapon, false);
             }
+
+            // Update HUD & ammo
+            UpdateWeapon(changeMain);
         }
         else
         {
@@ -390,12 +392,16 @@ public class PlayerController : MonoBehaviour
         DetermineAimLine();
     }
 
-    void UpdateWeapon()
+    void UpdateWeapon(bool main)
     {
-        //uiControl.UpdateWeaponHUD_Main(mainWeapon.weaponName);
-        // alt
-        //uiControl.UpdateWeaponHUD_Alt(altWeapon.weaponName);
-        // distinguish ammo for both? main and alt
+        if (main)
+        {
+            uiControl.UpdateWeaponHUD_Main(mainWeapon);
+        }
+        else// alt
+        {
+            uiControl.UpdateWeaponHUD_Alt(altWeapon);
+        }
     }
 
     public void UpdateSeraphs() // called in UI manager when window closed
