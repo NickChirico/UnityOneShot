@@ -11,7 +11,7 @@ public class WeaponSwapPanel : MonoBehaviour
     //public MasterDictionary masterDictionary;
     //public Weapon unequippedWeapon;
 
-    public int unequippedCode, mainCode, altCode;
+    public string unequippedCode, mainCode, altCode;
 
     public Image unequippedImage, mainImage, altImage;
 
@@ -53,46 +53,47 @@ public class WeaponSwapPanel : MonoBehaviour
         EditWeapon(altImage, altName, altDescription, altCode);
     }
 
-    public void EditWeapon(Image imageToChange, TextMeshProUGUI nameToChange, TextMeshProUGUI descToChange, int weaponCode)
+    public void EditWeapon(Image imageToChange, TextMeshProUGUI nameToChange, TextMeshProUGUI descToChange, string weaponCode)
     {
-        imageToChange.sprite = weaponCode >= 0 ? meleeSprite : rangedSprite;
-        nameToChange.text = myPlayer.myMasterDictionary.SimpleWeaponDictionary[weaponCode].weaponName;
-        descToChange.text = myPlayer.myMasterDictionary.SimpleWeaponDictionary[weaponCode].weaponDescription;
+        //imageToChange.sprite = weaponCode >= 0 ? meleeSprite : rangedSprite;
+        //HERE change to a switch
+        nameToChange.text = myPlayer.myMasterDictionary.WeaponDictionary[weaponCode].weaponName;
+        descToChange.text = myPlayer.myMasterDictionary.WeaponDictionary[weaponCode].weaponDescription;
         switch (weaponCode)
         {
-            case -5: //pistol
+            case "pistol": //pistol
                 nameToChange.text = "Pistol";
                 descToChange.text = "Standard ranged sidearm.";
                 break;
-            case -4: //rifle
+            case "rifle": //rifle
                 nameToChange.text = "Rifle";
                 descToChange.text = "Long-range and powerful, but slow to fire.";
                 break;
-            case -3: //repeater
+            case "repeater": //repeater
                 nameToChange.text = "Repeater";
                 descToChange.text = "Fast, low-power shots.";
                 break;
-            case -2: //blunderbuss
+            case "blunderbuss": //blunderbuss
                 nameToChange.text = "Blunderbuss";
                 descToChange.text = "Lots of close-range power!";
                 break;
-            case -1: //mortar
+            case "mortar": //mortar
                 nameToChange.text = "Mortar";
                 descToChange.text = "Hold the fire button to lob an explosive!";
                 break;
-            case 0: //knife
+            case "knife": //knife
                 nameToChange.text = "Knife";
                 descToChange.text = "Short-ranged, fast melee attacks";
                 break;
-            case 1: //saber
+            case "saber": //saber
                 nameToChange.text = "Saber";
                 descToChange.text = "3-hit melee combo!";
                 break;
-            case 2: //hammer
+            case "hammer": //hammer
                 nameToChange.text = "Hammer";
                 descToChange.text = "Slow, heavy melee attacks.";
                 break;
-            case 3: //bat
+            case "bat": //bat
                 nameToChange.text = "Bat";
                 descToChange.text = "Send enemies flying!";
                 break;

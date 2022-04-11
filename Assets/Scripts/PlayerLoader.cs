@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,14 @@ using UnityEngine;
 public class PlayerLoader : MonoBehaviour
 {
     public List<Seraph> baggedSeraphim, mainSeraphim, altSeraphim, armorSeraphim, bootsSeraphim, flaskSeraphim;
+    public string mainWeaponCode, altWeaponCode, armorCode, bootsCode, flaskCode;
     public Weapon mainWeapon, altWeapon;
     public Armor armor;
     public Boots boots;
     public Flask flask;
-    public int currentHealth, currentChitin, currentBlood, currentBrains, currentFlashCharges, currentEssence;
+    public int currentHealth, currentChitin, currentBlood, currentBrains, currentFlaskCharges, currentEssence, currentPathLevel; //currentPathLevel gets added after finishing level
     public GameObject playerPrefab;
+    public bool playerLoaded;
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -27,8 +30,18 @@ public class PlayerLoader : MonoBehaviour
         
     }
 
-    public void LoadIntoRoom(Vector3 playerSpawnPos)
+    public Player LoadIntoRoom(Vector3 playerSpawnPos)
     {
-        Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity).GetComponent<Player>().LoadIntoLevel();
+        if (playerLoaded)
+        {
+            throw new Exception();
+            return null;
+        }
+        else
+        {
+            playerLoaded = true;
+            return Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity).GetComponent<Player>().LoadIntoLevel(this);
+        }
+        //set everything in the player
     }
 }

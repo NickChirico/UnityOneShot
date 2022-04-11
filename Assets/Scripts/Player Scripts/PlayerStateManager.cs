@@ -46,7 +46,8 @@ public class PlayerStateManager : MonoBehaviour
 
     public PlayerState FullReload;
 
-    bool isActive;
+    bool isActive = true;
+    bool isAlive = true;
 
     void Start()
     {
@@ -102,12 +103,13 @@ public class PlayerStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isActive)
+        if(isActive && isAlive)
             currentState.DoState();
     }
 
     public void ChangeState(PlayerState newState)
     {
+        //print("changing state");
         if (currentState != null)
             currentState.Exit();
         currentState = newState;
@@ -130,6 +132,9 @@ public class PlayerStateManager : MonoBehaviour
     {
         isActive = b;
     }
+
+    public void KillPlayer()
+    { isAlive = false; }
 
     /*public void PlayAnimation(AnimationState animationState)
     {

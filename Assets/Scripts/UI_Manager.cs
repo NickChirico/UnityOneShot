@@ -108,13 +108,29 @@ public class UI_Manager : MonoBehaviour
         _uiControl = this;
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
+        move = MovementController.GetMoveController;
+        if (move == null)
+        {
+            print("Move controller not found");
+        }
+        shot = ShotController.GetShotControl;
+        if (shot == null)
+        {
+            print("Shot controller not found");
+        }
+        alt = AltShotController.GetAltControl;
+        if (alt == null)
+        {
+            print("Alt Shot controller not found");
+        }
+        melee = MeleeController.GetMeleeControl;
+        if (melee == null)
+        {
+            print("Melee controller not found");
+        }
     }
     private void Start()
     {
-        move = MovementController.GetMoveController;
-        shot = ShotController.GetShotControl;
-        alt = AltShotController.GetAltControl;
-        melee = MeleeController.GetMeleeControl;
         SM = FindObjectOfType<PlayerStateManager>();
         seraphs = SeraphController.GetSeraphController;
         weapons = WeaponManager.GetWeaponManager;
@@ -130,11 +146,12 @@ public class UI_Manager : MonoBehaviour
         altButtons = new Button[] { SelectAlt_Shotgun, SelectAlt_Burst, SelectAlt_Flamethrower };
 
         //EquipmentPanel.SetActive(false);
-        TogglePlayerControl(false);
-        ToggleControlDisplay(playerControl.usingMouse); 
-
+        TogglePlayerControl(true);
+        ToggleControlDisplay(playerControl.usingMouse);
+        /*
         if(!EquipmentPanel.activeSelf)
             ToggleEquipmentPanel(); // Sets to ENABLE on start
+            */
         //SwitchCurrentMenu(1); // 1:Weap , 2:Serap , 3:Options
         //SetInitialEquipment();
 
@@ -285,12 +302,22 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
-    private void TogglePlayerControl(bool check)
+    public void TogglePlayerControl(bool check)
     {
         //move.enabled = check;
         //shot.enabled = check;
         //alt.enabled = check;
         SM.ActivePlayer(check);
+    }
+
+    [Header("DEATH SCREEN")]
+    public GameObject DeathScreen_Panel;
+    public void EnableDeathScreen()
+    {
+        if (DeathScreen_Panel != null)
+        {
+            DeathScreen_Panel.SetActive(true);
+        }
     }
 
     private void HighlightActiveEquipment()
@@ -454,6 +481,11 @@ public class UI_Manager : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
     }
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("TitleScreen");
+    }
+
     public void LoadScene(int i)
     {
         if (i == 0)
@@ -556,16 +588,16 @@ public class UI_Manager : MonoBehaviour
 
     // ~~~~~~ In-Game HUD UI ~~~~~~~~~
 
-    public void UpdateWeaponHUD_Main(string name, bool melee)
+    public void UpdateWeaponHUD_Main(string name)
     {
         currentWeaponLabel.text = name;
-        ammoSubPanel.SetActive(!melee);
+        //ammoSubPanel.SetActive(!melee);
     }
 
-    public void UpdateWeaponHUD_Alt(string name, bool melee)
+    public void UpdateWeaponHUD_Alt(string name)
     {
         currentWeaponLabel_alt.text = name;
-        ammoSubPanel_alt.SetActive(!melee);
+        //ammoSubPanel_alt.SetActive(!melee);
     }
 
     public void UpdateCurrentSpecialLabel(string name)

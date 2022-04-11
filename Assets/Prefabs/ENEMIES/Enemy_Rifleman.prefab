@@ -454,7 +454,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.337}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3234226638064892110
@@ -852,8 +852,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.05, y: 0.43}
-  m_Size: {x: 0.45, y: 0.76}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.4, y: 0.76}
   m_Direction: 0
 --- !u!114 &4274466616857454616
 MonoBehaviour:
@@ -881,14 +881,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 40
   currentHealth: 0
-  postureMax: 10
+  postureMax: 16
   posture: 0
-  postureDecayRate: 2
+  postureRechargeRate: 1.5
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
   markedIndicator: {fileID: 2378157358557018362}
   contaminateParticles_prefab: {fileID: 154266614780650862, guid: 6acfc02aa966a5f41936cf287ba4b044,
+    type: 3}
+  stormParticles_prefab: {fileID: 5630597837917196486, guid: 41ec81e70c21c9c4b96e446a06e755c6,
     type: 3}
   healthBar: {fileID: 8874297191563927373}
   postureBar: {fileID: 7919647396408724700}
@@ -903,13 +905,15 @@ MonoBehaviour:
   damageAttack: 0
   postureColl: 0
   postureAtk: 0
-  visionRange: 5
+  visionRange: 6
   rupturePickup: {fileID: 403632358609029537, guid: 15a1369f717d6664ebd4a0be28103bc0,
     type: 3}
   contaminatePickup: {fileID: 6066597285942191914, guid: 9960b7266f24d6346bbbc76553b2f027,
     type: 3}
   siphonPickup: {fileID: 320607767360861005, guid: cf570d270e993a64ca7ce71fbee2f4f5,
     type: 3}
+  seraphPickup: {fileID: 0}
+  weaponPickup: {fileID: 0}
   playerSpotted: 0
   idleDuration: 2
   alertDuration: 0.5
@@ -919,16 +923,23 @@ MonoBehaviour:
   chaseDuration: 3
   chaseSpeed: 0.65
   attackDamage: 0
-  attackRange: 3
+  attackRange: 4.5
   attackDuration: 1
   attackDelay: 0.5
   attackLungeForce: 0
   canAttack: 1
+  attackCooldown: 1.5
   invulnTime: 0.2
   knockbackForce: 0
+  SERAPH_DROP: {fileID: 5627784362461883367, guid: 583094a07e8da064d9116d7cf18f4ce1,
+    type: 3}
+  DROP_CHANCE: 0.75
+  WEAPON_DROP: {fileID: 409388795005942077, guid: b4e8e48ec8b4fa640abdf304083ad628,
+    type: 3}
   enemyWeapon: {fileID: 4132644651413726360, guid: 6aaa37d5cf54dc446820bc813f715f26,
     type: 3}
   aimLine: {fileID: 8626469286467265796}
+  shootOffset: {x: 0, y: 0}
 --- !u!1 &4733986359453154834
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,7 +965,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4733986359453154834}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.023, y: 0.46, z: 0}
+  m_LocalPosition: {x: 0.023, y: 0.04, z: 0}
   m_LocalScale: {x: 1, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 4274466616857454598}
@@ -1221,8 +1232,8 @@ LineRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 11
   m_Positions:
-  - {x: 0, y: 0.25, z: 0}
-  - {x: 2, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1

@@ -61,11 +61,12 @@ public class MapGenerator : MonoBehaviour
         new int[] {3,11},
         new int[] {4,13},
         new int[] {5,15},
-        new int[] {6,17},
-        new int[] {7,19}
+        new int[] {6,19},
+        new int[] {10,25},
+        new int[] {12, 30}
     };
 
-    public int[] roomSizes = new[] {5, 5, 7, 7, 7};
+    public int[] roomSizes = new[] {5, 5, 7, 7, 7, 9};
     
     public int[,] maxArray = new[,]
     {
@@ -116,31 +117,118 @@ public class MapGenerator : MonoBehaviour
         {"X", "X", "X", "X", "X"},
         {"X", "X", "X", "X", "X"}
     };
+    public string[,] pregenPath = new string[,]
+    {
+        {"*3a", "X", "*2C", "X", "*1G"},
+        {"X", "*1A", "X", "*3g", "*1c"},
+        {"*3C", "*1g", "*1a", "X", "*2G"},
+        {"*1c", "X", "X", "*3A", "X"},
+        {"X", "*2g", "*3C", "*1a", "X"},
+        {"?1c", "?2A", "X", "?3G", "X"}
+    };
+    public string[,] pregenMap1 = new string[,]
+    {
+        {"X", "X", "*.B.H.0.0", "X", "X"},
+        {"X", "X", "*.C.H.1.3", "*.C.H.3.4", "X"},
+        {"X", "*.C.H.2.1", "*.C.H.3.3", "*.C.H.1.4", "X"},
+        {"X", "*.C.H.1.1", "*.C.H.2.2", "X", "X"},
+        {"X", "!.E.H.1.0", "X", "X", "X"}
+    };
+    public string[,] pregenMap2 = new string[,]
+    {
+        {"X", "X", "X", "*.B.H.0.0", "X"},
+        {"X", "*.C.H.3.4", "*.C.H.1.4", "*.C.H.2.4", "*.C.H.1.1"},
+        {"X", "X", "*.C.H.3.0", "*.C.H.2.1", "X"},
+        {"X", "*.C.H.2.3", "*.C.H.1.0", "*.C.H.3.1", "*.C.H.2.0"},
+        {"X", "X", "!.E.H.1.0", "X", "X"}
+    };
+    public string[,] pregenMap3 = new string[,]
+    {
+        {"X", "X", "X", "X", "*.B.H.0.0", "X", "X"},
+        {"X", "X", "X", "X", "*.C.H.3.4", "*.C.H.1.1", "X"},
+        {"X", "X", "X", "X", "*.C.H.2.4", "*.C.H.1.3", "X"},
+        {"X", "X", "X", "*.C.H.2.3", "*.C.H.3.1", "X", "X"},
+        {"X", "X", "X", "*.C.H.1.3", "*.C.H.1.0", "X", "X"},
+        {"X", "X", "*.C.H.2.1", "*.C.H.3.0", "*.C.H.1.4", "X", "X"},
+        {"X", "X", "X", "!.E.H.1.0", "X", "X", "X"}
+    };
+    public string[,] pregenMap4 = new string[,]
+    {
+        {"X", "*.B.H.0.0", "X", "X", "X", "X", "X"},
+        {"*.C.H.3.4", "*.C.H.1.4", "*.C.H.3.3", "X", "X", "X", "X"},
+        {"X", "*.C.H.1.2", "*.C.H.2.2", "*.C.H.3.2", "X", "X", "X"},
+        {"X", "X", "*.C.H.2.3", "*.C.H.3.1", "*.C.H.2.4", "X", "X"},
+        {"X", "X", "X", "*.C.H.1.1", "*.C.H.1.0", "X", "X"},
+        {"X", "X", "X", "X", "*.C.H.2.0", "*.C.H.3.0", "X"},
+        {"X", "X", "X", "X", "X", "!.E.H.1.0", "X"}
+    };
+    public string[,] pregenMap5 = new string[,]
+    {
+        {"X", "X", "X", "X", "X", "*.B.H.0.0", "X", "X", "X"},
+        {"X", "X", "X", "X", "*.C.H.2.0", "*.C.H.3.1", "*.C.H.1.3", "X", "X"},
+        {"X", "X", "X", "*.C.H.3.0", "*.C.H.1.0", "*.C.H.2.4", "X", "X", "X"},
+        {"X", "X", "*.C.H.1.4", "*.C.H.3.4", "*.C.H.2.1", "*.C.H.3.3", "X", "X", "X"},
+        {"X", "X", "X", "X", "*.C.H.2.3", "*.C.H.3.2", "X", "X", "X"},
+        {"*.C.H.1.2", "*.C.H.2.4", "X", "*.C.H.3.3", "*.C.H.3.1", "*.C.H.1.1", "X", "X", "X"},
+        {"X", "*.C.H.3.0", "*.C.H.2.1", "*.C.H.1.0", "*.C.H.2.2", "X", "X", "X", "X"},
+        {"X", "X", "*.C.H.1.3", "X", "X", "X", "X", "X", "X"},
+        {"X", "X", "!.E.H.1.0", "X", "X", "X", "X", "X", "X"}
+    };
+    public string[,] pregenMap6 = new string[,]
+    {
+        {"X", "X", "X", "X", "*.B.H.0.0", "X", "X", "X", "X"},
+        {"X", "X", "X", "X", "*.C.H.2.0", "*.C.H.1.0", "*.C.H.3.1", "X", "X"},
+        {"X", "X", "X", "*.C.H.3.4", "*.C.H.2.2", "X", "*.C.H.3.2", "X", "X"},
+        {"X", "X", "X", "*.C.H.1.3", "*.C.H.3.0", "*.C.H.2.0", "*.C.H.2.1", "*.C.H.1.4", "*.C.H.2.4"},
+        {"X", "X", "*.C.H.1.4", "*.C.H.1.1", "*.C.H.2.3", "*.C.H.3.4", "X", "X", "X"},
+        {"X", "X", "X", "X", "X", "*.C.H.1.2", "*.C.H.3.3", "X", "X"},
+        {"X", "X", "*.C.H.2.1", "*.C.H.3.1", "*.C.H.1.0", "*.C.H.2.2", "X", "X", "X"},
+        {"X", "X", "X", "*.C.H.1.1", "*.C.H.3.2", "*.C.H.2.0", "X", "X", "X"},
+        {"X", "X", "X", "X", "!.E.H.1.0", "X", "X", "X", "X"}
+    };
     //public string[,] demoMap = new string[1, 1];
+    public string[][,] allPregens;
     private int _currentTier;
     private string _currentPathCode;
     public int numDoneRooms, numDeadEnds, xMin, xMax, yMin, yMax, numDifferentRooms, numBossRooms;
     public List<int> deadEndXPos, deadEndYPos, allRoomsXPos, allRoomsYPos;
     public MapLoader myLoader;
     public Text screenText;
+    public PathManager myPathManager;
+
+    public int[] grasslandsRoomsAndArrangements, desertRoomsAndArrangements, volcanoRoomsAndArrangements;
+
+    public int[][] RoomsOfEachType;
+    
+    
+
+    public bool pathGenerated, usingPremade;
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        pathGenerated = false;
+        allPregens = new string[][,] {pregenMap1, pregenMap2, pregenMap3, pregenMap4, pregenMap5, pregenMap6};
         allTierLimits = new[] {tier1Limits, tier2Limits, tier3Limits, tier4Limits, tier5Limits};
+        RoomsOfEachType = new[]
+            {grasslandsRoomsAndArrangements, desertRoomsAndArrangements, volcanoRoomsAndArrangements};
         ResetMap();
-        //myLoader.complexMap = GenerateMapFromPath(1, "test");
     }
+    
+    
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //GeneratePath();
-            GenerateMapFromPath(1, "rupture");
-            //ShowPath();
-            //ShowMap();
-        }
+        
+    }
+
+    public void LoadMapScene()
+    {
+        GeneratePath();
+        ShowPath();
+        myPathManager.EnterMapScene();
+        //myPathManager.GeneratePathMapOnScreen(path);
+        //myPathManager.InitialOptions();
     }
 
     public void SetTier(int input)
@@ -162,7 +250,7 @@ public class MapGenerator : MonoBehaviour
         {
             ResetMap();
             IterateMap();
-            if (numDoneRooms >= tierRoomNumbers[_currentTier-1][0] && numDoneRooms <= tierRoomNumbers[_currentTier-1][1] && numDeadEnds > 2 && CheckOrientation("North"))
+            if (numDoneRooms >= tierRoomNumbers[_currentTier][0] && numDoneRooms <= tierRoomNumbers[_currentTier][1] && numDeadEnds > 2 && CheckOrientation("North"))
             {
                 stillGenerating = false;
             }
@@ -174,13 +262,14 @@ public class MapGenerator : MonoBehaviour
 
     public void OrientMap()
     {
-        string startRoomChar = "H";
+        string biomeChar = "H";
         int idealValue;
         int finalValue;
+        int whichBiome = int.Parse(_currentPathCode.ToCharArray()[1].ToString());
         int startLoc = 0;
         int endLoc = 0;
         idealValue = 0;
-        finalValue = roomSizes[_currentTier-1]-1;
+        finalValue = roomSizes[_currentTier]; //changed from roomSizes[_currentTier]-1
         for (int i = 0; i < deadEndXPos.Count; i++)
         {
             if (deadEndXPos[i] > idealValue)
@@ -194,20 +283,30 @@ public class MapGenerator : MonoBehaviour
                 finalValue = deadEndXPos[i];
             }
         }
-        switch (_currentPathCode)
+        switch (whichBiome)
         {
-            case "rupture":
-                startRoomChar = "*R/0";
+            case 1:
+                biomeChar = "G";
                 break;
-            case "contaminate":
-                startRoomChar = "*C/0";
+            case 2:
+                biomeChar = "D";
                 break;
-            case "siphon":
-                startRoomChar = "*S/0";
+            case 3:
+                biomeChar = "V";
                 break;
         }
-        roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = startRoomChar;
-        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = "*B/" + Random.Range(0, numBossRooms);
+        roomArray[deadEndXPos[startLoc], deadEndYPos[startLoc]] = "!.E." + biomeChar + "." + Random.Range(1, RoomsOfEachType[whichBiome-1].Length) + ".0";
+        roomArray[deadEndXPos[endLoc], deadEndYPos[endLoc]] = "*.B." + biomeChar + ".0.0"; //HERE make the 0th room the boss room with a special exit and an altar
+        for (int i = 0; i < roomSizes[_currentTier]; i++)
+        {
+            for (int j = 0; j < roomSizes[_currentTier]; j++)
+            {
+                if (roomArray[i, j] == "*D/") //when there are noncombat rooms, add those in HERE
+                {
+                    roomArray[i,j] = "*.C." + biomeChar + "." + Random.Range(1, RoomsOfEachType[whichBiome-1].Length) + "." + Random.Range(0, 5);
+                }
+            }
+        }
         for (int i = 0; i < deadEndXPos.Count; i++)
         {
             /*
@@ -223,10 +322,11 @@ public class MapGenerator : MonoBehaviour
         bool changed = false;
         int targetX = -1;
         int targetY = -1;
-        for (int i = 0; i < roomSizes[_currentTier-1]; i++)
+        for (int i = 0; i < roomSizes[_currentTier]; i++)
         {
-            for (int j = 0; j < roomSizes[_currentTier-1]; j++)
+            for (int j = 0; j < roomSizes[_currentTier]; j++)
             {
+                
                 //print("checking at (" + i + "," + j + ")");
                 if (!changed && roomArray[i, j] == "W")
                 {
@@ -275,7 +375,7 @@ public class MapGenerator : MonoBehaviour
                     break;
             }
         }
-        if (targetX < roomSizes[tempNum-1]-1)
+        if (targetX < roomSizes[tempNum]-1)
         {
             switch (roomArray[targetX + 1, targetY])
             {
@@ -313,7 +413,7 @@ public class MapGenerator : MonoBehaviour
                     break;
             }
         }
-        if (targetY < roomSizes[tempNum-1]-1)
+        if (targetY < roomSizes[tempNum]-1)
         {
             switch (roomArray[targetX, targetY + 1])
             {
@@ -433,7 +533,7 @@ public class MapGenerator : MonoBehaviour
         {
             roomArray[targetX - 1, targetY] = "X";
         }
-        if (targetX < roomSizes[tempNum-1]-1 && roomArray[targetX + 1, targetY] == "O")
+        if (targetX < roomSizes[tempNum]-1 && roomArray[targetX + 1, targetY] == "O")
         {
             roomArray[targetX + 1, targetY] = "X";
         }
@@ -441,11 +541,12 @@ public class MapGenerator : MonoBehaviour
         {
             roomArray[targetX, targetY - 1] = "X";
         }
-        if (targetY < roomSizes[tempNum-1]-1 && roomArray[targetX, targetY + 1] == "O")
+        if (targetY < roomSizes[tempNum]-1 && roomArray[targetX, targetY + 1] == "O")
         {
             roomArray[targetX, targetY + 1] = "X";
         }
-        roomArray[targetX, targetY] = "*D/" + Random.Range(0, numDifferentRooms);
+
+        roomArray[targetX, targetY] = "*D/";
     }
     
     public void FinalizeMap(bool tempChanged, int tempNum)
@@ -457,9 +558,9 @@ public class MapGenerator : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < roomSizes[tempNum-1]; i++)
+            for (int i = 0; i < roomSizes[tempNum]; i++)
             {
-                for (int j = 0; j < roomSizes[tempNum-1]; j++)
+                for (int j = 0; j < roomSizes[tempNum]; j++)
                 {
                     if (roomArray[i, j] == "O")
                     {
@@ -475,9 +576,9 @@ public class MapGenerator : MonoBehaviour
     public int CountRooms()
     {
         int counted = 0;
-        for (int i = 0; i < roomSizes[_currentTier-1]; i++)
+        for (int i = 0; i < roomSizes[_currentTier]; i++)
         {
-            for (int j = 0; j < roomSizes[_currentTier-1]; j++)
+            for (int j = 0; j < roomSizes[_currentTier]; j++)
             {
                 if (roomArray[i,j].Contains("*D/"))
                 {
@@ -513,7 +614,7 @@ public class MapGenerator : MonoBehaviour
     {
         switch (_currentTier)
         {
-            case 1:
+            case 0:
                 roomArray = new[,]
                 {
                     {"O", "O", "O", "O", "O"},
@@ -524,6 +625,18 @@ public class MapGenerator : MonoBehaviour
                 };
                 xMin = 4;
                 yMax = 4;
+                break;
+            case 1:
+                roomArray = new[,]
+                {
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "W", "O", "O"},
+                    {"O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O"}
+                };
+                xMin = 4;
+                yMin = 4;
                 break;
             case 2:
                 roomArray = new[,]
@@ -540,14 +653,16 @@ public class MapGenerator : MonoBehaviour
             case 3:
                 roomArray = new[,]
                 {
-                    {"O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O"},
-                    {"O", "O", "W", "O", "O"},
-                    {"O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O"}
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "W", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"},
+                    {"O", "O", "O", "O", "O", "O", "O"}
                 };
-                xMin = 4;
-                yMin = 4;
+                xMin = 6;
+                yMin = 6;
                 break;
             case 4:
                 roomArray = new[,]
@@ -566,16 +681,18 @@ public class MapGenerator : MonoBehaviour
             case 5:
                 roomArray = new[,]
                 {
-                    {"O", "O", "O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "W", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O", "O", "O"},
-                    {"O", "O", "O", "O", "O", "O", "O"}
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"},
+                    {"O", "O", "O", "O", "O", "O", "O", "0", "0"}
                 };
-                xMin = 6;
-                yMin = 6;
+                xMin = 8;
+                yMin = 8;
                 break;
         }
         xMax = 0;
@@ -591,9 +708,9 @@ public class MapGenerator : MonoBehaviour
     public void ShowMap()
     {
         string willPrint = "";
-        for (int i = 0; i < roomSizes[_currentTier-1]; i++)
+        for (int i = 0; i < roomSizes[_currentTier]; i++)
         {
-            for (int j = 0; j < roomSizes[_currentTier-1]; j++)
+            for (int j = 0; j < roomSizes[_currentTier]; j++)
             {
                 willPrint += roomArray[i, j] + " ";
             }
@@ -641,51 +758,52 @@ public class MapGenerator : MonoBehaviour
 
     public void GeneratePath()
     {
-        string[] pathCodeArray = new string[6];
-        int initialPath = Random.Range(0, 10);
-        switch (initialPath)
+        if (usingPremade)
         {
-            case 0:
-                pathCodeArray[0] = "abc";
-                break;
-            case 1:
-                pathCodeArray[0] = "abd";
-                break;
-            case 2:
-                pathCodeArray[0] = "abe";
-                break;
-            case 3:
-                pathCodeArray[0] = "acd";
-                break;
-            case 4:
-                pathCodeArray[0] = "ace";
-                break;
-            case 5:
-                pathCodeArray[0] = "ade";
-                break;
-            case 6:
-                pathCodeArray[0] = "bcd";
-                break;
-            case 7:
-                pathCodeArray[0] = "bce";
-                break;
-            case 8:
-                pathCodeArray[0] = "bde";
-                break;
-            case 9:
-                pathCodeArray[0] = "cde";
-                break;
+            path = pregenPath;
         }
-        for (int i = 1; i < 6; i++)
+        else
         {
-            pathCodeArray[i] = GetValidNextPath(pathCodeArray[i - 1]);
-        }
-        bool pathReady = false;
-        while (!pathReady)
-        {
-            pathReady = true;
-            IteratePath();
-            pathReady = CheckPath();
+            string[] pathCodeArray = new string[6];
+            int initialPath = Random.Range(0, 10);
+            switch (initialPath)
+            {
+                case 0:
+                    pathCodeArray[5] = "abc";
+                    break;
+                case 1:
+                    pathCodeArray[5] = "abd";
+                    break;
+                case 2:
+                    pathCodeArray[5] = "abe";
+                    break;
+                case 3:
+                    pathCodeArray[5] = "acd";
+                    break;
+                case 4:
+                    pathCodeArray[5] = "ace";
+                    break;
+                case 5:
+                    pathCodeArray[5] = "ade";
+                    break;
+                case 6:
+                    pathCodeArray[5] = "bcd";
+                    break;
+                case 7:
+                    pathCodeArray[5] = "bce";
+                    break;
+                case 8:
+                    pathCodeArray[5] = "bde";
+                    break;
+                case 9:
+                    pathCodeArray[5] = "cde";
+                    break;
+            }
+            for (int i = 4; i > -1; i--)
+            {
+                pathCodeArray[i] = GetValidNextPath(pathCodeArray[i + 1]);
+            }
+            path = GeneratePathFromPathCodes(pathCodeArray); 
         }
     }
 
@@ -1043,40 +1161,38 @@ public class MapGenerator : MonoBehaviour
                         return "abde";
                 }
             case "ace":
-                selection = Random.Range(0, 16);
+                selection = Random.Range(0, 15);
                 switch (selection)
                 {
                     case 0:
                         return "ad";
                     case 1:
-                        return "ae";
-                    case 2:
                         return "bd";
-                    case 3:
+                    case 2:
                         return "be";
-                    case 4:
+                    case 3:
                         return "abd";
-                    case 5:
+                    case 4:
                         return "abe";
-                    case 6:
+                    case 5:
                         return "acd";
-                    case 7:
+                    case 6:
                         return "ade";
-                    case 8:
+                    case 7:
                         return "bcd";
-                    case 9:
+                    case 8:
                         return "bce";
-                    case 10:
+                    case 9:
                         return "bde";
-                    case 11:
+                    case 10:
                         return "abcd";
-                    case 12:
+                    case 11:
                         return "abce";
-                    case 13:
+                    case 12:
                         return "abde";
-                    case 14:
+                    case 13:
                         return "acde";
-                    case 15:
+                    case 14:
                         return "bcde";
                     default:
                         return "abde";
@@ -1317,176 +1433,94 @@ public class MapGenerator : MonoBehaviour
                     default:
                         return "ace";
                 }
-            case "abce": //No ab, ac, ae, bc, cd, ce, de, abc, cde (11)
-                selection = Random.Range(0, 25);
+            case "abce":
+                selection = Random.Range(0, 11);
                 switch (selection)
                 {
                     case 0:
-                        return "ab";
-                    case 1:
-                        return "ac";
-                    case 2:
                         return "ad";
-                    case 3:
-                        return "ae";
-                    case 4:
-                        return "bc";
-                    case 5:
+                    case 1:
                         return "bd";
-                    case 6:
+                    case 2:
                         return "be";
-                    case 7:
-                        return "cd";
-                    case 8:
-                        return "ce";
-                    case 9:
-                        return "de";
-                    case 10:
-                        return "abc";
-                    case 11:
+                    case 3:
                         return "abd";
-                    case 12:
+                    case 4:
                         return "abe";
-                    case 13:
+                    case 5:
                         return "acd";
-                    case 14:
+                    case 6:
                         return "ace";
-                    case 15:
+                    case 7:
                         return "ade";
-                    case 16:
+                    case 8:
                         return "bcd";
-                    case 17:
+                    case 9:
                         return "bce";
-                    case 18:
+                    case 10:
                         return "bde";
-                    case 19:
-                        return "cde";
-                    case 20:
-                        return "abcd";
-                    case 21:
-                        return "abce";
-                    case 22:
-                        return "abde";
-                    case 23:
-                        return "acde";
-                    case 24:
-                        return "bcde";
                     default:
-                        return "abde";
+                        return "ace";
                 }
-            case "abde": //No ab, ac, bc, cd, ce, de, abc, cde (12)
-                selection = Random.Range(0, 25);
+            case "abde":
+                selection = Random.Range(0, 12);
                 switch (selection)
                 {
                     case 0:
-                        return "ab";
-                    case 1:
-                        return "ac";
-                    case 2:
                         return "ad";
-                    case 3:
+                    case 1:
                         return "ae";
-                    case 4:
-                        return "bc";
-                    case 5:
+                    case 2:
                         return "bd";
-                    case 6:
+                    case 3:
                         return "be";
-                    case 7:
-                        return "cd";
-                    case 8:
-                        return "ce";
-                    case 9:
-                        return "de";
-                    case 10:
-                        return "abc";
-                    case 11:
+                    case 4:
                         return "abd";
-                    case 12:
+                    case 5:
                         return "abe";
-                    case 13:
+                    case 6:
                         return "acd";
-                    case 14:
+                    case 7:
                         return "ace";
-                    case 15:
+                    case 8:
                         return "ade";
-                    case 16:
+                    case 9:
                         return "bcd";
-                    case 17:
+                    case 10:
                         return "bce";
-                    case 18:
+                    case 11:
                         return "bde";
-                    case 19:
-                        return "cde";
-                    case 20:
-                        return "abcd";
-                    case 21:
-                        return "abce";
-                    case 22:
-                        return "abde";
-                    case 23:
-                        return "acde";
-                    case 24:
-                        return "bcde";
                     default:
-                        return "abde";
+                        return "ace";
                 }
-            case "acde": //No ab, ac, ae, bc, cd, ce, de, abc, cde (11)
-                selection = Random.Range(0, 25);
+            case "acde":
+                selection = Random.Range(0, 11);
                 switch (selection)
                 {
                     case 0:
-                        return "ab";
-                    case 1:
-                        return "ac";
-                    case 2:
                         return "ad";
-                    case 3:
-                        return "ae";
-                    case 4:
-                        return "bc";
-                    case 5:
+                    case 1:
                         return "bd";
-                    case 6:
+                    case 2:
                         return "be";
-                    case 7:
-                        return "cd";
-                    case 8:
-                        return "ce";
-                    case 9:
-                        return "de";
-                    case 10:
-                        return "abc";
-                    case 11:
+                    case 3:
                         return "abd";
-                    case 12:
+                    case 4:
                         return "abe";
-                    case 13:
+                    case 5:
                         return "acd";
-                    case 14:
+                    case 6:
                         return "ace";
-                    case 15:
+                    case 7:
                         return "ade";
-                    case 16:
+                    case 8:
                         return "bcd";
-                    case 17:
+                    case 9:
                         return "bce";
-                    case 18:
+                    case 10:
                         return "bde";
-                    case 19:
-                        return "cde";
-                    case 20:
-                        return "abcd";
-                    case 21:
-                        return "abce";
-                    case 22:
-                        return "abde";
-                    case 23:
-                        return "acde";
-                    case 24:
-                        return "bcde";
                     default:
-                        return "abde";
+                        return "ace";
                 }
             case "bcde":
                 selection = Random.Range(0, 14);
@@ -1530,7 +1564,7 @@ public class MapGenerator : MonoBehaviour
 
     public string[,] GeneratePathFromPathCodes(string[] myPathCodes)
     {
-        string[,] pathToReturn = new string[,]
+        string[,] pathToReturn =
         {
             {"X", "X", "X", "X", "X"},
             {"X", "X", "X", "X", "X"},
@@ -1539,7 +1573,7 @@ public class MapGenerator : MonoBehaviour
             {"X", "X", "X", "X", "X"},
             {"X", "X", "X", "X", "X"}
         };
-        for (int i = 0; i < 6; i++)
+        for (int i = 5; i >= 0; i--)
         {
             if (myPathCodes[i].Contains("a"))
             {
@@ -1560,6 +1594,47 @@ public class MapGenerator : MonoBehaviour
             if (myPathCodes[i].Contains("e"))
             {
                 pathToReturn[i, 4] = "O";
+            }
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                if (pathToReturn[i, j] != "X")
+                {
+                    int biomeSelection = Random.Range(1, 4); //1 is grasslands, 2 is desert, 3 is volcano
+                    int factionSelection = Random.Range(0, 6);
+                    if (i == 5)
+                    {
+                        pathToReturn[i,j] = "?" + biomeSelection;
+                    }
+                    else
+                    {
+                        pathToReturn[i,j] = "*" + biomeSelection;
+                    }
+                    switch (factionSelection)
+                    {
+                        case 0:
+                            pathToReturn[i, j] += "a";
+                            break;
+                        case 1:
+                            pathToReturn[i, j] += "A";
+                            break;
+                        case 2:
+                            pathToReturn[i, j] += "c";
+                            break;
+                        case 3:
+                            pathToReturn[i, j] += "C";
+                            break;
+                        case 4:
+                            pathToReturn[i, j] += "g";
+                            break;
+                        case 5:
+                            pathToReturn[i, j] += "G";
+                            break;
+                    }
+                }
             }
         }
         return pathToReturn;
@@ -1618,6 +1693,44 @@ public class MapGenerator : MonoBehaviour
                 path[i, j] = "O";
             }
         }
+    }
+
+    public void UpdatePath(int targetTier, int pathSelection)
+    {
+        print("Target tier is " + targetTier);
+        print("Updating Path");
+        ShowPath();
+        path[targetTier, pathSelection].Replace('?', '!');
+        for (int i = 0; i < 5; i++)
+        {
+            if (path[targetTier, i].Contains("?"))
+            {
+                print("Question Mark Here!");
+                path[targetTier, i] = path[targetTier, i].Replace('?', '*');
+            }
+        }
+        if (targetTier > 0)
+        {
+            if (path[targetTier - 1, pathSelection].Contains("*"))
+            {
+                path[targetTier - 1, pathSelection] = path[targetTier - 1, pathSelection].Replace('*', '?');
+            }
+            if (pathSelection > 0)
+            {
+                if (path[targetTier - 1, pathSelection - 1].Contains("*"))
+                {
+                    path[targetTier - 1, pathSelection - 1] = path[targetTier - 1, pathSelection - 1].Replace('*', '?');
+                }     
+            }
+            if (pathSelection < 4)
+            {
+                if (path[targetTier - 1, pathSelection + 1].Contains("*"))
+                {
+                    path[targetTier - 1, pathSelection + 1] = path[targetTier - 1, pathSelection + 1].Replace('*', '?');
+                }
+            }
+        }
+        ShowPath();
     }
 
     public List<int> FindValidPaths(List<int> currentTier)
@@ -1755,11 +1868,12 @@ public class MapGenerator : MonoBehaviour
     public void ShowPath()
     {
         string willPrint = "";
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
+            willPrint += i + "= ";
             for (int j = 0; j < 5; j++)
             {
-                willPrint += path[i, j].ToString() + " ";
+                willPrint += path[i, j] + " ";
                 //print(path[i,j]);
             }
 
@@ -1773,6 +1887,47 @@ public class MapGenerator : MonoBehaviour
         SetTier(tierLevel);
         SetPathCode(pathCode);
         GenerateMap();
+    }
+
+    public void UpdatePregenMap(string[,] mapToUpdate, string pathCode)
+    {
+        char biomeCode = 'G';
+        if (pathCode.Contains("1"))
+        {
+            print("biome code is G");
+            biomeCode = 'G';
+        }
+        else if (pathCode.Contains("2"))
+        {
+            print("biome code is D");
+            biomeCode = 'D';
+        }
+        else if (pathCode.Contains("3"))
+        {
+            print("biome code is V");
+            biomeCode = 'V';
+        }
+        int mapSize = 0;
+        if (myPathManager.myPlayer.currentPathLevel == 0 || myPathManager.myPlayer.currentPathLevel == 1)
+        {
+            mapSize = 5;
+        }
+        else if (myPathManager.myPlayer.currentPathLevel == 2 || myPathManager.myPlayer.currentPathLevel == 3)
+        {
+            mapSize = 7;
+        }
+        else if (myPathManager.myPlayer.currentPathLevel == 4 || myPathManager.myPlayer.currentPathLevel == 5)
+        {
+            mapSize = 9;
+        }
+        for (int i = 0; i < mapSize; i++)
+        {
+            for (int j = 0; j < mapSize; j++)
+            {
+                //print(i + ", " + j);
+                mapToUpdate[i, j] = mapToUpdate[i, j].Replace('H', biomeCode);
+            }
+        }
     }
 
     public int GetCurrentTier()

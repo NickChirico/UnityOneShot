@@ -1,11 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : Entity
 {
+    public PlayerController myController;
+    public TextMeshPro interactLabel;
     public SpriteRenderer sp;
-
+    private bool _canInteract = false;
+    private InteractableObject _interactTarget = null;
+    public MasterDictionary myMasterDictionary;
     private PlayerStateManager SM;
     private UI_Manager ui;
     private SeraphController seraphControl;
@@ -18,19 +24,26 @@ public class Player : Entity
     private bool canBeDamaged = true;
     private Vector2 hitPoint;
 
+    public List<Seraph> bagSeraphim, mainWeaponSeraphim, altWeaponSeraphim, armorSeraphim, bootsSeraphim, flaskSeraphim;
+
     public int chitinNum, bloodNum, brainNum;
 
     private bool nimble = false;
+    //private Weapon _myMainWeapon, _myAltWeapon;
+    private Armor _myArmor;
+    private Boots _myBoots;
+    private Flask _myFlask;
 
     private void Awake()
     {
         SM = this.GetComponent<PlayerStateManager>();
+        seraphControl = SeraphController.GetSeraphController;
+        try { myMasterDictionary = GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>(); }
+        catch { myMasterDictionary = null; }
     }
     public override void Start()
     {
         base.Start();
-        ui = UI_Manager.GetUIManager;
-        seraphControl = SeraphController.GetSeraphController;
     }
 
     //void Update()
@@ -44,13 +57,34 @@ public class Player : Entity
         ui.UpdateHealth(currentHealth, MaxHealth);
         SM.ChangeState(SM.Damaged);
         StartCoroutine(FlashRed());
+        /*if (currentHealth <= 0)
+        {
+            SceneManager.LoadScene("DeathScreen");
+        }*/
     }
 
     public override bool TakeDamage(int damageAmount, Vector2 damageSpot, float knockForce, float postureDamage)
     {
+        bool b = base.TakeDamage(damageAmount, damageSpot, knockForce, postureDamage);
         SM.ChangeState(SM.Damaged);
         StartCoroutine(FlashRed());
-        return base.TakeDamage(damageAmount, damageSpot, knockForce, postureDamage);
+        ui.UpdateHealth(currentHealth, MaxHealth);
+        return b;
+    }
+
+    public override void Die()
+    {
+        sp.color = Color.red;
+        canBeDamaged = false;
+        ui.TogglePlayerControl(true);
+        MovementController.GetMoveController.SetMoveType(MovementController.Movement.Hold);
+        StartCoroutine(DeathScreen());
+    }
+
+    IEnumerator DeathScreen()
+    {
+        yield return new WaitForSeconds(1f);
+        ui.EnableDeathScreen();
     }
 
     public bool CanBeDamaged()
@@ -84,8 +118,15 @@ public class Player : Entity
         {
             chitinNum -= changeAmount;
         }
+
         if (ui.chitinAmount != null)
             ui.chitinAmount.text = chitinNum.ToString();
+    }
+    
+    public void ChangeChitinNum(int setAmount)
+    {
+        chitinNum = setAmount;
+        ui.chitinAmount.text = chitinNum.ToString();
     }
     
     public void ChangeBloodNum(bool isIncrease, int changeAmount)
@@ -101,6 +142,12 @@ public class Player : Entity
         if (ui.bloodAmount != null)
             ui.bloodAmount.text = bloodNum.ToString();
     }
+
+    public void ChangeBloodNum(int setAmount)
+    {
+        bloodNum = setAmount;
+        ui.bloodAmount.text = bloodNum.ToString();
+    }
     
     public void ChangeBrainNum(bool isIncrease, int changeAmount)
     {
@@ -115,6 +162,12 @@ public class Player : Entity
         if (ui.brainAmount != null)
             ui.brainAmount.text = brainNum.ToString();
     }
+    
+    public void ChangeBrainNum(int setAmount)
+    {
+        brainNum = setAmount;
+        ui.brainAmount.text = brainNum.ToString();
+    }
 
     public void RestoreFullHealth()
     {
@@ -122,9 +175,17 @@ public class Player : Entity
         //ui.UpdateHealth(currentHealth, maxHealth);
     }
 
-    public void LoadIntoLevel()
+    public Player LoadIntoLevel(PlayerLoader loader)
     {
-        
+        ui = UI_Manager.GetUIManager;
+        seraphControl = SeraphController.GetSeraphController;
+        SetAllEquipment(loader.mainWeaponCode, loader.altWeaponCode, loader.armorCode, loader.bootsCode, loader.flaskCode);
+        UpdateStatsToMatchEquipment();
+        currentHealth = loader.currentHealth <= MaxHealth ? loader.currentHealth : MaxHealth;
+        ChangeChitinNum(loader.currentChitin);
+        ChangeBrainNum(loader.currentBrains);
+        ChangeBloodNum(loader.currentBlood);
+        return this;
     }
 
     public void DrinkFlask()
@@ -132,8 +193,56 @@ public class Player : Entity
         
     }
 
+    public void SetInteract(bool canInteract, InteractableObject targetObject)
+    {
+        switch (canInteract)
+        {
+            case true:
+                _canInteract = true;
+                interactLabel.gameObject.SetActive(true);
+                _interactTarget = targetObject;
+                break;
+            case false:
+                _canInteract = false;
+                interactLabel.gameObject.SetActive(false);
+                _interactTarget = null;
+                break;
+        }
+    }
+
+    public void InteractWith()
+    {
+        if (_interactTarget != null)
+        {
+            _interactTarget.GetComponent<InteractableObject>().Interact();
+        }
+    }
+
+    public bool GetInteractStatus()
+    {
+        return _canInteract;
+    }
+
     public UI_Manager GetUIManager()
     {
         return ui;
+    }
+
+    public void SetAllEquipment(string mainWeap, string altWeap, string armor, string boots, string flask)
+    {
+        myController.SelectWeapon(mainWeap, true);
+        myController.SelectWeapon(altWeap, false);
+        if (myMasterDictionary != null)
+        {
+            myMasterDictionary.ArmorDictionary.TryGetValue(armor, out _myArmor);
+            myMasterDictionary.BootsDictionary.TryGetValue(armor, out _myBoots);
+            myMasterDictionary.FlaskDictionary.TryGetValue(armor, out _myFlask);
+        }
+        myController.UpdateSeraphs();
+    }
+
+    public void UpdateStatsToMatchEquipment()
+    {
+        
     }
 }

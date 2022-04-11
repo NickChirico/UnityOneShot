@@ -10,14 +10,15 @@ using Random = UnityEngine.Random;
 
 public class PathManager : MonoBehaviour
 {
+    public PathCollection myPathCollection;
 
-    public Player myPlayer;
+    public PlayerLoader myPlayer;
 
-    public PathOption[] allOptions;
+    public PathOption[] allOptions, tier1Options, tier2Options, tier3Options, tier4Options, tier5Options, tier6Options;
 
     public int currentOption, layerNum;
 
-    public bool choosingPath;
+    public bool choosingPath, usingPremade;
 
     public PlayerInputActions navActions;
 
@@ -27,8 +28,11 @@ public class PathManager : MonoBehaviour
 
     public MapGenerator myMapGen;
 
+    public PathOption[][] allPathOptions;
+
     public string[] newPaths;
     public string previousPath;
+    public Color myBackgroundColor;
 
     //public InputAction menuNav;
 
@@ -42,8 +46,9 @@ public class PathManager : MonoBehaviour
 
     void Start()
     {
+        
         DontDestroyOnLoad(gameObject);
-        layerNum = 1;
+        //5 - layerNum = myPlayer.currentPathLevel;
         //previousPaths = new[] {"healing", "shop", "mystery"};
         //LoadPathScene();
     }
@@ -51,51 +56,105 @@ public class PathManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            LoadPathScene();
-        }
         //selectOption.started += SelectOptionOnstarted;
         if (choosingPath)
         {
             if (navActions.UI.NavigateLeft.triggered)
             {
-                print("left");
-                if (currentOption > 0)
+                //print("left, " + currentOption);
+                if (currentOption == 4 && allPathOptions[5 - layerNum][3].valid)
                 {
-                    currentOption--;
+                    currentOption = 3;
+                    UpdateOptions();
+                }
+                else if (currentOption > 2 && allPathOptions[5 - layerNum][2].valid)
+                {
+                    currentOption = 2;
+                    UpdateOptions();
+                }
+                else if (currentOption > 1 && allPathOptions[5 - layerNum][1].valid)
+                {
+                    currentOption = 1;
+                    UpdateOptions();
+                }
+                else if (currentOption > 0 && allPathOptions[5 - layerNum][0].valid)
+                {
+                    currentOption = 0;
                     UpdateOptions();
                 }
             }
 
             if (navActions.UI.NavigateRight.triggered)
             {
-                print("right");
-                if (currentOption < 2)
+                //print("right, " + currentOption);
+                if (currentOption == 0 && allPathOptions[5 - layerNum][1].valid)
                 {
-                    currentOption++;
+                    //Debug.Log("1 is  valid");
+                    currentOption = 1;
+                    UpdateOptions();
+                }
+                else if (currentOption < 2 && allPathOptions[5 - layerNum][2].valid)
+                {
+                    //Debug.Log("2 is valid");
+                    currentOption = 2;
+                    UpdateOptions();
+                }
+                else if (currentOption < 3 && allPathOptions[5 - layerNum][3].valid)
+                {
+                    //Debug.Log("3 is valid");
+                    currentOption = 3;
+                    UpdateOptions();
+                }
+                else if (currentOption < 4 && allPathOptions[5 - layerNum][4].valid)
+                {
+                    //Debug.Log("4 is valid");
+                    currentOption = 4;
                     UpdateOptions();
                 }
             }
 
             if (navActions.UI.Select.triggered)
             {
-                print("here ya go");
-                previousPath = allOptions[currentOption].pathCode;
-                print("funny");
-                //myMapGen.GenerateMap("North");
-                myMapGen.GenerateMapFromPath(layerNum, allOptions[currentOption].pathCode);
-                //myMapGen.ShowMap();
+                myBackgroundColor = allPathOptions[5 - layerNum][currentOption].areaBackground.color;
+                if (usingPremade)
+                {
+                    myMapGen.UpdatePregenMap(myMapGen.allPregens[layerNum], allPathOptions[5-layerNum][currentOption].GetPathCode());
+                    myMapGen.roomArray = myMapGen.allPregens[layerNum];
+                }
+                else
+                {
+                    //previousPath = allOptions[currentOption].GetPathCode();
+                    //myMapGen.GenerateMap("North");
+                    myMapGen.GenerateMapFromPath(layerNum, allPathOptions[5-layerNum][currentOption].GetPathCode());
+                    //myMapGen.ShowMap();
+                    
+                }
+                myMapGen.UpdatePath(5 - layerNum, currentOption);
+                myMapGen.ShowMap();
                 SceneManager.LoadScene("SingleRoomIso");
-                choosingPath = false;
+                choosingPath = false; //HERE set to true again when we load back in!
             }
         }
     }
 
-    private void SelectOptionOnstarted(InputAction.CallbackContext obj)
+    public void UpdateNextPath(int layer, int whichOption)
+    {
+        
+    }
+
+    private void SelectOptionOnStarted(InputAction.CallbackContext obj)
     {
         print("funny");
         //throw new System.NotImplementedException();
+    }
+
+    public void EnterMapScene()
+    {
+        myPlayer.playerLoaded = false;
+        layerNum = myPlayer.currentPathLevel;
+        SceneManager.LoadScene("MapScene");
+        print("Loaded into scene now");
+        choosingPath = true;
     }
 
     public void LoadLevel()
@@ -103,18 +162,58 @@ public class PathManager : MonoBehaviour
         
     }
 
+    public void InitialOptions()
+    {
+        print("choosing initial options");
+        print(layerNum);
+        //Debug.Log(allPathOptions[5 - layerNum][0].valid.ToString());
+        if (allPathOptions[5 - layerNum][0].valid)
+        {
+            //Debug.Log("initial option is 0");
+            currentOption = 0;
+            UpdateOptions();
+        }
+        else if (allPathOptions[5 - layerNum][1].valid)
+        {
+            //Debug.Log("initial option is 1");
+            currentOption = 1;
+            UpdateOptions();
+        }
+        else if (allPathOptions[5 - layerNum][2].valid)
+        {
+            //Debug.Log("initial option is 2");
+            currentOption = 2;
+            UpdateOptions();
+        }
+        else if (allPathOptions[5 - layerNum][3].valid)
+        {
+            //Debug.Log("initial option is 3");
+            currentOption = 3;
+            UpdateOptions();
+        }
+        else if (allPathOptions[5 - layerNum][4].valid)
+        {
+            //Debug.Log("initial option is 4");
+            currentOption = 4;
+            UpdateOptions();
+        }
+    }
+
     public void UpdateOptions()
     {
-        print("updating options");
-        for (int i = 0; i < allOptions.Length; i++)
+        //print("updating options");
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                allPathOptions[i][j].ChangeSelection(false);
+            }
+        }
+        for (int i = 0; i < 5; i++)
         {
             if (i == currentOption)
             {
-                allOptions[i].ChangeSelection(true);
-            }
-            else
-            {
-                allOptions[i].ChangeSelection(false);
+                allPathOptions[5 - layerNum][i].ChangeSelection(true);
             }
         }
     }
@@ -130,7 +229,7 @@ public class PathManager : MonoBehaviour
         //allOptions[1] = GameObject.Find("Middle Option").GetComponent<PathOption>();
         //allOptions[2] = GameObject.Find("Right Option").GetComponent<PathOption>();
         //layerText = GameObject.Find("Layer Text").GetComponent<Text>();
-        //layerText.text = "Layer: " + layerNum;
+        //layerText.text = "Layer: " + 5 - layerNum;
     }
 
     public void Initiate()
@@ -149,7 +248,7 @@ public class PathManager : MonoBehaviour
         string[] options = new string[3];
         List<string> pathOptions = new List<string>()
             { "rupture", "siphon", "contaminate", "gold", "healing", "shop", "weapon", "mystery"};
-        if (layerNum == 1)
+        if (5 - layerNum == 1)
         {
             pathOptions.Remove("healing");
             pathOptions.Remove("shop");
@@ -157,7 +256,7 @@ public class PathManager : MonoBehaviour
         }
         else
         {
-            pathOptions.Remove(previousPath);
+            //pathOptions.Remove(previousPath);
         }
         int currentSelection;
         for (int i = 0; i < options.Length; i++)
@@ -172,5 +271,95 @@ public class PathManager : MonoBehaviour
 
         string[] demoOptions = {"rupture", "contaminate", "siphon"};
         return demoOptions;
+    }
+
+    public void GetPathOptions()
+    {
+        tier1Options = myPathCollection.tier1Options;
+        tier2Options = myPathCollection.tier2Options;
+        tier3Options = myPathCollection.tier3Options;
+        tier4Options = myPathCollection.tier4Options;
+        tier5Options = myPathCollection.tier5Options;
+        tier6Options = myPathCollection.tier6Options;
+        allPathOptions =  new []{tier6Options, tier5Options, tier4Options, tier3Options, tier2Options, tier1Options};
+    }
+    
+    public void GeneratePathMapOnScreen(string[,] inputArray)
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                MakePathOptionVisible(allPathOptions[i][j], inputArray[i,j]);
+            }
+        }
+    }
+
+    public void MakePathOptionVisible(PathOption inputOption, string inputCode)
+    {
+        inputOption.SetPathCode(inputCode);
+        if (inputOption.GetPathCode() == "X")
+        {
+            inputOption.valid = false;
+            inputOption.gameObject.SetActive(false);
+        }
+        else
+        {
+            char biomeSelection = inputOption.GetPathCode().ToCharArray()[1];
+            char factionSelection = inputOption.GetPathCode().ToCharArray()[2];
+            char initialChar = inputOption.GetPathCode().ToCharArray()[0];
+            if (initialChar == '*')
+            {
+                inputOption.grayOverlay.enabled = true;
+                inputOption.valid = false;
+            }
+            else
+            {
+                inputOption.grayOverlay.enabled = false;
+                if (initialChar == '?')
+                {
+                    //Debug.Log("question mark here");
+                    inputOption.valid = true;
+                }
+            }
+
+            switch (biomeSelection)
+            {
+                case '1':
+                    inputOption.areaBackground.color = inputOption.grasslandsColor;
+                    break;
+                case '2':
+                    inputOption.areaBackground.color = inputOption.desertColor;
+                    break;
+                case '3':
+                    inputOption.areaBackground.color = inputOption.volcanoColor;
+                    break;
+                default:
+                    inputOption.areaBackground.color = inputOption.grasslandsColor;
+                    break;
+            }
+
+            switch (factionSelection)
+            {
+                case 'a':
+                    inputOption.pathSymbol.sprite = inputOption.academySymbol;
+                    break;
+                case 'A':
+                    inputOption.pathSymbol.sprite = inputOption.academySymbol;
+                    break;
+                case 'c':
+                    inputOption.pathSymbol.sprite = inputOption.churchSymbol;
+                    break;
+                case 'C':
+                    inputOption.pathSymbol.sprite = inputOption.churchSymbol;
+                    break;
+                case 'g':
+                    inputOption.pathSymbol.sprite = inputOption.guildSymbol;
+                    break;
+                case 'G':
+                    inputOption.pathSymbol.sprite = inputOption.guildSymbol;
+                    break;
+            }
+        }
     }
 }

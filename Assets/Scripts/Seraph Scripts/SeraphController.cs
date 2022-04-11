@@ -26,11 +26,11 @@ public class SeraphController : MonoBehaviour
 
     public int bagCapacity;
     public List<Seraph_UI> BagSeraphs;
-
     public List<Seraph_UI> MainWeapSeraphs;
     public List<Seraph_UI> AltWeapSeraphs;
     public List<Seraph_UI> ArmorSeraphs;
     public List<Seraph_UI> BootsSeraphs;
+    public List<Seraph_UI> FlaskSeraphs;
 
     public Seraph_UI UI_Seraph_Prefab;
 
@@ -82,6 +82,9 @@ public class SeraphController : MonoBehaviour
                 case 2:
                     newSeraph.SetGenome(Seraph_UI.Genome.Contaminate);
                     break;
+                case 3:
+                    newSeraph.SetGenome(Seraph_UI.Genome.Storm);
+                    break;
                 default:
                     newSeraph.SetGenome(Seraph_UI.Genome.None);
                     break;
@@ -90,6 +93,29 @@ public class SeraphController : MonoBehaviour
         else
         {
             Debug.Log("BAG FULL");
+        }
+    }
+
+    public void SpawnSeraph(string inputCode)
+    {
+        if (BagSeraphs.Count < bagCapacity)
+        {
+            Seraph_UI newSeraph = Instantiate(UI_Seraph_Prefab, parentPanel);
+            switch (inputCode)
+            {
+                case "rupture":
+                    newSeraph.SetGenome(Seraph_UI.Genome.Rupture);
+                    break;
+                case "siphon":
+                    newSeraph.SetGenome(Seraph_UI.Genome.Siphon);
+                    break;
+                case "contaminate":
+                    newSeraph.SetGenome(Seraph_UI.Genome.Contaminate);
+                    break;
+                default:
+                    newSeraph.SetGenome(Seraph_UI.Genome.None);
+                    break;
+            }
         }
     }
 
