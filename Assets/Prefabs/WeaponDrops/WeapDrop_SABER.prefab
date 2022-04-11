@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 409388795005942078}
   - component: {fileID: 409388795005942050}
   - component: {fileID: 409388795005942049}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: WeapDrop_SABER
   m_TagString: weaponDrop
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8168285348691850266}
   - component: {fileID: 1494978963593133256}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: image
   m_TagString: Untagged
   m_Icon: {fileID: 0}

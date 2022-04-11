@@ -43,7 +43,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9223d974c005efb47af8d1828988302a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyName: Lightning Storm
+  Title: Stormcaller
+  SubTitle: Crescendium
+  Description: 'Concentrates static electricity to call down a lightning strike '
+  VariantSubtitles:
+  - A
+  - B
+  - AB
+  - O
+  VariantDescriptions:
+  - 
+  - 
+  - 
+  - 
   myBlood: 0
   boltDamage: 20
   chargedDuration: 6

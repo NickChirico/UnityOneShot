@@ -43,7 +43,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc6280857644324b9ff0ed4478508d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyName: Fulminant
+  Title: Rupture
+  SubTitle: Fulminant
+  Description: 'Creates an explosion '
+  VariantSubtitles:
+  - Magnus
+  - Exactus
+  - Novus
+  - Patiens
+  VariantDescriptions:
+  - that deals increased damage.
+  - with increased size and force.
+  - with both increased damage and knockback
+  - that explodes twice.
   myBlood: 0
   Explosion_Prefab: {fileID: -4243994153142615949, guid: 6d946df5f3242154c85137bdebde629a,
     type: 3}
@@ -52,4 +64,5 @@ MonoBehaviour:
   ruptureDamage: 11
   ruptureRadius: 0.65
   ruptureDuration: 0.15
+  ruptureKnockback: 0
   ruptureOnsetDelay: 0.15

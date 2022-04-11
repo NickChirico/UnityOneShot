@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class SeraphController : MonoBehaviour
 {
@@ -34,6 +36,15 @@ public class SeraphController : MonoBehaviour
 
     public Seraph_UI UI_Seraph_Prefab;
 
+    [Space(10)]
+    [Header("TOOLTIP")]
+    public Image tooltipPanel;
+    public Image tooltipSprite;
+    public TextMeshProUGUI tooltipTitle;
+    public TextMeshProUGUI tooltipSubTitle;
+    public TextMeshProUGUI tooltipDescription;
+       
+
     private void Awake()
     {
         _seraphControl = this;
@@ -44,6 +55,8 @@ public class SeraphController : MonoBehaviour
         shot = ShotController.GetShotControl;
         melee = MeleeController.GetMeleeControl;
         spec = SpecialController.GetSpecialController;
+
+        ClearTooltip();
     }
 
     
@@ -65,7 +78,7 @@ public class SeraphController : MonoBehaviour
 
     }
 
-    public void SpawnSeraph(int i)
+    public void SpawnSeraph(int i) // ****** ADD NEW SERAPH ******
     {
         if (BagSeraphs.Count < bagCapacity)
         {
@@ -233,6 +246,42 @@ public class SeraphController : MonoBehaviour
         {
             s.GoToSpot();
         }
+    }
+
+    // Called from Seraph_UI.cs prefabs when you hover over it. 
+    public void LoadTooltip(Sprite sprite, Color color, string title, string subtitle, string description, string blood)
+    {
+        // Load all stuff from Seraph into the UI
+        tooltipSprite.sprite = sprite;
+        tooltipPanel.color = color;
+        tooltipTitle.text = title;
+        tooltipSubTitle.text = subtitle;
+        tooltipDescription.text = description;
+
+        switch (blood)
+        {
+            case "A": // A
+                tooltipTitle.text += "<color=#330000>  'A'</color>";
+                break;
+            case "B": // B
+                tooltipTitle.text += "<color=#000b33>  'B'</color>";
+                break;
+            case "AB": // AB
+                tooltipTitle.text += "<color=#330027>  'AB'</color>";
+                break;
+            case "O": // O
+                tooltipTitle.text += "<color=#053300>  'O'</color>";
+                break;
+        }
+
+        if(!tooltipPanel.gameObject.activeSelf)
+            tooltipPanel.gameObject.SetActive(true);
+    }
+
+    public void ClearTooltip()
+    {
+        if (tooltipPanel.gameObject.activeSelf)
+            tooltipPanel.gameObject.SetActive(false);
     }
 
 

@@ -10,7 +10,7 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
     SeraphController seraphControl;
     public Image seraphIcon;
     public Image backdrop;
-    public Sprite ruptureSprite, contaminateSprite, siphonSprite;
+    public Sprite ruptureSprite, contaminateSprite, siphonSprite, stormSprite;
 
     private Canvas canvas;
     private CanvasGroup canvasGroup;
@@ -31,11 +31,6 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
     public GameObject[] SeraphPrefabs;
     public Color[] seraphColors;
 
-    [Header("Tooltip")]
-    public Image Tooltip_box;
-    public TextMeshProUGUI tooltip_title;
-    public TextMeshProUGUI tooltip_description;
-
     private void Awake()
     {
 
@@ -45,8 +40,7 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
         canvasGroup = this.GetComponent<CanvasGroup>();
 
         //mySeraph = Instantiate(mySeraphPrefab, seraphControl.seraphParent).GetComponent<Seraph>();
-
-        Tooltip_box.gameObject.SetActive(false);
+        //Tooltip_box.gameObject.SetActive(false);
     }
     private void OnEnable()
     {
@@ -76,31 +70,25 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
                 backdrop.color = seraphColors[0];
                 seraphIcon.sprite = ruptureSprite;
                 mySeraph = Instantiate(SeraphPrefabs[0], seraphControl.seraphParent).GetComponent<Seraph>();
-                tooltip_title.text = "Rupture Seraph";
-                tooltip_description.text = "Creates an Explosion damaging and knocking back enemies.";
                 break;
             case Genome.Siphon:
                 backdrop.color = seraphColors[1];
                 seraphIcon.sprite = siphonSprite;
                 mySeraph = Instantiate(SeraphPrefabs[1], seraphControl.seraphParent).GetComponent<Seraph>();
-                tooltip_title.text = "Siphon Seraph";
-                tooltip_description.text = "Heal for a portion of the damage dealt or received.";
                 break;
             case Genome.Contaminate:
                 backdrop.color = seraphColors[2];
                 seraphIcon.sprite = contaminateSprite;
                 mySeraph = Instantiate(SeraphPrefabs[2], seraphControl.seraphParent).GetComponent<Seraph>();
-                tooltip_title.text = "Contamination Seraph";
-                tooltip_description.text = "Infect targets with a gradual poison effect.";
                 break;
             case Genome.Storm:
                 backdrop.color = seraphColors[3];
+                seraphIcon.sprite = stormSprite;
                 mySeraph = Instantiate(SeraphPrefabs[3], seraphControl.seraphParent).GetComponent<Seraph>();
-                tooltip_title.text = "Storm Seraph";
-                tooltip_description.text = "Channel a powerful Lightning Strike.";
                 break;
             case Genome.Surge:
                 backdrop.color = seraphColors[4];
+                //seraphIcon.sprite = stormSprite;
                 mySeraph = Instantiate(SeraphPrefabs[4], seraphControl.seraphParent).GetComponent<Seraph>();
                 break;
 
@@ -130,12 +118,16 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
 
     private void OnMouseOver()
     {
-        Tooltip_box.gameObject.SetActive(true);
+        //Tooltip_box.gameObject.SetActive(true);
+
+        seraphControl.LoadTooltip(seraphIcon.sprite, backdrop.color, mySeraph.Title, mySeraph.SubTitle, mySeraph.Description, mySeraph.myBlood.ToString());
     }
 
     private void OnMouseExit()
     {
-        Tooltip_box.gameObject.SetActive(false);
+        //Tooltip_box.gameObject.SetActive(false);
+
+        seraphControl.ClearTooltip();
 
     }
 
