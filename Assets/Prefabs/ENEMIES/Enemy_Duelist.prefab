@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12828a29807a844aa1ba28970f49929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponSprite: {fileID: 0}
   simpleWeaponCode: 0
   complexWeaponCode: 
   isValidWeapon: 1
@@ -147,15 +148,15 @@ MonoBehaviour:
   - 0.15
   - 0.2
   swingRangeArr:
-  - 0.6
-  - 0.7
-  - 0.7
-  - 0.9
+  - 1.25
+  - 1.25
+  - 1.5
+  - 1.5
   attackRadiusArr:
-  - 0.5
-  - 0.6
   - 0.6
   - 0.75
+  - 0.75
+  - 0.8
   thrustForceArr:
   - 8
   - 8
@@ -1068,8 +1069,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04, y: 0.17}
-  m_Size: {x: 0.45, y: 1.06}
+  m_Offset: {x: 0, y: 0.2}
+  m_Size: {x: 0.45, y: 1.25}
   m_Direction: 0
 --- !u!114 &8194989536356328622
 MonoBehaviour:
@@ -1127,7 +1128,7 @@ MonoBehaviour:
   patrolDuration: 2
   patrolSpeed: 0.6
   chaseDuration: 24
-  chaseSpeed: 1.15
+  chaseSpeed: 1.45
   attackDamage: 24
   attackRange: 1.5
   attackDuration: 0.55

@@ -66,6 +66,7 @@ public class Player : Entity
     public override bool TakeDamage(int damageAmount, Vector2 damageSpot, float knockForce, float postureDamage)
     {
         bool b = base.TakeDamage(damageAmount, damageSpot, knockForce, postureDamage);
+        seraphControl.ActivateArmorSeraphs(null, this.transform.position);
         SM.ChangeState(SM.Damaged);
         StartCoroutine(FlashRed());
         ui.UpdateHealth(currentHealth, MaxHealth);

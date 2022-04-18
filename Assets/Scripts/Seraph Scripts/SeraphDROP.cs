@@ -5,9 +5,9 @@ using UnityEngine;
 public class SeraphDROP : MonoBehaviour
 {
     SeraphController seraphControl;
-    public enum SeraphType { Rupture, Siphon, Contam, Storm }
+    public enum SeraphType { Rupture, Siphon, Contam, Storm, Surge }
     public SeraphType upgradeType;
-    //public int value; // 0 == rup, 1 == siph, 2 == contam, 3 == storm;
+    //public int value; // 0 == rup, 1 == siph, 2 == contam, 3 == storm, 4 == surge;
 
     bool canPickUp = true;
     bool moving = false;

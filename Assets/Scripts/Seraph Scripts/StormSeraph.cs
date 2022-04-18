@@ -39,13 +39,16 @@ public class StormSeraph : Seraph
 
     public override void StartEffect(Entity entity, Vector2 hitPoint)
     {
-        if (entity.IsCharged())
+        if (entity != null)
         {
-            entity.AccelerateLightning(chargedReductionAmount);
-        }
-        else
-        {
-            entity.StormStrike(chargedDuration, boltDamage, doStun, LightningStrike);
+            if (entity.IsCharged())
+            {
+                entity.AccelerateLightning(chargedReductionAmount);
+            }
+            else
+            {
+                entity.StormStrike(chargedDuration, boltDamage, doStun, LightningStrike);
+            }
         }
     }
     public override void DoEffect()

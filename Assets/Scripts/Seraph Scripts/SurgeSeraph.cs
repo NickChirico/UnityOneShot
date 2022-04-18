@@ -20,7 +20,7 @@ public class SurgeSeraph : Seraph
                 break;
             case BloodType.B:
                 // Give small boost for longer time
-                boostAmount *= 1.65f;
+                boostAmount *= 1.75f;
                 boostDuration *= 2.5f;
                 echoFrequency = 0.09f;
                 break;
@@ -32,7 +32,7 @@ public class SurgeSeraph : Seraph
 
                 break;
             case BloodType.O:
-                boostAmount *= 1.5f;
+                boostAmount *= 1.65f;
                 echoFrequency = 0.075f;
                 // While reloading, increased speed. 
 
@@ -41,7 +41,7 @@ public class SurgeSeraph : Seraph
     }
     public override void StartEffect(Entity entity, Vector2 hitPoint)
     {
-        if (entity.IsEnemy()) // if an enemy was hit, boost PLAYER
+        if (entity == null || entity.IsEnemy()) // if an enemy was hit, boost PLAYER
         {
             if (myBlood != BloodType.O)
             {
