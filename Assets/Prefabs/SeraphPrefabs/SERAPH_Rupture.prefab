@@ -47,14 +47,14 @@ MonoBehaviour:
   SubTitle: Fulminant
   Description: 'Creates an explosion '
   VariantSubtitles:
+  - Fortis
   - Magnus
-  - Exactus
   - Novus
   - Patiens
   VariantDescriptions:
-  - that deals increased damage.
-  - with increased size and force.
-  - with both increased damage and knockback
+  - that deals great damage.
+  - with great size and force.
+  - dealing great damage and knockback.
   - that explodes twice.
   myBlood: 0
   Explosion_Prefab: {fileID: -4243994153142615949, guid: 6d946df5f3242154c85137bdebde629a,

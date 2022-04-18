@@ -56,6 +56,36 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
+    public void DoSeraphEffects()
+    {
+        if (seraphs == null)
+        {
+            print("seraph UI stuff missing");
+        }
+        else if (seraphs.Length >= 1)
+        {
+            foreach (Seraph_UI S in seraphs)
+            {
+                S.mySeraph.DoEffect();
+            }
+        }
+    }
+
+    public void EndSeraphEffects()
+    {
+        if (seraphs == null)
+        {
+            print("seraph UI stuff missing");
+        }
+        else if (seraphs.Length >= 1)
+        {
+            foreach (Seraph_UI S in seraphs)
+            {
+                S.mySeraph.EndEffect();
+            }
+        }
+    }
+
     public virtual bool IsRanged()
     { return false; }
 }

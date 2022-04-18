@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2506849827344306906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2506849827344306905}
+  - component: {fileID: 5007941369564757908}
+  m_Layer: 0
+  m_Name: SERAPH_SurgeSpeed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2506849827344306905
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2506849827344306906}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -24.991528, y: -4.897835, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5007941369564757908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2506849827344306906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c946232e4264b4db326be241397ce2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Title: Surge
+  SubTitle: Surgetis
+  Description: 'Gain '
+  VariantSubtitles:
+  - 
+  - 
+  - 
+  - 
+  VariantDescriptions:
+  - a short but potent boost of speed.
+  - 'a boost of speed that slowly dissapates. '
+  - a sudden boost of speed for a brief moment.
+  - 'increased movement speed while reloading. '
+  myBlood: 0
+  boostAmount: 1
+  boostDuration: 1.5
+  echoFrequency: 0
+  isStacking: 0

@@ -311,6 +311,16 @@ public abstract class Enemy : Entity
 
     }
 
+    public override void Stun()
+    {
+        SM.Stun();
+        Debug.Log("ENEMY stun");
+    }
+
+    public override bool IsEnemy()
+    {
+        return true;
+    }
     public abstract void SetUp();
 
     public virtual void Patrol(Vector2 dest)

@@ -143,6 +143,7 @@ MonoBehaviour:
   contaminateSprite: {fileID: 21300000, guid: 61b9511a3a9433a44942b645c879b418, type: 3}
   siphonSprite: {fileID: 21300000, guid: 128f40e563a8b374a873a319e6d0cc70, type: 3}
   stormSprite: {fileID: 21300000, guid: 33d5c28ba588a5d44978410c704bca0d, type: 3}
+  surgeSprite: {fileID: 21300000, guid: 33d5c28ba588a5d44978410c704bca0d, type: 3}
   mySlot: {fileID: 0}
   mySeraph: {fileID: 0}
   seraphType: 0
@@ -151,13 +152,13 @@ MonoBehaviour:
   - {fileID: 5001664139991484655, guid: 3a5629b0ec9d2e44592e46a6d2dc16a4, type: 3}
   - {fileID: 5001664139991484655, guid: e321f07156281c842becf27521605e4c, type: 3}
   - {fileID: 2506849827344306906, guid: 2c9e342bfa62db846b3db3953ea27ace, type: 3}
-  - {fileID: 0}
+  - {fileID: 2506849827344306906, guid: c56c04c3d08f3414397b39387db4ad41, type: 3}
   seraphColors:
   - {r: 0.7529412, g: 0.16470589, b: 0.16862746, a: 1}
   - {r: 0.18431373, g: 0.7529412, b: 0.16470589, a: 1}
   - {r: 0.5471698, g: 0.06452473, b: 0.42818445, a: 1}
   - {r: 0.3160377, g: 0.4268691, b: 1, a: 1}
-  - {r: 0.65624547, g: 0.6698113, b: 0.43284976, a: 1}
+  - {r: 0.8867924, g: 0.78849155, b: 0.15477037, a: 1}
 --- !u!225 &2876480196639066006
 CanvasGroup:
   m_ObjectHideFlags: 0

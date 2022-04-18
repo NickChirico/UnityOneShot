@@ -194,6 +194,16 @@ public class Entity : MonoBehaviour
         }
     }
 
+    public virtual void Stun()
+    {
+        Debug.Log("ENTITY stun");
+    }
+
+    public virtual bool IsPlayer()
+    { return false; }
+    public virtual bool IsEnemy()
+    { return false; }
+
 
     //   ~~~~~~~~~ Seraph Afflications ~~~~~~~~~~
     public void Mark(float dur)
@@ -265,14 +275,16 @@ public class Entity : MonoBehaviour
     int lightningDamage;
     float lightningKnockForce;
     float lightningPostureDamage;
+    bool lightning_doStun;
     GameObject storm_particles;
     GameObject bolt_object;
 
-    public void StormStrike(float dur, int boltDamage, GameObject boltObject)
+    public void StormStrike(float dur, int boltDamage, bool doStun, GameObject boltObject)
     {
         lightningTimer = dur;
         lightningDamage = boltDamage;
         bolt_object = boltObject;
+        lightning_doStun = doStun;
         isCharged = true;
 
         if (stormParticles_prefab != null)
@@ -296,6 +308,9 @@ public class Entity : MonoBehaviour
     }
     private void FireLightning()
     {
+        if (lightning_doStun)
+            Stun();
+
         TakeDamage(lightningDamage, this.transform.position, lightningKnockForce, lightningPostureDamage);
         isCharged = false;
 

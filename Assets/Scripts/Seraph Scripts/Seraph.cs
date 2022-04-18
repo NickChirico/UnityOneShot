@@ -55,7 +55,7 @@ public abstract class Seraph : MonoBehaviour
     private Vector2 targetPos;
 
     public abstract void StartEffect(Entity entity, Vector2 hitPoint);
-    public abstract void DoEffect();
+    public abstract void DoEffect(); // called in RELOAD
     public abstract void EndEffect();
 
     public virtual void SetTargetPos(Vector2 pos)

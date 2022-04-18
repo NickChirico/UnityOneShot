@@ -63,13 +63,13 @@ MonoBehaviour:
   - 0.175
   - 0.25
   swingRangeArr:
-  - 0.55
-  - 0.55
-  - 0.7
+  - 0.75
+  - 0.75
+  - 0.9
   attackRadiusArr:
-  - 0.55
-  - 0.55
-  - 0.7
+  - 0.6
+  - 0.6
+  - 0.75
   thrustForceArr:
   - 4
   - 4

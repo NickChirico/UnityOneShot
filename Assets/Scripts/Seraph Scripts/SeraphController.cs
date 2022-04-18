@@ -98,6 +98,9 @@ public class SeraphController : MonoBehaviour
                 case 3:
                     newSeraph.SetGenome(Seraph_UI.Genome.Storm);
                     break;
+                case 4:
+                    newSeraph.SetGenome(Seraph_UI.Genome.Surge);
+                    break;
                 default:
                     newSeraph.SetGenome(Seraph_UI.Genome.None);
                     break;

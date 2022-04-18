@@ -87,6 +87,11 @@ public class Player : Entity
         ui.EnableDeathScreen();
     }
 
+    public override bool IsPlayer()
+    {
+        return true;
+    }
+
     public bool CanBeDamaged()
     { return canBeDamaged; }
 

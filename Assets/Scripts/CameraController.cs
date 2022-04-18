@@ -15,7 +15,10 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         cam = this.GetComponent<Camera>();
-        currentCamSize = cam.orthographicSize;
+        if (currentCamSize <= 1)
+            currentCamSize = cam.orthographicSize;
+        else if (currentCamSize > 1)
+            cam.orthographicSize = currentCamSize;
         cam.backgroundColor = GameObject.Find("Path Manager").GetComponent<PathManager>().myBackgroundColor;
     }
 

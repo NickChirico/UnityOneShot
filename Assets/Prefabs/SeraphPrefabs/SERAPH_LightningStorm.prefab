@@ -45,19 +45,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Title: Stormcaller
   SubTitle: Crescendium
-  Description: 'Concentrates static electricity to call down a lightning strike '
+  Description: 'Concentrate static electricity to call down a lightning strike '
   VariantSubtitles:
-  - A
-  - B
-  - AB
-  - O
+  - Fortis
+  - Velox
+  - Novus
+  - Debilis
   VariantDescriptions:
   - 
   - 
   - 
   - 
   myBlood: 0
-  boltDamage: 20
+  boltDamage: 18
   chargedDuration: 6
   chargedReductionAmount: 1
   LightningStrike: {fileID: 7519064206190138433, guid: a7ec138633665a74da75782dadb86236,

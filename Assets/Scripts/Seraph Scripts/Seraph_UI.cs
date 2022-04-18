@@ -10,7 +10,7 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
     SeraphController seraphControl;
     public Image seraphIcon;
     public Image backdrop;
-    public Sprite ruptureSprite, contaminateSprite, siphonSprite, stormSprite;
+    public Sprite ruptureSprite, contaminateSprite, siphonSprite, stormSprite, surgeSprite;
 
     private Canvas canvas;
     private CanvasGroup canvasGroup;
@@ -88,7 +88,7 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
                 break;
             case Genome.Surge:
                 backdrop.color = seraphColors[4];
-                //seraphIcon.sprite = stormSprite;
+                seraphIcon.sprite = surgeSprite;
                 mySeraph = Instantiate(SeraphPrefabs[4], seraphControl.seraphParent).GetComponent<Seraph>();
                 break;
 

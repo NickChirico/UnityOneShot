@@ -22,10 +22,12 @@ public class RuptureSeraph : Seraph
                 break;
             case BloodType.B:
                 ruptureKnockback *= 1.5f;
+                ruptureRadius *= 1.5f;
                 break;
             case BloodType.AB:
-                ruptureDamage = (int)(ruptureDamage * 1.5f); // 50% Increased Damage
-                ruptureKnockback *= 1.5f;
+                ruptureDamage = (int)(ruptureDamage * 1.25f); // 50% Increased Damage
+                ruptureKnockback *= 1.25f;
+                ruptureRadius *= 1.25f;
                 break;
             case BloodType.O:
                 // 2nd Explosion -- in SpawnExplosion()

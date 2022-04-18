@@ -631,12 +631,16 @@ public class PlayerState_Reloading : PlayerState
             Duration = 3f;
         }
 
+        weapon.DoSeraphEffects();
+
         weapon.PlayFullReloadSound();
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        weapon.EndSeraphEffects();
     }
 
     private void ReloadSuccess()
