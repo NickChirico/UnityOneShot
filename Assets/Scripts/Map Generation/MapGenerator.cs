@@ -117,7 +117,7 @@ public class MapGenerator : MonoBehaviour
         {"X", "X", "X", "X", "X"},
         {"X", "X", "X", "X", "X"}
     };
-    public string[,] pregenPath = new string[,]
+    public string[,] pregenPath = new string[,] //the path that shows up on the map in the exhibition build.
     {
         {"*3a", "X", "*2C", "X", "*1G"},
         {"X", "*1A", "X", "*3g", "*1c"},
@@ -126,6 +126,16 @@ public class MapGenerator : MonoBehaviour
         {"X", "*2g", "*3C", "*1a", "X"},
         {"?1c", "?2A", "X", "?3G", "X"}
     };
+    //the pregen maps are the room layouts of the levels in the exhibition build. The rooms are all written using the same shorthand code.
+    //"X" means there's no room there, but I'll go through the other codes character by character
+    //Rooms codes are made up of five characters, separated by periods.
+    //The first character is always "!" for the entrance room (! means it's the room we're currently in) and the rest of the rooms start as "*" (which means the enemies haven't been killed yet)
+    //The second character is the type of room. Always put "E" for the entrance (the southernmost room), "B" for the boss (the northernmost room), and "C" for everything else (stands for combat)
+    //The third character is ALWAYS "H". This is the placeholder that gets changed when the player chooses what biome they want.
+    //The fourth character is the room layout being used. The number corresponds to the index of the room in its "Room Collection" array.
+    //The final character is the specific enemy layout to use in the room. This corresponds to the indexes in the "Enemy Spawns" array in the room object
+    //Entrances always have "1.0" as their final two characters. Boss rooms always have "0.0" as their final two characters.
+    //As a general rule, I try not to put two identical room+enemy pairs next to each other, but that's not necessary at all.
     public string[,] pregenMap1 = new string[,]
     {
         {"X", "X", "*.B.H.0.0", "X", "X"},
