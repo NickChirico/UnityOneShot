@@ -43,8 +43,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09f1d97b5fd18e54195ef59da55e856c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyName: Divorant
-  targetPos: {x: 13.3, y: 1.5}
+  Title: Siphon
+  SubTitle: Divorant
+  Description: 'Heals the owner '
+  VariantSubtitles:
+  - Avidus
+  - Voraxis
+  - Novus
+  - Superflueris
+  VariantDescriptions:
+  - for a fixed amount
+  - for a percentage of damage dealt.
+  - for a greater amount.
+  - and store excess healing as a shield.
+  myBlood: 0
   healthOrb: {fileID: 6942797452527294329, guid: 7e8aa5da1690e034d94b787a8ecfe51b,
     type: 3}
   healAmount: 10

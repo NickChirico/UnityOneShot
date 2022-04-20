@@ -11,34 +11,44 @@ public class StormSeraph : Seraph
     public float chargedReductionAmount;
     public GameObject LightningStrike;
 
+    bool doStun = false;
+
     void Start()
     {
         switch (myBlood)
         {
             case BloodType.A:
-                // Each hit reduces the charge build up - quicker detonation with fast attacks
+                // Increased bolt damage
+                boltDamage += 8;
                 break;
             case BloodType.B:
-                // higher bonus detonation damage if attacked in sweet spot 
+                // Shorter build up
+                chargedDuration -= 2.5f;
                 break;
             case BloodType.AB:
                 // Shorter build up, and higher bonus detonation damage
+                boltDamage += 5;
+                chargedDuration -= 1.25f;
                 break;
             case BloodType.O:
                 // Lightning strike briefly stuns
+                doStun = true;
                 break;
         }
     }
 
     public override void StartEffect(Entity entity, Vector2 hitPoint)
     {
-        if (entity.IsCharged())
+        if (entity != null)
         {
-            entity.AccelerateLightning(chargedReductionAmount);
-        }
-        else
-        {
-            entity.StormStrike(chargedDuration, boltDamage, LightningStrike);
+            if (entity.IsCharged())
+            {
+                entity.AccelerateLightning(chargedReductionAmount);
+            }
+            else
+            {
+                entity.StormStrike(chargedDuration, boltDamage, doStun, LightningStrike);
+            }
         }
     }
     public override void DoEffect()

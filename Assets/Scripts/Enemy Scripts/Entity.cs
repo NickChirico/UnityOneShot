@@ -130,7 +130,11 @@ public class Entity : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            if (canDie)
+            {
+                canDie = false;
+                Die();
+            }
             return true;
         }
         else
@@ -139,6 +143,7 @@ public class Entity : MonoBehaviour
         }
     }
 
+    bool canDie = true;
     public virtual void Die()
     {
         //gameObject.SetActive(false);
@@ -166,7 +171,7 @@ public class Entity : MonoBehaviour
                 //posture = Mathf.Lerp(posture, 0, Time.deltaTime / postureDecayRate);
                 posture -= postureRechargeRate * 0.01f;
 
-                if (posture < postureMax / 2)
+                if (posture < postureMax / 4)
                 {
                     if (guardBroken)
                     {
@@ -188,6 +193,16 @@ public class Entity : MonoBehaviour
             postureBar.GuardBreak(true);
         }
     }
+
+    public virtual void Stun()
+    {
+        Debug.Log("ENTITY stun");
+    }
+
+    public virtual bool IsPlayer()
+    { return false; }
+    public virtual bool IsEnemy()
+    { return false; }
 
 
     //   ~~~~~~~~~ Seraph Afflications ~~~~~~~~~~
@@ -260,14 +275,16 @@ public class Entity : MonoBehaviour
     int lightningDamage;
     float lightningKnockForce;
     float lightningPostureDamage;
+    bool lightning_doStun;
     GameObject storm_particles;
     GameObject bolt_object;
 
-    public void StormStrike(float dur, int boltDamage, GameObject boltObject)
+    public void StormStrike(float dur, int boltDamage, bool doStun, GameObject boltObject)
     {
         lightningTimer = dur;
         lightningDamage = boltDamage;
         bolt_object = boltObject;
+        lightning_doStun = doStun;
         isCharged = true;
 
         if (stormParticles_prefab != null)
@@ -291,6 +308,9 @@ public class Entity : MonoBehaviour
     }
     private void FireLightning()
     {
+        if (lightning_doStun)
+            Stun();
+
         TakeDamage(lightningDamage, this.transform.position, lightningKnockForce, lightningPostureDamage);
         isCharged = false;
 

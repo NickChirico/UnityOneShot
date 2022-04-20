@@ -563,7 +563,7 @@ MonoBehaviour:
   currentHealth: 0
   postureMax: 36
   posture: 0
-  postureRechargeRate: 3
+  postureRechargeRate: 2.5
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
@@ -611,6 +611,8 @@ MonoBehaviour:
   attackCooldown: 1.5
   invulnTime: 0.2
   knockbackForce: 10
+  SERAPH_DROP: {fileID: 0}
+  DROP_CHANCE: 0
   gruntSpeed: 0
 --- !u!114 &7320017029194801053
 MonoBehaviour:

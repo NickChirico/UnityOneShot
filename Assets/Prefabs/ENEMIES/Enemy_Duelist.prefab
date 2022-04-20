@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12828a29807a844aa1ba28970f49929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponSprite: {fileID: 0}
   simpleWeaponCode: 0
   complexWeaponCode: 
   isValidWeapon: 1
@@ -147,15 +148,15 @@ MonoBehaviour:
   - 0.15
   - 0.2
   swingRangeArr:
-  - 0.6
-  - 0.7
-  - 0.7
-  - 0.9
+  - 1.25
+  - 1.25
+  - 1.5
+  - 1.5
   attackRadiusArr:
-  - 0.5
-  - 0.6
   - 0.6
   - 0.75
+  - 0.75
+  - 0.8
   thrustForceArr:
   - 8
   - 8
@@ -1068,8 +1069,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04, y: 0.17}
-  m_Size: {x: 0.45, y: 1.06}
+  m_Offset: {x: 0, y: 0.2}
+  m_Size: {x: 0.45, y: 1.25}
   m_Direction: 0
 --- !u!114 &8194989536356328622
 MonoBehaviour:
@@ -1085,9 +1086,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 100
   currentHealth: 0
-  postureMax: 22
+  postureMax: 20
   posture: 0
-  postureRechargeRate: 2.5
+  postureRechargeRate: 2
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
@@ -1127,7 +1128,7 @@ MonoBehaviour:
   patrolDuration: 2
   patrolSpeed: 0.6
   chaseDuration: 24
-  chaseSpeed: 2
+  chaseSpeed: 1.45
   attackDamage: 24
   attackRange: 1.5
   attackDuration: 0.55
@@ -1137,8 +1138,16 @@ MonoBehaviour:
   attackCooldown: 0.75
   invulnTime: 0.2
   knockbackForce: 8
+  SERAPH_DROP: {fileID: 5627784362461883367, guid: f77b655dc7ea0954d8e51a1b0c6ac32e,
+    type: 3}
+  DROP_CHANCE: 0.6
+  WEAPON_DROP: {fileID: 409388795005942077, guid: 4b2d66d9bf0d06c4c80cd42ad00fd31d,
+    type: 3}
   knife: {fileID: 3075264334211088375}
   height: 0.25
+  SeraphDrop: {fileID: 5627784362461883367, guid: 1969b742d64e22b4285b10f1c2c66ef8,
+    type: 3}
+  dropChance: 1
 --- !u!114 &8194989536356328619
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -492,7 +492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7673803558728606625}
   - component: {fileID: 7673803558728606653}
-  - component: {fileID: 1196562783665463033}
+  - component: {fileID: 3276433391768726539}
   - component: {fileID: 7673803558728606655}
   - component: {fileID: 7673803558728606644}
   m_Layer: 6
@@ -542,8 +542,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &1196562783665463033
-CapsuleCollider2D:
+--- !u!58 &3276433391768726539
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -555,9 +555,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04, y: 0.31}
-  m_Size: {x: 0.45, y: 0.79}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0.33}
+  serializedVersion: 2
+  m_Radius: 0.24
 --- !u!114 &7673803558728606655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,7 +627,7 @@ MonoBehaviour:
   chaseDuration: 10
   chaseSpeed: 1.8
   attackDamage: 0
-  attackRange: 0.65
+  attackRange: 0.85
   attackDuration: 1
   attackDelay: 0
   attackLungeForce: 0
@@ -635,9 +635,13 @@ MonoBehaviour:
   attackCooldown: 1.5
   invulnTime: 0
   knockbackForce: 5
-  blastDamage: 20
+  SERAPH_DROP: {fileID: 5627784362461883367, guid: 1969b742d64e22b4285b10f1c2c66ef8,
+    type: 3}
+  DROP_CHANCE: 0.25
+  WEAPON_DROP: {fileID: 0}
+  blastDamage: 18
   blastPostureDamage: 20
-  blastRadius: 0.75
+  blastRadius: 0.7
   blastKnockForce: 10
   blastDuration: 0.5
   blastDelay: 0.35

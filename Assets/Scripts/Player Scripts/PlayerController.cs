@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     private float Theta;
     public Player myPlayer;
 
+    public string[] EquippedWeapons;
+
     [Space(20)]
     Rifle rifle;
     Repeater repeater;
@@ -99,10 +101,12 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        
-        
-        
+        EquippedWeapons = new string[2] { mainWeapon.weaponName, altWeapon.weaponName };
+        UpdateWeapon(true);
+        UpdateWeapon(false);
+
         //UpdateWeapon();
+        DetermineAimLine();
 
         StartCoroutine(OnStart_UpdateSeraphs());
     }
@@ -112,7 +116,22 @@ public class PlayerController : MonoBehaviour
     {
         direction = UpdateDirection(usingMouse);
         rayOrigin = UpdateRayOrigin();
-        UpdateAimLine(true, direction);
+
+        if (aimlineEnabled)
+        {
+            UpdateAimLine(true, direction);
+        }
+        else
+        {
+            if (AimLine.enabled)
+                AimLine.enabled = false;
+        }
+        /*if (mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged || altWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged)
+        {
+            UpdateAimLine(true, direction);
+        }
+        else
+        { UpdateAimLine(false, direction); }*/
 
         if (playerInputActions.Player.Interact.triggered && myPlayer.GetInteractStatus())
         {
@@ -167,60 +186,64 @@ public class PlayerController : MonoBehaviour
     private Vector2 UpdateRayOrigin()
     {
         return new Vector3(this.transform.position.x,
-        this.transform.position.y + 0.25f,
+        this.transform.position.y,
         this.transform.position.z);
     }
 
     public Vector2 GetOrigin() { return rayOrigin; }
     public Vector2 GetDirection() { return direction; }
 
+    bool aimlineEnabled;
+    float indicatorRange;
+    float segmentRange;
+    void DetermineAimLine()
+    {
+        if (mainWeapon == null || altWeapon == null)
+            return;
+
+        float mainRange;
+        float altRange;
+
+        if (mainWeapon.isValidWeapon && altWeapon.isValidWeapon)
+        {
+            if (mainWeapon.IsRanged() && altWeapon.IsRanged()) // IF BOTH WEAPONS ARE RANGED
+            {
+                mainRange = mainWeapon.GetComponent<RangedWeapon>().range;
+                altRange = altWeapon.GetComponent<RangedWeapon>().range;
+                if (mainRange > altRange)
+                    indicatorRange = mainRange;
+                else if (mainRange < altRange)
+                    indicatorRange = altRange;
+                aimlineEnabled = true;
+            }
+            else if (mainWeapon.IsRanged())
+            {
+                mainRange = mainWeapon.GetComponent<RangedWeapon>().range;
+                indicatorRange = mainRange;
+                aimlineEnabled = true;
+            }
+            else if (altWeapon.IsRanged())
+            {
+                altRange = altWeapon.GetComponent<RangedWeapon>().range;
+                indicatorRange = altRange;
+                aimlineEnabled = false;
+            }
+            else
+            { aimlineEnabled = false; }
+        }
+    }
+
     void UpdateAimLine(bool enabled, Vector2 dir)
     {
-        float indicatorRange;
-        float segmentRange;
         if (enabled)
         {
             if (!AimLine.enabled)
                 AimLine.enabled = true;
 
-            
+
             AimLine.SetPosition(0, rayOrigin);
 
-            if (mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged && mainWeapon.isValidWeapon)
-            {
-                if (altWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged && altWeapon.isValidWeapon)
-                {
-                    if (mainWeapon.GetComponent<RangedWeapon>().range > altWeapon.GetComponent<RangedWeapon>().range)
-                    {
-                        indicatorRange = mainWeapon.GetComponent<RangedWeapon>().range;
-                        segmentRange = altWeapon.GetComponent<RangedWeapon>().range;
-                    }
-                    else
-                    {
-                        indicatorRange = altWeapon.GetComponent<RangedWeapon>().range;
-                        segmentRange = mainWeapon.GetComponent<RangedWeapon>().range;
-                    }
-                }
-                else
-                {
-                    indicatorRange = mainWeapon.GetComponent<RangedWeapon>().range;
-                    segmentRange = mainWeapon.GetComponent<RangedWeapon>().range;
-                }
-            }
-
-            else if (altWeapon.isValidWeapon)
-            {
-                indicatorRange = altWeapon.GetComponent<RangedWeapon>().range;
-                segmentRange = altWeapon.GetComponent<RangedWeapon>().range;
-            }
-            else
-            {
-                indicatorRange = 2f;
-                segmentRange = 2f;
-            }
-
-            AimLine.SetPosition(1, rayOrigin + (dir * segmentRange));
-            AimLine.SetPosition(2, rayOrigin + (dir * indicatorRange));
+            AimLine.SetPosition(1, rayOrigin + (dir.normalized * indicatorRange)); //NORMALIZED for static length.
            
         }
         else
@@ -347,29 +370,38 @@ public class PlayerController : MonoBehaviour
             {
                 mainWeapon = newWeapon;
                 mainWeapon.Equip(true);
-                UpdateWeapon();
-                uiControl.UpdateWeapon_uiPanel(newWeapon, true);
+                //EquippedWeapons[0] = mainWeapon.weaponName;
+                //uiControl.UpdateWeapon_uiPanel(mainWeapon, true);
             }
             else
             {
                 altWeapon = newWeapon;
                 altWeapon.Equip(false);
-                UpdateWeapon();
-                uiControl.UpdateWeapon_uiPanel(newWeapon, false);
+                //EquippedWeapons[1] = altWeapon.weaponName;
+                //uiControl.UpdateWeapon_uiPanel(altWeapon, false);
             }
+
+            // Update HUD & ammo
+            UpdateWeapon(changeMain);
         }
         else
         {
             print("Weapon is null!");
         }
+
+        DetermineAimLine();
     }
 
-    void UpdateWeapon()
+    void UpdateWeapon(bool main)
     {
-        //uiControl.UpdateWeaponHUD_Main(mainWeapon.weaponName);
-        // alt
-        //uiControl.UpdateWeaponHUD_Alt(altWeapon.weaponName);
-        // distinguish ammo for both? main and alt
+        if (main)
+        {
+            uiControl.UpdateWeaponHUD_Main(mainWeapon);
+        }
+        else// alt
+        {
+            uiControl.UpdateWeaponHUD_Alt(altWeapon);
+        }
     }
 
     public void UpdateSeraphs() // called in UI manager when window closed
@@ -382,5 +414,93 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         UpdateSeraphs();
+    }
+
+
+    // ~~~~~~~~~~~~~~~~~~~~~
+    // WEAPON DROP - SWAPPING
+    string weapDropName;
+    GameObject inspectedWeapDrop;
+    public bool CanSwapWeapon = false;
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("weaponDrop"))
+        {
+            inspectedWeapDrop = collision.gameObject;
+            weapDropName = inspectedWeapDrop.GetComponent<WeaponDrop>().GetWeaponName();
+            CanSwapWeapon = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("weaponDrop"))
+        {
+            inspectedWeapDrop = null;
+            weapDropName = null;
+            CanSwapWeapon = false;
+        }
+    }
+
+    public void SwapMain()
+    {
+        if (inspectedWeapDrop != null)
+        {
+            DropCurrentWeapon(true);
+            SelectWeapon(weapDropName, true);
+            Destroy(inspectedWeapDrop);
+        }
+    }
+    public void SwapAlt()
+    {
+        if (inspectedWeapDrop != null)
+        {
+            DropCurrentWeapon(false);
+            SelectWeapon(weapDropName, false);
+            Destroy(inspectedWeapDrop);
+        }
+    }
+
+    [Header("Weapon Drop Prefabs")]
+    public GameObject RIFLE_DROP;
+    public GameObject REPEATER_DROP;
+    public GameObject SHOTGUN_DROP;
+    public GameObject KNIFE_DROP;
+    public GameObject SABER_DROP;
+    public GameObject MORTAR_DROP;
+
+    public void DropCurrentWeapon(bool isMain)
+    {
+        string weaponToDrop;
+
+        if (isMain)
+            weaponToDrop = mainWeapon.weaponName;
+        else
+            weaponToDrop = altWeapon.weaponName;
+
+        Vector3 offset = new Vector2(Random.Range(0, 0.3f), Random.Range(0, 0.3f));
+        switch (weaponToDrop)
+        {
+            case "Rifle":
+                Instantiate(RIFLE_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            case "Repeater":
+                Instantiate(REPEATER_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            case "Blunderbuss":
+                Instantiate(SHOTGUN_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            case "Knife":
+                Instantiate(KNIFE_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            case "Saber":
+                Instantiate(SABER_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            case "Mortar":
+                Instantiate(MORTAR_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
+            default:
+                Debug.Log("No Weapon Dropped ???");
+                break;
+        }
     }
 }

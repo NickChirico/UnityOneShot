@@ -30,7 +30,10 @@ public class ContaminateSeraph : Seraph
     }
     public override void StartEffect(Entity entity, Vector2 hitPoint)
     {
-        entity.Contaminate(damagePerTick, duration, damageInterval);
+        if (entity != null)
+        {
+            entity.Contaminate(damagePerTick, duration, damageInterval);
+        }
     }
 
     public override void DoEffect()

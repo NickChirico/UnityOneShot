@@ -34,6 +34,8 @@ public class MovementController : MonoBehaviour
     public float boostAmount = 1.5f;
     public float killShotBoostMultiplier = 1.5f;
     public float boostDuration = 3f;
+    float normalBoostDuration;
+    float normalBoostAmount;
 
     [Header("Dash")]
     public float dashForce;
@@ -56,6 +58,10 @@ public class MovementController : MonoBehaviour
 
     private Vector2 direction;
 
+    [Header("Seraph Stuff")]
+    public TrailRenderer boostTrail;
+    EchoEffect boostEcho;
+
     private void Awake()
     {
         currentSpecial = EquipmentManager.SpecialType.None;
@@ -63,6 +69,8 @@ public class MovementController : MonoBehaviour
 
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
+
+        boostEcho = this.GetComponent<EchoEffect>();
     }
 
     /*private void Movement_performed(InputAction.CallbackContext context)
@@ -80,6 +88,11 @@ public class MovementController : MonoBehaviour
 
         rb = this.GetComponent<Rigidbody2D>();
         currentMoveSpeed = baseMoveSpeed;
+        normalBoostDuration = boostDuration;
+        normalBoostAmount = boostAmount;
+        neutralSpeed = baseMoveSpeed;
+
+        boostTrail.emitting = false;
     }
     public Vector2 GetDirection()
     { return direction; }
@@ -132,12 +145,18 @@ public class MovementController : MonoBehaviour
     }
 
     // **UPDATE**
+    bool isBoostEcho;
+    bool isHasted;
     private void Update()
     {
         float t = Time.deltaTime;
         switch (currentMoveType.ToString())
         {
             case "Boost":
+                //boostTrail.emitting = true;
+                if(isBoostEcho) // during the Seraph Surge boost only.
+                    boostEcho.Activate(true, IsFlipX());
+
                 boostLerpTimer += Time.deltaTime;
                 if (boostLerpTimer > boostDuration)
                     boostLerpTimer = boostDuration;
@@ -163,6 +182,18 @@ public class MovementController : MonoBehaviour
                 break;
             default:
                 // Normal 
+                if (isHasted && !isBoostEcho)
+                { boostEcho.Activate(true, IsFlipX()); }
+                else
+                { boostEcho.Activate(false, false); }
+
+
+                if (isBoostEcho) { 
+                    boostEcho.Activate(false, IsFlipX());
+                    isBoostEcho = false;
+                }
+
+                boostDuration = normalBoostDuration;
                 neutralSpeed = baseMoveSpeed;
                 t = Time.deltaTime * 8;
                 break;
@@ -226,6 +257,61 @@ public class MovementController : MonoBehaviour
         }
         boostLerpTimer = 0f;
         audioManager.PlayBoostSound(isKillShot);
+    }
+
+    public void SeraphBoost(float amount, float duration, float echoFrequency)
+    {
+        SetMoveType(Movement.Boost);
+        targetSpeed = baseMoveSpeed * (amount);
+        boostDuration = duration;
+        isBoostEcho = true;
+        boostEcho.timeBtwnSpawns = echoFrequency;
+
+        //StartCoroutine(SeraphBoostCo(duration, amount));
+        //boostAmount = amount;
+        //boostDuration = duration;
+        //boostMovespeed = baseMoveSpeed * amount;
+    }
+
+    public void SetSpeed(bool SetNormal, float multiplier)
+    {
+        if (SetNormal)
+        {
+            targetSpeed = baseMoveSpeed;
+            isHasted = false;
+        }
+        else
+        {
+            targetSpeed = baseMoveSpeed * (multiplier);
+            isHasted = true;
+            boostEcho.timeBtwnSpawns = 0.1f;
+        }
+    }
+
+    IEnumerator SeraphBoostCo(float dur, float amount)
+    {
+        //boostTrail.emitting = true;
+        //boostEcho.Activate(true);
+        //boostMovespeed = baseMoveSpeed * amount;
+        yield return new WaitForSeconds(dur);
+        //boostMovespeed = baseMoveSpeed;
+        isBoostEcho = false;
+        SetMoveType(Movement.Normal);
+        //boostEcho.Activate(false);
+
+        //  boostTrail.emitting = false;
+    }
+
+    public bool IsFlipX()
+    {
+        if (direction.x < 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     // ~~ Thrust ~~

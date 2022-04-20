@@ -225,7 +225,6 @@ public class MapGenerator : MonoBehaviour
         ResetMap();
     }
     
-    
 
     void Update()
     {

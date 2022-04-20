@@ -201,8 +201,26 @@ public abstract class Enemy : Entity
         return b;
     }
 
+    public GameObject SERAPH_DROP;
+    [Range(0f, 1f)] public float DROP_CHANCE;
+    public GameObject WEAPON_DROP;
     public override void Die()
     {
+        if (SERAPH_DROP != null)
+        {
+            if (Random.Range(0f, 1f) < DROP_CHANCE)
+            {
+                Instantiate(SERAPH_DROP, this.transform.position, Quaternion.identity);
+            }
+        }
+        // ~~~~~~~~~~~~~~~~~~~~~~ CURRENTLY EQUIPPED
+        if (WEAPON_DROP != null )//&& PlayerController.GetPlayerController.EquippedWeapons.) // && player weapon not currently equipped
+        {
+            Vector3 offset = new Vector2(Random.Range(0, 0.3f), Random.Range(0, 0.3f));
+            Instantiate(WEAPON_DROP, this.transform.position + offset, Quaternion.identity);
+        }
+
+
         if (mySpawner != null)
         {
             if (mySpawner.myMapLoader.loadedRoom.allPickups.Count < 5)
@@ -293,6 +311,16 @@ public abstract class Enemy : Entity
 
     }
 
+    public override void Stun()
+    {
+        SM.Stun();
+        Debug.Log("ENEMY stun");
+    }
+
+    public override bool IsEnemy()
+    {
+        return true;
+    }
     public abstract void SetUp();
 
     public virtual void Patrol(Vector2 dest)

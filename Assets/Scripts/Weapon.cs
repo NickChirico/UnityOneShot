@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    public Sprite weaponSprite;
     public int simpleWeaponCode;
     public string complexWeaponCode;
     public bool isValidWeapon;
@@ -46,7 +47,7 @@ public abstract class Weapon : MonoBehaviour
         {
             print("seraph UI stuff missing");
         }
-        if (seraphs.Length > 0)
+        else if (seraphs.Length >= 1)
         {
             foreach (Seraph_UI S in seraphs)
             {
@@ -54,6 +55,39 @@ public abstract class Weapon : MonoBehaviour
             }
         }
     }
+
+    public void DoSeraphEffects()
+    {
+        if (seraphs == null)
+        {
+            print("seraph UI stuff missing");
+        }
+        else if (seraphs.Length >= 1)
+        {
+            foreach (Seraph_UI S in seraphs)
+            {
+                S.mySeraph.DoEffect();
+            }
+        }
+    }
+
+    public void EndSeraphEffects()
+    {
+        if (seraphs == null)
+        {
+            print("seraph UI stuff missing");
+        }
+        else if (seraphs.Length >= 1)
+        {
+            foreach (Seraph_UI S in seraphs)
+            {
+                S.mySeraph.EndEffect();
+            }
+        }
+    }
+
+    public virtual bool IsRanged()
+    { return false; }
 }
 
 #region Ranged Weapon
@@ -99,7 +133,7 @@ public class RangedWeapon : Weapon
         moveControl = MovementController.GetMoveController;
         playerControl = PlayerController.GetPlayerController;
         audioManager = AudioManager.GetAudioManager;
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity, isMainWeapon);
+        uiControl.UpdateAmmo(ammoCapacity, ammoCapacity, IsRanged());
     }
 
     Ray2D[] rays;
@@ -326,6 +360,10 @@ public class RangedWeapon : Weapon
         float y2 = x * sin + y * cos;
 
         return new Vector2(x2, y2);
+    }
+    public override bool IsRanged()
+    {
+        return true;
     }
 }
 #endregion
