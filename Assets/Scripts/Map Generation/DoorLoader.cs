@@ -36,6 +36,7 @@ public class DoorLoader : MonoBehaviour
             
             if (portal)
             {
+                Debug.Log("AREA COMPLETE");
                 myMapLoader.CompleteArea();
             }
             else
