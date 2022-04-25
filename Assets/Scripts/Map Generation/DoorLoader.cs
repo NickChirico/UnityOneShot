@@ -30,6 +30,7 @@ public class DoorLoader : MonoBehaviour
                 myMapLoader.LoadRoom(direction);
             }
         }*/
+
         if (other.CompareTag("Player") && !traveled)
         {
             traveled = true;
