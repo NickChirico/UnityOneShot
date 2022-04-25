@@ -167,7 +167,6 @@ public class PathManager : MonoBehaviour
     public void InitialOptions()
     {
         print("choosing initial options");
-        print(layerNum);
         //Debug.Log(allPathOptions[5 - layerNum][0].valid.ToString());
         if (allPathOptions[5 - layerNum][0].valid)
         {
@@ -219,6 +218,10 @@ public class PathManager : MonoBehaviour
                 string myPathCode = allPathOptions[5 - layerNum][i].GetPathCode();
                 if (myPathCode.Contains("1"))
                 {
+                    if (mySummary == null)
+                    {
+                        print("it's null");
+                    }
                     mySummary.biomeDescription.text = mySummary.grasslandsDescription;
                 }
                 else if (myPathCode.Contains("2"))
