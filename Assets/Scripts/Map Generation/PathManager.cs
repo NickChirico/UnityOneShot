@@ -16,6 +16,8 @@ public class PathManager : MonoBehaviour
 
     public PathOption[] allOptions, tier1Options, tier2Options, tier3Options, tier4Options, tier5Options, tier6Options;
 
+    public PathSummary mySummary;
+
     public int currentOption, layerNum;
 
     public bool choosingPath, usingPremade;
@@ -214,8 +216,62 @@ public class PathManager : MonoBehaviour
             if (i == currentOption)
             {
                 allPathOptions[5 - layerNum][i].ChangeSelection(true);
+                string myPathCode = allPathOptions[5 - layerNum][i].GetPathCode();
+                if (myPathCode.Contains("1"))
+                {
+                    mySummary.biomeDescription.text = mySummary.grasslandsDescription;
+                }
+                else if (myPathCode.Contains("2"))
+                {
+                    mySummary.biomeDescription.text = mySummary.desertDescription;
+                }
+                else if (myPathCode.Contains("3"))
+                {
+                    mySummary.biomeDescription.text = mySummary.volcanoDescription;
+                }
+                else
+                {
+                    mySummary.biomeDescription.text = "You shouldn't be seeing this.";
+                }
+
+                if (myPathCode.Contains("A"))
+                {
+                    mySummary.positiveFaction.text = mySummary.proAcademy;
+                    mySummary.negativeFaction.text = mySummary.antiChurch;
+                }
+                else if(myPathCode.Contains("a"))
+                {
+                    mySummary.positiveFaction.text = mySummary.proAcademy;
+                    mySummary.negativeFaction.text = mySummary.antiGuild;
+                }
+                else if(myPathCode.Contains("C"))
+                {
+                    mySummary.positiveFaction.text = mySummary.proChurch;
+                    mySummary.negativeFaction.text = mySummary.antiGuild;
+                }
+                else if(myPathCode.Contains("c"))
+                {
+                    mySummary.positiveFaction.text = mySummary.proChurch;
+                    mySummary.negativeFaction.text = mySummary.antiAcademy;
+                }
+                else if(myPathCode.Contains("G"))
+                {
+                    mySummary.positiveFaction.text = mySummary.proGuild;
+                    mySummary.negativeFaction.text = mySummary.antiAcademy;
+                }
+                else if(myPathCode.Contains("g"))
+                {
+                    mySummary.positiveFaction.text = mySummary.proGuild;
+                    mySummary.negativeFaction.text = mySummary.antiChurch;
+                }
+                else
+                {
+                    mySummary.positiveFaction.text = "You shouldn't be seeing this.";
+                    mySummary.negativeFaction.text = "You shouldn't be seeing this.";
+                }
             }
         }
+        
     }
 
     public void LoadPathScene()
