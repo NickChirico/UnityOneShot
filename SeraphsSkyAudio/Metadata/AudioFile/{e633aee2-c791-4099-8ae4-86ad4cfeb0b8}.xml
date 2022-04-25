@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{e633aee2-c791-4099-8ae4-86ad4cfeb0b8}">
+		<property name="assetPath">
+			<value>Air Swing 4.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>22.0480003</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.21720791001451378</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{76e383f3-815b-4cca-8ce9-9012602476f6}</destination>
+		</relationship>
+	</object>
+</objects>
