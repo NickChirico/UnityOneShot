@@ -177,6 +177,7 @@ public class MapLoader : MonoBehaviour
 
         myPlayer.gameObject.transform.position = loadedRoom.allPickupSpawnLocs[0].position;
         //myPlayer.gameObject.transform.position = targetSpawn.position;
+        myMap.ShowMap();
     }
 
     public void CompleteArea()
