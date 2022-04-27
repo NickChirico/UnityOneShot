@@ -175,8 +175,8 @@ public class MapLoader : MonoBehaviour
                 break;
         }
 
-        myPlayer.gameObject.transform.position = loadedRoom.allPickupSpawnLocs[0].position;
-        //myPlayer.gameObject.transform.position = targetSpawn.position;
+        //myPlayer.gameObject.transform.position = loadedRoom.allPickupSpawnLocs[0].position;
+        myPlayer.gameObject.transform.position = targetSpawn.position;
     }
 
     public void CompleteArea()
