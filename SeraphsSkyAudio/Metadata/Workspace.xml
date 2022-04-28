@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.00.00">
+<objects serializationModel="Studio.02.01.00">
 	<object class="Workspace" id="{416ca1ec-6a19-4ee3-abc6-ed18be7a941a}">
 		<relationship name="masterEventFolder">
 			<destination>{6a52c8fc-a22a-4a1e-9d08-2bce0dcd0d5b}</destination>
@@ -16,11 +16,17 @@
 		<relationship name="masterBankFolder">
 			<destination>{8e7d2355-f99d-4368-8ee5-93a692f3cfc7}</destination>
 		</relationship>
+		<relationship name="masterSandboxFolder">
+			<destination>{5f93fe46-998d-4bdc-905d-2da587deecac}</destination>
+		</relationship>
 		<relationship name="masterAssetFolder">
 			<destination>{76e383f3-815b-4cca-8ce9-9012602476f6}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{7b22d39d-b434-42e9-97a2-1dbae466b1ef}</destination>
+		</relationship>
+		<relationship name="profilerSessionFolder">
+			<destination>{6c80e0d5-2e44-4667-8f02-570d2048b621}</destination>
 		</relationship>
 		<relationship name="platforms">
 			<destination>{6dbb9c75-b528-4a38-8b2e-281199a1b3e7}</destination>

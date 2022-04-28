@@ -33,7 +33,6 @@ public class DoorLoader : MonoBehaviour
         if (other.CompareTag("Player") && !traveled)
         {
             traveled = true;
-            
             if (portal)
             {
                 myMapLoader.CompleteArea();
