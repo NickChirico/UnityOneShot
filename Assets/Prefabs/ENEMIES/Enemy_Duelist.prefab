@@ -148,10 +148,10 @@ MonoBehaviour:
   - 0.15
   - 0.2
   swingRangeArr:
-  - 1.25
-  - 1.25
-  - 1.5
-  - 1.5
+  - 0.65
+  - 0.65
+  - 0.75
+  - 0.75
   attackRadiusArr:
   - 0.6
   - 0.75

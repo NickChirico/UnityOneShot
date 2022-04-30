@@ -53,7 +53,7 @@ MonoBehaviour:
   weaponDescription: 
   postureDamage: 14
   shotDamage: 14
-  ammoCapacity: 8
+  ammoCapacity: 6
   currentAmmo: 0
   reloadDuration: 1.75
   knockbackForce: 8
