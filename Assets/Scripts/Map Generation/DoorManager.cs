@@ -49,6 +49,7 @@ public class DoorManager : Unlockable
                 checkSymbol.SetActive(false);
                 locked.SetActive(false);
                 myLoader.enabled = false;
+                deadEnd.SetActive(true);
                 checkSymbol.SetActive(false);
             }
             else

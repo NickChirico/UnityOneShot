@@ -164,6 +164,10 @@ public class UI_Manager : MonoBehaviour
     bool pressedP = false;
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.RightBracket))
+        {
+            StartCoroutine(FadeToBlack());
+        }
         //manaBar.fillAmount = Mathf.Lerp(manaBar.fillAmount, alt.currentMana / alt.maxMana, Time.deltaTime * 8);
 
         // ~~~ Menu (*select)
@@ -492,7 +496,7 @@ public class UI_Manager : MonoBehaviour
     {
         if (i == 0)
             SceneManager.LoadScene("SampleScene");
-        else if(i == 1)
+        else if (i == 1)
             SceneManager.LoadScene("SingleRoomFlat");
     }
 
@@ -502,14 +506,14 @@ public class UI_Manager : MonoBehaviour
     public GameObject SeraphimPanel;
     public void SwitchCurrentMenu(int num)
     {
-        switch(num)
+        switch (num)
         {
             case 1: // go to Weapons panel
                 WeaponsPanel.SetActive(true);
                 SeraphimPanel.SetActive(false);
                 OptionsPanel.SetActive(false);
                 //weapons.GoToSpots();
-                
+
                 break;
             case 2: // go to Seraphim panel
                 WeaponsPanel.SetActive(false);
@@ -594,9 +598,9 @@ public class UI_Manager : MonoBehaviour
     {
         main_weap_Label.text = mainWeap.weaponName;
 
-        if(mainWeap.weaponSprite != null)
+        if (mainWeap.weaponSprite != null)
             main_weap_Image.sprite = mainWeap.weaponSprite;
-        
+
         if (mainWeap.IsRanged())
         {
             main_ammo_Label.gameObject.SetActive(true);
@@ -620,8 +624,8 @@ public class UI_Manager : MonoBehaviour
         }
         else
             alt_ammo_Label.gameObject.SetActive(false);
-    //ammoSubPanel_alt.SetActive(!melee);
-}
+        //ammoSubPanel_alt.SetActive(!melee);
+    }
 
     public void UpdateCurrentSpecialLabel(string name)
     {
@@ -698,7 +702,7 @@ public class UI_Manager : MonoBehaviour
         }
 
 
-        if(showingTooltip)
+        if (showingTooltip)
         {
             bool doShow = false;
             foreach (Button b in weaponButtons)
@@ -728,6 +732,46 @@ public class UI_Manager : MonoBehaviour
         {
             altWeap_UI_title.text = newName;
         }
+    }
+
+    public void ScreenTransition()
+    {
+        StartCoroutine(FadeToBlack());
+    }
+
+    public Image BlackOutSquare;
+    public int fadeSpeed;
+
+    /*IEnumerator FadeInAndOut()
+    {
+        
+    }*/
+    public IEnumerator FadeToBlack()
+    {
+        Color squareColor = BlackOutSquare.color;
+        float fadeAmount;
+        bool doFade = true;
+
+
+        while (BlackOutSquare.color.a < 1)
+        {
+            fadeAmount = squareColor.a + (fadeSpeed * Time.deltaTime);
+            squareColor = new Color(squareColor.r, squareColor.g, squareColor.b, fadeAmount);
+            BlackOutSquare.color = squareColor;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        while (BlackOutSquare.color.a > 0)
+        {
+            fadeAmount = squareColor.a - (fadeSpeed * Time.deltaTime);
+            squareColor = new Color(squareColor.r, squareColor.g, squareColor.b, fadeAmount);
+            BlackOutSquare.color = squareColor;
+            yield return null;
+
+        }
+
     }
 
 }

@@ -344,6 +344,12 @@ public class RangedWeapon : Weapon
         }
     }
 
+    private void OnDestroy()
+    {
+        if(lineTrails != null && lineTrails.Length > 0 && !isPlayerWeapon)
+            DestoryTrailLines();
+    }
+
     // ~~
     private Vector2 RandomConeAngle(Vector2 dir)
     {
@@ -400,6 +406,10 @@ public class MeleeWeapon : Weapon
     Vector2 direction;
     public int currentInterval = 0;
     public bool canAttack = true;
+    public Color SwingFX_Color;
+
+    [HideInInspector] public Animator meleeIndicatorAnim;
+    public float ANIM_SPEED;
 
     public override WeaponManager.WeaponType GetWeaponType()
     {
@@ -410,29 +420,69 @@ public class MeleeWeapon : Weapon
     {
         moveControl = MovementController.GetMoveController;
         audioManager = AudioManager.GetAudioManager;
+
+        if(isPlayerWeapon)
+            meleeIndicatorAnim = GameObject.Find("Melee_indicator").GetComponent<Animator>();
+        else
+        {
+            meleeIndicatorAnim = tempAttackDisplay.GetComponent<Animator>();
+        }
     }
 
     public override void Fire(Vector2 origin, Vector2 dir)
     {
-        SetMeleeIndicator();
         direction = dir;
         float swingRange = swingRangeArr[currentInterval];
         attackPoint = origin + (dir * swingRange);
-        SetIndicator(true);
+        //SetIndicator(true);
         tempAttackDisplay.transform.position = attackPoint;
+
+        //SetSwingAnimation();
     }
-    public void SetIndicator(bool b)
+
+    public virtual void SetSwingAnimation()
+    {
+        SetIndicator(true);
+        if (tempAttackDisplay != null)
+        {
+            Vector2 diff = direction.normalized;
+            float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            tempAttackDisplay.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+        }
+
+        if (meleeIndicatorAnim != null)
+        {
+            if (animFlip)
+            {
+                meleeIndicatorAnim.SetTrigger("Attack");
+            }
+            else
+            {
+                meleeIndicatorAnim.SetTrigger("AttackFlip");
+            }
+            animFlip = !animFlip;
+        }
+    }
+
+    bool animFlip = false;
+    public virtual void SetIndicator(bool b)
     {
         SetMeleeIndicator();
-        tempAttackDisplay.GetComponent<SpriteRenderer>().enabled = b;
+        SpriteRenderer spp = tempAttackDisplay.GetComponent<SpriteRenderer>();
+        spp.enabled = b;
+
+        if(b)
+            spp.color = SwingFX_Color;
+
+        meleeIndicatorAnim.speed = ANIM_SPEED;
     }
 
     public void PrepAttack(int interval)
     {
         SetMeleeIndicator();
-        tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.yellow;
+        //tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.yellow;
         float rad = attackRadiusArr[interval];
-        tempAttackDisplay.transform.localScale = Vector3.one * rad * 1.25f;
+        //tempAttackDisplay.transform.localScale = Vector3.one * rad * 1.25f;
     }
 
     public void AttackThrust(int interval)
@@ -459,29 +509,24 @@ public class MeleeWeapon : Weapon
         {
             //print("The melee indicator was null");
             tempAttackDisplay = GameObject.Find("Melee_indicator");
-            if (tempAttackDisplay == null)
-            {
-                //print("And it still is because melee indicator was not found");
-            }
-            else
-            {
-                //print("but not anymore!");
-            }
         }
     }
 
     public void Attack(int interval)
     {
+        SetSwingAnimation();
+
         SetMeleeIndicator();
         Debug.Log("ATTACK");
         // TEMP DISPLAY STUFF
-        tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.red;
+        //tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.red;
+        //tempAttackDisplay.transform.localScale = Vector3.one * (rad * 2); //diameter - TEMP display
+
         Collider2D[] hitEnemies;
 
         float rad = attackRadiusArr[interval];
         int damageToPass = damageArr[interval];
 
-        tempAttackDisplay.transform.localScale = Vector3.one * (rad * 2); //diameter - TEMP display
         hitEnemies = Physics2D.OverlapCircleAll(attackPoint, rad, hittableEntity);
 
         if (hitEnemies != null)
@@ -532,8 +577,8 @@ public class MeleeWeapon : Weapon
     public void Recover()
     {
         SetMeleeIndicator();
-        tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.green;
-        tempAttackDisplay.transform.localScale = Vector3.one * 0.25f;
+        //tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.green;
+        //tempAttackDisplay.transform.localScale = Vector3.one * 0.25f;
         if (currentInterval < intervalCount - 1)
             currentInterval++;
         else
@@ -545,11 +590,13 @@ public class MeleeWeapon : Weapon
         SetMeleeIndicator();
         //Debug.Log("ATTACK COOLDOWN");
         currentInterval = 0;
-        tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.black;
-        tempAttackDisplay.transform.localScale = Vector3.one * 0.25f;
+        //tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.black;
+        //tempAttackDisplay.transform.localScale = Vector3.one * 0.25f;
 
         canAttack = false;
         StartCoroutine(AttackCooldown(comboCooldown));
+
+        //animFlip = false;
     }
 
     IEnumerator AttackCooldown(float cd)
