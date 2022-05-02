@@ -86,6 +86,7 @@ public class Duelist : Enemy
         knife.PrepAttack(0);
         yield return new WaitForSeconds(attackDuration);
         Thrust(attackLungeForce * 4);
+        knife.Attack(3);
         knife.SetIndicator(false);
         ResetAttack(attackCooldown - 0.5f);
     }

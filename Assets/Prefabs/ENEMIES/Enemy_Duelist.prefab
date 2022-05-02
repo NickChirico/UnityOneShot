@@ -182,6 +182,9 @@ MonoBehaviour:
     m_Bits: 8
   currentInterval: 0
   canAttack: 1
+  SwingFX_Color: {r: 0.764151, g: 0.11894804, b: 0.2994684, a: 1}
+  meleeIndicatorAnim: {fileID: 0}
+  ANIM_SPEED: 1
 --- !u!1 &4603691308709001900
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,6 +195,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4603691308709001903}
   - component: {fileID: 4603691308709001902}
+  - component: {fileID: 4581891687246377184}
+  - component: {fileID: 1853345468115147143}
   m_Layer: 3
   m_Name: Melee_indicator
   m_TagString: Untagged
@@ -252,9 +257,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 40c0d368090a0404499de09e8f0a93d5, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -264,6 +269,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4581891687246377184
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4603691308709001900}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1e555c05a6e934645bf7a7887ee1c8f0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1853345468115147143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4603691308709001900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d19332ab13a43a642ad35b4ddce147bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weap: {fileID: 3075264334211088375}
 --- !u!1 &6860671957586128470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,7 +1170,7 @@ MonoBehaviour:
   attackRange: 1.5
   attackDuration: 0.55
   attackDelay: 0.25
-  attackLungeForce: 2
+  attackLungeForce: 3
   canAttack: 1
   attackCooldown: 0.75
   invulnTime: 0.2
