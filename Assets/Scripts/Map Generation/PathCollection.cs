@@ -22,8 +22,6 @@ public class PathCollection : MonoBehaviour
         {
             myPathManager.GeneratePathMapOnScreen(myPathManager.myMapGen.path);
         }
-
-        myPathManager.mySummary = GameObject.Find("Path Info Panel").GetComponent<PathSummary>();
         myPathManager.InitialOptions();
     }
     void Start()

@@ -3542,7 +3542,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 137.90002, y: 0}
+  m_AnchoredPosition: {x: 137.9, y: 0}
   m_SizeDelta: {x: 275.7574, y: 324.7107}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &462247554
@@ -4602,15 +4602,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -5491,7 +5491,7 @@ GameObject:
   - component: {fileID: 727914303}
   - component: {fileID: 727914302}
   m_Layer: 5
-  m_Name: Faction Allegiance Panel
+  m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10674,16 +10674,15 @@ MonoBehaviour:
   biomeDescription: {fileID: 604741540}
   positiveFaction: {fileID: 1613427356}
   negativeFaction: {fileID: 1712215583}
-  desertDescription: A vast and hostile desert stretches into the horizon.
-  grasslandsDescription: These grasslands, once peaceful, are now teeming with enemies.
-  volcanoDescription: This rocky, volcanic area is filled with rivers and pools of
-    boiling lava.
-  proAcademy: 'This path will grant you favor with the Academy, '
-  antiAcademy: but it will anger the Academy.
-  proChurch: 'This path will grant you favor with the Church, '
-  antiChurch: but it will anger the Church
-  proGuild: 'This path will grant you favor with the Guild, '
-  antiGuild: but it will anger the Church
+  desertDescription: 
+  grasslandsDescription: 
+  volcanoDescription: 
+  proAcademy: 
+  antiAcademy: 
+  proChurch: 
+  antiChurch: 
+  proGuild: 
+  antiGuild: 
 --- !u!1 &1489613229
 GameObject:
   m_ObjectHideFlags: 0
@@ -11447,15 +11446,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -11974,15 +11973,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -12214,7 +12213,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -145.70001, y: 0}
+  m_AnchoredPosition: {x: -145.7, y: 0}
   m_SizeDelta: {x: 275.7574, y: 324.7107}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1787217976
