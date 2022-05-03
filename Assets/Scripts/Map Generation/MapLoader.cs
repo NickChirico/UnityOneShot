@@ -174,7 +174,10 @@ public class MapLoader : MonoBehaviour
                 }
                 break;
         }
-        myPlayer.gameObject.transform.position = targetSpawn.position;
+
+        myPlayer.gameObject.transform.position = loadedRoom.allPickupSpawnLocs[0].position;
+        //myPlayer.gameObject.transform.position = targetSpawn.position;
+        ShowMap();
     }
 
     public void CompleteArea()
@@ -241,5 +244,20 @@ public class MapLoader : MonoBehaviour
         }
         testStartX = tempX;
         testStartY = tempY;
+    }
+
+    public void ShowMap()
+    {
+        string willPrint = "";
+        for (int i = 0; i < myMap.roomSizes[myMap.GetCurrentTier()]; i++)
+        {
+            for (int j = 0; j < myMap.roomSizes[myMap.GetCurrentTier()]; j++)
+            {
+                willPrint += ComplexMap[i, j] + " ";
+            }
+
+            willPrint += "\n";
+        }
+        print(willPrint);
     }
 }
