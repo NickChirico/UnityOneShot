@@ -119,8 +119,7 @@ public abstract class PlayerState
         switch (playerControl.mainWeapon.GetWeaponType())
         {
             case WeaponManager.WeaponType.Ranged:
-                if(playerControl.mainWeapon.GetComponent<RangedWeapon>().currentAmmo > 0)
-                    SM.ChangeState(SM.ShootMain);
+                SM.ChangeState(SM.ShootMain);
                 break;
             case WeaponManager.WeaponType.Melee:
                 if (playerControl.mainWeapon.GetComponent<MeleeWeapon>().canAttack)
@@ -138,8 +137,7 @@ public abstract class PlayerState
         switch (playerControl.altWeapon.GetWeaponType())
         {
             case WeaponManager.WeaponType.Ranged:
-                if (playerControl.altWeapon.GetComponent<RangedWeapon>().currentAmmo > 0)
-                    SM.ChangeState(SM.ShootAlt);
+                SM.ChangeState(SM.ShootAlt);
                 break;
             case WeaponManager.WeaponType.Melee:
                 if (playerControl.altWeapon.GetComponent<MeleeWeapon>().canAttack)
