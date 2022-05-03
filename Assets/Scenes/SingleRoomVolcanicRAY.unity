@@ -1617,7 +1617,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae40a4669ef2b8e4e9b50e9205a9bf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSprite: {fileID: 0}
   simpleWeaponCode: 0
   complexWeaponCode: 
   isValidWeapon: 0
@@ -6804,6 +6803,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLoader: {fileID: 0}
+  rupturePrefab: {fileID: 0}
+  contaminatePrefab: {fileID: 0}
+  siphonPrefab: {fileID: 0}
+  pickupSpawnLoc: {fileID: 0}
   northDoor: {fileID: 0}
   eastDoor: {fileID: 0}
   southDoor: {fileID: 0}
@@ -6814,9 +6817,6 @@ MonoBehaviour:
   westSpawn: {fileID: 0}
   roomTag: 
   spawnOptions: []
-  allPickupSpawnLocs: []
-  allPickups: []
-  savedPickups: []
 --- !u!1 &152393817
 GameObject:
   m_ObjectHideFlags: 0
@@ -6861,22 +6861,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99116ed55c338c40bd788c882036afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCam: {fileID: 0}
   rupturePickup: {fileID: 0}
   contaminatePickup: {fileID: 0}
   siphonPickup: {fileID: 0}
-  playerLoader: {fileID: 0}
   loadedRoom: {fileID: 0}
   allRooms: []
   bossRooms: []
   mySpawner: {fileID: 1036814737}
   mySpring: {fileID: 0}
   myMap: {fileID: 152393820}
-  currentRank: 0
-  currentFile: 0
+  currentXLoc: 0
+  currentYLoc: 0
   bossXLoc: 0
   bossYLoc: 0
   currentArea: 0
+  woodsStartX: 0
+  woodsStartY: 0
+  churchStartX: 0
+  churchStartY: 0
+  marketStartX: 0
+  marketStartY: 0
+  academyStartX: 0
+  academyStartY: 0
   testStartX: 0
   testStartY: 0
   northDoor: {fileID: 0}
@@ -6886,9 +6892,6 @@ MonoBehaviour:
   myPlayer: {fileID: 0}
   allUnlockables: []
   entranceRoom: {fileID: 0}
-  grasslands: {fileID: 0}
-  desert: {fileID: 0}
-  volcano: {fileID: 0}
 --- !u!114 &152393820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6916,12 +6919,6 @@ MonoBehaviour:
   allRoomsYPos: 
   myLoader: {fileID: 152393819}
   screenText: {fileID: 0}
-  myPathManager: {fileID: 0}
-  grasslandsRoomsAndArrangements: 
-  desertRoomsAndArrangements: 
-  volcanoRoomsAndArrangements: 
-  pathGenerated: 0
-  usingPremade: 0
 --- !u!1 &156443407
 GameObject:
   m_ObjectHideFlags: 0
@@ -7817,11 +7814,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7176645b5f0af144bfabff75a7e39f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy1: {fileID: 0}
-  enemy2: {fileID: 0}
-  enemy3: {fileID: 0}
-  enemy4: {fileID: 0}
-  enemy5: {fileID: 0}
+  GruntOneShot: {fileID: 3475403720523709434, guid: 1d8f440a8a13e7e4f8e8f0d724e82872,
+    type: 3}
+  Grunt50: {fileID: 218352700723620520, guid: 8cd1c744d62e05d44864e91a91e2f82a, type: 3}
+  Grunt200: {fileID: 5390593308842656644, guid: 8825a2a00be84a542966f07130d2a91b,
+    type: 3}
 --- !u!1 &190564072
 GameObject:
   m_ObjectHideFlags: 0
@@ -23848,7 +23845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2be1c416e782348bc25b7b92949896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSprite: {fileID: 0}
   simpleWeaponCode: 0
   complexWeaponCode: 
   isValidWeapon: 0
@@ -23860,9 +23856,9 @@ MonoBehaviour:
   shotDamage: 0
   ammoCapacity: 2
   currentAmmo: 0
+  range: 0
   reloadDuration: 0.1
   knockbackForce: 0
-  range: 0
   doRecoil: 0
   recoilForce: 0
   recoilDuration: 0
@@ -25964,12 +25960,11 @@ MonoBehaviour:
   currentHealth: 0
   postureMax: 0
   posture: 0
-  postureRechargeRate: 0
+  postureDecayRate: 0
   guardBreakDuration: 0
   damageText: {fileID: 0}
   markedIndicator: {fileID: 0}
   contaminateParticles_prefab: {fileID: 0}
-  stormParticles_prefab: {fileID: 0}
   healthBar: {fileID: 0}
   postureBar: {fileID: 0}
   guardBroken: 0
@@ -26003,12 +25998,8 @@ MonoBehaviour:
   attackDelay: 0
   attackLungeForce: 0
   canAttack: 0
-  attackCooldown: 1.5
   invulnTime: 0
   knockbackForce: 0
-  SERAPH_DROP: {fileID: 0}
-  DROP_CHANCE: 0
-  WEAPON_DROP: {fileID: 0}
   chargeSpeed: 0
 --- !u!1 &613768150
 GameObject:
@@ -30540,6 +30531,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLoader: {fileID: 1457603090}
+  rupturePrefab: {fileID: 403632358609029537, guid: 15a1369f717d6664ebd4a0be28103bc0,
+    type: 3}
+  contaminatePrefab: {fileID: 6066597285942191914, guid: 9960b7266f24d6346bbbc76553b2f027,
+    type: 3}
+  siphonPrefab: {fileID: 320607767360861005, guid: cf570d270e993a64ca7ce71fbee2f4f5,
+    type: 3}
+  pickupSpawnLoc: {fileID: 981749498}
   northDoor: {fileID: 1359321033}
   eastDoor: {fileID: 1477894201}
   southDoor: {fileID: 365435509}
@@ -30550,9 +30548,6 @@ MonoBehaviour:
   westSpawn: {fileID: 1387021922}
   roomTag: 
   spawnOptions: []
-  allPickupSpawnLocs: []
-  allPickups: []
-  savedPickups: []
 --- !u!1 &640648132
 GameObject:
   m_ObjectHideFlags: 0
@@ -35016,12 +35011,10 @@ MonoBehaviour:
   SettingsButton2: {fileID: 0}
   SettingsButton_Back: {fileID: 2102585568}
   weaponPanel: {fileID: 420538635}
-  main_weap_Label: {fileID: 0}
-  alt_weap_Label: {fileID: 0}
-  main_weap_Image: {fileID: 0}
-  alt_weap_Image: {fileID: 0}
-  main_ammo_Label: {fileID: 0}
-  alt_ammo_Label: {fileID: 0}
+  currentWeaponLabel: {fileID: 1047941370}
+  currentWeaponLabel_alt: {fileID: 1271850145}
+  ammoLabel: {fileID: 532375448}
+  ammoLabel_alt: {fileID: 2109064556}
   ammoSubPanel: {fileID: 899612291}
   ammoSubPanel_alt: {fileID: 1474035847}
   healthbar: {fileID: 1668911033}
@@ -35046,7 +35039,6 @@ MonoBehaviour:
   EButton_SelectedColor: {r: 0.972549, g: 0.7764706, b: 0.13333334, a: 1}
   ammoLabelColor_Normal: {r: 0.9529412, g: 0.7921569, b: 0.6862745, a: 1}
   ammoLabelColor_Low: {r: 0.9056604, g: 0.20702519, b: 0.09825563, a: 1}
-  DeathScreen_Panel: {fileID: 0}
   OptionsPanel: {fileID: 1927119088}
   WeaponsPanel: {fileID: 697594324}
   SeraphimPanel: {fileID: 418168270}
@@ -35072,8 +35064,6 @@ MonoBehaviour:
   tooltip_Width: 120
   textPadding: 4
   offset: {x: 1.75, y: 0.35}
-  mainWeap_UI_title: {fileID: 0}
-  altWeap_UI_title: {fileID: 0}
 --- !u!4 &770487658
 Transform:
   m_ObjectHideFlags: 0
@@ -35805,7 +35795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaf9cd021f4721468592d9bac2ba887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSprite: {fileID: 0}
   simpleWeaponCode: 0
   complexWeaponCode: 
   isValidWeapon: 0
@@ -47679,14 +47668,8 @@ MonoBehaviour:
   AltWeapSeraphs: []
   ArmorSeraphs: []
   BootsSeraphs: []
-  FlaskSeraphs: []
   UI_Seraph_Prefab: {fileID: 4214629509268402384, guid: 909d46dfe8fb79f43a11fd8e674f9967,
     type: 3}
-  tooltipPanel: {fileID: 0}
-  tooltipSprite: {fileID: 0}
-  tooltipTitle: {fileID: 0}
-  tooltipSubTitle: {fileID: 0}
-  tooltipDescription: {fileID: 0}
 --- !u!1 &922189830
 GameObject:
   m_ObjectHideFlags: 0
@@ -52336,8 +52319,6 @@ MonoBehaviour:
     type: 3}
   bossPrefab: {fileID: 7320017029194801049, guid: e1d3104af90a9384b943533178fb81a8,
     type: 3}
-  duelistPrefab: {fileID: 0}
-  banelingPrefab: {fileID: 0}
   roomComplete: 0
   numToSpawn: 0
   myMapLoader: {fileID: 1457603090}
@@ -60787,7 +60768,6 @@ MonoBehaviour:
   zoomRate: 0.5
   zoomSpeed: 4
   currentCamSize: 0
-  target: {fileID: 0}
   smoothSpeed: 1.5
   minX: -10
   maxX: 10
@@ -67547,14 +67527,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99116ed55c338c40bd788c882036afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCam: {fileID: 0}
   rupturePickup: {fileID: 403632358609029537, guid: 15a1369f717d6664ebd4a0be28103bc0,
     type: 3}
   contaminatePickup: {fileID: 6066597285942191914, guid: 9960b7266f24d6346bbbc76553b2f027,
     type: 3}
   siphonPickup: {fileID: 320607767360861005, guid: cf570d270e993a64ca7ce71fbee2f4f5,
     type: 3}
-  playerLoader: {fileID: 0}
   loadedRoom: {fileID: 1493341772}
   allRooms:
   - {fileID: 1493341772}
@@ -67563,11 +67541,19 @@ MonoBehaviour:
   mySpawner: {fileID: 1036814737}
   mySpring: {fileID: 471240778}
   myMap: {fileID: 0}
-  currentRank: 0
-  currentFile: 0
+  currentXLoc: 0
+  currentYLoc: 0
   bossXLoc: 0
   bossYLoc: 0
   currentArea: 0
+  woodsStartX: 0
+  woodsStartY: 0
+  churchStartX: 0
+  churchStartY: 0
+  marketStartX: 0
+  marketStartY: 0
+  academyStartX: 0
+  academyStartY: 0
   testStartX: 0
   testStartY: 0
   northDoor: {fileID: 1733046824}
@@ -67577,9 +67563,6 @@ MonoBehaviour:
   myPlayer: {fileID: 1901772834}
   allUnlockables: []
   entranceRoom: {fileID: 1493341768}
-  grasslands: {fileID: 0}
-  desert: {fileID: 0}
-  volcano: {fileID: 0}
 --- !u!1 &1464565307
 GameObject:
   m_ObjectHideFlags: 0
@@ -73487,6 +73470,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLoader: {fileID: 1457603090}
+  rupturePrefab: {fileID: 403632358609029537, guid: 15a1369f717d6664ebd4a0be28103bc0,
+    type: 3}
+  contaminatePrefab: {fileID: 6066597285942191914, guid: 9960b7266f24d6346bbbc76553b2f027,
+    type: 3}
+  siphonPrefab: {fileID: 320607767360861005, guid: cf570d270e993a64ca7ce71fbee2f4f5,
+    type: 3}
+  pickupSpawnLoc: {fileID: 1314566884}
   northDoor: {fileID: 1733046824}
   eastDoor: {fileID: 1852105189}
   southDoor: {fileID: 1820076155}
@@ -73501,9 +73491,6 @@ MonoBehaviour:
   - {fileID: 786745773}
   - {fileID: 2077956863}
   - {fileID: 141219251}
-  allPickupSpawnLocs: []
-  allPickups: []
-  savedPickups: []
 --- !u!1 &1494403494
 GameObject:
   m_ObjectHideFlags: 0
@@ -86038,6 +86025,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLoader: {fileID: 0}
+  rupturePrefab: {fileID: 0}
+  contaminatePrefab: {fileID: 0}
+  siphonPrefab: {fileID: 0}
+  pickupSpawnLoc: {fileID: 0}
   northDoor: {fileID: 0}
   eastDoor: {fileID: 0}
   southDoor: {fileID: 0}
@@ -86048,9 +86039,6 @@ MonoBehaviour:
   westSpawn: {fileID: 0}
   roomTag: 
   spawnOptions: []
-  allPickupSpawnLocs: []
-  allPickups: []
-  savedPickups: []
 --- !u!483693784 &1874419848
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -88394,19 +88382,16 @@ MonoBehaviour:
   usingMouse: 1
   mainWeapon: {fileID: 1316755347}
   altWeapon: {fileID: 713108052}
+  rangedWeap1: {fileID: 566177368}
+  meleeWeap1: {fileID: 47649246}
+  specWeap1: {fileID: 0}
+  rangedWeap2: {fileID: 566177368}
+  meleeWeap2: {fileID: 47649246}
+  specWeap2: {fileID: 0}
   AimLine: {fileID: 76366610}
   RangeCircleMain: {fileID: 633439702}
   RangeCircleAlt: {fileID: 0}
   circleEnabled: 1
-  myPlayer: {fileID: 0}
-  EquippedWeapons: []
-  CanSwapWeapon: 0
-  RIFLE_DROP: {fileID: 0}
-  REPEATER_DROP: {fileID: 0}
-  SHOTGUN_DROP: {fileID: 0}
-  KNIFE_DROP: {fileID: 0}
-  SABER_DROP: {fileID: 0}
-  MORTAR_DROP: {fileID: 0}
 --- !u!114 &1901772832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88445,7 +88430,6 @@ MonoBehaviour:
   dashDuration: 0.5
   dashCooldown: 1.5
   delayStopTime: 3
-  boostTrail: {fileID: 0}
 --- !u!114 &1901772834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88462,29 +88446,19 @@ MonoBehaviour:
   currentHealth: 0
   postureMax: 0
   posture: 0
-  postureRechargeRate: 0
+  postureDecayRate: 0
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: 427564367acaca6428fb198a67f226e7,
     type: 3}
   markedIndicator: {fileID: 0}
   contaminateParticles_prefab: {fileID: 0}
-  stormParticles_prefab: {fileID: 0}
   healthBar: {fileID: 1668911034}
   postureBar: {fileID: 0}
   guardBroken: 0
-  myController: {fileID: 0}
-  interactLabel: {fileID: 0}
   sp: {fileID: 354610516}
-  myMasterDictionary: {fileID: 0}
   invulnDuration: 0.5
   invulnBuffer: 0.75
   knockedForce: 8
-  bagSeraphim: []
-  mainWeaponSeraphim: []
-  altWeaponSeraphim: []
-  armorSeraphim: []
-  bootsSeraphim: []
-  flaskSeraphim: []
   chitinNum: 0
   bloodNum: 0
   brainNum: 0
