@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.00.00">
 	<object class="ParameterPreset" id="{de075d52-3eb7-4733-ada0-c60129917db2}">
 		<property name="name">
-			<value>Parameter 1</value>
+			<value>Melee Type</value>
 		</property>
 		<relationship name="folder">
 			<destination>{115f46fe-7920-4c27-8568-90ce479f5d58}</destination>
