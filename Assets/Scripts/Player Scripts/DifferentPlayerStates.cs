@@ -619,10 +619,15 @@ public class PlayerState_Reloading : PlayerState
     {
         base.Enter();
         if (isMainWeap)
-            weapon = (RangedWeapon)playerControl.mainWeapon;
+        {
+            if (playerControl.mainWeapon.IsRanged())
+                weapon = (RangedWeapon)playerControl.mainWeapon;
+        }
         else
-            weapon = (RangedWeapon)playerControl.altWeapon;
-
+        {
+            if (playerControl.altWeapon.IsRanged())
+                weapon = (RangedWeapon)playerControl.altWeapon;
+        }
 
         soundPlayed = false;
         Duration = weapon.reloadDuration;
@@ -933,6 +938,8 @@ public class PlayerState_Damaged : PlayerState
                 else
                     SM.BackToReady();
             }
+            else
+                SM.BackToReady();
         }
     }
 
@@ -941,6 +948,7 @@ public class PlayerState_Damaged : PlayerState
         base.Enter();
         Vector2 knockDir = new Vector2(Random.Range(-360, 360), Random.Range(-360, 360)).normalized;
         Move.Recoil(false, knockDir, player.knockedForce, player.invulnDuration);
+
         if (playerControl.mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Melee)
         {
             playerControl.mainWeapon.GetComponent<MeleeWeapon>().ResetAttackSequence();
@@ -954,6 +962,14 @@ public class PlayerState_Damaged : PlayerState
     public override void Exit()
     {
         base.Exit();
+        /*if (playerControl.mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Melee)
+        {
+            playerControl.mainWeapon.GetComponent<MeleeWeapon>().canAttack = true;
+        }
+        if (playerControl.altWeapon.GetWeaponType() == WeaponManager.WeaponType.Melee)
+        {
+            playerControl.altWeapon.GetComponent<MeleeWeapon>().canAttack = true;
+        }*/
     }
 
     public PlayerState_Damaged(PlayerStateManager myManager, Player p, string myName, float myDur) :

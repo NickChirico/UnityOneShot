@@ -105,6 +105,9 @@ public class PlayerStateManager : MonoBehaviour
     {
         if(isActive && isAlive)
             currentState.DoState();
+
+        if (Input.GetKeyDown(KeyCode.RightBracket))
+            Debug.Log(currentState.GetName());
     }
 
     public void ChangeState(PlayerState newState)
