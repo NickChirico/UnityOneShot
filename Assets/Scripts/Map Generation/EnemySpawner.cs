@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject Shambler_pf, Baneling_pf, Knifer_pf, Duelist_pf, Rifleman_pf, Breacher_pf, Gunner_pf,  boss1_pf;
+    public GameObject meleePrefab, rangedPrefab, bossPrefab, duelistPrefab, banelingPrefab;
     public bool roomComplete;
     public int numToSpawn;
     public MapLoader myMapLoader;
@@ -29,23 +29,23 @@ public class EnemySpawner : MonoBehaviour
         {
             if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'M')
             {
-                allEnemies.Add(Instantiate(Shambler_pf, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+                allEnemies.Add(Instantiate(meleePrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
             }
             else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'R')
             {
-                allEnemies.Add(Instantiate(Rifleman_pf, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+                allEnemies.Add(Instantiate(rangedPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
             }
             else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'B')
             {
-                allEnemies.Add(Instantiate(boss1_pf, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+                allEnemies.Add(Instantiate(bossPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
             }
             else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'X')
             {
-                allEnemies.Add(Instantiate(Baneling_pf, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+                allEnemies.Add(Instantiate(banelingPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
             }
             else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'D')
             {
-                allEnemies.Add(Instantiate(Duelist_pf, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+                allEnemies.Add(Instantiate(duelistPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
             }
         }
 

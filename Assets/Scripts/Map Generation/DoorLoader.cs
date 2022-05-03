@@ -41,18 +41,10 @@ public class DoorLoader : MonoBehaviour
             }
             else
             {
-                StartCoroutine(TravelCo());
-                //myMapLoader.Travel(direction);
+                myMapLoader.Travel(direction);
             }
             
         }
-    }
-
-    IEnumerator TravelCo()
-    {
-        UI_Manager.GetUIManager.ScreenTransition();
-        yield return new WaitForSeconds(0.2f);
-        myMapLoader.Travel(direction);
     }
 
 }

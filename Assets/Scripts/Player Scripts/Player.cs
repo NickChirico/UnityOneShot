@@ -43,8 +43,6 @@ public class Player : Entity
     }
     public override void Start()
     {
-        currentHealth = MaxHealth;
-        ui.UpdateHealth(currentHealth, MaxHealth);
         base.Start();
     }
 

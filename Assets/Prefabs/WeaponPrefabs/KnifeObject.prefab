@@ -93,6 +93,3 @@ MonoBehaviour:
     m_Bits: 64
   currentInterval: 0
   canAttack: 1
-  SwingFX_Color: {r: 0.6853863, g: 0.9622642, b: 0.7904001, a: 1}
-  meleeIndicatorAnim: {fileID: 0}
-  ANIM_SPEED: 1

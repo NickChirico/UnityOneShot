@@ -22,20 +22,15 @@ public class CameraController : MonoBehaviour
         cam.backgroundColor = GameObject.Find("Path Manager").GetComponent<PathManager>().myBackgroundColor;
     }
 
-    private void Start()
-    {
-        transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
-    }
-
     private void LateUpdate()
     {
-        if (target != null && !jumping)
+        if (target != null)
         {
             transform.position = Vector3.Lerp(transform.position, new Vector3(target.position.x, target.position.y, transform.position.z), smoothSpeed * Time.deltaTime);
 
             transform.position = new Vector3(
-                Mathf.Clamp(transform.position.x, minX, maxX),
-                Mathf.Clamp(transform.position.y, minY, maxY),
+                Mathf.Clamp(transform.position.x, minX, maxX), 
+                Mathf.Clamp(transform.position.y, minY, maxY), 
                 transform.position.z);
 
 
@@ -51,33 +46,10 @@ public class CameraController : MonoBehaviour
 
             cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, currentCamSize, Time.deltaTime * zoomSpeed);
         }
-
-        if (jumping)
-        {
-            transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
-        }
     }
 
     public void SetTarget(Transform targetTransform)
     {
         target = targetTransform;
-    }
-
-    bool jumping;
-    public void JumpToPlayer()
-    {
-        if (target != null)
-        {
-            StartCoroutine(JumpScreen());
-            //UI_Manager.GetUIManager.ScreenTransition();
-        }
-
-    }
-
-    IEnumerator JumpScreen()
-    {
-        jumping = true;
-        yield return new WaitForSeconds(0.15f);
-        jumping = false;
     }
 }

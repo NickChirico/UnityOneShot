@@ -177,9 +177,6 @@ public class MapLoader : MonoBehaviour
 
         //myPlayer.gameObject.transform.position = loadedRoom.allPickupSpawnLocs[0].position;
         myPlayer.gameObject.transform.position = targetSpawn.position;
-
-        Camera.main.GetComponent<CameraController>().JumpToPlayer();
-
     }
 
     public void CompleteArea()
@@ -223,13 +220,9 @@ public class MapLoader : MonoBehaviour
         //Spawn in all the pickups that are here, HERE
 
         // DESTROY WEAPON DROPS UPON ENTERING NEW ROOM
-        WeaponDrop[] WeapDrops = FindObjectsOfType<WeaponDrop>();
-        foreach (WeaponDrop weapDrop in WeapDrops)
+        WeaponDrop[] drops = FindObjectsOfType<WeaponDrop>();
+        foreach (WeaponDrop weapDrop in drops)
             Destroy(weapDrop.gameObject);
-
-        SeraphDROP[] SerDrops = FindObjectsOfType<SeraphDROP>();
-        foreach (SeraphDROP serDrop in SerDrops)
-            Destroy(serDrop.gameObject);
     }
 
 

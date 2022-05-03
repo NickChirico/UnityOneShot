@@ -95,8 +95,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        //uiControl = GameObject.Find("*** UI Manager").GetComponent<UI_Manager>();
-        uiControl = UI_Manager.GetUIManager;
+        uiControl = GameObject.Find("*** UI Manager").GetComponent<UI_Manager>();
         seraphControl = SeraphController.GetSeraphController;
     }
 
