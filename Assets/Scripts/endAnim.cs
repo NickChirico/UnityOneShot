@@ -5,6 +5,7 @@ using UnityEngine;
 public class endAnim : MonoBehaviour
 {
     public MeleeWeapon weap;
+    float test;
 
     public void HideWeapon()
     {
