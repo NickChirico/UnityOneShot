@@ -119,19 +119,12 @@ public class MapGenerator : MonoBehaviour
     };
     public string[,] pregenPath = new string[,] //the path that shows up on the map in the exhibition build.
     {
-        /*{"*3a", "X", "*2C", "X", "*1G"},
+        {"*3a", "X", "*2C", "X", "*1G"},
         {"X", "*1A", "X", "*3g", "*1c"},
         {"*3C", "*1g", "*1a", "X", "*2G"},
         {"*1c", "X", "X", "*3A", "X"},
         {"X", "*2g", "*3C", "*1a", "X"},
-        {"?1c", "?2A", "X", "?3G", "X"}*/
-
-        {"*2a", "X", "*3C", "X", "*1G"},
-        {"X", "*2A", "X", "*3g", "*1c"},
-        {"*3C", "*1g", "*1a", "X", "*2G"},
-        {"*3g", "*2C", "X", "*3A", "X"},
-        {"X", "*3C", "*2g", "*1a", "X"},
-        {"X", "X", "?1c", "X", "X"}
+        {"?1c", "?2A", "X", "?3G", "X"}
     };
     //the pregen maps are the room layouts of the levels in the exhibition build. The rooms are all written using the same shorthand code.
     //"X" means there's no room there, but I'll go through the other codes character by character
@@ -145,8 +138,8 @@ public class MapGenerator : MonoBehaviour
     //As a general rule, I try not to put two identical room+enemy pairs next to each other, but that's not necessary at all.
     public string[,] pregenMap1 = new string[,]
     {
-        {"X", "X", "*.C.H.2.1", "X", "X"},
-        {"X", "X", "*.B.H.0.0", "*.C.H.3.4", "X"},
+        {"X", "X", "*.B.H.0.0", "X", "X"},
+        {"X", "X", "*.C.H.1.3", "*.C.H.3.4", "X"},
         {"X", "*.C.H.2.1", "*.C.H.3.3", "*.C.H.1.4", "X"},
         {"X", "*.C.H.1.1", "*.C.H.2.2", "X", "X"},
         {"X", "!.E.H.1.0", "X", "X", "X"}
