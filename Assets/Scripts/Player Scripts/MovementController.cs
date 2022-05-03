@@ -62,9 +62,6 @@ public class MovementController : MonoBehaviour
     public TrailRenderer boostTrail;
     EchoEffect boostEcho;
 
-    public GameObject DirtCloudPivot;
-    public ParticleSystem DirtCloudSystem;
-
     private void Awake()
     {
         currentSpecial = EquipmentManager.SpecialType.None;
@@ -101,7 +98,6 @@ public class MovementController : MonoBehaviour
     { return direction; }
 
     // **FIXED UPDATE**
-    bool isSpeed; // true if you are moving, false when standing still.
     private void FixedUpdate()
     {
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
@@ -166,14 +162,11 @@ public class MovementController : MonoBehaviour
         }
 
         animControl.SetFlipX(direction);*/
+        bool isSpeed;
         if (Mathf.Abs(rb.velocity.x) > 0.4f || Mathf.Abs(rb.velocity.y) > 0.4f)
-        {
             isSpeed = true;
-        }
         else
-        {
             isSpeed = false;
-        }
 
         animControl.SetMoveDirection(direction, isSpeed);
 
@@ -181,24 +174,6 @@ public class MovementController : MonoBehaviour
         //  Movement INDICATOR ?
         //Vector2 indicatiorLoc = new Vector2(this.transform.position.x + (moveH * 0.15f), this.transform.position.y + (moveV * 0.15f));
         //destinationIndicator.transform.position = indicatiorLoc;
-    }
-
-    void UpdateDirtCloud()
-    {
-        if (isSpeed)
-        {
-            if (!DirtCloudSystem.isPlaying)
-                DirtCloudSystem.Play();
-
-            Vector2 diff = direction.normalized;
-            float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            DirtCloudPivot.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
-        }
-        else
-        {
-            if (DirtCloudSystem.isPlaying)
-                DirtCloudSystem.Stop();
-        }
     }
 
     // **UPDATE**
@@ -262,8 +237,6 @@ public class MovementController : MonoBehaviour
         currentMoveSpeed = targetSpeed;
         // Always returning to neutralSpeed from targetSpeed
         //Update ends with changing currentMoveSpeed --> rb move in 
-
-        UpdateDirtCloud();
     }
 
     public void SetMoveType(Movement type)
