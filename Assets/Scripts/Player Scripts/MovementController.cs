@@ -125,47 +125,21 @@ public class MovementController : MonoBehaviour
 
         direction = inputVector;
 
-        //direction = direction.normalized;
-
         //  SET ANIMATION
         //FindObjectOfType<PlayerAnimation>().SetDirection(direction);
         //Debug.Log(currentMoveSpeed);
 
-        /*if (Mathf.Abs(rb.velocity.x) > 0.4f || Mathf.Abs(rb.velocity.y) > 0.4f)
+        if (Mathf.Abs(rb.velocity.x) > 0.4f || Mathf.Abs(rb.velocity.y) > 0.4f)
         {
             if (!animControl.GetWalk())
                 animControl.SetWalk(true);
-
-            if (direction.y > 0.75f)
-            {
-                // Run North
-                if(animControl.GetRunAnim() != 1)
-                    animControl.SetRunAnim(1);
-
-            }
-            else if (direction.y < -0.75f)
-            {
-                // Run South
-                if (animControl.GetRunAnim() != 2)
-                    animControl.SetRunAnim(2);
-
-            }
-            else
-            {
-                // Run Side (account for flip)
-                if (animControl.GetRunAnim() != 3)
-                    animControl.SetRunAnim(3);
-
-            }
-
         }
         else
         {
             if (animControl.GetWalk())
-              animControl.SetWalk(false);
+                animControl.SetWalk(false);
         }
 
-<<<<<<< HEAD
 <<<<<<< HEAD
         animControl.SetFlipX(direction);
 =======
@@ -181,16 +155,6 @@ public class MovementController : MonoBehaviour
 
         animControl.SetMoveDirection(direction, isSpeed);
 >>>>>>> parent of 7d0dc9d (Revert "Merge remote-tracking branch 'origin/Nick' into TR")
-=======
-        animControl.SetFlipX(direction);*/
-        bool isSpeed;
-        if (Mathf.Abs(rb.velocity.x) > 0.4f || Mathf.Abs(rb.velocity.y) > 0.4f)
-            isSpeed = true;
-        else
-            isSpeed = false;
-
-        animControl.SetMoveDirection(direction, isSpeed);
->>>>>>> parent of 80c3d29 (Revert "Merge remote-tracking branch 'origin/Nick' into TR")
 
 
         //  Movement INDICATOR ?

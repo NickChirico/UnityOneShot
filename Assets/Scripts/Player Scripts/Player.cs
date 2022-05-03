@@ -15,7 +15,6 @@ public class Player : Entity
     private PlayerStateManager SM;
     private UI_Manager ui;
     private SeraphController seraphControl;
-    private AnimationController animControl;
 
     [Header("PLAYER")]
     public float invulnDuration;
@@ -38,16 +37,12 @@ public class Player : Entity
     private void Awake()
     {
         SM = this.GetComponent<PlayerStateManager>();
+        seraphControl = SeraphController.GetSeraphController;
         try { myMasterDictionary = GameObject.Find("Master Dictionary").GetComponent<MasterDictionary>(); }
         catch { myMasterDictionary = null; }
     }
     public override void Start()
     {
-        seraphControl = SeraphController.GetSeraphController;
-        animControl = AnimationController.GetAnimController;
-
-        currentHealth = MaxHealth;
-        ui.UpdateHealth(currentHealth, MaxHealth);
         base.Start();
     }
 
@@ -80,8 +75,7 @@ public class Player : Entity
 
     public override void Die()
     {
-        //sp.color = Color.red;
-        animControl.DieAnim();
+        sp.color = Color.red;
         canBeDamaged = false;
         ui.TogglePlayerControl(true);
         MovementController.GetMoveController.SetMoveType(MovementController.Movement.Hold);
@@ -107,12 +101,11 @@ public class Player : Entity
 
     IEnumerator FlashRed()
     {
-        animControl.TakeDamageAnim();
-        //sp.color = Color.red;
+        sp.color = Color.red;
         canBeDamaged = false;
         yield return new WaitForSeconds(invulnDuration + invulnBuffer);
         canBeDamaged = true;
-        //sp.color = Color.white;
+        sp.color = Color.white;
     }
 
     public void Nimble(bool b)

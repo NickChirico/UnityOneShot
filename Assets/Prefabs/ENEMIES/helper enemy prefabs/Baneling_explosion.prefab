@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1119967734856473334}
   - component: {fileID: 992862236852760450}
   - component: {fileID: 1799266399063975966}
-  - component: {fileID: 3851546400712784026}
   m_Layer: 0
   m_Name: Baneling_explosion
   m_TagString: Untagged
@@ -75,7 +74,7 @@ SpriteRenderer:
   m_SortingOrder: 3
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847,
     type: 3}
-  m_Color: {r: 0.9009434, g: 1, b: 0.90774137, a: 1}
+  m_Color: {r: 0.990566, g: 0.32146668, b: 0.32146668, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -101,26 +100,7 @@ MonoBehaviour:
   postureDamage: 25
   radius: 1
   knockForce: 10
-  explosionTime: 0.25
+  explosionTime: 0.5
   hittableEntity:
     serializedVersion: 2
     m_Bits: 72
---- !u!95 &3851546400712784026
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2673210722478169366}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4f963cb80929823418818f58ed574cee, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
