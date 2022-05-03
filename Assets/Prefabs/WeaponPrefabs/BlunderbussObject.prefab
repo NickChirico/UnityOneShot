@@ -59,7 +59,7 @@ MonoBehaviour:
   knockbackForce: 8
   range: 2.5
   doRecoil: 1
-  recoilForce: 16
+  recoilForce: 60
   recoilDuration: 0.2
   delayBetweenShots: 0.35
   doRechamber: 1
