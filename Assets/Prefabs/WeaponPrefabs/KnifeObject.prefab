@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12828a29807a844aa1ba28970f49929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponSprite: {fileID: 21300000, guid: 4e7dbee614a331949a00c9fd70ce936f, type: 3}
   simpleWeaponCode: 0
   complexWeaponCode: 
   isValidWeapon: 1

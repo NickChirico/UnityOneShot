@@ -43,17 +43,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2be1c416e782348bc25b7b92949896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponSprite: {fileID: 21300000, guid: 305afea4d3836bf4b85555cb001cca46, type: 3}
+  simpleWeaponCode: 0
+  complexWeaponCode: 
   isValidWeapon: 1
   isPlayerWeapon: 1
   isMainWeapon: 0
   weaponName: Pistol
+  weaponDescription: 
   postureDamage: 0
   shotDamage: 6
   ammoCapacity: 8
   currentAmmo: 0
-  range: 4
   reloadDuration: 1.25
   knockbackForce: 4
+  range: 4
   doRecoil: 0
   recoilForce: 0
   recoilDuration: 0

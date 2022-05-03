@@ -41,7 +41,8 @@ public class Baneling : Enemy
         yield return new WaitForSeconds(blastDelay);
         Explosion E = Instantiate(blast_prefab, this.transform.position, Quaternion.identity);
         E.SetValues(blastDamage, blastRadius, blastKnockForce, blastDuration);
-        Destroy(this.gameObject);
+        Die();
+        //Destroy(this.gameObject);
 
     }
 }

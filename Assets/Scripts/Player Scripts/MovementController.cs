@@ -34,6 +34,8 @@ public class MovementController : MonoBehaviour
     public float boostAmount = 1.5f;
     public float killShotBoostMultiplier = 1.5f;
     public float boostDuration = 3f;
+    float normalBoostDuration;
+    float normalBoostAmount;
 
     [Header("Dash")]
     public float dashForce;
@@ -56,6 +58,13 @@ public class MovementController : MonoBehaviour
 
     private Vector2 direction;
 
+    [Header("Seraph Stuff")]
+    public TrailRenderer boostTrail;
+    EchoEffect boostEcho;
+
+    public GameObject DirtCloudPivot;
+    public ParticleSystem DirtCloudSystem;
+
     private void Awake()
     {
         currentSpecial = EquipmentManager.SpecialType.None;
@@ -63,6 +72,8 @@ public class MovementController : MonoBehaviour
 
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
+
+        boostEcho = this.GetComponent<EchoEffect>();
     }
 
     /*private void Movement_performed(InputAction.CallbackContext context)
@@ -80,11 +91,17 @@ public class MovementController : MonoBehaviour
 
         rb = this.GetComponent<Rigidbody2D>();
         currentMoveSpeed = baseMoveSpeed;
+        normalBoostDuration = boostDuration;
+        normalBoostAmount = boostAmount;
+        neutralSpeed = baseMoveSpeed;
+
+        boostTrail.emitting = false;
     }
     public Vector2 GetDirection()
     { return direction; }
 
     // **FIXED UPDATE**
+    bool isSpeed; // true if you are moving, false when standing still.
     private void FixedUpdate()
     {
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
@@ -108,22 +125,57 @@ public class MovementController : MonoBehaviour
 
         direction = inputVector;
 
+        //direction = direction.normalized;
+
         //  SET ANIMATION
         //FindObjectOfType<PlayerAnimation>().SetDirection(direction);
         //Debug.Log(currentMoveSpeed);
 
-        if (Mathf.Abs(rb.velocity.x) > 0.4f || Mathf.Abs(rb.velocity.y) > 0.4f)
+        /*if (Mathf.Abs(rb.velocity.x) > 0.4f || Mathf.Abs(rb.velocity.y) > 0.4f)
         {
             if (!animControl.GetWalk())
                 animControl.SetWalk(true);
+
+            if (direction.y > 0.75f)
+            {
+                // Run North
+                if(animControl.GetRunAnim() != 1)
+                    animControl.SetRunAnim(1);
+
+            }
+            else if (direction.y < -0.75f)
+            {
+                // Run South
+                if (animControl.GetRunAnim() != 2)
+                    animControl.SetRunAnim(2);
+
+            }
+            else
+            {
+                // Run Side (account for flip)
+                if (animControl.GetRunAnim() != 3)
+                    animControl.SetRunAnim(3);
+
+            }
+
         }
         else
         {
             if (animControl.GetWalk())
-                animControl.SetWalk(false);
+              animControl.SetWalk(false);
         }
 
-        animControl.SetFlipX(direction);
+        animControl.SetFlipX(direction);*/
+        if (Mathf.Abs(rb.velocity.x) > 0.4f || Mathf.Abs(rb.velocity.y) > 0.4f)
+        {
+            isSpeed = true;
+        }
+        else
+        {
+            isSpeed = false;
+        }
+
+        animControl.SetMoveDirection(direction, isSpeed);
 
 
         //  Movement INDICATOR ?
@@ -131,13 +183,37 @@ public class MovementController : MonoBehaviour
         //destinationIndicator.transform.position = indicatiorLoc;
     }
 
+    void UpdateDirtCloud()
+    {
+        if (isSpeed)
+        {
+            if (!DirtCloudSystem.isPlaying)
+                DirtCloudSystem.Play();
+
+            Vector2 diff = direction.normalized;
+            float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            DirtCloudPivot.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+        }
+        else
+        {
+            if (DirtCloudSystem.isPlaying)
+                DirtCloudSystem.Stop();
+        }
+    }
+
     // **UPDATE**
+    bool isBoostEcho;
+    bool isHasted;
     private void Update()
     {
         float t = Time.deltaTime;
         switch (currentMoveType.ToString())
         {
             case "Boost":
+                //boostTrail.emitting = true;
+                if(isBoostEcho) // during the Seraph Surge boost only.
+                    boostEcho.Activate(true, IsFlipX());
+
                 boostLerpTimer += Time.deltaTime;
                 if (boostLerpTimer > boostDuration)
                     boostLerpTimer = boostDuration;
@@ -163,6 +239,18 @@ public class MovementController : MonoBehaviour
                 break;
             default:
                 // Normal 
+                if (isHasted && !isBoostEcho)
+                { boostEcho.Activate(true, IsFlipX()); }
+                else
+                { boostEcho.Activate(false, false); }
+
+
+                if (isBoostEcho) { 
+                    boostEcho.Activate(false, IsFlipX());
+                    isBoostEcho = false;
+                }
+
+                boostDuration = normalBoostDuration;
                 neutralSpeed = baseMoveSpeed;
                 t = Time.deltaTime * 8;
                 break;
@@ -174,6 +262,8 @@ public class MovementController : MonoBehaviour
         currentMoveSpeed = targetSpeed;
         // Always returning to neutralSpeed from targetSpeed
         //Update ends with changing currentMoveSpeed --> rb move in 
+
+        UpdateDirtCloud();
     }
 
     public void SetMoveType(Movement type)
@@ -226,6 +316,61 @@ public class MovementController : MonoBehaviour
         }
         boostLerpTimer = 0f;
         audioManager.PlayBoostSound(isKillShot);
+    }
+
+    public void SeraphBoost(float amount, float duration, float echoFrequency)
+    {
+        SetMoveType(Movement.Boost);
+        targetSpeed = baseMoveSpeed * (amount);
+        boostDuration = duration;
+        isBoostEcho = true;
+        boostEcho.timeBtwnSpawns = echoFrequency;
+
+        //StartCoroutine(SeraphBoostCo(duration, amount));
+        //boostAmount = amount;
+        //boostDuration = duration;
+        //boostMovespeed = baseMoveSpeed * amount;
+    }
+
+    public void SetSpeed(bool SetNormal, float multiplier)
+    {
+        if (SetNormal)
+        {
+            targetSpeed = baseMoveSpeed;
+            isHasted = false;
+        }
+        else
+        {
+            targetSpeed = baseMoveSpeed * (multiplier);
+            isHasted = true;
+            boostEcho.timeBtwnSpawns = 0.1f;
+        }
+    }
+
+    IEnumerator SeraphBoostCo(float dur, float amount)
+    {
+        //boostTrail.emitting = true;
+        //boostEcho.Activate(true);
+        //boostMovespeed = baseMoveSpeed * amount;
+        yield return new WaitForSeconds(dur);
+        //boostMovespeed = baseMoveSpeed;
+        isBoostEcho = false;
+        SetMoveType(Movement.Normal);
+        //boostEcho.Activate(false);
+
+        //  boostTrail.emitting = false;
+    }
+
+    public bool IsFlipX()
+    {
+        if (direction.x < 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     // ~~ Thrust ~~

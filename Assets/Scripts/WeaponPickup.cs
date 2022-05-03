@@ -5,13 +5,17 @@ using UnityEngine;
 public class WeaponPickup : Pickup
 {
     public int weaponNum;
+    public string weaponCode;
 
-    public Sprite meleeSprite, rangedSprite; //ranged weapons are negative, melee weapons are positive
+    public UI_Manager myUIManager;
+
+    public PlayerController myPlayerController;
     //randomly generate from -4 (inclusive) to 4 (exclusive)
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        myUIManager = UI_Manager.GetUIManager;
+        myPlayerController = GameObject.Find("PLAYER(Clone)").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -20,8 +24,13 @@ public class WeaponPickup : Pickup
         
     }
 
-    public override void ChoosePickupImage(int pickupCode)
+    public override void OnPickup()
     {
-        GetComponent<SpriteRenderer>().sprite = pickupCode >= 0 ? meleeSprite : rangedSprite;
+        
+    }
+
+    public override void Interact()
+    {
+        myUIManager.ToggleWeaponPickupPanel();
     }
 }

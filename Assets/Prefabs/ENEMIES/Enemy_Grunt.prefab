@@ -348,14 +348,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 60
   currentHealth: 0
-  postureMax: 12
+  postureMax: 16
   posture: 0
-  postureDecayRate: 1.5
+  postureRechargeRate: 1.5
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
   markedIndicator: {fileID: 6055360675647800459}
   contaminateParticles_prefab: {fileID: 154266614780650862, guid: 6acfc02aa966a5f41936cf287ba4b044,
+    type: 3}
+  stormParticles_prefab: {fileID: 5630597837917196486, guid: 41ec81e70c21c9c4b96e446a06e755c6,
     type: 3}
   healthBar: {fileID: 1022257399202112316}
   postureBar: {fileID: 1792470790924726445}
@@ -392,11 +394,15 @@ MonoBehaviour:
   attackRange: 1.5
   attackDuration: 1.5
   attackDelay: 0.25
-  attackLungeForce: 10
+  attackLungeForce: 7
   canAttack: 1
   attackCooldown: 1.5
   invulnTime: 0.2
   knockbackForce: 10
+  SERAPH_DROP: {fileID: 5627784362461883367, guid: 785636c2a1808fb4fa33d9b5b6d2725e,
+    type: 3}
+  DROP_CHANCE: 0.33
+  WEAPON_DROP: {fileID: 0}
   gruntSpeed: 0
 --- !u!114 &5645802313161577577
 MonoBehaviour:

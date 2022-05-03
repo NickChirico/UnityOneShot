@@ -20,34 +20,52 @@ public class DoorManager : Unlockable
 
     public void LoadNewDoor(int targetX, int targetY)
     {
-        myLoader.portal = false;
         unlocked.SetActive(false);
-        if (targetX >= myMap.roomSizes[myMap.GetCurrentTier()] || targetX < 0 || targetY >= myMap.roomSizes[myMap.GetCurrentTier()]
-            || targetY < 0 || myMapLoader.ComplexMap[targetX, targetY] == "X") //there is no neighboring room
-        {
-            //print("no neighbor at " + targetX + ", " + targetY);
-            door.SetActive(false);
-            unlocked.SetActive(false);
-            lockSymbol.SetActive(false);
-            checkSymbol.SetActive(false);
-            locked.SetActive(false);
-            myLoader.enabled = false;
-            checkSymbol.SetActive(false);
-        }
-        else
+        if (myLoader.portal)
         {
             unlocked.SetActive(false);
             door.SetActive(true);
-            print("neighbor at " + targetX + ", " + targetY);
+            //print("neighbor at " + targetX + ", " + targetY);
             locked.SetActive(true);
             lockSymbol.SetActive(true);
             myLoader.enabled = true;
             myLoader.traveled = false;
             deadEnd.SetActive(false);
             checkSymbol.SetActive(!myMapLoader.ComplexMap[targetX, targetY].StartsWith("*"));
-            if (!myMapLoader.ComplexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc].StartsWith("*")) //if we cleared out this room, unlock this door
+            if (!myMapLoader.ComplexMap[myMapLoader.currentRank, myMapLoader.currentFile].StartsWith("*")) //if we cleared out this room, unlock this door
             {
                 Unlock();
+            }
+        }
+        else
+        {
+            if (targetX >= myMap.roomSizes[myMap.GetCurrentTier()] || targetX < 0 || targetY >= myMap.roomSizes[myMap.GetCurrentTier()]
+                || targetY < 0 || myMapLoader.ComplexMap[targetX, targetY] == "X") //there is no neighboring room
+            {
+                //print("no neighbor at " + targetX + ", " + targetY);
+                door.SetActive(false);
+                unlocked.SetActive(false);
+                lockSymbol.SetActive(false);
+                checkSymbol.SetActive(false);
+                locked.SetActive(false);
+                myLoader.enabled = false;
+                checkSymbol.SetActive(false);
+            }
+            else
+            {
+                unlocked.SetActive(false);
+                door.SetActive(true);
+                //print("neighbor at " + targetX + ", " + targetY);
+                locked.SetActive(true);
+                lockSymbol.SetActive(true);
+                myLoader.enabled = true;
+                myLoader.traveled = false;
+                deadEnd.SetActive(false);
+                checkSymbol.SetActive(!myMapLoader.ComplexMap[targetX, targetY].StartsWith("*"));
+                if (!myMapLoader.ComplexMap[myMapLoader.currentRank, myMapLoader.currentFile].StartsWith("*")) //if we cleared out this room, unlock this door
+                {
+                    Unlock();
+                }
             }
         }
         /*
@@ -79,9 +97,4 @@ public class DoorManager : Unlockable
         }
     }
 
-    public void LoadPortal(MapLoader.Area targetArea)
-    {
-        unlocked.SetActive(true);
-        myLoader.SetPortal(targetArea);
-    }
 }

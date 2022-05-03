@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject meleePrefab, rangedPrefab, bossPrefab;
+    public GameObject meleePrefab, rangedPrefab, bossPrefab, duelistPrefab, banelingPrefab;
     public bool roomComplete;
     public int numToSpawn;
     public MapLoader myMapLoader;
@@ -22,47 +22,33 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
-    public void SpawnEnemies(Room toSpawn, bool spawningBoss)
+    public void SpawnEnemies(Room toSpawn, int spawnSelection)
     {
-        int spawnSelection;
-        if (spawningBoss)
+        print(spawnSelection);
+        for (int i = 0; i < toSpawn.spawnOptions[spawnSelection].spawnLocationsArray.Length; i++)
         {
-            for (int i = 0; i < toSpawn.spawnOptions[0].spawnLocationsArray.Length; i++)
+            if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'M')
             {
-                if (toSpawn.spawnOptions[0].enemyTypeArray[i] == 'M')
-                {
-                    allEnemies.Add(Instantiate(meleePrefab, toSpawn.spawnOptions[0].spawnLocationsArray[i]));
-                }
-                else if (toSpawn.spawnOptions[0].enemyTypeArray[i] == 'R')
-                {
-                    allEnemies.Add(Instantiate(rangedPrefab, toSpawn.spawnOptions[0].spawnLocationsArray[i]));
-                }
-                else if (toSpawn.spawnOptions[0].enemyTypeArray[i] == 'B')
-                {
-                    allEnemies.Add(Instantiate(bossPrefab, toSpawn.spawnOptions[0].spawnLocationsArray[i]));
-                }
+                allEnemies.Add(Instantiate(meleePrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+            }
+            else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'R')
+            {
+                allEnemies.Add(Instantiate(rangedPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+            }
+            else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'B')
+            {
+                allEnemies.Add(Instantiate(bossPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+            }
+            else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'X')
+            {
+                allEnemies.Add(Instantiate(banelingPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+            }
+            else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'D')
+            {
+                allEnemies.Add(Instantiate(duelistPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
             }
         }
-        else
-        {
-            spawnSelection = Random.Range(1, toSpawn.spawnOptions.Length);
-            for (int i = 0; i < toSpawn.spawnOptions[spawnSelection].spawnLocationsArray.Length; i++)
-            {
-                if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'M')
-                {
-                    allEnemies.Add(Instantiate(meleePrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
-                }
-                else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'R')
-                {
-                    allEnemies.Add(Instantiate(rangedPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
-                }
-                else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'B')
-                {
-                    allEnemies.Add(Instantiate(bossPrefab, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
-                }
-            }
-        }
-        
+
     }
 
     public void FinishRoom()
@@ -70,17 +56,17 @@ public class EnemySpawner : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = true;
         print("finished");
         roomComplete = true;
-        myMapLoader.ComplexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = myMapLoader.ComplexMap[myMapLoader.currentXLoc, myMapLoader.currentYLoc].TrimStart('*');
-        //myMapLoader.GetCompletionMap()[myMapLoader.currentXLoc, myMapLoader.currentYLoc] = true;
+        myMapLoader.ComplexMap[myMapLoader.currentRank, myMapLoader.currentFile] = myMapLoader.ComplexMap[myMapLoader.currentRank, myMapLoader.currentFile].TrimStart('*');
+        //myMapLoader.GetCompletionMap()[myMapLoader.currentRank, myMapLoader.currentFile] = true;
         for (int i = 0; i < myMapLoader.allUnlockables.Length; i++)
         {
             myMapLoader.allUnlockables[i].Unlock();
         }
-
-        myMapLoader.northDoor.Unlock();
-        myMapLoader.eastDoor.Unlock();
-        myMapLoader.southDoor.Unlock();
-        myMapLoader.westDoor.Unlock();
+        print("Unlocking Now");
+        myMapLoader.loadedRoom.northDoor.Unlock();
+        myMapLoader.loadedRoom.eastDoor.Unlock();
+        myMapLoader.loadedRoom.southDoor.Unlock();
+        myMapLoader.loadedRoom.westDoor.Unlock();
     }
 
     public void CheckEnemiesAlive()

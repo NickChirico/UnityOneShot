@@ -8,6 +8,9 @@ TagManager:
   - Terrain
   - PlayerHitbox
   - Activator
+  - weaponDrop
+  - UI
+  - bag
   layers:
   - Default
   - TransparentFX

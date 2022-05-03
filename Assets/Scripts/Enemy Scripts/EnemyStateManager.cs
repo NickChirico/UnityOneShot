@@ -62,6 +62,11 @@ public class EnemyStateManager : MonoBehaviour
         ChangeState(Idle);
     }
 
+    public void Stun()
+    {
+        ChangeState(Knocked);
+    }
+
     /*public void PlayAnimation(AnimationState animationState)
     {
         if (currentAnimationState != animationState)

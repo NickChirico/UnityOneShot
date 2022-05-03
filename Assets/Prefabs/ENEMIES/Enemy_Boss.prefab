@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2267113308157200791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.023, y: 0.344, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.17615, y: 0.17615, z: 0.17615}
   m_Children: []
   m_Father: {fileID: 7320017029194801027}
   m_RootOrder: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 5ff3c8b50af1b914a97e16aca3018091, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9149704c23354aa4da1f0897d0e901cb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -544,8 +544,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04, y: 0.31}
-  m_Size: {x: 0.45, y: 0.79}
+  m_Offset: {x: -0.02, y: 0.36334455}
+  m_Size: {x: 0.9, y: 0.87}
   m_Direction: 0
 --- !u!114 &7320017029194801052
 MonoBehaviour:
@@ -561,14 +561,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 200
   currentHealth: 0
-  postureMax: 1000
+  postureMax: 36
   posture: 0
-  postureDecayRate: 4
+  postureRechargeRate: 2.5
   guardBreakDuration: 0
   damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
     type: 3}
   markedIndicator: {fileID: 9206749127625346943}
   contaminateParticles_prefab: {fileID: 154266614780650862, guid: 6acfc02aa966a5f41936cf287ba4b044,
+    type: 3}
+  stormParticles_prefab: {fileID: 5630597837917196486, guid: 41ec81e70c21c9c4b96e446a06e755c6,
     type: 3}
   healthBar: {fileID: 2730252636985010376}
   postureBar: {fileID: 3687363224894749529}
@@ -590,6 +592,8 @@ MonoBehaviour:
     type: 3}
   siphonPickup: {fileID: 320607767360861005, guid: cf570d270e993a64ca7ce71fbee2f4f5,
     type: 3}
+  seraphPickup: {fileID: 0}
+  weaponPickup: {fileID: 0}
   playerSpotted: 0
   idleDuration: 2
   alertDuration: 0.5
@@ -597,15 +601,18 @@ MonoBehaviour:
   patrolDuration: 2
   patrolSpeed: 0.25
   chaseDuration: 4
-  chaseSpeed: 0.75
+  chaseSpeed: 3
   attackDamage: 0
   attackRange: 2.5
   attackDuration: 1.5
   attackDelay: 0.5
   attackLungeForce: 17
   canAttack: 1
+  attackCooldown: 1.5
   invulnTime: 0.2
   knockbackForce: 10
+  SERAPH_DROP: {fileID: 0}
+  DROP_CHANCE: 0
   gruntSpeed: 0
 --- !u!114 &7320017029194801053
 MonoBehaviour:

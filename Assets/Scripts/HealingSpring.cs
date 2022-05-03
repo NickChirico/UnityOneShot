@@ -23,13 +23,13 @@ public class HealingSpring : MonoBehaviour
 
     public void LoadSpring()
     {
-        if (myMap.ComplexMap[myMap.currentXLoc, myMap.currentYLoc] == "V")
+        if (myMap.ComplexMap[myMap.currentRank, myMap.currentFile] == "V")
         {
             gameObject.SetActive(true);
             mySR.sprite = unusedSpring;
             used = false;
         }
-        else if (myMap.ComplexMap[myMap.currentXLoc, myMap.currentYLoc] == "U")
+        else if (myMap.ComplexMap[myMap.currentRank, myMap.currentFile] == "U")
         {
             gameObject.SetActive(true);
             mySR.sprite = usedSpring;
@@ -48,7 +48,7 @@ public class HealingSpring : MonoBehaviour
             used = true;
             other.gameObject.GetComponent<Player>().RestoreFullHealth();
             mySR.sprite = usedSpring;
-            myMap.ComplexMap[myMap.currentXLoc, myMap.currentYLoc] = "U";
+            myMap.ComplexMap[myMap.currentRank, myMap.currentFile] = "U";
         }
     }
 }

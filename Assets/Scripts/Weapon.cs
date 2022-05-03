@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    public Sprite weaponSprite;
     public int simpleWeaponCode;
     public string complexWeaponCode;
     public bool isValidWeapon;
@@ -26,13 +27,27 @@ public abstract class Weapon : MonoBehaviour
         isMainWeapon = isMain;
     }
 
+    public virtual void Reload()
+    {
+        
+    }
+
     public void SetSeraphs(List<Seraph_UI> list)
     {
         seraphs = list.ToArray();
     }
     public void ActivateSeraphs(Entity entity, Vector2 pos)
     {
-        if (seraphs.Length > 0)
+        if (entity == null)
+        {
+            print("entity is missing");
+        }
+
+        if (seraphs == null)
+        {
+            print("seraph UI stuff missing");
+        }
+        else if (seraphs.Length >= 1)
         {
             foreach (Seraph_UI S in seraphs)
             {
@@ -40,6 +55,39 @@ public abstract class Weapon : MonoBehaviour
             }
         }
     }
+
+    public void DoSeraphEffects()
+    {
+        if (seraphs == null)
+        {
+            print("seraph UI stuff missing");
+        }
+        else if (seraphs.Length >= 1)
+        {
+            foreach (Seraph_UI S in seraphs)
+            {
+                S.mySeraph.DoEffect();
+            }
+        }
+    }
+
+    public void EndSeraphEffects()
+    {
+        if (seraphs == null)
+        {
+            print("seraph UI stuff missing");
+        }
+        else if (seraphs.Length >= 1)
+        {
+            foreach (Seraph_UI S in seraphs)
+            {
+                S.mySeraph.EndEffect();
+            }
+        }
+    }
+
+    public virtual bool IsRanged()
+    { return false; }
 }
 
 #region Ranged Weapon
@@ -49,9 +97,9 @@ public class RangedWeapon : Weapon
     public int shotDamage;
     public int ammoCapacity;
     public int currentAmmo;
-    public float range;
     public float reloadDuration;
     public float knockbackForce;
+    public float range;
     [Space(10)]
     public bool doRecoil;
     public float recoilForce, recoilDuration;
@@ -81,7 +129,11 @@ public class RangedWeapon : Weapon
     public override void Equip(bool b)
     {
         base.Equip(b);
-        uiControl.UpdateAmmo(currentAmmo, ammoCapacity, isMainWeapon);
+        uiControl = UI_Manager.GetUIManager;
+        moveControl = MovementController.GetMoveController;
+        playerControl = PlayerController.GetPlayerController;
+        audioManager = AudioManager.GetAudioManager;
+        uiControl.UpdateAmmo(ammoCapacity, ammoCapacity, IsRanged());
     }
 
     Ray2D[] rays;
@@ -138,7 +190,10 @@ public class RangedWeapon : Weapon
         //
         LoseAmmo();
         //
+        Debug.Log("Active? " + gameObject.activeInHierarchy);
+
         StartCoroutine(ShotEffect());
+
     }
 
     private RaycastHit2D[] FindHitsFromRays(Ray2D[] rays)
@@ -157,7 +212,7 @@ public class RangedWeapon : Weapon
         int i = 0;
         foreach (RaycastHit2D hit in hits)
         {
-            LineRenderer line = Instantiate(ShotTrail_prefab, this.transform);
+            LineRenderer line = Instantiate(ShotTrail_prefab, moveControl.transform);
             line.SetPosition(0, rayOrigin);
 
             if (hit.collider != null)
@@ -255,8 +310,9 @@ public class RangedWeapon : Weapon
         uiControl.UpdateAmmo(currentAmmo, ammoCapacity, isMainWeapon);
     }
 
-    public void Reload()
+    public override void Reload()
     {
+        base.Reload();
         currentAmmo = ammoCapacity;
         uiControl.UpdateAmmo(currentAmmo, ammoCapacity, isMainWeapon);
         SetHasShot(true);
@@ -305,9 +361,12 @@ public class RangedWeapon : Weapon
 
         return new Vector2(x2, y2);
     }
+    public override bool IsRanged()
+    {
+        return true;
+    }
 }
 #endregion
-
 
 #region Melee Weapon
 public class MeleeWeapon : Weapon
@@ -355,6 +414,7 @@ public class MeleeWeapon : Weapon
 
     public override void Fire(Vector2 origin, Vector2 dir)
     {
+        SetMeleeIndicator();
         direction = dir;
         float swingRange = swingRangeArr[currentInterval];
         attackPoint = origin + (dir * swingRange);
@@ -363,13 +423,14 @@ public class MeleeWeapon : Weapon
     }
     public void SetIndicator(bool b)
     {
+        SetMeleeIndicator();
         tempAttackDisplay.GetComponent<SpriteRenderer>().enabled = b;
     }
 
     public void PrepAttack(int interval)
     {
+        SetMeleeIndicator();
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.yellow;
-
         float rad = attackRadiusArr[interval];
         tempAttackDisplay.transform.localScale = Vector3.one * rad * 1.25f;
     }
@@ -391,8 +452,27 @@ public class MeleeWeapon : Weapon
         audioManager.PlayMeleeSound(interval);
     }
 
+    public void SetMeleeIndicator()
+    {
+        //print("making sure the melee indicator is attached");
+        if (tempAttackDisplay == null)
+        {
+            //print("The melee indicator was null");
+            tempAttackDisplay = GameObject.Find("Melee_indicator");
+            if (tempAttackDisplay == null)
+            {
+                //print("And it still is because melee indicator was not found");
+            }
+            else
+            {
+                //print("but not anymore!");
+            }
+        }
+    }
+
     public void Attack(int interval)
     {
+        SetMeleeIndicator();
         Debug.Log("ATTACK");
         // TEMP DISPLAY STUFF
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.red;
@@ -451,6 +531,7 @@ public class MeleeWeapon : Weapon
 
     public void Recover()
     {
+        SetMeleeIndicator();
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.green;
         tempAttackDisplay.transform.localScale = Vector3.one * 0.25f;
         if (currentInterval < intervalCount - 1)
@@ -461,6 +542,7 @@ public class MeleeWeapon : Weapon
 
     public void ResetAttackSequence()
     {
+        SetMeleeIndicator();
         //Debug.Log("ATTACK COOLDOWN");
         currentInterval = 0;
         tempAttackDisplay.GetComponent<SpriteRenderer>().color = Color.black;
@@ -515,6 +597,10 @@ public class SpecialWeapon : Weapon
     public override void Equip(bool b)
     {
         base.Equip(b);
+        uiControl = UI_Manager.GetUIManager;
+        moveControl = MovementController.GetMoveController;
+        playerControl = PlayerController.GetPlayerController;
+        audioManager = AudioManager.GetAudioManager;
         uiControl.UpdateAmmo(currentAmmo, sp_Capacity, isMainWeapon);
     }
 

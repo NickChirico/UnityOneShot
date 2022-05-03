@@ -20,22 +20,30 @@ public class PlayerState_Ready : PlayerState
         // READY : read inputs
         float firePressed = InputAction.Player.Fire.ReadValue<float>(); // ~~~~~~~ InputAction ~~~ WORKS ~~~~~
         float reloadPressed = InputAction.Player.Reload.ReadValue<float>();
-        float specPressed = InputAction.Player.Fire2.ReadValue<float>();
+        float fire2Pressed = InputAction.Player.Fire2.ReadValue<float>();
         float dashPressed = InputAction.Player.Dash.ReadValue<float>();
 
         if (firePressed > 0)
         {
-            GoToMainWeapon();
+            if(playerControl.CanSwapWeapon)
+            { playerControl.SwapMain(); }
+            else
+            { GoToMainWeapon(); }
         }
-        if (specPressed > 0)
+        if (fire2Pressed > 0)
         {
-            GoToAltWeapon();
+            if (playerControl.CanSwapWeapon)
+            { playerControl.SwapAlt(); }
+            else
+            { GoToAltWeapon(); }
         }
         if (reloadPressed > 0)
         {
-            if(playerControl.rangedWeap1.currentAmmo < playerControl.rangedWeap1.ammoCapacity ||
-                playerControl.rangedWeap2.currentAmmo < playerControl.rangedWeap2.ammoCapacity)
-            SM.ChangeState(SM.FullReload);
+            Debug.Log("go to full reload");
+            if (playerControl.mainWeapon.IsRanged() && playerControl.mainWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.mainWeapon.GetComponent<RangedWeapon>().ammoCapacity)
+            { SM.ChangeState(SM.FullReload); }
+            else if(playerControl.altWeapon.IsRanged() && playerControl.altWeapon.GetComponent<RangedWeapon>().currentAmmo < playerControl.altWeapon.GetComponent<RangedWeapon>().ammoCapacity)
+            { SM.ChangeState(SM.FullReload); }
         }
         if (dashPressed > 0 && Move.CanDash())
         {
@@ -611,10 +619,15 @@ public class PlayerState_Reloading : PlayerState
     {
         base.Enter();
         if (isMainWeap)
-            weapon = (RangedWeapon)playerControl.mainWeapon;
+        {
+            if (playerControl.mainWeapon.IsRanged())
+                weapon = (RangedWeapon)playerControl.mainWeapon;
+        }
         else
-            weapon = (RangedWeapon)playerControl.altWeapon;
-
+        {
+            if (playerControl.altWeapon.IsRanged())
+                weapon = (RangedWeapon)playerControl.altWeapon;
+        }
 
         soundPlayed = false;
         Duration = weapon.reloadDuration;
@@ -623,12 +636,16 @@ public class PlayerState_Reloading : PlayerState
             Duration = 3f;
         }
 
+        weapon.DoSeraphEffects();
+
         weapon.PlayFullReloadSound();
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        weapon.EndSeraphEffects();
     }
 
     private void ReloadSuccess()
@@ -794,7 +811,7 @@ public class PlayerState_MeleeRecover : PlayerState
         {
             weapon.ResetAttackSequence();
 
-            if (!playerControl.rangedWeap1.HasShot())
+            if (playerControl.mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged && playerControl.mainWeapon.GetComponent<RangedWeapon>().HasShot())
             {
                 SM.ChangeState(SM.RechamberMain);
             }
@@ -860,7 +877,7 @@ public class PlayerState_Dash : PlayerState
                 SM.BackToReady();
             else
                 SM.ChangeState(SM.Reloading);*/
-            if (!playerControl.rangedWeap1.HasShot())
+            if (playerControl.mainWeapon.IsRanged() && !playerControl.mainWeapon.GetComponent<RangedWeapon>().HasShot())
             {
                 SM.ChangeState(SM.RechamberMain);
             }
@@ -873,9 +890,14 @@ public class PlayerState_Dash : PlayerState
     {
         base.Enter();
         Move.Dash();
-
-        playerControl.meleeWeap1.ResetAttackSequence();
-        playerControl.meleeWeap2.ResetAttackSequence();
+        if (playerControl.mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Melee)
+        {
+            playerControl.mainWeapon.GetComponent<MeleeWeapon>().ResetAttackSequence();
+        }
+        if (playerControl.altWeapon.GetWeaponType() == WeaponManager.WeaponType.Melee)
+        {
+            playerControl.altWeapon.GetComponent<MeleeWeapon>().ResetAttackSequence();
+        }
     }
 
     public override void Exit()
@@ -897,9 +919,24 @@ public class PlayerState_Damaged : PlayerState
 
         if (timer > Duration)
         {
-            if (!playerControl.rangedWeap1.HasShot())
+            if (playerControl.mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged)
             {
-                SM.ChangeState(SM.RechamberMain);
+                if (!playerControl.mainWeapon.GetComponent<RangedWeapon>().HasShot())
+                {
+                    SM.ChangeState(SM.RechamberMain);
+                }
+                else
+                    SM.BackToReady();
+            }
+            //I assume that this should also go for alt?
+            if (playerControl.altWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged)
+            {
+                if (!playerControl.altWeapon.GetComponent<RangedWeapon>().HasShot())
+                {
+                    SM.ChangeState(SM.RechamberAlt);
+                }
+                else
+                    SM.BackToReady();
             }
             else
                 SM.BackToReady();
@@ -912,13 +949,27 @@ public class PlayerState_Damaged : PlayerState
         Vector2 knockDir = new Vector2(Random.Range(-360, 360), Random.Range(-360, 360)).normalized;
         Move.Recoil(false, knockDir, player.knockedForce, player.invulnDuration);
 
-        playerControl.meleeWeap1.ResetAttackSequence();
-        playerControl.meleeWeap2.ResetAttackSequence();
+        if (playerControl.mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Melee)
+        {
+            playerControl.mainWeapon.GetComponent<MeleeWeapon>().ResetAttackSequence();
+        }
+        if (playerControl.altWeapon.GetWeaponType() == WeaponManager.WeaponType.Melee)
+        {
+            playerControl.altWeapon.GetComponent<MeleeWeapon>().ResetAttackSequence();
+        }
     }
 
     public override void Exit()
     {
         base.Exit();
+        /*if (playerControl.mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Melee)
+        {
+            playerControl.mainWeapon.GetComponent<MeleeWeapon>().canAttack = true;
+        }
+        if (playerControl.altWeapon.GetWeaponType() == WeaponManager.WeaponType.Melee)
+        {
+            playerControl.altWeapon.GetComponent<MeleeWeapon>().canAttack = true;
+        }*/
     }
 
     public PlayerState_Damaged(PlayerStateManager myManager, Player p, string myName, float myDur) :

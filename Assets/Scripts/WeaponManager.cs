@@ -100,13 +100,13 @@ public class WeaponManager : MonoBehaviour
         UIControl.UpdateCurrentWeaponPanelTMP(SelectedWeapon.ToString());
 
         // -- getting weapon name -little sloppy
-        string weapName = "";
+       /* string weapName = "";
         if (currentR != null)
             weapName = currentR.weaponName;
         else if (currentM != null)
             weapName = currentM.weaponName;
         //
-        UIControl.UpdateWeaponHUD_Main(weapName, IsMelee());
+        UIControl.UpdateWeaponHUD_Main(weapName);*/
     }
 
     public void UpdateSpecial()

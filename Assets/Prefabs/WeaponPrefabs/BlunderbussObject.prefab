@@ -43,17 +43,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8956eb16111953949a04dbc3b448ec86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponSprite: {fileID: 21300000, guid: c42f217ac106b144fa270c2e220acd19, type: 3}
+  simpleWeaponCode: 0
+  complexWeaponCode: 
   isValidWeapon: 1
+  isPlayerWeapon: 0
+  isMainWeapon: 0
   weaponName: Blunderbuss
+  weaponDescription: 
   postureDamage: 7
   shotDamage: 5
   ammoCapacity: 2
   currentAmmo: 0
-  range: 2.5
   reloadDuration: 1.5
   knockbackForce: 8
+  range: 2.5
   doRecoil: 1
-  recoilForce: 12
+  recoilForce: 16
   recoilDuration: 0.2
   delayBetweenShots: 0.35
   doRechamber: 1
