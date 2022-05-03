@@ -370,6 +370,7 @@ public class PlayerController : MonoBehaviour
             {
                 mainWeapon = newWeapon;
                 mainWeapon.Equip(true);
+                uiControl.UpdateMenuWeaponNames(true, mainWeapon.weaponName);
                 //EquippedWeapons[0] = mainWeapon.weaponName;
                 //uiControl.UpdateWeapon_uiPanel(mainWeapon, true);
             }
@@ -377,6 +378,7 @@ public class PlayerController : MonoBehaviour
             {
                 altWeapon = newWeapon;
                 altWeapon.Equip(false);
+                uiControl.UpdateMenuWeaponNames(false, altWeapon.weaponName);
                 //EquippedWeapons[1] = altWeapon.weaponName;
                 //uiControl.UpdateWeapon_uiPanel(altWeapon, false);
             }

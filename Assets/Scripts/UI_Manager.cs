@@ -716,4 +716,18 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
+    public TextMeshProUGUI mainWeap_UI_title;
+    public TextMeshProUGUI altWeap_UI_title;
+    public void UpdateMenuWeaponNames(bool isMain, string newName)
+    {
+        if (isMain)
+        {
+            mainWeap_UI_title.text = newName;
+        }
+        else
+        {
+            altWeap_UI_title.text = newName;
+        }
+    }
+
 }
