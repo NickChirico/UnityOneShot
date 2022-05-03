@@ -175,8 +175,11 @@ public class MapLoader : MonoBehaviour
                 break;
         }
 
-        myPlayer.gameObject.transform.position = loadedRoom.allPickupSpawnLocs[0].position;
-        //myPlayer.gameObject.transform.position = targetSpawn.position;
+        //myPlayer.gameObject.transform.position = loadedRoom.allPickupSpawnLocs[0].position;
+        myPlayer.gameObject.transform.position = targetSpawn.position;
+
+        Camera.main.GetComponent<CameraController>().JumpToPlayer();
+
         ShowMap();
     }
 
@@ -224,6 +227,11 @@ public class MapLoader : MonoBehaviour
         WeaponDrop[] drops = FindObjectsOfType<WeaponDrop>();
         foreach (WeaponDrop weapDrop in drops)
             Destroy(weapDrop.gameObject);
+
+        SeraphDROP[] serDrops = FindObjectsOfType<SeraphDROP>();
+        foreach (SeraphDROP serD in serDrops)
+            Destroy(serD.gameObject);
+
     }
 
 
