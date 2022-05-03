@@ -20,6 +20,38 @@ public class AnimationController : MonoBehaviour
     {
         anim.SetBool("isRunning", b);
     }
+    public void SetWalkNorth(bool b)
+    {
+        anim.SetBool("isRunning", b);
+    }
+    public void SetWalkSouth(bool b)
+    {
+        anim.SetBool("isRunning", b);
+    }
+
+    public void SetRunAnim(int val)
+    {
+        switch (val)
+        {
+            case 1: // NORTH
+                anim.SetInteger("RunDirection", 1);
+                break;
+            case 2: // SOUTH
+                anim.SetInteger("RunDirection", 2);
+                break;
+            case 3: // SIDE
+                anim.SetInteger("RunDirection", 3);
+                break;
+            default: // 
+                anim.SetInteger("RunDirection", 0);
+                break;
+        }
+    }
+
+    public int GetRunAnim()
+    {
+        return anim.GetInteger("RunDirection");
+    }
 
     public bool GetWalk()
     {
@@ -32,5 +64,29 @@ public class AnimationController : MonoBehaviour
             sp.flipX = true;
         else if(dir.x > 0)
             sp.flipX = false;
+    }
+
+    // New Stuff Below !
+
+    public void SetMoveDirection(Vector2 dir, bool doRun)
+    {
+        anim.SetFloat("Horizontal", dir.x);
+        anim.SetFloat("Vertical", dir.y);
+        anim.SetBool("DoRun", doRun);
+    }
+
+    bool isDead = false;
+    public void TakeDamageAnim()
+    {
+        if (!isDead)
+        {
+            anim.SetTrigger("TakeDamage");
+        }
+    }
+
+    public void DieAnim()
+    {
+        anim.SetTrigger("Die");
+        isDead = true;
     }
 }

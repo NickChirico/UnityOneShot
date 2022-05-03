@@ -152,9 +152,9 @@ public class PlayerController : MonoBehaviour
 
     public void ReloadBothWeapons()
     {
-        if (mainWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged)
+        if (mainWeapon.IsRanged())
             mainWeapon.Reload();
-        if (altWeapon.GetWeaponType() == WeaponManager.WeaponType.Ranged)
+        if (altWeapon.IsRanged())
             altWeapon.Reload();
     }
 
