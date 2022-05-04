@@ -11,4 +11,16 @@ public class GruntEnemy : Enemy
     {
         
     }
+
+    public override void Die()
+    {
+        if (enemyName == "Boss")
+        {
+            Enemy[] enemies = FindObjectsOfType<Baneling>();
+            foreach (Enemy e in enemies)
+                Destroy(e.gameObject);
+        }
+
+        base.Die();
+    }
 }

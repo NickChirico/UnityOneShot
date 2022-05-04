@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9165991366323335961}
   - component: {fileID: 7827708954937343551}
+  - component: {fileID: 7354316069596615516}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -82,6 +83,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7354316069596615516
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3799455287855874659}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 79ff218cc70fdb845b4fefb58a607b91, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4710247366311949799
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +421,7 @@ MonoBehaviour:
   knockbackForce: 10
   SERAPH_DROP: {fileID: 5627784362461883367, guid: 785636c2a1808fb4fa33d9b5b6d2725e,
     type: 3}
+  AlwaysDrop: 0
   DROP_CHANCE: 0.33
   WEAPON_DROP: {fileID: 0}
   gruntSpeed: 0
