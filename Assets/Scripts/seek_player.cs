@@ -9,7 +9,7 @@ public class seek_player : MonoBehaviour
     Vector2 targetDir;
     Rigidbody2D rb;
 
-    Entity myEnemy;
+    Healer myEnemy;
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
@@ -27,19 +27,22 @@ public class seek_player : MonoBehaviour
     {
         if (coll.CompareTag("Player"))
         {
-            Destroy(this.gameObject);
             Player player = coll.gameObject.GetComponent<Player>();
             if (player.CanBeDamaged())
             {
                 if (myEnemy != null)
                 {
                     player.TakeDamage(myEnemy, damage, 0);
+                    myEnemy.Heal();
+                    Debug.Log("HIT PLAYER");
                 }
             }
+            Destroy(this.gameObject);
         }
+
     }
 
-    public void SetMyEnemy(Entity e)
+    public void SetMyEnemy(Healer e)
     {
         myEnemy = e;
     }

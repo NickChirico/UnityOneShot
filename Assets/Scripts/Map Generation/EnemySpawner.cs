@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject Shambler_pf, Baneling_pf, Knifer_pf, Duelist_pf, Rifleman_pf, Breacher_pf, Gunner_pf,  boss1_pf;
+    public GameObject Shambler_pf, Baneling_pf, Knifer_pf, Duelist_pf, Rifleman_pf, Breacher_pf, Healer_pf,  boss1_pf;
     public bool roomComplete;
     public int numToSpawn;
     public MapLoader myMapLoader;
@@ -46,6 +46,14 @@ public class EnemySpawner : MonoBehaviour
             else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'D')
             {
                 allEnemies.Add(Instantiate(Duelist_pf, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+            }
+            else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'H')
+            {
+                allEnemies.Add(Instantiate(Healer_pf, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
+            }
+            else if (toSpawn.spawnOptions[spawnSelection].enemyTypeArray[i] == 'S')
+            {
+                allEnemies.Add(Instantiate(Breacher_pf, toSpawn.spawnOptions[spawnSelection].spawnLocationsArray[i]));
             }
         }
 

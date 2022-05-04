@@ -968,11 +968,11 @@ MonoBehaviour:
   knockbackForce: 4
   SERAPH_DROP: {fileID: 5627784362461883367, guid: e6f732f571dbaf74abdb4c4f6cbacd01,
     type: 3}
-  AlwaysDrop: 0
+  AlwaysDrop: 1
   DROP_CHANCE: 0
   WEAPON_DROP: {fileID: 0}
   animHealer: {fileID: 0}
-  Projectile: {fileID: 8543310786598433796, guid: 7ce8f69d124dc914f86d7eb8ded38bd1,
+  Projectile: {fileID: 8543310786598433792, guid: 7ce8f69d124dc914f86d7eb8ded38bd1,
     type: 3}
   shootPoint: {fileID: 2313206028476689440}
 --- !u!1 &5564434975295686857
