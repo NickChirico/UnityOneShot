@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.00.00">
+<objects serializationModel="Studio.02.01.00">
 	<object class="AudioFile" id="{76dfe83f-3037-4a36-9b4c-8cd84db327d7}">
 		<property name="assetPath">
 			<value>Whoosh_Cloth_Fienup_001_FREE SFX 3.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>

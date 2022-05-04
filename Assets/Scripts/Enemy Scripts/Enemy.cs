@@ -24,6 +24,10 @@ public abstract class Enemy : Entity
     public LineRenderer lineRend;
     public bool EnableLineRend;
     public EnemySpawner mySpawner;
+
+    public AudioSource mySource;
+
+    public AudioClip attackClip, dieClip;
     //ShootableEntity entity;
 
 
@@ -79,6 +83,7 @@ public abstract class Enemy : Entity
             lineRend.enabled = true;
         }
         seraphPickup = GameObject.Find("Seraph Pickup Prefab");
+        mySource.clip = attackClip;
     }
 
     public override void Start()
@@ -228,6 +233,7 @@ public abstract class Enemy : Entity
 
         if (mySpawner != null)
         {
+            
             if (mySpawner.myMapLoader.loadedRoom.allPickups.Count < 5)
             {
                 int materialDropNumber = Random.Range(0, 100);
@@ -303,6 +309,7 @@ public abstract class Enemy : Entity
             }
             if (mySpawner != null)
             {
+                GameObject.Find("AudioManager").GetComponent<AudioManager>().PlayEnemyDeathSound(enemyName);
                 mySpawner.allEnemies.Remove(gameObject);
                 mySpawner.CheckEnemiesAlive();
             }
@@ -382,6 +389,7 @@ public abstract class Enemy : Entity
         // ATTACK LOGIC base
         canAttack = false;
         rb.AddForce(dir * attackLungeForce, ForceMode2D.Impulse);
+        mySource.Play();
         ResetAttack(attackCooldown);
 
     }

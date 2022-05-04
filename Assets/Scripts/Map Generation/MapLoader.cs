@@ -192,7 +192,14 @@ public class MapLoader : MonoBehaviour
     {
         GameObject.Find("SeraphController").GetComponent<SeraphController>().UploadSeraphs();
         GameObject.Find("Player Loader").GetComponent<PlayerLoader>().currentPathLevel += 1;
-        GameObject.Find("Path Manager").GetComponent<PathManager>().EnterMapScene();
+        if (GameObject.Find("Player Loader").GetComponent<PlayerLoader>().currentPathLevel >= 2)
+        {
+            GameObject.Find("DeathScreen").GetComponent<DeathScreen>().RestartGame();
+        }
+        else
+        {
+            GameObject.Find("Path Manager").GetComponent<PathManager>().EnterMapScene();
+        }
     }
 
 

@@ -13,6 +13,7 @@ public class Explosion : MonoBehaviour
 
     void Start()
     {
+        GameObject.Find("AudioManager").GetComponent<AudioManager>().ExplosionSource.PlayOneShot(GameObject.Find("AudioManager").GetComponent<AudioManager>().explosionSound);
         StartCoroutine(DestoryAfterDelay());
 
         Collider2D[] hitEnemies;
