@@ -413,6 +413,7 @@ public class PlayerController : MonoBehaviour
                 mainWeapon = newWeapon;
                 mainWeapon.Equip(true);
                 uiControl.UpdateMenuWeaponNames(true, mainWeapon.weaponName);
+                GameObject.Find("Player Loader").GetComponent<PlayerLoader>().mainWeaponCode = weap;
                 //EquippedWeapons[0] = mainWeapon.weaponName;
                 //uiControl.UpdateWeapon_uiPanel(mainWeapon, true);
             }
@@ -421,6 +422,7 @@ public class PlayerController : MonoBehaviour
                 altWeapon = newWeapon;
                 altWeapon.Equip(false);
                 uiControl.UpdateMenuWeaponNames(false, altWeapon.weaponName);
+                GameObject.Find("Player Loader").GetComponent<PlayerLoader>().altWeaponCode = weap;
                 //EquippedWeapons[1] = altWeapon.weaponName;
                 //uiControl.UpdateWeapon_uiPanel(altWeapon, false);
             }
