@@ -121,8 +121,11 @@ public class MapLoader : MonoBehaviour
         */
     }
 
+    public GameObject Instructions;
     public void Travel(string targetDirection)
     {
+        Instructions.SetActive(false);
+
         print("loading room");
         loadedRoom.ClearChests();
 

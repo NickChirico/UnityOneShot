@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Security.Cryptography.X509Certificates;
 
 public class Player : Entity
 {
@@ -192,6 +193,13 @@ public class Player : Entity
     {
         ui = UI_Manager.GetUIManager;
         seraphControl = SeraphController.GetSeraphController;
+
+        SetAllSeraphs(loader.baggedSeraphim, loader.mainSeraphim, loader.altSeraphim, loader.armorSeraphim);
+        loader.baggedSeraphim.Clear();
+        loader.mainSeraphim.Clear();
+        loader.altSeraphim.Clear();
+        loader.armorSeraphim.Clear();
+
         SetAllEquipment(loader.mainWeaponCode, loader.altWeaponCode, loader.armorCode, loader.bootsCode, loader.flaskCode);
         UpdateStatsToMatchEquipment();
         currentHealth = loader.currentHealth <= MaxHealth ? loader.currentHealth : MaxHealth;
@@ -259,5 +267,26 @@ public class Player : Entity
         
     }
 
+    public void SetAllSeraphs(List<int> inBag, List<int> onMain, List<int> onAlt, List<int> onArmor)
+    {
+        foreach (var temp in inBag)
+        {
+            seraphControl.SpawnSeraphUIToList(seraphControl.BagSeraphs, temp);
+        }
+        foreach (var temp in onMain)
+        {
+            seraphControl.SpawnSeraphUIToList(seraphControl.MainWeapSeraphs, temp);
+        }
+        foreach (var temp in onAlt)
+        {
+            seraphControl.SpawnSeraphUIToList(seraphControl.AltWeapSeraphs, temp);
+        }
+        foreach (var temp in onArmor)
+        {
+            seraphControl.SpawnSeraphUIToList(seraphControl.ArmorSeraphs, temp);
+
+        }
+        seraphControl.DownloadSeraphs();
+    }
 
 }
