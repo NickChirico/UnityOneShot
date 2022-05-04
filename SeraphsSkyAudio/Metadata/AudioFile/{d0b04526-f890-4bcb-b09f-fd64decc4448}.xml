@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.01.00">
-	<object class="AudioFile" id="{76dfe83f-3037-4a36-9b4c-8cd84db327d7}">
+	<object class="AudioFile" id="{d0b04526-f890-4bcb-b09f-fd64decc4448}">
 		<property name="assetPath">
-			<value>Whoosh_Cloth_Fienup_001_FREE SFX 3.wav</value>
+			<value>Shot3.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
-			<value>48</value>
+			<value>44.0999985</value>
 		</property>
 		<property name="channelCount">
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>1.3534375000000001</value>
+			<value>1.2534013605442176</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{76e383f3-815b-4cca-8ce9-9012602476f6}</destination>

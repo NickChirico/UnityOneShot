@@ -39,6 +39,7 @@ public class SeraphDROP : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            GameObject.Find("AudioManager").GetComponent<AudioManager>().sfxSource.PlayOneShot(GameObject.Find("AudioManager").GetComponent<AudioManager>().seraphPickupSound);
             if (canPickUp)
                 seraphControl.SpawnSeraph(((int)upgradeType));
             canPickUp = false;

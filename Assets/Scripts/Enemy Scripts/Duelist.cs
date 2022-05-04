@@ -7,6 +7,7 @@ public class Duelist : Enemy
     [Header("DUELIST")]
     public MeleeWeapon knife;
     public float height;
+    public AudioClip attackClip2, attackClip3;
 
     public GameObject SeraphDrop;
     [Range(0f, 1f)] public float dropChance;
@@ -46,6 +47,8 @@ public class Duelist : Enemy
         knife.Fire(GetRayOrigin(height), GetDirection());
         knife.PrepAttack(0);
         yield return new WaitForSeconds(attackDelay);
+        //mySource.clip = attackClip;
+        //mySource.Play();
         Thrust(attackLungeForce);
         knife.Attack(0);
         yield return new WaitForSeconds(attackDuration);
@@ -58,6 +61,8 @@ public class Duelist : Enemy
         knife.Fire(GetRayOrigin(height), GetDirection());
         knife.PrepAttack(0);
         yield return new WaitForSeconds(attackDelay);
+        //mySource.clip = attackClip;
+        //mySource.Play();
         Thrust(attackLungeForce);
         knife.Attack(0);
 
@@ -65,6 +70,8 @@ public class Duelist : Enemy
         knife.Fire(GetRayOrigin(height), GetDirection());
         knife.PrepAttack(2);
         yield return new WaitForSeconds(attackDelay);
+        //mySource.clip = attackClip2;
+        //mySource.Play();
         Thrust(attackLungeForce);
         knife.Attack(2);
 
@@ -72,6 +79,8 @@ public class Duelist : Enemy
         knife.Fire(GetRayOrigin(height), GetDirection());
         knife.PrepAttack(3);
         yield return new WaitForSeconds(attackDelay);
+        //mySource.clip = attackClip3;
+        //mySource.Play();
         Thrust(attackLungeForce);
         knife.Attack(3);
 
@@ -85,6 +94,8 @@ public class Duelist : Enemy
         knife.Fire(GetRayOrigin(height), GetDirection());
         knife.PrepAttack(0);
         yield return new WaitForSeconds(attackDuration);
+        //mySource.clip = attackClip;
+        //mySource.Play();
         Thrust(attackLungeForce * 4);
         knife.Attack(3);
         knife.SetIndicator(false);

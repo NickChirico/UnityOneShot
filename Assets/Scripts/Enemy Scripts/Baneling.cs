@@ -39,6 +39,7 @@ public class Baneling : Enemy
     {
         Anim_baneling.SetBool("isRoll", false);
         yield return new WaitForSeconds(blastDelay);
+        GameObject.Find("AudioManager").GetComponent<AudioManager>().ExplosionSource.PlayOneShot(GameObject.Find("AudioManager").GetComponent<AudioManager>().explosionSound);
         Explosion E = Instantiate(blast_prefab, this.transform.position, Quaternion.identity);
         E.SetValues(blastDamage, blastRadius, blastKnockForce, blastDuration);
         Die();
