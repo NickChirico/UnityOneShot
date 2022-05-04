@@ -286,12 +286,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78784487413205245a4e7779c68fac75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baggedSeraphim: []
-  mainSeraphim: []
-  altSeraphim: []
-  armorSeraphim: []
-  bootsSeraphim: []
-  flaskSeraphim: []
+  baggedSeraphim: 
+  mainSeraphim: 
+  altSeraphim: 
+  armorSeraphim: 
+  bootsSeraphim: 
+  flaskSeraphim: 
   mainWeaponCode: rifle
   altWeaponCode: saber
   armorCode: basic armor

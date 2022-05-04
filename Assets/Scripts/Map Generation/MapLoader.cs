@@ -185,6 +185,7 @@ public class MapLoader : MonoBehaviour
 
     public void CompleteArea()
     {
+        GameObject.Find("SeraphController").GetComponent<SeraphController>().UploadSeraphs();
         GameObject.Find("Player Loader").GetComponent<PlayerLoader>().currentPathLevel += 1;
         GameObject.Find("Path Manager").GetComponent<PathManager>().EnterMapScene();
     }

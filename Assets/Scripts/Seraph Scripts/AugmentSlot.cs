@@ -65,7 +65,7 @@ public class AugmentSlot : MonoBehaviour, IDropHandler, IBeginDragHandler
 
     }
 
-    private void SetSeraphLocation()
+    public void SetSeraphLocation()
     {
         mySeraph_ui.transform.position = rect.transform.position;
     }

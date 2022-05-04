@@ -83,7 +83,7 @@ public class SeraphController : MonoBehaviour
         if (BagSeraphs.Count < bagCapacity)
         {
             Seraph_UI newSeraph = Instantiate(UI_Seraph_Prefab, parentPanel);
-
+            
             switch (i)
             {
                 case 0:
@@ -110,6 +110,33 @@ public class SeraphController : MonoBehaviour
         {
             Debug.Log("BAG FULL");
         }
+    }
+
+    public Seraph_UI SpawnSeraphUI(int i)
+    {
+        Seraph_UI newSeraph = Instantiate(UI_Seraph_Prefab, parentPanel);
+        switch (i)
+        {
+            case 0:
+                newSeraph.SetGenome(Seraph_UI.Genome.Rupture);
+                break;
+            case 1:
+                newSeraph.SetGenome(Seraph_UI.Genome.Siphon);
+                break;
+            case 2:
+                newSeraph.SetGenome(Seraph_UI.Genome.Contaminate);
+                break;
+            case 3:
+                newSeraph.SetGenome(Seraph_UI.Genome.Storm);
+                break;
+            case 4:
+                newSeraph.SetGenome(Seraph_UI.Genome.Surge);
+                break;
+            default:
+                newSeraph.SetGenome(Seraph_UI.Genome.None);
+                break;
+        }
+        return newSeraph;
     }
 
     public void SpawnSeraph(string inputCode)
@@ -158,6 +185,7 @@ public class SeraphController : MonoBehaviour
 
     public void UpdateSeraphLists()
     {
+        print("Updating seraph list");
         MainWeapSeraphs = new List<Seraph_UI>();
         AltWeapSeraphs = new List<Seraph_UI>();
         ArmorSeraphs = new List<Seraph_UI>();
@@ -193,6 +221,50 @@ public class SeraphController : MonoBehaviour
                 BagSeraphs.Add(slot.mySeraph_ui);
             }
         }
+    }
+
+    public void SpawnSeraphUIToList(List<Seraph_UI> targetList, int seraphType)
+    {
+        targetList.Add(SpawnSeraphUI(seraphType));
+    }
+
+    public void DownloadSeraphs()
+    {
+        print("downloading seraphs");
+        for (int i = 0; i < BagSeraphs.Count; i++)
+        {
+            if (i < bagSlots.Count)
+            {
+                bagSlots[i].mySeraph_ui = BagSeraphs[i];
+                //bagSlots[i].SetSeraphLocation();
+            }
+        }
+        for (int i = 0; i < MainWeapSeraphs.Count; i++)
+        {
+            if (i < mainWeapSlots.Count)
+            {
+                mainWeapSlots[i].mySeraph_ui = MainWeapSeraphs[i];
+                //mainWeapSlots[i].SetSeraphLocation();
+            }
+        }
+        for (int i = 0; i < AltWeapSeraphs.Count; i++)
+        {
+            if (i < altWeapSlots.Count)
+            {
+                altWeapSlots[i].mySeraph_ui = AltWeapSeraphs[i];
+                //altWeapSlots[i].SetSeraphLocation();
+            }
+        }
+        for (int i = 0; i < ArmorSeraphs.Count; i++)
+        {
+            if (i < armorSlots.Count)
+            {
+                armorSlots[i].mySeraph_ui = ArmorSeraphs[i];
+                //armorSlots[i].SetSeraphLocation();
+            }
+        }
+        GoToSpots();
+        //UpdateSeraphLists();
     }
 
     public void AddToSeraphList(Seraph_UI s, AugmentSlot.EquipmentType e)
@@ -285,6 +357,30 @@ public class SeraphController : MonoBehaviour
     {
         if (tooltipPanel.gameObject.activeSelf)
             tooltipPanel.gameObject.SetActive(false);
+    }
+
+    public void UploadSeraphs()
+    {
+        PlayerLoader myLoader = GameObject.Find("Player Loader").GetComponent<PlayerLoader>();
+        foreach (var temp in BagSeraphs)
+        {
+            myLoader.baggedSeraphim.Add(temp.GetGenomeAsInt());
+        }
+
+        foreach (var temp in MainWeapSeraphs)
+        {
+            myLoader.mainSeraphim.Add(temp.GetGenomeAsInt());
+        }
+
+        foreach (var temp in AltWeapSeraphs)
+        {
+            myLoader.altSeraphim.Add(temp.GetGenomeAsInt());
+        }
+
+        foreach (var temp in ArmorSeraphs)
+        {
+            myLoader.armorSeraphim.Add(temp.GetGenomeAsInt());
+        }
     }
 
 
