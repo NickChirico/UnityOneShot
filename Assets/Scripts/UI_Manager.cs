@@ -130,11 +130,12 @@ public class UI_Manager : MonoBehaviour
         {
             print("Melee controller not found");
         }
+        seraphs = SeraphController.GetSeraphController;
     }
     private void Start()
     {
         SM = FindObjectOfType<PlayerStateManager>();
-        seraphs = SeraphController.GetSeraphController;
+        
         weapons = WeaponManager.GetWeaponManager;
 
         Equipment = EquipmentManager.GetEquipManager;
@@ -146,8 +147,7 @@ public class UI_Manager : MonoBehaviour
         gunButtons = new Button[] { SelectGun_Basic, SelectGun_Charge, SelectGun_Inverse };
         bulletButtons = new Button[] { SelectBullet_Basic, SelectBullet_Pierce, SelectBullet_Impact };
         altButtons = new Button[] { SelectAlt_Shotgun, SelectAlt_Burst, SelectAlt_Flamethrower };
-
-        EquipmentPanel.SetActive(false);
+        EquipmentPanel.SetActive(GameObject.Find("Player Loader").GetComponent<PlayerLoader>().PreLoadingSeraphs());
         TogglePlayerControl(true);
         ToggleControlDisplay(playerControl.usingMouse);
         /*
@@ -232,8 +232,14 @@ public class UI_Manager : MonoBehaviour
 
     public void ToggleEquipmentPanel()
     {
+        if (seraphs == null)
+        {
+            print("seraphs were null, fixing now");
+            seraphs = SeraphController.GetSeraphController; 
+        }
         if (EquipmentPanel.activeSelf)
         {
+            print("equipment panel is active");
             seraphs.UpdateSeraphLists();
             playerControl.UpdateSeraphs();
 

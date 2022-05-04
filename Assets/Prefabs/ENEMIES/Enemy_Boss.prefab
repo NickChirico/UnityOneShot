@@ -575,12 +575,15 @@ MonoBehaviour:
   healthBar: {fileID: 2730252636985010376}
   postureBar: {fileID: 3687363224894749529}
   guardBroken: 0
-  enemyName: Grunt
+  enemyName: Boss
   sp: {fileID: 5146941664678081995}
   rb: {fileID: 0}
   lineRend: {fileID: 7320017028057867096}
   EnableLineRend: 0
   mySpawner: {fileID: 0}
+  mySource: {fileID: 0}
+  attackClip: {fileID: 0}
+  dieClip: {fileID: 0}
   damageCollision: 10
   damageAttack: 18
   postureColl: 0
@@ -613,6 +616,7 @@ MonoBehaviour:
   knockbackForce: 10
   SERAPH_DROP: {fileID: 0}
   DROP_CHANCE: 0
+  WEAPON_DROP: {fileID: 0}
   gruntSpeed: 0
 --- !u!114 &7320017029194801053
 MonoBehaviour:

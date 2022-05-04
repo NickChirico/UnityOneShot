@@ -452,6 +452,7 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateSeraphs() // called in UI manager when window closed
     {
+        print("Updating Seraphs");
         mainWeapon.SetSeraphs(seraphControl.MainWeapSeraphs);
         altWeapon.SetSeraphs(seraphControl.AltWeapSeraphs);
     }

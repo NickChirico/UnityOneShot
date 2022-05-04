@@ -37,6 +37,12 @@ public class AudioManager : MonoBehaviour
     [Space(10)]
     public AudioClip[] meleeSounds;
 
+    [Header("Enemy Audio")]
+    public AudioSource gruntSource;
+    public AudioSource banelingSource;
+    public AudioSource duelistSource;
+    public AudioSource riflemanSource;
+
     bool isCharging;
 
     private void Awake()
@@ -102,6 +108,28 @@ public class AudioManager : MonoBehaviour
             ChargeSource.Play();
         }
         isCharging = true;
+    }
+
+    public void PlayEnemyDeathSound(string enemyType)
+    {
+        switch (enemyType)
+        {
+            case "Grunt":
+                gruntSource.PlayOneShot(gruntSource.clip);
+                break;
+            case "Baneling":
+                banelingSource.PlayOneShot(banelingSource.clip);
+                break;
+            case "Duelist":
+                duelistSource.PlayOneShot(duelistSource.clip);
+                break;
+            case "Rifleman":
+                riflemanSource.PlayOneShot(riflemanSource.clip);
+                break;
+            default:
+                gruntSource.PlayOneShot(gruntSource.clip);
+                break;
+        }
     }
 
     public void StopChargeSound()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerLoader : MonoBehaviour
 {
-    public List<Seraph> baggedSeraphim, mainSeraphim, altSeraphim, armorSeraphim, bootsSeraphim, flaskSeraphim;
+    public List<int> baggedSeraphim, mainSeraphim, altSeraphim, armorSeraphim, bootsSeraphim, flaskSeraphim;
     public string mainWeaponCode, altWeaponCode, armorCode, bootsCode, flaskCode;
     public Weapon mainWeapon, altWeapon;
     public Armor armor;
@@ -43,5 +43,32 @@ public class PlayerLoader : MonoBehaviour
             return Instantiate(playerPrefab, playerSpawnPos, Quaternion.identity).GetComponent<Player>().LoadIntoLevel(this);
         }
         //set everything in the player
+    }
+
+    public bool PreLoadingSeraphs()
+    {
+        bool toReturn = false;
+        if (baggedSeraphim.Count > 0)
+        {
+            print("Pre loaded in bag");
+            toReturn = true;
+        }
+        else if (mainSeraphim.Count > 0)
+        {
+            print("Pre loaded on main");
+            toReturn = true;
+        }
+        else if (altSeraphim.Count > 0)
+        {
+            print("Pre loaded on alt");
+            toReturn = true;
+        }
+        else if (armorSeraphim.Count > 0)
+        {
+            print("Pre loaded on armor");
+            toReturn = true;
+        }
+        
+        return toReturn;
     }
 }

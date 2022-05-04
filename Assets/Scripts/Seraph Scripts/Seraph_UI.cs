@@ -156,4 +156,23 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
         if(Slot != null)
             this.transform.position = Slot.transform.position;
     }
+
+    public int GetGenomeAsInt()
+    {
+        switch (seraphType)
+        {
+            case Genome.Rupture:
+                return 0;
+            case Genome.Siphon:
+                return 1;
+            case Genome.Contaminate:
+                return 2;
+            case Genome.Storm:
+                return 3;
+            case Genome.Surge:
+                return 4;
+            default:
+                return Random.Range(0, 5);
+        }
+    }
 }
