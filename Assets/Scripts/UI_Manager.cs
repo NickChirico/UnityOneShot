@@ -149,6 +149,8 @@ public class UI_Manager : MonoBehaviour
         altButtons = new Button[] { SelectAlt_Shotgun, SelectAlt_Burst, SelectAlt_Flamethrower };
         EquipmentPanel.SetActive(GameObject.Find("Player Loader").GetComponent<PlayerLoader>().PreLoadingSeraphs());
         ToggleEquipmentPanel();
+        ToggleEquipmentPanel();
+
         TogglePlayerControl(true);
         ToggleControlDisplay(playerControl.usingMouse);
         /*

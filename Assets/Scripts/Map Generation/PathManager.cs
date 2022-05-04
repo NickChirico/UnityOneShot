@@ -150,8 +150,17 @@ public class PathManager : MonoBehaviour
         //throw new System.NotImplementedException();
     }
 
+    int endCount = 0;
+    public bool DoEnding()
+    {
+        if (endCount >= 2)
+            return true;
+        else
+            return false;
+    }
     public void EnterMapScene()
     {
+        endCount++;
         myPlayer.playerLoaded = false;
         layerNum = myPlayer.currentPathLevel;
         SceneManager.LoadScene("MapScene");

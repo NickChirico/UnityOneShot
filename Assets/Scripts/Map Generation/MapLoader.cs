@@ -51,7 +51,7 @@ public class MapLoader : MonoBehaviour
         myMap = GameObject.Find("Map Generator").GetComponent<MapGenerator>();
         playerLoader = GameObject.Find("Player Loader").GetComponent<PlayerLoader>();
     }
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -194,6 +194,8 @@ public class MapLoader : MonoBehaviour
         GameObject.Find("Player Loader").GetComponent<PlayerLoader>().currentPathLevel += 1;
         GameObject.Find("Path Manager").GetComponent<PathManager>().EnterMapScene();
     }
+
+
     
     public void LoadRoom(string loadingRoomCode)
     {

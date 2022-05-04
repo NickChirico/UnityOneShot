@@ -293,7 +293,7 @@ MonoBehaviour:
   bootsSeraphim: 
   flaskSeraphim: 
   mainWeaponCode: rifle
-  altWeaponCode: saber
+  altWeaponCode: knife
   armorCode: basic armor
   bootsCode: basic boots
   flaskCode: basic flask

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6122682637910522093}
   - component: {fileID: 5146941664678081995}
+  - component: {fileID: 4616556879853383884}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -82,6 +83,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4616556879853383884
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2267113308157200791}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0c4333829e99e334e835a114297271d1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5411532279365178720
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,9 +601,6 @@ MonoBehaviour:
   lineRend: {fileID: 7320017028057867096}
   EnableLineRend: 0
   mySpawner: {fileID: 0}
-  mySource: {fileID: 0}
-  attackClip: {fileID: 0}
-  dieClip: {fileID: 0}
   damageCollision: 10
   damageAttack: 18
   postureColl: 0
@@ -615,6 +632,7 @@ MonoBehaviour:
   invulnTime: 0.2
   knockbackForce: 10
   SERAPH_DROP: {fileID: 0}
+  AlwaysDrop: 0
   DROP_CHANCE: 0
   WEAPON_DROP: {fileID: 0}
   gruntSpeed: 0
