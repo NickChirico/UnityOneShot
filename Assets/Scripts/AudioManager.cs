@@ -47,6 +47,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource banelingSource;
     public AudioSource duelistSource;
     public AudioSource riflemanSource;
+    public AudioSource bossSource;
 
     bool isCharging;
 
@@ -130,6 +131,9 @@ public class AudioManager : MonoBehaviour
                 break;
             case "Rifleman":
                 riflemanSource.PlayOneShot(riflemanSource.clip);
+                break;
+            case "Boss":
+                bossSource.PlayOneShot(bossSource.clip);
                 break;
             default:
                 gruntSource.PlayOneShot(gruntSource.clip);
