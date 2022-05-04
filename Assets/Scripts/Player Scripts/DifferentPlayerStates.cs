@@ -114,11 +114,17 @@ public class PlayerState_RangedFire : PlayerState
 
         Duration = weapon.delayBetweenShots;
 
-        playerControl.FireWeapon(weapon);
+
+            playerControl.FireWeapon(weapon);
+            playerControl.ShowArmStart();
+        
+
+
 
         //playerControl.FireMainWeapon();
         //playerControl.ToggleAimLineColor(true);
         //Duration = playerControl.rangedWeap1.delayBetweenShots;
+        
     }
 
     public override void Exit()

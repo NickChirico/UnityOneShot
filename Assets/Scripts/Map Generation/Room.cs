@@ -12,17 +12,20 @@ public class Room : MonoBehaviour
     public Transform[] allPickupSpawnLocs;
     public List<Pickup> allPickups;
     public List<string> savedPickups;
-    
+
+    [Space(10)]
+    public GameObject[] chestSpawns;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void LoadAllDoors(int tempX, int tempY)
@@ -50,12 +53,12 @@ public class Room : MonoBehaviour
         northDoor.LoadNewDoor(tempX - 1, tempY);
         eastDoor.LoadNewDoor(tempX, tempY + 1);
         southDoor.LoadNewDoor(tempX + 1, tempY);
-        westDoor.LoadNewDoor(tempX, tempY - 1); 
+        westDoor.LoadNewDoor(tempX, tempY - 1);
     }
 
     public void AddPickup(Pickup pickupToAdd, string codeToAdd)
     {
-        
+
     }
 
     public void RemovePickup(int whichOne)
@@ -69,5 +72,20 @@ public class Room : MonoBehaviour
         }
         allPickups.RemoveAt(whichOne);
         savedPickups.RemoveAt(whichOne);
+    }
+
+
+    public void EnableChest(int val)
+    {
+        chestSpawns[val].SetActive(true);
+    }
+
+    public void ClearChests()
+    {
+        if (chestSpawns != null)
+        {
+            foreach (GameObject c in chestSpawns)
+                c.SetActive(false);
+        }
     }
 }

@@ -440,6 +440,7 @@ public class MeleeWeapon : Weapon
         //SetSwingAnimation();
     }
 
+    bool animFlip = false;
     public virtual void SetSwingAnimation()
     {
         SetIndicator(true);
@@ -464,14 +465,36 @@ public class MeleeWeapon : Weapon
         }
     }
 
-    bool animFlip = false;
+    public virtual void SetSwingAnimation(bool facing)
+    {
+        SetIndicator(true);
+        if (tempAttackDisplay != null)
+        {
+            Vector2 diff = direction.normalized;
+            float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            tempAttackDisplay.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+        }
+
+        if (meleeIndicatorAnim != null)
+        {
+            if (facing)
+            {
+                meleeIndicatorAnim.SetTrigger("Attack");
+            }
+            else
+            {
+                meleeIndicatorAnim.SetTrigger("AttackFlip");
+            }
+        }
+    }
+
     public virtual void SetIndicator(bool b)
     {
         SetMeleeIndicator();
         SpriteRenderer spp = tempAttackDisplay.GetComponent<SpriteRenderer>();
         spp.enabled = b;
 
-        if(b)
+        if (b)
             spp.color = SwingFX_Color;
 
         meleeIndicatorAnim.speed = ANIM_SPEED;
@@ -514,7 +537,8 @@ public class MeleeWeapon : Weapon
 
     public void Attack(int interval)
     {
-        SetSwingAnimation();
+        if(isPlayerWeapon)
+            SetSwingAnimation();
 
         SetMeleeIndicator();
         Debug.Log("ATTACK");

@@ -207,13 +207,18 @@ public abstract class Enemy : Entity
     }
 
     public GameObject SERAPH_DROP;
+    public bool AlwaysDrop;
     [Range(0f, 1f)] public float DROP_CHANCE;
     public GameObject WEAPON_DROP;
     public override void Die()
     {
         if (SERAPH_DROP != null)
         {
-            if (Random.Range(0f, 1f) < DROP_CHANCE)
+            if (AlwaysDrop)
+            {
+                Instantiate(SERAPH_DROP, this.transform.position, Quaternion.identity);
+            }
+            else if (Random.Range(0f, 1f) < DROP_CHANCE)
             {
                 Instantiate(SERAPH_DROP, this.transform.position, Quaternion.identity);
             }

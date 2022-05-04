@@ -121,9 +121,14 @@ public class MapLoader : MonoBehaviour
         */
     }
 
+    public GameObject Instructions;
     public void Travel(string targetDirection)
     {
+        Instructions.SetActive(false);
+
         print("loading room");
+        loadedRoom.ClearChests();
+
         Transform targetSpawn = myPlayer.transform;
         int targetRank = currentRank;
         int targetFile = currentFile;
@@ -229,7 +234,29 @@ public class MapLoader : MonoBehaviour
         {
             ComplexMap[currentRank, currentFile].Replace('?', '!');
         }
-        //Spawn in all the pickups that are here, HERE
+
+        // CHEST CHEST CHEST
+        if (roomAttributes.Length > 5) // CHEST SPAWNS
+        {
+            switch (roomAttributes[5])
+            {
+                case "A":
+                    mySpawner.SpawnChests(loadedRoom, 0);
+                    break;
+                case "B":
+                    mySpawner.SpawnChests(loadedRoom, 1);
+                    break;
+                case "C":
+                    mySpawner.SpawnChests(loadedRoom, 2);
+                    break;
+                case "D":
+                    mySpawner.SpawnChests(loadedRoom, 3);
+                    break;
+
+                default:
+                    break;
+            }
+        }
 
         // DESTROY WEAPON DROPS UPON ENTERING NEW ROOM
         WeaponDrop[] drops = FindObjectsOfType<WeaponDrop>();

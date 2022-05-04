@@ -148,6 +148,7 @@ public class UI_Manager : MonoBehaviour
         bulletButtons = new Button[] { SelectBullet_Basic, SelectBullet_Pierce, SelectBullet_Impact };
         altButtons = new Button[] { SelectAlt_Shotgun, SelectAlt_Burst, SelectAlt_Flamethrower };
         EquipmentPanel.SetActive(GameObject.Find("Player Loader").GetComponent<PlayerLoader>().PreLoadingSeraphs());
+        ToggleEquipmentPanel();
         TogglePlayerControl(true);
         ToggleControlDisplay(playerControl.usingMouse);
         /*

@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Security.Cryptography.X509Certificates;
 
 public class Player : Entity
 {
@@ -193,11 +193,13 @@ public class Player : Entity
     {
         ui = UI_Manager.GetUIManager;
         seraphControl = SeraphController.GetSeraphController;
+
         SetAllSeraphs(loader.baggedSeraphim, loader.mainSeraphim, loader.altSeraphim, loader.armorSeraphim);
         loader.baggedSeraphim.Clear();
         loader.mainSeraphim.Clear();
         loader.altSeraphim.Clear();
         loader.armorSeraphim.Clear();
+
         SetAllEquipment(loader.mainWeaponCode, loader.altWeaponCode, loader.armorCode, loader.bootsCode, loader.flaskCode);
         UpdateStatsToMatchEquipment();
         currentHealth = loader.currentHealth <= MaxHealth ? loader.currentHealth : MaxHealth;
@@ -249,7 +251,6 @@ public class Player : Entity
 
     public void SetAllEquipment(string mainWeap, string altWeap, string armor, string boots, string flask)
     {
-        print("Setting all equipment");
         myController.SelectWeapon(mainWeap, true);
         myController.SelectWeapon(altWeap, false);
         if (myMasterDictionary != null)
@@ -268,8 +269,6 @@ public class Player : Entity
 
     public void SetAllSeraphs(List<int> inBag, List<int> onMain, List<int> onAlt, List<int> onArmor)
     {
-        //spawn the seraph UI in the correct list
-        //move the seraph UI in each list to the correct augment slots
         foreach (var temp in inBag)
         {
             seraphControl.SpawnSeraphUIToList(seraphControl.BagSeraphs, temp);
@@ -285,7 +284,9 @@ public class Player : Entity
         foreach (var temp in onArmor)
         {
             seraphControl.SpawnSeraphUIToList(seraphControl.ArmorSeraphs, temp);
+
         }
         seraphControl.DownloadSeraphs();
     }
+
 }

@@ -313,7 +313,7 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -324,7 +324,7 @@
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "XBOX_Controller",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
