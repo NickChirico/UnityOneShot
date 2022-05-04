@@ -582,7 +582,7 @@ MonoBehaviour:
   EnableLineRend: 0
   mySpawner: {fileID: 0}
   mySource: {fileID: 0}
-  attackClip: {fileID: 0}
+  attackClip: {fileID: 8300000, guid: 70245f8ae97794cd69604175f2287c7e, type: 3}
   dieClip: {fileID: 0}
   damageCollision: 10
   damageAttack: 18

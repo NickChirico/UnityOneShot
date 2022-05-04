@@ -24,6 +24,9 @@ public class AudioManager : MonoBehaviour
     public AudioSource AltFireSource;
     public AudioSource DashSource;
     public AudioSource MeleeSource;
+    public AudioSource ExplosionSource;
+    public AudioSource sfxSource;
+    //public AudioSource musicSource;
     [Space(10)]
     public AudioClip[] shotSounds;
     public AudioClip[] rechamberSounds;
@@ -31,6 +34,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip chargeSound;
     public AudioClip[] boostSounds;
     public AudioClip dashSound;
+    public AudioClip explosionSound;
+    public AudioClip seraphPickupSound;
     [Space(10)]
     public AudioClip[] shotgunSounds;
     public AudioClip burstSound;
@@ -78,7 +83,7 @@ public class AudioManager : MonoBehaviour
             case 1: 
                 // Hit something
                 GunSource.clip = shotSounds[Random.Range(0, shotSounds.Length)];
-                GunSource.Play();
+                GunSource.PlayOneShot(GunSource.clip);
                 break;
             case 2:
                 // Miss? Hit Terrain?
