@@ -59,6 +59,11 @@ public class PlayerController : MonoBehaviour
     null_melee nullMelee;
     null_special nullSpec;
 
+    [Space(15)]
+    public GameObject ArmPivot;
+    public Animator MuzzleFlashAnim;
+    public SpriteRenderer gunSP;
+    bool armShowing;
 
     void Awake()
     {
@@ -234,6 +239,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    float armTimer = 0;
+    float armDuration = 0.5f;
     void UpdateAimLine(bool enabled, Vector2 dir)
     {
         if (enabled)
@@ -245,13 +252,47 @@ public class PlayerController : MonoBehaviour
             AimLine.SetPosition(0, rayOrigin);
 
             AimLine.SetPosition(1, rayOrigin + (dir.normalized * indicatorRange)); //NORMALIZED for static length.
-           
+
         }
         else
         {
             if (AimLine.enabled)
                 AimLine.enabled = false;
         }
+
+
+        // Arm Rotation
+        if (armTimer < armDuration)
+        {
+            Vector2 diff = direction.normalized;
+            float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            ArmPivot.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+            armTimer += Time.deltaTime;
+
+            if (rot_z > 90 || rot_z < -90)
+            {
+                gunSP.flipY = true;
+            }
+            else
+            {
+                gunSP.flipY = false;
+            }
+        }
+        else
+        {
+            if (ArmPivot.activeSelf)
+                ArmPivot.SetActive(false);
+        }
+    }
+
+    public void ShowArmStart()
+    {
+        if (!ArmPivot.activeSelf)
+            ArmPivot.SetActive(true);
+
+        MuzzleFlashAnim.SetTrigger("Fire");
+
+        armTimer = 0;
     }
 
     private void UpdateCircleMain(float range)

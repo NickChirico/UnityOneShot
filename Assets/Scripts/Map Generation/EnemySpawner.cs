@@ -51,8 +51,20 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
+    public void SpawnChests(Room toSpawn, int val)
+    {
+        //chests[val].gameObject.SetActive(true);
+        toSpawn.EnableChest(val);
+    }
+
     public void FinishRoom()
     {
+        /*if (chests.Length > 0)
+        {
+            foreach (CHEST c in chests)
+                c.gameObject.SetActive(false);
+        }*/
+
         GetComponent<BoxCollider2D>().enabled = true;
         print("finished");
         roomComplete = true;

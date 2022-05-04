@@ -64,6 +64,8 @@ public class MovementController : MonoBehaviour
 
     public GameObject DirtCloudPivot;
     public ParticleSystem DirtCloudSystem;
+    public SpriteRenderer sp;
+
 
     private void Awake()
     {
@@ -176,6 +178,15 @@ public class MovementController : MonoBehaviour
         }
 
         animControl.SetMoveDirection(direction, isSpeed);
+        if (direction.normalized.y > 0.5f)
+        {
+            sp.sortingOrder = 15;
+        }
+        else
+        {
+            if (sp.sortingOrder != 12)
+                sp.sortingOrder = 12;
+        }
 
 
         //  Movement INDICATOR ?
@@ -200,6 +211,8 @@ public class MovementController : MonoBehaviour
                 DirtCloudSystem.Stop();
         }
     }
+
+
 
     // **UPDATE**
     bool isBoostEcho;
