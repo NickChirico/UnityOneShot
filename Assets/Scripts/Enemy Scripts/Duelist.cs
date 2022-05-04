@@ -9,9 +9,6 @@ public class Duelist : Enemy
     public MeleeWeapon knife;
     public float height;
 
-    public GameObject SeraphDrop;
-    [Range(0f, 1f)] public float dropChance;
-
     public override void SetUp()
     {
 

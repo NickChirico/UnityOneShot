@@ -11,7 +11,7 @@ public class SeraphDROP : MonoBehaviour
 
     bool canPickUp = true;
     bool moving = false;
-    float speed = 2;
+    float speed = 4;
     GameObject target;
     Vector2 targetPos;
     void Start()
