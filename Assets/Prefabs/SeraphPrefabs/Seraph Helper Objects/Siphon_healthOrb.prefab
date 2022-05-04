@@ -75,9 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847,
-    type: 3}
-  m_Color: {r: 0.42745098, g: 1, b: 0.37254903, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 40c0d368090a0404499de09e8f0a93d5, type: 3}
+  m_Color: {r: 0.20392159, g: 0.48235297, b: 0.1764706, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -99,9 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c68e63f954a4a45836a8f2217dbb7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healAmount: 10
+  healAmount: 6
   speed: 4.5
-  myColor: {r: 0.42939925, g: 1, b: 0.37169808, a: 1}
+  myColor: {r: 0.20260365, g: 0.4811321, b: 0.17475079, a: 1}
 --- !u!96 &6942797452527294332
 TrailRenderer:
   serializedVersion: 2

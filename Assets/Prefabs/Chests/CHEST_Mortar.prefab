@@ -136,7 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fce8d1f96f0ba949ade22706f3124c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSeraphChest: 0
   contents: {fileID: 409388795005942078, guid: c547432ed440d844d92a6c74b88ae614, type: 3}
+  serContents: {fileID: 0}
   displayText: {fileID: 334745995655736643}
   openSprite: {fileID: 21300000, guid: de3b37554e274e64485202abf2632667, type: 3}
 --- !u!58 &334745995266993157

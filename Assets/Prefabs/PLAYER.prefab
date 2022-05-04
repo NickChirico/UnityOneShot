@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1955667668498732366}
   - component: {fileID: 9014697044386512967}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: rifle_drop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4602222843011733891}
   - component: {fileID: 5799068268339666147}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DustCloud_pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 4301619139286471796}
   - component: {fileID: 8420743913451404631}
   - component: {fileID: 748366971853829522}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MuzzleFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2626803749100831928}
   - component: {fileID: 3943693418743820404}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MuzzleFlash_pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1685,7 +1685,7 @@ GameObject:
   - component: {fileID: 4824040796340245851}
   - component: {fileID: 7072668274933957289}
   - component: {fileID: 2036368818887937272}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DUST_Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
