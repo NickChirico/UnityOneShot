@@ -5,6 +5,7 @@ using UnityEngine;
 public class Duelist : Enemy
 {
     [Header("DUELIST")]
+    public Animator animDuel;
     public MeleeWeapon knife;
     public float height;
     public AudioClip attackClip2, attackClip3;
@@ -44,9 +45,11 @@ public class Duelist : Enemy
 
     private IEnumerator QuickAttack()
     {
+        animDuel.SetTrigger("Prep");
         knife.Fire(GetRayOrigin(height), GetDirection());
         knife.PrepAttack(0);
         yield return new WaitForSeconds(attackDelay);
+        animDuel.SetTrigger("Attack1");
         //mySource.clip = attackClip;
         //mySource.Play();
         Thrust(attackLungeForce);
@@ -54,13 +57,16 @@ public class Duelist : Enemy
         yield return new WaitForSeconds(attackDuration);
         knife.SetIndicator(false);
         ResetAttack(attackCooldown);
+        animDuel.SetTrigger("End");
     }
 
     private IEnumerator ComboAttack()
     {
+        animDuel.SetTrigger("Prep");
         knife.Fire(GetRayOrigin(height), GetDirection());
         knife.PrepAttack(0);
         yield return new WaitForSeconds(attackDelay);
+        animDuel.SetTrigger("Attack3");
         //mySource.clip = attackClip;
         //mySource.Play();
         Thrust(attackLungeForce);
@@ -87,19 +93,23 @@ public class Duelist : Enemy
         yield return new WaitForSeconds(attackDuration);
         knife.SetIndicator(false);
         ResetAttack(attackCooldown + 0.5f);
+        animDuel.SetTrigger("End");
     }
 
     private IEnumerator LungeAttack()
     {
+        animDuel.SetTrigger("Prep");
         knife.Fire(GetRayOrigin(height), GetDirection());
         knife.PrepAttack(0);
         yield return new WaitForSeconds(attackDuration);
+        animDuel.SetTrigger("Attack1");
         //mySource.clip = attackClip;
         //mySource.Play();
         Thrust(attackLungeForce * 4);
         knife.Attack(3);
         knife.SetIndicator(false);
         ResetAttack(attackCooldown - 0.5f);
+        animDuel.SetTrigger("End");
     }
 
     private void Thrust(float force)

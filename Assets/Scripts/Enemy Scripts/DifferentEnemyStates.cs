@@ -249,7 +249,7 @@ public class EnemyState_Attack : EnemyState
         base.Enter();
         delay = thisEnemy.attackDelay;
         attackDir = thisEnemy.GetDirection();
-        thisEnemy.sp.color = Color.red;
+        //thisEnemy.sp.color = Color.red;
 
         thisEnemy.Aim(attackDir);
     }

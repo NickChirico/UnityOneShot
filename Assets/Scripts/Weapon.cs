@@ -243,6 +243,10 @@ public class RangedWeapon : Weapon
                         Instantiate(ImpactBurst_prefab, hitPoint, Quaternion.identity);
                     }
                 }
+                else if (hit.collider.CompareTag("Projectile") && isPlayerWeapon)
+                {
+                    Destroy(hit.collider.gameObject);
+                }
             }
             else
             {
@@ -559,6 +563,10 @@ public class MeleeWeapon : Weapon
             {
                 if (hit.CompareTag("Terrain"))
                 { }
+                else if (hit.CompareTag("Projectile") && isPlayerWeapon)
+                {
+                    Destroy(hit.gameObject);
+                }
                 else if (hit.CompareTag("Enemy"))
                 {
                     Entity entity = hit.GetComponent<Enemy>();

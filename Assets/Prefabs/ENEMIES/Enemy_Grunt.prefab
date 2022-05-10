@@ -426,7 +426,7 @@ MonoBehaviour:
   SERAPH_DROP: {fileID: 5627784362461883367, guid: 785636c2a1808fb4fa33d9b5b6d2725e,
     type: 3}
   AlwaysDrop: 0
-  DROP_CHANCE: 0.33
+  DROP_CHANCE: 0.25
   WEAPON_DROP: {fileID: 0}
   gruntSpeed: 0
 --- !u!114 &5645802313161577577

@@ -12,7 +12,7 @@ public class MapEnding : MonoBehaviour
 
     IEnumerator Ending()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.25f);
         bool b = FindObjectOfType<PathManager>().DoEnding();
 
         

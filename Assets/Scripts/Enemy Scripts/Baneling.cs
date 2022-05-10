@@ -38,6 +38,7 @@ public class Baneling : Enemy
     IEnumerator Detonate()
     {
         Anim_baneling.SetBool("isRoll", false);
+        sp.color = Color.red;
         yield return new WaitForSeconds(blastDelay);
         GameObject.Find("AudioManager").GetComponent<AudioManager>().ExplosionSource.PlayOneShot(GameObject.Find("AudioManager").GetComponent<AudioManager>().explosionSound);
         Explosion E = Instantiate(blast_prefab, this.transform.position, Quaternion.identity);

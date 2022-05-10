@@ -46,10 +46,13 @@ public class MapLoader : MonoBehaviour
     public RoomCollections grasslands, desert, volcano;
     //woodsRoom, churchRoom, marketRoom, academyRoom;
 
+    PathManager pathMan;
+
     void Awake()
     {
         myMap = GameObject.Find("Map Generator").GetComponent<MapGenerator>();
         playerLoader = GameObject.Find("Player Loader").GetComponent<PlayerLoader>();
+        pathMan = FindObjectOfType<PathManager>();
     }
 
     // Start is called before the first frame update
@@ -121,15 +124,14 @@ public class MapLoader : MonoBehaviour
         */
     }
 
-    public GameObject Instructions;
+
     public void Travel(string targetDirection)
     {
-        Instructions.SetActive(false);
-
         print("loading room");
         loadedRoom.ClearChests();
 
         Transform targetSpawn = myPlayer.transform;
+        Vector2 targetLoc = myPlayer.transform.position;
         int targetRank = currentRank;
         int targetFile = currentFile;
         switch (targetDirection)
@@ -142,7 +144,8 @@ public class MapLoader : MonoBehaviour
                     currentRank -= 1;
                     LoadRoom(ComplexMap[currentRank, currentFile]);
                     //loadedRoom.LoadAllDoors(currentRank, currentFile);
-                    targetSpawn = loadedRoom.southSpawn;
+                    //targetSpawn = loadedRoom.southSpawn;
+                    targetLoc = loadedRoom.southSpawn.position;
                 }
                 break;
             case "east":
@@ -153,7 +156,8 @@ public class MapLoader : MonoBehaviour
                     currentFile += 1;
                     LoadRoom(ComplexMap[currentRank, currentFile]);
                     //loadedRoom.LoadAllDoors(currentRank, currentFile);
-                    targetSpawn = loadedRoom.westSpawn;
+                    //targetSpawn = loadedRoom.westSpawn;
+                    targetLoc = loadedRoom.westSpawn.position;
                 }
                 break;
             case "south":
@@ -164,7 +168,8 @@ public class MapLoader : MonoBehaviour
                     currentRank += 1;
                     LoadRoom(ComplexMap[currentRank, currentFile]);
                     //loadedRoom.LoadAllDoors(currentRank, currentFile);
-                    targetSpawn = loadedRoom.northSpawn;
+                    //targetSpawn = loadedRoom.northSpawn;
+                    targetLoc = loadedRoom.northSpawn.position;
                 }
                 break;
             case "west":
@@ -175,37 +180,42 @@ public class MapLoader : MonoBehaviour
                     currentFile -= 1;
                     LoadRoom(ComplexMap[currentRank, currentFile]);
                     //loadedRoom.LoadAllDoors(currentRank, currentFile);
-                    targetSpawn = loadedRoom.eastSpawn;
+                    //targetSpawn = loadedRoom.eastSpawn;
+                    targetLoc = loadedRoom.eastSpawn.position;
                 }
                 break;
         }
 
         //myPlayer.gameObject.transform.position = loadedRoom.allPickupSpawnLocs[0].position;
-        myPlayer.gameObject.transform.position = targetSpawn.position;
+        //myPlayer.transform.position = targetSpawn.position;
+        myPlayer.transform.position = targetLoc;
 
         Camera.main.GetComponent<CameraController>().JumpToPlayer();
 
-        ShowMap();
+        //ShowMap();
     }
 
     public void CompleteArea()
     {
         GameObject.Find("SeraphController").GetComponent<SeraphController>().UploadSeraphs();
         GameObject.Find("Player Loader").GetComponent<PlayerLoader>().currentPathLevel += 1;
-        if (GameObject.Find("Player Loader").GetComponent<PlayerLoader>().currentPathLevel >= 2)
+        /*if (GameObject.Find("Player Loader").GetComponent<PlayerLoader>().currentPathLevel >= 2)
         {
             GameObject.Find("DeathScreen").GetComponent<DeathScreen>().RestartGame();
         }
         else
         {
             GameObject.Find("Path Manager").GetComponent<PathManager>().EnterMapScene();
-        }
+        }*/
+        GameObject.Find("Path Manager").GetComponent<PathManager>().EnterMapScene();
+
     }
 
 
-    
     public void LoadRoom(string loadingRoomCode)
     {
+        pathMan.DoNewSection(); //roomsCleared++ (in PathManager)
+
         grasslands.SetAllInactive();
         desert.SetAllInactive();
         volcano.SetAllInactive();
@@ -268,7 +278,6 @@ public class MapLoader : MonoBehaviour
         SeraphDROP[] serDrops = FindObjectsOfType<SeraphDROP>();
         foreach (SeraphDROP serD in serDrops)
             Destroy(serD.gameObject);
-
     }
 
 

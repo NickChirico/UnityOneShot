@@ -16,6 +16,8 @@ public class CHEST : MonoBehaviour
     PlayerInputActions inputActions;
     SpriteRenderer sp;
 
+    public Collider2D myCollider;
+
     void Start()
     {
         inputActions = MovementController.GetInputActions;
@@ -35,6 +37,7 @@ public class CHEST : MonoBehaviour
             {
                 isOpen = true;
                 Instantiate(serContents, this.transform.position + offset, Quaternion.identity);
+                myCollider.enabled = false;
             }
         }
         else
@@ -43,6 +46,7 @@ public class CHEST : MonoBehaviour
             {
                 isOpen = true;
                 Instantiate(contents, this.transform.position + offset, Quaternion.identity);
+                myCollider.enabled = false;
             }
         }
     }

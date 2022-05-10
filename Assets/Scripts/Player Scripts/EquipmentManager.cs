@@ -58,6 +58,7 @@ public class EquipmentManager : MonoBehaviour
         //cresendumMeter.fillAmount = 0;
 
         UpdateEquipment();
+        UIControl.CheckSeraphReset();
 
         //UIControl.UpdateCurrentWeaponLabel(currentWeapon.ToString());
     }

@@ -130,7 +130,7 @@ public class MapGenerator : MonoBehaviour
         {"X", "*2A", "X", "*3g", "*1c"},
         {"*3C", "*1g", "*1a", "X", "*2G"},
         {"*3g", "*2C", "X", "*3A", "X"},
-        {"X", "*3C", "*2g", "*1a", "X"},
+        {"X", "*2C", "*3g", "*3a", "X"},
         {"X", "X", "?1c", "X", "X"}
     };
     //the pregen maps are the room layouts of the levels in the exhibition build. The rooms are all written using the same shorthand code.
@@ -146,15 +146,21 @@ public class MapGenerator : MonoBehaviour
     public string[,] pregenMap1 = new string[,]
     {
         {"X", "X", "*.C.H.2.1", "X", "X"},
-        {"X", "X", "*.B.H.0.0.A", "*.C.H.3.4", "X"},
+        {"X", "X", "*.B.H.0.0.B", "*.C.H.3.4", "X"},
         {"X", "*.C.H.2.1", "*.C.H.3.3", "*.C.H.1.4", "X"},
         {"X", "*.C.H.1.1", "*.C.H.2.2.B", "X", "X"},
         {"X", "!.E.H.1.0", "X", "X", "X"}
+
+        /*{"X", "X", "*.C.H.2.1", "X", "X"},
+        {"X", "X", "*.B.H.0.0.A", "X", "X"},
+        {"X", "*.C.H.2.1", "*.C.H.3.3", "*.C.H.1.4", "X"},
+        {"X", "*.C.H.1.1", "*.C.H.2.2.B", "X", "X"},
+        {"X", "!.E.H.1.0", "X", "X", "X"}*/
     };
     public string[,] pregenMap2 = new string[,]
     {
-        {"X", "X", "*.C.H.3.4", "X", "X"},
-        {"X", "*.C.H.3.4", "*.B.H.0.0", "*.C.H.2.2", "*.C.H.1.1"},
+        {"X", "X", "*.C.H.3.4", "X", "*.C.H.3.4"},
+        {"X", "*.C.H.3.4", "*.C.H.1.1", "*.C.H.2.2", "*.B.H.0.0"},
         {"X", "X", "*.C.H.3.1", "*.C.H.2.1", "X"},
         {"X", "*.C.H.2.3", "*.C.H.1.3", "*.C.H.3.1", "*.C.H.2.2"},
         {"X", "X", "!.E.H.1.2", "X", "X"}

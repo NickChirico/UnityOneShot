@@ -135,7 +135,7 @@ public class UI_Manager : MonoBehaviour
     private void Start()
     {
         SM = FindObjectOfType<PlayerStateManager>();
-        
+
         weapons = WeaponManager.GetWeaponManager;
 
         Equipment = EquipmentManager.GetEquipManager;
@@ -147,9 +147,9 @@ public class UI_Manager : MonoBehaviour
         gunButtons = new Button[] { SelectGun_Basic, SelectGun_Charge, SelectGun_Inverse };
         bulletButtons = new Button[] { SelectBullet_Basic, SelectBullet_Pierce, SelectBullet_Impact };
         altButtons = new Button[] { SelectAlt_Shotgun, SelectAlt_Burst, SelectAlt_Flamethrower };
-        EquipmentPanel.SetActive(GameObject.Find("Player Loader").GetComponent<PlayerLoader>().PreLoadingSeraphs());
-        ToggleEquipmentPanel();
-        ToggleEquipmentPanel();
+        //EquipmentPanel.SetActive(GameObject.Find("Player Loader").GetComponent<PlayerLoader>().PreLoadingSeraphs());
+        //ToggleEquipmentPanel();
+        //ToggleEquipmentPanel();
 
         TogglePlayerControl(true);
         ToggleControlDisplay(playerControl.usingMouse);
@@ -238,7 +238,7 @@ public class UI_Manager : MonoBehaviour
         if (seraphs == null)
         {
             print("seraphs were null, fixing now");
-            seraphs = SeraphController.GetSeraphController; 
+            seraphs = SeraphController.GetSeraphController;
         }
         if (EquipmentPanel.activeSelf)
         {
@@ -260,6 +260,67 @@ public class UI_Manager : MonoBehaviour
             ButtonEffect_equipment();
             //SwitchCurrentMenu(1);
         }
+    }
+
+    public void CheckSeraphReset()
+    {
+        if (seraphs == null)
+        {
+            print("seraphs were null, fixing now");
+            seraphs = SeraphController.GetSeraphController;
+        }
+        if (seraphs != null)
+        {
+            /*EquipmentPanel.SetActive(true);
+            seraphs.UpdateSeraphLists();
+            playerControl.UpdateSeraphs();
+            EquipmentPanel.SetActive(false);*/
+            StartCoroutine(FlashEquipScreenReset());
+        }
+    }
+
+    IEnumerator FlashEquipScreenReset()
+    {
+        ToggleEquipmentPanel();
+        //yield return new WaitForSeconds(0.05f);
+        yield return new WaitForEndOfFrame();
+        ToggleEquipmentPanel();
+    }
+
+    public GameObject EnemyTutorialPanel;
+    public Button OK_Enemy_Button;
+    public void ToggleEnemyTutorial()
+    {
+        if (EnemyTutorialPanel.activeSelf)
+        {
+            Time.timeScale = 1;
+            EnemyTutorialPanel.SetActive(false);
+            TogglePlayerControl(true);
+        }
+        else
+        {
+            Time.timeScale = 0;
+            EnemyTutorialPanel.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(OK_Enemy_Button.gameObject);
+            TogglePlayerControl(false);
+        }
+    }
+
+    public void DoShowEnemyPanel()
+    {
+        StartCoroutine(ShowEnemyPanel());
+    }
+    public IEnumerator ShowEnemyPanel()
+    {
+        yield return new WaitForSeconds(1.25f);
+        ToggleEnemyTutorial();
+    }
+
+    public GameObject Instructions;
+    public void ShowInitInstructions(bool show)
+    {
+        Instructions.SetActive(show);
     }
 
     public void TogglePausePanel()
