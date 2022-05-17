@@ -30,19 +30,17 @@ public class DoorLoader : MonoBehaviour
                 myMapLoader.LoadRoom(direction);
             }
         }*/
-
         if (other.CompareTag("Player") && !traveled)
         {
             traveled = true;
             if (portal)
             {
-                Debug.Log("AREA COMPLETE");
                 myMapLoader.CompleteArea();
             }
             else
             {
-                StartCoroutine(TravelCo());
                 //myMapLoader.Travel(direction);
+                StartCoroutine(TravelCo());
             }
             
         }
@@ -54,6 +52,5 @@ public class DoorLoader : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         myMapLoader.Travel(direction);
     }
-
 }
  

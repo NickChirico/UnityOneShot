@@ -180,6 +180,7 @@ public class MapLoader : MonoBehaviour
 
         Camera.main.GetComponent<CameraController>().JumpToPlayer();
 
+        ShowMap();
     }
 
     public void CompleteArea()
@@ -223,13 +224,14 @@ public class MapLoader : MonoBehaviour
         //Spawn in all the pickups that are here, HERE
 
         // DESTROY WEAPON DROPS UPON ENTERING NEW ROOM
-        WeaponDrop[] WeapDrops = FindObjectsOfType<WeaponDrop>();
-        foreach (WeaponDrop weapDrop in WeapDrops)
+        WeaponDrop[] drops = FindObjectsOfType<WeaponDrop>();
+        foreach (WeaponDrop weapDrop in drops)
             Destroy(weapDrop.gameObject);
 
-        SeraphDROP[] SerDrops = FindObjectsOfType<SeraphDROP>();
-        foreach (SeraphDROP serDrop in SerDrops)
-            Destroy(serDrop.gameObject);
+        SeraphDROP[] serDrops = FindObjectsOfType<SeraphDROP>();
+        foreach (SeraphDROP serD in serDrops)
+            Destroy(serD.gameObject);
+
     }
 
 
@@ -250,5 +252,20 @@ public class MapLoader : MonoBehaviour
         }
         testStartX = tempX;
         testStartY = tempY;
+    }
+
+    public void ShowMap()
+    {
+        string willPrint = "";
+        for (int i = 0; i < myMap.roomSizes[myMap.GetCurrentTier()]; i++)
+        {
+            for (int j = 0; j < myMap.roomSizes[myMap.GetCurrentTier()]; j++)
+            {
+                willPrint += ComplexMap[i, j] + " ";
+            }
+
+            willPrint += "\n";
+        }
+        print(willPrint);
     }
 }
