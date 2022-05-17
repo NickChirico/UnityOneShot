@@ -80,47 +80,6 @@ public class MapLoader : MonoBehaviour
         myCam.SetTarget(myPlayer.transform);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        /*
-        if (Input.GetKeyDown(KeyCode.Space) && GetAreaMap()[currentRank, currentFile] != 'B' && mySpawner.roomComplete)
-        {
-            currentRank = bossXLoc;
-            currentFile = bossYLoc;
-            northDoor.LoadNewDoor(currentRank - 1, currentFile);
-            eastDoor.LoadNewDoor(currentRank, currentFile + 1);
-            southDoor.LoadNewDoor(currentRank + 1, currentFile);
-            westDoor.LoadNewDoor(currentRank, currentFile - 1);
-            myPlayer.gameObject.transform.position = southSpawn.position;
-            mySpawner.SpawnEnemies();
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            northDoor.Unlock();
-            eastDoor.Unlock();
-            southDoor.Unlock();
-            westDoor.Unlock();
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            LoadRoom("north");
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            LoadRoom("south");
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            LoadRoom("west");
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            LoadRoom("east");
-        }
-        */
-    }
-
     public GameObject Instructions;
     public void Travel(string targetDirection)
     {
