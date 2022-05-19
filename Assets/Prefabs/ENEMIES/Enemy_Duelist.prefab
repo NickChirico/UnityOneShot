@@ -1169,8 +1169,8 @@ MonoBehaviour:
   attackClip: {fileID: 8300000, guid: d459d62682a434332806d32f652c1bd7, type: 3}
   dieClip: {fileID: 0}
   myAnim: {fileID: 0}
-  damageCollision: 12
-  damageAttack: 9
+  damageCollision: 6
+  damageAttack: 8
   postureColl: 0
   postureAtk: 0
   visionRange: 4.5
@@ -1192,7 +1192,7 @@ MonoBehaviour:
   patrolSpeed: 0.6
   chaseDuration: 24
   chaseSpeed: 1.45
-  attackDamage: 22
+  attackDamage: 15
   attackRange: 1.5
   attackDuration: 0.55
   attackDelay: 0.25

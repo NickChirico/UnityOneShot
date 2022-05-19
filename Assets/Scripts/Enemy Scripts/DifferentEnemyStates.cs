@@ -106,9 +106,9 @@ public class EnemyState_Alert : EnemyState
 
         action = DetermineAction();
 
-        if (thisEnemy.myAnim != null)
+        if (thisEnemy.myAnim != null && thisEnemy.isAlive)
         {
-            thisEnemy.myAnim.SetBool("isWalking", false);
+            //thisEnemy.myAnim.SetBool("isWalking", false);
             thisEnemy.myAnim.SetTrigger("Idle");
         }
     }
@@ -158,7 +158,7 @@ public class EnemyState_Chase : EnemyState
         base.Enter();
         //thisEnemy.sp.color = Color.green;
 
-        if (thisEnemy.myAnim != null)
+        if (thisEnemy.myAnim != null && thisEnemy.isAlive)
         {
             //thisEnemy.myAnim.SetBool("isWalking", true);
             thisEnemy.myAnim.SetTrigger("Move");
@@ -212,7 +212,7 @@ public class EnemyState_Patrol : EnemyState
 
         dest = thisEnemy.GetPatrolPoint();
         //Debug.Log(dest);
-        if (thisEnemy.myAnim != null)
+        if (thisEnemy.myAnim != null && thisEnemy.isAlive)
         {
             //thisEnemy.myAnim.SetBool("isWalking", true);
             thisEnemy.myAnim.SetTrigger("Move");
@@ -253,7 +253,7 @@ public class EnemyState_Attack : EnemyState
                 { 
                     thisEnemy.Attack(attackDir);
 
-                    if (thisEnemy.myAnim != null && !thisEnemy.doAnim)
+                    if (thisEnemy.myAnim != null && !thisEnemy.doAnim && thisEnemy.isAlive)
                     {
                         thisEnemy.myAnim.SetTrigger("Attack");
                     }
@@ -277,7 +277,7 @@ public class EnemyState_Attack : EnemyState
 
         thisEnemy.Aim(attackDir);
 
-        if (thisEnemy.myAnim != null)
+        if (thisEnemy.myAnim != null && thisEnemy.isAlive)
         {
             thisEnemy.myAnim.SetTrigger("Prep");
         }

@@ -11,7 +11,7 @@ public abstract class Enemy : Entity
     private Transform playerLoc;
     private EnemyStateManager SM;
 
-    public bool isAlive = true;
+    public bool isAlive;
 
 
     //[Header("Information")]
@@ -93,6 +93,8 @@ public abstract class Enemy : Entity
 
     public override void Start()
     {
+        isAlive = true;
+
         base.Start();
         SetUp();
     }
@@ -328,9 +330,10 @@ public abstract class Enemy : Entity
             }
         }
 
-        isAlive = false;
-        if (myAnim != null)
+        if (myAnim != null && isAlive)
         {
+            this.GetComponent<Collider2D>().enabled = false;
+            isAlive = false;
             myAnim.SetTrigger("Die");
         }
         base.Die();

@@ -32,7 +32,7 @@ public class RangedEnemy : Enemy
         aimLine.SetPosition(0, shotLoc);
         aimLine.SetPosition(1, GetRayOrigin() + (attackDir * attackRange));
 
-        if (myAnim != null)
+        if (myAnim != null && isAlive)
         {
             myAnim.SetTrigger("Attack");
         }

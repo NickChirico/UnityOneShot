@@ -313,7 +313,7 @@ public class UI_Manager : MonoBehaviour
     }
     public IEnumerator ShowEnemyPanel()
     {
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(1f);
         ToggleEnemyTutorial();
     }
 
