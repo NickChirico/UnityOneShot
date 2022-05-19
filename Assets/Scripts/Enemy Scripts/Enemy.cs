@@ -11,6 +11,8 @@ public abstract class Enemy : Entity
     private Transform playerLoc;
     private EnemyStateManager SM;
 
+    public bool isAlive = true;
+
 
     //[Header("Information")]
     private Vector2 rayOrigin;
@@ -29,6 +31,8 @@ public abstract class Enemy : Entity
 
     public AudioClip attackClip, dieClip;
     //ShootableEntity entity;
+
+    public Animator myAnim;
 
 
     [Header("Variables")]
@@ -62,6 +66,7 @@ public abstract class Enemy : Entity
     public float invulnTime;
     public float knockbackForce;
 
+    public bool doAnim;
 
 
     private void Awake()
@@ -203,6 +208,12 @@ public abstract class Enemy : Entity
             GotKnocked();
             Knockback(knockForce);
         }
+
+        Vector3 spot = damageSpot;
+        Vector3 hitDir = (spot - this.transform.position).normalized;
+        float angle = Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg;
+
+        Instantiate(hitParticles, this.transform.position, Quaternion.Euler(angle - 180, 90, -90));
         return b;
     }
 
@@ -210,6 +221,8 @@ public abstract class Enemy : Entity
     public bool AlwaysDrop;
     [Range(0f, 1f)] public float DROP_CHANCE;
     public GameObject WEAPON_DROP;
+    [Space(10)]
+    public GameObject hitParticles;
     public override void Die()
     {
         if (SERAPH_DROP != null)
@@ -313,6 +326,12 @@ public abstract class Enemy : Entity
                 mySpawner.allEnemies.Remove(gameObject);
                 mySpawner.CheckEnemiesAlive();
             }
+        }
+
+        isAlive = false;
+        if (myAnim != null)
+        {
+            myAnim.SetTrigger("Die");
         }
         base.Die();
     }

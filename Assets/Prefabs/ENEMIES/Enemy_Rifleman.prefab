@@ -355,7 +355,7 @@ RectTransform:
   m_GameObject: {fileID: 3405625889222748646}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.02, y: 0.02, z: 1}
+  m_LocalScale: {x: 0.018749999, y: 0.02, z: 1}
   m_Children:
   - {fileID: 7935962279951236258}
   m_Father: {fileID: 1742251628845765355}
@@ -454,7 +454,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.337}
+  m_AnchoredPosition: {x: 0.042, y: -0.583}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3234226638064892110
@@ -897,6 +897,7 @@ MonoBehaviour:
   postureBar: {fileID: 7919647396408724700}
   guardBroken: 0
   enemyName: Rifleman
+  isAlive: 1
   sp: {fileID: 1849154418511037006}
   rb: {fileID: 0}
   lineRend: {fileID: 7788953141543029816}
@@ -905,6 +906,7 @@ MonoBehaviour:
   mySource: {fileID: 7948298796669417437}
   attackClip: {fileID: 8300000, guid: 26911a83d6a92554e9fd7da1814e1f7e, type: 3}
   dieClip: {fileID: 0}
+  myAnim: {fileID: 7357093653523414423}
   damageCollision: 8
   damageAttack: 0
   postureColl: 0
@@ -935,10 +937,14 @@ MonoBehaviour:
   attackCooldown: 1.5
   invulnTime: 0.2
   knockbackForce: 0
+  doAnim: 0
   SERAPH_DROP: {fileID: 5627784362461883367, guid: 583094a07e8da064d9116d7cf18f4ce1,
     type: 3}
+  AlwaysDrop: 0
   DROP_CHANCE: 0.75
   WEAPON_DROP: {fileID: 409388795005942077, guid: b4e8e48ec8b4fa640abdf304083ad628,
+    type: 3}
+  hitParticles: {fileID: 6744645483605463850, guid: e202f3d0ddc41cb4abbee76f8f54bef9,
     type: 3}
   enemyWeapon: {fileID: 4132644651413726360, guid: 6aaa37d5cf54dc446820bc813f715f26,
     type: 3}
@@ -1050,6 +1056,7 @@ GameObject:
   m_Component:
   - component: {fileID: 737529733790633832}
   - component: {fileID: 1849154418511037006}
+  - component: {fileID: 7357093653523414423}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -1122,6 +1129,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7357093653523414423
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4733986359453154834}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b622265f283cf234ca8e97bea1b5bfc7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6253849190035648870
 GameObject:
   m_ObjectHideFlags: 0

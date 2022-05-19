@@ -712,11 +712,16 @@ MonoBehaviour:
   postureBar: {fileID: 5564434974129191841}
   guardBroken: 0
   enemyName: Breacher
+  isAlive: 1
   sp: {fileID: 5564434975439579436}
   rb: {fileID: 5564434975066815275}
   lineRend: {fileID: 5564434975193465819}
   EnableLineRend: 0
   mySpawner: {fileID: 0}
+  mySource: {fileID: 0}
+  attackClip: {fileID: 0}
+  dieClip: {fileID: 0}
+  myAnim: {fileID: 0}
   damageCollision: 8
   damageAttack: 0
   postureColl: 0
@@ -747,9 +752,13 @@ MonoBehaviour:
   attackCooldown: 1.5
   invulnTime: 0.2
   knockbackForce: 0
+  doAnim: 0
   SERAPH_DROP: {fileID: 0}
+  AlwaysDrop: 0
   DROP_CHANCE: 1
   WEAPON_DROP: {fileID: 409388795005942077, guid: c8515215c0a209643aacaa4f67434b3a,
+    type: 3}
+  hitParticles: {fileID: 6744645483605463850, guid: e202f3d0ddc41cb4abbee76f8f54bef9,
     type: 3}
   enemyWeapon: {fileID: 5447640758910180122, guid: 92e30a6ac0f7d7b47a59f3a40db9785e,
     type: 3}

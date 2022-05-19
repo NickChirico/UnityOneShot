@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeMonkey;
+using CodeMonkey.Utils;
 
 public abstract class Weapon : MonoBehaviour
 {
@@ -21,6 +23,8 @@ public abstract class Weapon : MonoBehaviour
     //public abstract Weapon GetThisWeapon();
 
     public abstract void Fire(Vector2 origin, Vector2 dir);
+
+
 
     public virtual void Equip(bool isMain)
     {
@@ -91,6 +95,7 @@ public abstract class Weapon : MonoBehaviour
 }
 
 #region Ranged Weapon
+
 public class RangedWeapon : Weapon
 {
     [Space(5)]
@@ -145,6 +150,7 @@ public class RangedWeapon : Weapon
     AudioManager audioManager;
     UI_Manager uiControl;
 
+    HowToBulletTracer BulletTracer;
     void Start()
     {
         moveControl = MovementController.GetMoveController;
@@ -152,8 +158,10 @@ public class RangedWeapon : Weapon
         audioManager = AudioManager.GetAudioManager;
         uiControl = UI_Manager.GetUIManager;
         currentAmmo = ammoCapacity;
-    }
 
+        BulletTracer = FindObjectOfType<HowToBulletTracer>();
+
+    }
 
     public bool HasShot()
     {
@@ -256,6 +264,12 @@ public class RangedWeapon : Weapon
             }
             lineTrails[i] = line;
             i++;
+
+            /*UtilsClass.ShakeCamera(0f, .2f);
+            BulletTracer.CreateWeaponTracer(line.GetPosition(0), line.GetPosition(1));
+            BulletTracer.CreateShootFlash(line.GetPosition(0));*/
+            BulletTracer.Shoot(playerControl.EndOfbarrel.position, line.GetPosition(1));
+            
         }
 
 

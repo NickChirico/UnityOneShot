@@ -122,7 +122,7 @@ public class Entity : MonoBehaviour
 
             currentHealth -= damageAmount;
             if (healthBar != null) // HP BAR
-                healthBar.SetHealth((float)currentHealth/(float)MaxHealth);
+                healthBar.SetHealth((float)currentHealth / (float)MaxHealth);
 
             PopUpDamageText T = Instantiate(damageText, damageSpot, Quaternion.identity);
             T.SendMessage("SetTextRun", damageAmount);
@@ -143,6 +143,12 @@ public class Entity : MonoBehaviour
         }
     }
 
+    IEnumerator DieDelay()
+    {
+        yield return new WaitForSeconds(0.75f);
+        Destroy(this.gameObject);
+    }
+
     bool canDie = true;
     public virtual void Die()
     {
@@ -150,8 +156,10 @@ public class Entity : MonoBehaviour
         //if (mySpawner != null)
         //    mySpawner.CheckEnemiesAlive();
 
-        if(this.tag != "Player")
-            Destroy(this.gameObject);
+        if (this.tag != "Player")
+        {
+            StartCoroutine(DieDelay());
+        }
     }
 
     public virtual void UpdateHealth()

@@ -352,8 +352,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04, y: 0.31}
-  m_Size: {x: 0.45, y: 0.79}
+  m_Offset: {x: 0, y: 0.34435064}
+  m_Size: {x: 0.55, y: 0.85}
   m_Direction: 0
 --- !u!114 &5645802313161577576
 MonoBehaviour:
@@ -384,6 +384,7 @@ MonoBehaviour:
   postureBar: {fileID: 1792470790924726445}
   guardBroken: 0
   enemyName: Grunt
+  isAlive: 1
   sp: {fileID: 7827708954937343551}
   rb: {fileID: 0}
   lineRend: {fileID: 5645802314197854380}
@@ -392,6 +393,7 @@ MonoBehaviour:
   mySource: {fileID: 1710320221276897065}
   attackClip: {fileID: 8300000, guid: 0c93560afee6143e89479b4d5f29fbce, type: 3}
   dieClip: {fileID: 0}
+  myAnim: {fileID: 7354316069596615516}
   damageCollision: 8
   damageAttack: 10
   postureColl: 0
@@ -407,27 +409,30 @@ MonoBehaviour:
     type: 3}
   weaponPickup: {fileID: 0}
   playerSpotted: 0
-  idleDuration: 2
+  idleDuration: 1
   alertDuration: 0.5
-  patrolRange: 2
+  patrolRange: 3
   patrolDuration: 2
-  patrolSpeed: 0.25
+  patrolSpeed: 0.75
   chaseDuration: 4
-  chaseSpeed: 0.75
+  chaseSpeed: 1
   attackDamage: 0
-  attackRange: 1.5
+  attackRange: 2
   attackDuration: 1.5
   attackDelay: 0.25
-  attackLungeForce: 7
+  attackLungeForce: 11
   canAttack: 1
-  attackCooldown: 1.5
+  attackCooldown: 0.75
   invulnTime: 0.2
   knockbackForce: 10
+  doAnim: 0
   SERAPH_DROP: {fileID: 5627784362461883367, guid: 785636c2a1808fb4fa33d9b5b6d2725e,
     type: 3}
   AlwaysDrop: 0
   DROP_CHANCE: 0.25
   WEAPON_DROP: {fileID: 0}
+  hitParticles: {fileID: 6744645483605463850, guid: e202f3d0ddc41cb4abbee76f8f54bef9,
+    type: 3}
   gruntSpeed: 0
 --- !u!114 &5645802313161577577
 MonoBehaviour:
