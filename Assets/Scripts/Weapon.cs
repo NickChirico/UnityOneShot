@@ -294,7 +294,8 @@ public class RangedWeapon : Weapon
         if(isPlayerWeapon)
         {
             // Speed Boost
-            moveControl.SpeedBoost(isKillShot);
+            if(weaponName != "Pistol" && weaponName != "Repeater")
+                moveControl.SpeedBoost(isKillShot);
 
             // APPLY SERAPH EFFECTS
             ActivateSeraphs(entityHit, hitPoint);

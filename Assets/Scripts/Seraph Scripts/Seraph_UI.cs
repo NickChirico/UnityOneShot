@@ -102,6 +102,7 @@ public class Seraph_UI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
     {
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0.75f;
+        seraphControl.LoadTooltip(seraphIcon.sprite, backdrop.color, mySeraph.Title, mySeraph.SubTitle, mySeraph.Description, mySeraph.myBlood.ToString());
     }
 
     public void OnDrag(PointerEventData eventData)

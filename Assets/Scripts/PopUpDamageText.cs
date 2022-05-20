@@ -33,7 +33,7 @@ public class PopUpDamageText : MonoBehaviour
         TextMeshPro textMesh = this.GetComponentInChildren<TextMeshPro>();
         textMesh.text = "" + text;
 
-        this.transform.localScale = new Vector3(2,2,0);
+        this.transform.localScale = new Vector3(0.45f,0.45f,0);
         textMesh.color = Color.white;
     }
 

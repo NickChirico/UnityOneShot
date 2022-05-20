@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MapEnding : MonoBehaviour
 {
     public GameObject EndScreen;
+    public GameObject EndButton;
     void Start()
     {
         StartCoroutine(Ending());
@@ -17,7 +19,10 @@ public class MapEnding : MonoBehaviour
 
         
         if(b)
-        { EndScreen.SetActive(true);
+        { 
+            EndScreen.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(EndButton);
         }
     }
 

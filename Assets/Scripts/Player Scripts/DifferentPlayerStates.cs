@@ -639,7 +639,7 @@ public class PlayerState_Reloading : PlayerState
         Duration = weapon.reloadDuration;
         if (Name == "FullReload")
         {
-            Duration = 3f;
+            Duration = 2f;
         }
 
         weapon.DoSeraphEffects();

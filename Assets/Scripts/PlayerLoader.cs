@@ -2,9 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerLoader : MonoBehaviour
 {
+    public bool usingMouse;
+
     public List<int> baggedSeraphim, mainSeraphim, altSeraphim, armorSeraphim, bootsSeraphim, flaskSeraphim;
     public string mainWeaponCode, altWeaponCode, armorCode, bootsCode, flaskCode;
     public Weapon mainWeapon, altWeapon;
@@ -21,13 +25,12 @@ public class PlayerLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        usingMouse = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public Player LoadIntoRoom(Vector3 playerSpawnPos)
@@ -71,4 +74,21 @@ public class PlayerLoader : MonoBehaviour
         
         return toReturn;
     }
+
+    public TextMeshProUGUI displayText;
+    public void ToggleControl()
+    {
+        usingMouse = !usingMouse;
+
+        if (displayText != null)
+        {
+            if (usingMouse)
+                displayText.text = "Keyboard + Mouse";
+            else
+                displayText.text = "XBOX Controller";
+        }
+    }
+
+    public bool GetUsingMouse()
+    { return usingMouse; }
 }

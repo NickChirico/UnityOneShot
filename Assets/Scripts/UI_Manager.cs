@@ -8,10 +8,13 @@ using UnityEngine.EventSystems;
 
 public class UI_Manager : MonoBehaviour
 {
+    public EventSystem events;
+
     public static UI_Manager _uiControl;
     public static UI_Manager GetUIManager { get { return _uiControl; } }
 
     private PlayerInputActions playerInputActions;
+    public GamepadCursor gamepadCursor;
 
     MovementController move;
     ShotController shot;
@@ -61,6 +64,7 @@ public class UI_Manager : MonoBehaviour
     public Button SettingsButton1;
     public Button SettingsButton2;
     public Button SettingsButton_Back;
+    public GameObject ControlsImage;
 
     [Header("In-Game HUD")]
     public GameObject weaponPanel;
@@ -105,6 +109,8 @@ public class UI_Manager : MonoBehaviour
     private Button[] bulletButtons;
     private Button[] altButtons;
 
+
+    PlayerLoader playerLoader;
     private void Awake()
     {
         _uiControl = this;
@@ -151,8 +157,8 @@ public class UI_Manager : MonoBehaviour
         //ToggleEquipmentPanel();
         //ToggleEquipmentPanel();
 
-        TogglePlayerControl(true);
-        ToggleControlDisplay(playerControl.usingMouse);
+        //TogglePlayerControl(true);
+        //ToggleControlDisplay(playerControl.usingMouse);
         /*
         if(!EquipmentPanel.activeSelf)
             ToggleEquipmentPanel(); // Sets to ENABLE on start
@@ -160,17 +166,28 @@ public class UI_Manager : MonoBehaviour
         //SwitchCurrentMenu(1); // 1:Weap , 2:Serap , 3:Options
         //SetInitialEquipment();
 
-        EventSystem.current.SetSelectedGameObject(firstSelected.gameObject);
+        //EventSystem.current.SetSelectedGameObject(firstSelected.gameObject);
+        playerLoader = FindObjectOfType<PlayerLoader>();
+        playerControl.usingMouse = playerLoader.GetUsingMouse();
+        TogglePlayerControl(true);
+        ToggleControlDisplay(playerControl.usingMouse);
+
+        if (!playerControl.usingMouse)
+            Cursor.visible = false;
     }
 
     bool pressedM = false;
     bool pressedP = false;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightBracket))
+        if (EnemyTutorialPanel.activeSelf && playerInputActions.UI.Click.ReadValue<float>() > 0)
+        {
+            ToggleEnemyTutorial();
+        }
+        /*if (Input.GetKeyDown(KeyCode.RightBracket))
         {
             StartCoroutine(FadeToBlack());
-        }
+        }*/
         //manaBar.fillAmount = Mathf.Lerp(manaBar.fillAmount, alt.currentMana / alt.maxMana, Time.deltaTime * 8);
 
         // ~~~ Menu (*select)
@@ -211,16 +228,29 @@ public class UI_Manager : MonoBehaviour
         // ~~~
 
         //
-        if (EquipmentPanel.activeSelf)
+        /*if (EquipmentPanel.activeSelf)
         {
             HighlightActiveEquipment();
-        }
+        }*/
 
         // UPDATE:: Tool Tips
         if (weaponPanel.activeSelf)
         {
             ManageTooltips();
         }
+
+
+        /*if (showingInitControlPanel)
+        {
+            if (playerInputActions.UI.ControllerA.ReadValue<float>() > 0)
+            {
+                ControlSetGamepad();
+            }
+            else if ((playerInputActions.UI.KeyboardE.ReadValue<float>() > 0))
+            {
+                ControlSetMouse();
+            }
+        }*/
     }
 
     /*
@@ -247,6 +277,7 @@ public class UI_Manager : MonoBehaviour
             playerControl.UpdateSeraphs();
 
             Time.timeScale = 1;
+            gamepadCursor.SetCursorActive(false);
             EquipmentPanel.SetActive(false);
             TogglePlayerControl(true);
         }
@@ -254,10 +285,11 @@ public class UI_Manager : MonoBehaviour
         {
             Time.timeScale = 0;
             EquipmentPanel.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(firstSelected.gameObject);
             TogglePlayerControl(false);
-            ButtonEffect_equipment();
+            //ButtonEffect_equipment();
+            if (!playerControl.usingMouse)
+                gamepadCursor.SetCursorActive(true);
             //SwitchCurrentMenu(1);
         }
     }
@@ -299,9 +331,8 @@ public class UI_Manager : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0.05f;
             EnemyTutorialPanel.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(OK_Enemy_Button.gameObject);
             TogglePlayerControl(false);
         }
@@ -325,6 +356,7 @@ public class UI_Manager : MonoBehaviour
 
     public void TogglePausePanel()
     {
+        SettingsPanel.SetActive(false);
         if (PausePanel.activeSelf)
         {
             pause.TogglePause(false);
@@ -335,12 +367,21 @@ public class UI_Manager : MonoBehaviour
         {
             pause.TogglePause(true);
             PausePanel.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(ResumeButton.gameObject);
             TogglePlayerControl(false);
         }
     }
 
+    bool showingControls;
+    public void ToggleControlsImage()
+    {
+        if (showingControls)
+            ControlsImage.SetActive(false);
+        else
+            ControlsImage.SetActive(true);
+
+        showingControls = !showingControls;
+    }
 
     public void ToggleWeaponPickupPanel()
     {
@@ -348,14 +389,12 @@ public class UI_Manager : MonoBehaviour
         {
             weaponPickupPanel.SetActive(false);
             TogglePlayerControl(true);
-            EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(ResumeButton.gameObject);
         }
         else
         {
             weaponPickupPanel.SetActive(true);
             TogglePlayerControl(false);
-            EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(swapMainWeaponButton.gameObject);
         }
     }
@@ -366,15 +405,13 @@ public class UI_Manager : MonoBehaviour
         {
             SettingsPanel.SetActive(false);
             PausePanel.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(ResumeButton.gameObject);
+            EventSystem.current.SetSelectedGameObject(SettingsButton1.gameObject);
         }
         else
         {
-            PausePanel.SetActive(false);
             SettingsPanel.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(SettingsButton1.gameObject);
+            PausePanel.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(ResumeButton.gameObject);
         }
     }
 
@@ -445,7 +482,7 @@ public class UI_Manager : MonoBehaviour
 
     private void ButtonEffect_equipment()
     {
-        HighlightActiveEquipment();
+        //HighlightActiveEquipment();
         Equipment.UpdateEquipment();
     }
 
@@ -543,13 +580,15 @@ public class UI_Manager : MonoBehaviour
     {
         playerControl.usingMouse = !playerControl.usingMouse;
         ToggleControlDisplay(playerControl.usingMouse);
+        //EventSystem.current.SetSelectedGameObject(SettingsButton2.gameObject);
     }
+
     private void ToggleControlDisplay(bool on)
     {
         if (on)
-            controlDisplay.text = "Control: MOUSE";
+            controlDisplay.text = "Selected:   Mouse + Keyboard";
         else
-            controlDisplay.text = "Control: CONTROLLER";
+            controlDisplay.text = "Selected:   XBOX Controller";
     }
     public void RestartScene()
     {
@@ -663,7 +702,10 @@ public class UI_Manager : MonoBehaviour
 
 
     // ~~~~~~ In-Game HUD UI ~~~~~~~~~
-
+    [Header("LATE WEAPON HUD")]
+    public Image mainWeapHud;
+    public Image altWeapHud;
+    public Sprite RangedWeapBox, MeleeWeapBox;
     public void UpdateWeaponHUD_Main(Weapon mainWeap)
     {
         main_weap_Label.text = mainWeap.weaponName;
@@ -673,10 +715,19 @@ public class UI_Manager : MonoBehaviour
 
         if (mainWeap.IsRanged())
         {
+            mainWeapHud.sprite = RangedWeapBox;
             main_ammo_Label.gameObject.SetActive(true);
         }
-        else
+        else if (mainWeap.weaponName == "Mortar")
+        {
+            mainWeapHud.sprite = MeleeWeapBox;
             main_ammo_Label.gameObject.SetActive(false);
+        }
+        else
+        {
+            mainWeapHud.sprite = MeleeWeapBox;
+            main_ammo_Label.gameObject.SetActive(false);
+        }
     }
     //ammoSubPanel.SetActive(!melee);
 
@@ -690,10 +741,19 @@ public class UI_Manager : MonoBehaviour
 
         if (altWeap.IsRanged())
         {
+            altWeapHud.sprite = RangedWeapBox;
             alt_ammo_Label.gameObject.SetActive(true);
         }
-        else
+        else if (altWeap.weaponName == "Mortar")
+        {
+            altWeapHud.sprite = MeleeWeapBox;
             alt_ammo_Label.gameObject.SetActive(false);
+        }
+        else
+        {
+            altWeapHud.sprite = MeleeWeapBox;
+            alt_ammo_Label.gameObject.SetActive(false);
+        }
         //ammoSubPanel_alt.SetActive(!melee);
     }
 

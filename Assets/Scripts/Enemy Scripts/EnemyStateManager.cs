@@ -37,8 +37,7 @@ public class EnemyStateManager : MonoBehaviour
 
     private void Update()
     {
-        if(thisEnemy.isAlive)
-            currentState.DoState();
+        currentState.DoState();
     }
 
     public void ChangeState(EnemyState newState)

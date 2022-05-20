@@ -553,6 +553,8 @@ MonoBehaviour:
   gunSP: {fileID: 9014697044386512967}
   EndOfbarrel: {fileID: 2972241298225537208}
   CanSwapWeapon: 0
+  damageText: {fileID: 3792361872634072957, guid: ebf92b6544459a148972033ef8f9296c,
+    type: 3}
   RIFLE_DROP: {fileID: 409388795005942077, guid: b4e8e48ec8b4fa640abdf304083ad628,
     type: 3}
   REPEATER_DROP: {fileID: 409388795005942077, guid: f8510d86e99744c45bb1402e2b97a0a8,
@@ -564,6 +566,8 @@ MonoBehaviour:
   SABER_DROP: {fileID: 409388795005942077, guid: 1ed8715331391ad46aba892b5380b8a2,
     type: 3}
   MORTAR_DROP: {fileID: 409388795005942077, guid: c547432ed440d844d92a6c74b88ae614,
+    type: 3}
+  PISTOl_DROP: {fileID: 409388795005942077, guid: 03e1f4cfb4cdb14428ecfdb81c786d6f,
     type: 3}
 --- !u!114 &6600408298937354188
 MonoBehaviour:

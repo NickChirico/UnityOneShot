@@ -35,7 +35,7 @@ public class PauseController : MonoBehaviour
     {
         if(doPause)
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0f;
         }
         else
         {

@@ -31,6 +31,11 @@ public class Breacher : Enemy
         attackDir = dir;
         aimLine.SetPosition(0, shotLoc);
         aimLine.SetPosition(1, GetRayOrigin() + (attackDir * attackRange));
+
+        if (myAnim != null && isAlive)
+        {
+            myAnim.SetTrigger("Attack");
+        }
     }
 
     public override void Attack(Vector2 dir)

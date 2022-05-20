@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727455521984608518}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.819331, y: -0.51427495, z: -0.90115243}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -51,24 +51,24 @@ MonoBehaviour:
   isMainWeapon: 0
   weaponName: Pistol
   weaponDescription: 
-  postureDamage: 0
+  postureDamage: 6
   shotDamage: 6
-  ammoCapacity: 8
+  ammoCapacity: 10
   currentAmmo: 0
-  reloadDuration: 1.25
+  reloadDuration: 0.75
   knockbackForce: 4
-  range: 4
+  range: 3.33
   doRecoil: 0
   recoilForce: 0
   recoilDuration: 0
-  delayBetweenShots: 0.25
+  delayBetweenShots: 0.33
   doRechamber: 0
   rechamberDuration: 0
   doCone: 0
   coneSpread: 0
   coneAngle: 0
   shotSounds:
-  - {fileID: 8300000, guid: a0f3949af04534c4fb3e57fabd588087, type: 3}
+  - {fileID: 8300000, guid: 4a8cf9d70363f1d4ca6cb07e4557b2e9, type: 3}
   reload_Sound: {fileID: 8300000, guid: d3c87f5768735524b9ae916fab361e15, type: 3}
   ShotTrail_prefab: {fileID: 4895484642774608296, guid: 3b09048e5397e7c4694603b6654870c7,
     type: 3}

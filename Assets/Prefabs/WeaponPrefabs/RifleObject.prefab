@@ -47,17 +47,17 @@ MonoBehaviour:
   simpleWeaponCode: 0
   complexWeaponCode: 
   isValidWeapon: 1
-  isPlayerWeapon: 0
+  isPlayerWeapon: 1
   isMainWeapon: 0
   weaponName: Rifle
   weaponDescription: 
   postureDamage: 14
-  shotDamage: 14
-  ammoCapacity: 6
+  shotDamage: 16
+  ammoCapacity: 4
   currentAmmo: 0
-  reloadDuration: 1.75
+  reloadDuration: 1.95
   knockbackForce: 8
-  range: 4.5
+  range: 4.75
   doRecoil: 0
   recoilForce: 0
   recoilDuration: 0

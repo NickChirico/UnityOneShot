@@ -422,7 +422,7 @@ MonoBehaviour:
   attackDelay: 0.25
   attackLungeForce: 11
   canAttack: 1
-  attackCooldown: 0.75
+  attackCooldown: 1
   invulnTime: 0.2
   knockbackForce: 10
   doAnim: 0

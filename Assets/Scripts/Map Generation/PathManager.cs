@@ -59,7 +59,7 @@ public class PathManager : MonoBehaviour
     void Update()
     {
         //selectOption.started += SelectOptionOnstarted;
-        if (choosingPath)
+        if (choosingPath && SceneManager.GetActiveScene().name == "MapScene")
         {
             if (navActions.UI.NavigateLeft.triggered)
             {
@@ -175,6 +175,7 @@ public class PathManager : MonoBehaviour
         {
             if (roomsCleared == 0)
             {
+                //UI_Manager.GetUIManager.InitialControlPanel();
                 UI_Manager.GetUIManager.ShowInitInstructions(true);
             }
             else if (roomsCleared == 1)

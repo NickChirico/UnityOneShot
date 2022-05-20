@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6122682637910522093}
   - component: {fileID: 5146941664678081995}
+  - component: {fileID: 4996247116923912422}
   m_Layer: 6
-  m_Name: Sprite
+  m_Name: BossSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,6 +83,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4996247116923912422
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2267113308157200791}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9e41a4ef326285c48aa52da3d425f072, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5411532279365178720
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,7 +606,7 @@ MonoBehaviour:
   mySource: {fileID: 8036538145392559710}
   attackClip: {fileID: 8300000, guid: 70245f8ae97794cd69604175f2287c7e, type: 3}
   dieClip: {fileID: 0}
-  myAnim: {fileID: 0}
+  myAnim: {fileID: 4996247116923912422}
   damageCollision: 10
   damageAttack: 18
   postureColl: 0

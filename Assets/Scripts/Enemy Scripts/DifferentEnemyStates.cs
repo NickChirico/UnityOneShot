@@ -96,7 +96,7 @@ public class EnemyState_Alert : EnemyState
         else if (thisEnemy.IsInLineOfSight())
             return 2; // CHASE
         else
-            return 0; // IDLE
+            return 0; // ROLL THIN MAN
     }
 
     public override void Enter()

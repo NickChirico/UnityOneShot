@@ -34,6 +34,8 @@ public class Healer : Enemy
 
     private IEnumerator ShootOne()
     {
+        if(myAnim != null)
+        { myAnim.SetTrigger("Attack"); }
         seek_player proj = Instantiate(Projectile, shootPoint.transform.position, Quaternion.identity);
         proj.SetMyEnemy(this);
         yield return new WaitForSeconds(attackDuration);
@@ -42,14 +44,18 @@ public class Healer : Enemy
 
     private IEnumerator ShootBurst()
     {
+        if (myAnim != null)
+        { myAnim.SetTrigger("Attack"); }
         seek_player proj = Instantiate(Projectile, shootPoint.transform.position, Quaternion.identity);
         proj.SetMyEnemy(this);
         yield return new WaitForSeconds(0.33f);
-
+        if (myAnim != null)
+        { myAnim.SetTrigger("Attack"); }
         seek_player proj2 = Instantiate(Projectile, shootPoint.transform.position, Quaternion.identity);
         proj2.SetMyEnemy(this);
         yield return new WaitForSeconds(0.33f);
-
+        if (myAnim != null)
+        { myAnim.SetTrigger("Attack"); }
         seek_player proj3 = Instantiate(Projectile, shootPoint.transform.position, Quaternion.identity);
         proj3.SetMyEnemy(this);
         yield return new WaitForSeconds(attackDuration);

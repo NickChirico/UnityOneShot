@@ -233,7 +233,7 @@ public class PlayerController : MonoBehaviour
             {
                 altRange = altWeapon.GetComponent<RangedWeapon>().range;
                 indicatorRange = altRange;
-                aimlineEnabled = false;
+                aimlineEnabled = true;
             }
             else
             { aimlineEnabled = false; }
@@ -489,22 +489,44 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public PopUpDamageText damageText;
+
     public void SwapMain()
     {
         if (inspectedWeapDrop != null)
         {
-            DropCurrentWeapon(true);
-            SelectWeapon(weapDropName, true);
-            Destroy(inspectedWeapDrop);
+            string mainName = mainWeapon.weaponName.ToLower();
+            string altName = altWeapon.weaponName.ToLower();
+            if (weapDropName == mainName || weapDropName == altName)
+            {
+                PopUpDamageText T = Instantiate(damageText, inspectedWeapDrop.transform.position, Quaternion.identity);
+                T.SendMessage("SetTextRun", "Already Equipped!");
+            }
+            else
+            {
+                DropCurrentWeapon(true);
+                SelectWeapon(weapDropName, true);
+                Destroy(inspectedWeapDrop);
+            }
         }
     }
     public void SwapAlt()
     {
         if (inspectedWeapDrop != null)
         {
-            DropCurrentWeapon(false);
-            SelectWeapon(weapDropName, false);
-            Destroy(inspectedWeapDrop);
+            string mainName = mainWeapon.weaponName.ToLower();
+            string altName = altWeapon.weaponName.ToLower();
+            if (weapDropName == mainName || weapDropName == altName)
+            {
+                PopUpDamageText T = Instantiate(damageText, inspectedWeapDrop.transform.position, Quaternion.identity);
+                T.SendMessage("SetTextRun", "Already Equipped!");
+            }
+            else
+            {
+                DropCurrentWeapon(false);
+                SelectWeapon(weapDropName, false);
+                Destroy(inspectedWeapDrop);
+            }
         }
     }
 
@@ -515,6 +537,7 @@ public class PlayerController : MonoBehaviour
     public GameObject KNIFE_DROP;
     public GameObject SABER_DROP;
     public GameObject MORTAR_DROP;
+    public GameObject PISTOl_DROP;
 
     public void DropCurrentWeapon(bool isMain)
     {
@@ -528,6 +551,9 @@ public class PlayerController : MonoBehaviour
         Vector3 offset = new Vector2(Random.Range(0, 0.3f), Random.Range(0, 0.3f));
         switch (weaponToDrop)
         {
+            case "Pistol":
+                Instantiate(PISTOl_DROP, this.transform.position + offset, Quaternion.identity);
+                break;
             case "Rifle":
                 Instantiate(RIFLE_DROP, this.transform.position + offset, Quaternion.identity);
                 break;

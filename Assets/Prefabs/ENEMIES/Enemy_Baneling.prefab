@@ -609,7 +609,7 @@ MonoBehaviour:
   mySource: {fileID: -8216172570857405630}
   attackClip: {fileID: 8300000, guid: d459d62682a434332806d32f652c1bd7, type: 3}
   dieClip: {fileID: 0}
-  myAnim: {fileID: 0}
+  myAnim: {fileID: 4234368059743108362}
   damageCollision: 0
   damageAttack: 0
   postureColl: 0

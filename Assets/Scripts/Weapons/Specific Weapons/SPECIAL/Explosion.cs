@@ -11,8 +11,12 @@ public class Explosion : MonoBehaviour
     public float explosionTime;
     public LayerMask hittableEntity;
 
+    RipplePostProcessor Ripple;
     void Start()
     {
+        Ripple = Camera.main.GetComponent<RipplePostProcessor>();
+        Ripple.RippleEffect();
+
         GameObject.Find("AudioManager").GetComponent<AudioManager>().ExplosionSource.PlayOneShot(GameObject.Find("AudioManager").GetComponent<AudioManager>().explosionSound);
         StartCoroutine(DestoryAfterDelay());
 
