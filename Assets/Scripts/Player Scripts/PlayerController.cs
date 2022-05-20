@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
     public Animator MuzzleFlashAnim;
     public SpriteRenderer gunSP;
     bool armShowing;
+    public Transform EndOfbarrel;
 
     void Awake()
     {

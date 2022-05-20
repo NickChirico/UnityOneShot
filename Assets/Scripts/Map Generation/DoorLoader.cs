@@ -40,6 +40,7 @@ public class DoorLoader : MonoBehaviour
             else
             {
                 //myMapLoader.Travel(direction);
+                UI_Manager.GetUIManager.ShowInitInstructions(false);
                 StartCoroutine(TravelCo());
             }
             

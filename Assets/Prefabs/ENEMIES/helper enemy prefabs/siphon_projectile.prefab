@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 8543310786598433792}
   - component: {fileID: 8543310786598434046}
   - component: {fileID: 8543310786598434047}
-  m_Layer: 0
+  - component: {fileID: 736608403766804500}
+  m_Layer: 6
   m_Name: siphon_projectile
-  m_TagString: Enemy
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,6 +158,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.15
+--- !u!114 &736608403766804500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543310786598433796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293d53099bb73e3478642a62cd21e228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Delay: 2
 --- !u!1 &8543310787018120401
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +182,7 @@ GameObject:
   - component: {fileID: 8543310787018120400}
   - component: {fileID: 8543310787018120398}
   - component: {fileID: 8543310787018120399}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}

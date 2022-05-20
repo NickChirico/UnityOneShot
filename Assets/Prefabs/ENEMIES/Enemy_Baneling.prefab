@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1197210466122184117}
   m_LocalRotation: {x: -0, y: -0, z: 0.0990743, w: 0.99508005}
   m_LocalPosition: {x: 0.023, y: 0.344, z: 0}
-  m_LocalScale: {x: 0.42, y: 0.28, z: 1}
+  m_LocalScale: {x: 0.42, y: 0.32, z: 1}
   m_Children: []
   m_Father: {fileID: 7673803558728606625}
   m_RootOrder: 0
@@ -600,6 +600,7 @@ MonoBehaviour:
   postureBar: {fileID: 4379498061955745659}
   guardBroken: 0
   enemyName: Baneling
+  isAlive: 1
   sp: {fileID: 5226043865875188201}
   rb: {fileID: 7673803558728606653}
   lineRend: {fileID: 7673803557751086970}
@@ -608,6 +609,7 @@ MonoBehaviour:
   mySource: {fileID: -8216172570857405630}
   attackClip: {fileID: 8300000, guid: d459d62682a434332806d32f652c1bd7, type: 3}
   dieClip: {fileID: 0}
+  myAnim: {fileID: 0}
   damageCollision: 0
   damageAttack: 0
   postureColl: 0
@@ -639,11 +641,14 @@ MonoBehaviour:
   attackCooldown: 1.5
   invulnTime: 0
   knockbackForce: 5
+  doAnim: 0
   SERAPH_DROP: {fileID: 5627784362461883367, guid: 1969b742d64e22b4285b10f1c2c66ef8,
     type: 3}
   AlwaysDrop: 0
   DROP_CHANCE: 0.25
   WEAPON_DROP: {fileID: 0}
+  hitParticles: {fileID: 6744645483605463850, guid: e202f3d0ddc41cb4abbee76f8f54bef9,
+    type: 3}
   blastDamage: 18
   blastPostureDamage: 20
   blastRadius: 0.7

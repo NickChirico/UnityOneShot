@@ -59,4 +59,4 @@ MonoBehaviour:
   myBlood: 0
   healthOrb: {fileID: 6942797452527294329, guid: 7e8aa5da1690e034d94b787a8ecfe51b,
     type: 3}
-  healAmount: 6
+  healAmount: 3

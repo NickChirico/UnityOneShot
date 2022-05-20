@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5938249223754248859}
   - component: {fileID: 5775110598448285679}
   - component: {fileID: -4243994153142615949}
+  - component: {fileID: 8285525752518777771}
   m_Layer: 0
   m_Name: Mortar_explosion
   m_TagString: Untagged
@@ -97,8 +98,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 25
+  postureDamage: 0
   radius: 1
+  knockForce: 0
   explosionTime: 0.5
   hittableEntity:
     serializedVersion: 2
     m_Bits: 64
+--- !u!95 &8285525752518777771
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8717610368732181883}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 11cef5e0216f16548a7287a64c592997, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

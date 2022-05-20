@@ -48,7 +48,7 @@ public class PathManager : MonoBehaviour
 
     void Start()
     {
-        
+
         DontDestroyOnLoad(gameObject);
         //5 - layerNum = myPlayer.currentPathLevel;
         //previousPaths = new[] {"healing", "shop", "mystery"};
@@ -120,16 +120,16 @@ public class PathManager : MonoBehaviour
                 myBackgroundColor = allPathOptions[5 - layerNum][currentOption].areaBackground.color;
                 if (usingPremade)
                 {
-                    myMapGen.UpdatePregenMap(myMapGen.allPregens[layerNum], allPathOptions[5-layerNum][currentOption].GetPathCode());
+                    myMapGen.UpdatePregenMap(myMapGen.allPregens[layerNum], allPathOptions[5 - layerNum][currentOption].GetPathCode());
                     myMapGen.roomArray = myMapGen.allPregens[layerNum];
                 }
                 else
                 {
                     //previousPath = allOptions[currentOption].GetPathCode();
                     //myMapGen.GenerateMap("North");
-                    myMapGen.GenerateMapFromPath(layerNum, allPathOptions[5-layerNum][currentOption].GetPathCode());
+                    myMapGen.GenerateMapFromPath(layerNum, allPathOptions[5 - layerNum][currentOption].GetPathCode());
                     //myMapGen.ShowMap();
-                    
+
                 }
                 myMapGen.UpdatePath(5 - layerNum, currentOption);
                 myMapGen.ShowMap();
@@ -141,7 +141,7 @@ public class PathManager : MonoBehaviour
 
     public void UpdateNextPath(int layer, int whichOption)
     {
-        
+
     }
 
     private void SelectOptionOnStarted(InputAction.CallbackContext obj)
@@ -150,8 +150,44 @@ public class PathManager : MonoBehaviour
         //throw new System.NotImplementedException();
     }
 
+    int endCount = 0;
+    public bool DoEnding()
+    {
+        if (endCount >= 3)
+            return true;
+        else
+            return false;
+    }
+
+    public bool IsFirstLevel()
+    {
+        if (endCount <= 1)
+            return true;
+        else return false;
+    }
+
+    int roomsCleared = -1;
+    public void DoNewSection()
+    {
+        roomsCleared++;
+
+        if (IsFirstLevel())
+        {
+            if (roomsCleared == 0)
+            {
+                UI_Manager.GetUIManager.ShowInitInstructions(true);
+            }
+            else if (roomsCleared == 1)
+            {
+                // ENEMY TUTORIAL;
+                UI_Manager.GetUIManager.DoShowEnemyPanel();
+            }
+        }
+    }
+
     public void EnterMapScene()
     {
+        endCount++;
         myPlayer.playerLoaded = false;
         layerNum = myPlayer.currentPathLevel;
         SceneManager.LoadScene("MapScene");

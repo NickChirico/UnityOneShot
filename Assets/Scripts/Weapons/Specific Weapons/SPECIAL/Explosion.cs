@@ -36,6 +36,10 @@ public class Explosion : MonoBehaviour
                         entity.TakeDamage(damageToDeal, hitPoint, knockForce, postureDamage);
                     }
                 }
+                else if (hit.CompareTag("Projectile"))
+                {
+                    Destroy(hit.gameObject);
+                }
             }
         }
     }

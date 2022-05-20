@@ -11,6 +11,7 @@ TagManager:
   - weaponDrop
   - UI
   - bag
+  - Projectile
   layers:
   - Default
   - TransparentFX

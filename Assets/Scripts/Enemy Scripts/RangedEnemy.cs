@@ -18,7 +18,7 @@ public class RangedEnemy : Enemy
             myRifle = (RangedWeapon)Instantiate(enemyWeapon, this.transform);
             //attackRange = myRifle.range;
             attackDamage = myRifle.shotDamage;
-
+            doAnim = true;
         }
     }
 
@@ -31,6 +31,11 @@ public class RangedEnemy : Enemy
         attackDir = dir;
         aimLine.SetPosition(0, shotLoc);
         aimLine.SetPosition(1, GetRayOrigin() + (attackDir * attackRange));
+
+        if (myAnim != null && isAlive)
+        {
+            myAnim.SetTrigger("Attack");
+        }
     }
 
     public override void Attack(Vector2 dir)
