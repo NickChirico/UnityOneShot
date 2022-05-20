@@ -146,8 +146,8 @@ public class MapGenerator : MonoBehaviour
     public string[,] pregenMap1 = new string[,]
     {
         {"X", "X", "*.C.H.2.1", "X", "X"},
-        {"X", "X", "*.B.H.0.0.A", "*.C.H.3.4", "X"},
-        {"X", "*.C.H.2.1", "*.C.H.3.3", "*.C.H.1.4", "X"},
+        {"X", "X", "*.B.H.0.0.A", "*.C.H.2.4", "X"},
+        {"X", "*.C.H.2.1", "*.C.H.2.3", "*.C.H.1.4", "X"},
         {"X", "*.C.H.1.1", "*.C.H.2.2.B", "X", "X"},
         {"X", "!.E.H.1.0", "X", "X", "X"}
     };
