@@ -153,7 +153,7 @@ public class PathManager : MonoBehaviour
     int endCount = 0;
     public bool DoEnding()
     {
-        if (endCount >= 3)
+        if (endCount >= 5)
             return true;
         else
             return false;

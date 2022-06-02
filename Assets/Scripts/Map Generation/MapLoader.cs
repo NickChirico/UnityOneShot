@@ -285,9 +285,9 @@ public class MapLoader : MonoBehaviour
     {
         int tempX = 0;
         int tempY = 0;
-        for (int i = 0; i < myMap.roomSizes[myMap.GetCurrentTier()]; i++)
+        for (int i = 0; i < myMap.roomSizes[playerLoader.currentPathLevel]; i++)
         {
-            for (int j = 0; j < myMap.roomSizes[myMap.GetCurrentTier()]; j++)
+            for (int j = 0; j < myMap.roomSizes[playerLoader.currentPathLevel]; j++)
             {
                 if (tempMap[i, j].Contains("E"))
                 {

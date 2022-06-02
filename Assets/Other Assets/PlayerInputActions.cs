@@ -820,7 +820,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""path"": ""<VirtualMouse>/press"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""XBOX_Controller"",
                     ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

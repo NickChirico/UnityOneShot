@@ -42,16 +42,16 @@ public class GamepadCursor : MonoBehaviour
         }
 
         InputSystem.onAfterUpdate += UpdateMotion;
-        playerInput.onControlsChanged += OnControlsChanged;
+        //playerInput.onControlsChanged += OnControlsChanged;
     }
 
     private void OnDisable()
     {
-        if(virtualMouse != null && virtualMouse.added)
-            InputSystem.RemoveDevice(virtualMouse);
+        /*if(virtualMouse != null && virtualMouse.added)
+            InputSystem.RemoveDevice(virtualMouse);*/
 
         InputSystem.onAfterUpdate -= UpdateMotion;
-        playerInput.onControlsChanged -= OnControlsChanged;
+        //playerInput.onControlsChanged -= OnControlsChanged;
     }
 
     bool doActive = true;
